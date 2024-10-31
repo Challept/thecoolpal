@@ -2,19 +2,16 @@
   {
     "title": "Hemsida",
     "price": "400 kr",
-    "image": "https://via.placeholder.com/300",
     "description": "En fullt fungerande webbplats."
   },
   {
     "title": "Swish-integration",
     "price": "300 kr",
-    "image": "https://via.placeholder.com/300",
     "description": "Möjlighet för kunder att betala direkt med Swish."
   },
   {
     "title": "Telegram-bot",
     "price": "100 kr",
-    "image": "https://via.placeholder.com/300",
     "description": "En bot som skickar alla beställningar direkt till Telegram."
   }
 ]
