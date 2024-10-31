@@ -11,24 +11,26 @@ body, html {
     color: #333;
 }
 
-h2 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.order-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.container {
     width: 90%;
     max-width: 800px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
     box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15);
-    padding: 20px 40px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 
+/* Rubriker */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Stil för formulär */
 .order-form {
     width: 100%;
     margin-bottom: 20px;
@@ -54,7 +56,7 @@ input[type="text"]:focus, input[type="tel"]:focus, select:focus {
     outline: none;
 }
 
-/* Stil för produktkort */
+/* Produktkort */
 .order-products {
     display: flex;
     flex-wrap: wrap;
@@ -83,13 +85,6 @@ input[type="text"]:focus, input[type="tel"]:focus, select:focus {
 .product.selected {
     border-color: #4A90E2;
     background-color: #e6f2ff;
-}
-
-.product img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px;
 }
 
 .product h4 {
