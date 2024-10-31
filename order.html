@@ -7,30 +7,44 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="order-container">
+    <div class="container">
         <h2>Beställ Produkter och Betala med Swish</h2>
+        
         <div class="order-form">
-            <label for="name">Namn:</label>
+            <label for="name">Ditt Namn:</label>
             <input type="text" id="name" name="name" required>
 
-            <label for="address">Adress:</label>
+            <label for="address">Din Adress:</label>
             <input type="text" id="address" name="address" required>
 
-            <label for="phone">Telefonnummer:</label>
+            <label for="phone">Ditt Telefonnummer:</label>
             <input type="tel" id="phone" name="phone" required>
         </div>
 
-        <h3>Välj dina produkter</h3>
-        <div id="product-list" class="order-products"></div>
+        <h2>Välj dina produkter</h2>
+        <div class="order-products">
+            <div class="product" onclick="selectProduct(this)">
+                <h4>Hemsida</h4>
+                <p>En fullt fungerande webbplats. Pris: 400 kr</p>
+            </div>
+            <div class="product" onclick="selectProduct(this)">
+                <h4>Swish-integration</h4>
+                <p>Möjlighet för kunder att betala direkt med Swish. Pris: 300 kr</p>
+            </div>
+            <div class="product" onclick="selectProduct(this)">
+                <h4>Telegram-bot</h4>
+                <p>En bot som skickar alla beställningar direkt till Telegram. Pris: 100 kr</p>
+            </div>
+        </div>
 
         <div class="checkbox-container">
-            <input type="checkbox" id="accept" required>
+            <input type="checkbox" id="accept" name="accept">
             <label for="accept">Jag godkänner villkoren</label>
         </div>
 
-        <button type="button" onclick="validateForm()">Beställ</button>
+        <button onclick="validateForm()">Lägg till beställning</button>
     </div>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
