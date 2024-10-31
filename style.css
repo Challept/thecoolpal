@@ -65,7 +65,7 @@ input[type="text"]:focus, input[type="tel"]:focus, select:focus {
     width: 100%;
 }
 
-.product {
+.product-card {
     background: #ffffff;
     padding: 20px;
     border-radius: 10px;
@@ -77,23 +77,23 @@ input[type="text"]:focus, input[type="tel"]:focus, select:focus {
     border: 2px solid transparent;
 }
 
-.product:hover {
+.product-card:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.product.selected {
+.product-card.selected {
     border-color: #4A90E2;
     background-color: #e6f2ff;
 }
 
-.product h4 {
+.product-card h4 {
     font-size: 1.1em;
     color: #4A90E2;
     margin-bottom: 8px;
 }
 
-.product p {
+.product-card p {
     font-size: 0.9em;
     color: #555;
 }
