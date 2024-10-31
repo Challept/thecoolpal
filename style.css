@@ -1,152 +1,23 @@
-/* Allmänna Inställningar */
-body, html {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom right, #4A90E2, #D3D3D3);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #333;
-}
+window.onload = function() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const swishLink = document.getElementById('swish-link');
+    const swishQR = document.getElementById('swish-qr');
 
-h1, h2 {
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.order-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90%;
-    max-width: 800px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15);
-    padding: 20px 40px;
-    text-align: center;
-}
-
-.order-form, .order-products {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.order-form h2, .order-products h2 {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #4A90E2;
-}
-
-.order-form label {
-    font-size: 16px;
-    color: #555;
-}
-
-input[type="text"], input[type="tel"], select {
-    padding: 12px;
-    margin: 10px 0;
-    width: 100%;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus, input[type="tel"]:focus, select:focus {
-    border-color: #4A90E2;
-    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
-    outline: none;
-}
-
-/* Knappdesign */
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 25px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 15px;
-}
-
-button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-/* Snygga Produktkort */
-.order-products {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-}
-
-.product {
-    width: calc(50% - 20px);
-    background-color: #ffffff;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    text-align: center;
-    transition: all 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-}
-
-.product:hover {
-    border-color: #4A90E2;
-    background-color: #f0f8ff;
-    box-shadow: 0px 8px 20px rgba(74, 144, 226, 0.3);
-    transform: scale(1.05);
-}
-
-.product.selected {
-    border-color: #4CAF50;
-    background-color: #e6ffe6;
-    box-shadow: 0px 8px 20px rgba(76, 175, 80, 0.3);
-}
-
-.product h3 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.product p {
-    color: #555;
-    font-size: 14px;
-}
-
-/* Checkbox-styling */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #555;
-    margin-top: 20px;
-}
-
-input[type="checkbox"] {
-    margin-right: 10px;
-    transform: scale(1.2);
-}
-
-/* Responsiv layout */
-@media (max-width: 768px) {
-    .product {
-        width: 100%;
+    if (isMobile) {
+        swishLink.style.display = 'block';
+        swishLink.href = 'swish://payment';
+    } else {
+        swishQR.style.display = 'block';
     }
 
-    button {
-        width: 100%;
-    }
+    // Lägg till klickhändelse för produktkort
+    const products = document.querySelectorAll('.product');
+    products.forEach(product => {
+        product.addEventListener('click', () => selectProduct(product));
+    });
+};
+
+// Funktion för att växla produktval och styling
+function selectProduct(element) {
+    element.classList.toggle("selected");
 }
