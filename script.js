@@ -5,11 +5,11 @@ window.onload = function() {
             const productList = document.getElementById('product-list');
             products.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.classList.add('product-card');
+                productCard.classList.add('product'); // Ändrat till 'product'
                 productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.title}">
+                    <img src="${product.image}" alt="${product.title}" style="width: 100%; height: auto; border-radius: 8px;">
                     <h4>${product.title}</h4>
-                    <p>${product.price}</p>
+                    <p class="price">${product.price}</p>
                     <p>${product.description}</p>
                 `;
                 productList.appendChild(productCard);
