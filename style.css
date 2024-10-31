@@ -1,4 +1,4 @@
-/* Allmänna inställningar */
+/* Grundläggande layoutinställningar */
 body, html {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -8,73 +8,39 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #333;
 }
 
 .container {
     width: 90%;
-    max-width: 800px;
+    max-width: 1000px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
     box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15);
     padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     text-align: center;
 }
 
-/* Rubriker */
 h2 {
     color: #333;
     margin-bottom: 20px;
 }
 
-/* Stil för formulär */
-.order-form {
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.order-form label {
-    font-size: 16px;
-    color: #555;
-}
-
-input[type="text"], input[type="tel"], select {
-    padding: 12px;
-    margin: 10px 0;
-    width: 100%;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus, input[type="tel"]:focus, select:focus {
-    border-color: #4A90E2;
-    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
-    outline: none;
-}
-
-/* Produktkort */
+/* Produktkort styling */
 .order-products {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     width: 100%;
+    margin-top: 20px;
 }
 
 .product-card {
     background: #ffffff;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 180px;
+    padding: 20px;
     text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border: 2px solid transparent;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-card:hover {
@@ -82,63 +48,27 @@ input[type="text"]:focus, input[type="tel"]:focus, select:focus {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.product-card.selected {
-    border-color: #4A90E2;
-    background-color: #e6f2ff;
+.product-card img {
+    max-width: 100px;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .product-card h4 {
-    font-size: 1.1em;
     color: #4A90E2;
-    margin-bottom: 8px;
+    font-size: 1.1em;
+    margin-bottom: 10px;
 }
 
 .product-card p {
+    color: #555;
     font-size: 0.9em;
-    color: #555;
-}
-
-/* Checkbox-styling */
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    color: #555;
-    margin-top: 20px;
-}
-
-input[type="checkbox"] {
-    margin-right: 10px;
-    transform: scale(1.2);
-}
-
-/* Stil för beställningsknappen */
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    cursor: pointer;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 25px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 20px;
-}
-
-button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
+    margin: 5px 0;
 }
 
 /* Responsiv layout */
 @media (max-width: 768px) {
     .order-products {
-        flex-direction: column;
-    }
-
-    button {
-        width: 100%;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }
