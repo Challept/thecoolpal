@@ -13,7 +13,7 @@ body, html {
 
 .container {
     width: 90%;
-    max-width: 800px;
+    max-width: 600px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
     box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15);
@@ -22,6 +22,13 @@ body, html {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    animation: fadeIn 1.5s ease;
+}
+
+/* Animation för inladdning */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Rubriker */
@@ -33,10 +40,10 @@ h2 {
 /* Produktkort */
 .order-products {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+    gap: 20px;
 }
 
 .product-card {
@@ -44,20 +51,21 @@ h2 {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
+    width: 100%;
+    max-width: 500px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 2px solid #ccc;
+    border: 2px solid transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation: slideIn 0.5s ease forwards;
+    opacity: 0;
 }
 
-.product-card img {
-    max-width: 80%;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 10px;
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .product-card:hover {
@@ -72,7 +80,7 @@ h2 {
 }
 
 .product-card h4 {
-    font-size: 1.2em;
+    font-size: 1.3em;
     color: #4A90E2;
     margin-bottom: 8px;
 }
@@ -83,9 +91,50 @@ h2 {
     margin: 5px 0;
 }
 
-/* Responsiv layout */
-@media (max-width: 768px) {
-    .order-products {
-        flex-direction: column;
-    }
+/* Formulärfält */
+.order-form {
+    width: 100%;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.order-form label {
+    font-size: 16px;
+    color: #555;
+}
+
+input[type="text"], input[type="tel"], select {
+    padding: 12px;
+    margin: 10px 0;
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    font-size: 1em;
+}
+
+input[type="text"]:focus, input[type="tel"]:focus, select:focus {
+    border-color: #4A90E2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+    outline: none;
+}
+
+/* Beställningsknapp */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 25px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
 }
