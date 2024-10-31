@@ -10,7 +10,6 @@ window.onload = function() {
                 productCard.innerHTML = `
                     <img src="${product.image}" alt="${product.title}">
                     <h4>${product.title}</h4>
-                    <p class="price">${product.price}</p>
                     <p>${product.description}</p>
                 `;
                 productCard.onclick = () => productCard.classList.toggle('selected');
