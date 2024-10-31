@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betalning</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="confirmation">
+        <h2>Tack för din beställning!</h2>
+        <p>Klicka på länken nedan för att betala via Swish:</p>
+        <button id="swish-link" style="display:none">Betala med Swish</button>
+        <img id="swish-qr" style="display:none" src="https://api.qrserver.com/v1/create-qr-code/?data=swish://payment&size=150x150" alt="Swish QR Code">
+    </div>
+</body>
+</html>
