@@ -10,7 +10,7 @@
     <div class="order-container animate-slide-up">
         <div class="order-form">
             <h2>Fyll i dina uppgifter</h2>
-            <form>
+            <form onsubmit="return validateForm()">
                 <label for="name">Namn:</label>
                 <input type="text" id="name" name="name" required>
                 <label for="phone">Telefonnummer:</label>
@@ -21,18 +21,21 @@
             </form>
         </div>
         <div class="order-products">
-            <h2>Välj dina produkter</h2>
+            <h2>Vilka produkter vill du ha?</h2>
             <div class="product" onclick="selectProduct(this)">
-                <p>Hemsida: En fullt fungerande webbplats.</p>
-                <p>Pris: 400 kr</p>
+                <h3>Hemsida</h3>
+                <p>En fullt fungerande webbplats.</p>
+                <p><strong>Pris: 400 kr</strong></p>
             </div>
             <div class="product" onclick="selectProduct(this)">
-                <p>Swish-integration: Möjlighet för kunder att betala direkt med Swish.</p>
-                <p>Pris: 300 kr</p>
+                <h3>Swish-integration</h3>
+                <p>Möjlighet för kunder att betala direkt med Swish.</p>
+                <p><strong>Pris: 300 kr</strong></p>
             </div>
             <div class="product" onclick="selectProduct(this)">
-                <p>Telegram-bot: En bot som skickar alla beställningar direkt till Telegram.</p>
-                <p>Pris: 100 kr</p>
+                <h3>Telegram-bot</h3>
+                <p>En bot som skickar alla beställningar direkt till Telegram.</p>
+                <p><strong>Pris: 100 kr</strong></p>
             </div>
         </div>
     </div>
