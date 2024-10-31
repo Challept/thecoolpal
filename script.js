@@ -26,6 +26,7 @@ function selectProduct(element) {
 function validateForm() {
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
+    const acceptTerms = document.getElementById('accept').checked;
     const selectedProducts = document.querySelectorAll('.product.selected');
 
     if (name === "") {
@@ -40,6 +41,11 @@ function validateForm() {
 
     if (selectedProducts.length === 0) {
         alert("Välj minst en produkt!");
+        return false;
+    }
+
+    if (!acceptTerms) {
+        alert("Godkänn villkoren innan du fortsätter.");
         return false;
     }
 
