@@ -10,19 +10,19 @@ window.onload = function() {
         swishQR.style.display = 'block';
     }
 
-    // Add click event to products
+    // Lägg till klickhändelse för produkter
     const products = document.querySelectorAll('.product');
     products.forEach(product => {
         product.addEventListener('click', () => selectProduct(product));
     });
 };
 
-// Function to toggle product selection and styling
+// Funktion för att växla produktval och styling
 function selectProduct(element) {
     element.classList.toggle("selected");
 }
 
-// Form validation function
+// Formulärvalidering
 function validateForm() {
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -49,6 +49,6 @@ function validateForm() {
         return false;
     }
 
-    // If all fields are valid, proceed with form submission
+    // Om alla fält är giltiga, fortsätt med formulärinlämning
     return true;
 }
