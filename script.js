@@ -5,13 +5,14 @@ window.onload = function() {
             const productList = document.getElementById('product-list');
             products.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.classList.add('product'); // Ändrat till 'product'
+                productCard.classList.add('product-card');
                 productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.title}" style="width: 100%; height: auto; border-radius: 8px;">
+                    <img src="${product.image}" alt="${product.title}">
                     <h4>${product.title}</h4>
-                    <p class="price">${product.price}</p>
+                    <p>${product.price}</p>
                     <p>${product.description}</p>
                 `;
+                productCard.onclick = () => productCard.classList.toggle('selected');
                 productList.appendChild(productCard);
             });
         })
