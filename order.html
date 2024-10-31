@@ -7,43 +7,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Beställ Produkter och Betala med Swish</h1>
     <div class="order-container">
-        <form onsubmit="return validateForm()">
-            <h2>Fyll i dina uppgifter</h2>
-            
+        <h2>Beställ Produkter och Betala med Swish</h2>
+        <div class="order-form">
             <label for="name">Namn:</label>
             <input type="text" id="name" name="name" required>
-            
-            <label for="phone">Telefonnummer:</label>
-            <input type="tel" id="phone" name="phone" required>
-            
+
             <label for="address">Adress:</label>
             <input type="text" id="address" name="address" required>
 
-            <h2>Välj dina produkter</h2>
-            <div class="product-selection">
-                <div class="product-card" onclick="selectProduct(this)">
-                    <p><strong>Hemsida:</strong> En fullt fungerande webbplats.</p>
-                    <p>Pris: 400 kr</p>
-                </div>
-                <div class="product-card" onclick="selectProduct(this)">
-                    <p><strong>Swish-integration:</strong> Möjlighet för kunder att betala direkt med Swish.</p>
-                    <p>Pris: 300 kr</p>
-                </div>
-                <div class="product-card" onclick="selectProduct(this)">
-                    <p><strong>Telegram-bot:</strong> En bot som skickar alla beställningar direkt till Telegram.</p>
-                    <p>Pris: 100 kr</p>
-                </div>
-            </div>
-            
-            <label>
-                <input type="checkbox" required> Jag godkänner villkoren
-            </label>
-            
-            <button type="submit">Beställ</button>
-        </form>
+            <label for="phone">Telefonnummer:</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+
+        <h3>Välj dina produkter</h3>
+        <div id="product-list" class="order-products"></div>
+
+        <div class="checkbox-container">
+            <input type="checkbox" id="accept" required>
+            <label for="accept">Jag godkänner villkoren</label>
+        </div>
+
+        <button type="button" onclick="validateForm()">Beställ</button>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
