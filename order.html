@@ -3,48 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beställning</title>
+    <title>Beställ Produkter</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Beställ Produkter och Betala med Swish</h2>
-        
-        <div class="order-form">
-            <label for="name">Ditt Namn:</label>
+    <div class="order-container">
+        <h2>Fyll i dina uppgifter</h2>
+        <form id="order-form">
+            <label for="name">Namn:</label>
             <input type="text" id="name" name="name" required>
-
-            <label for="address">Din Adress:</label>
+            
+            <label for="address">Adress:</label>
             <input type="text" id="address" name="address" required>
+            
+            <label for="phone">Telefonnummer:</label>
+            <input type="text" id="phone" name="phone" required>
+        </form>
 
-            <label for="phone">Ditt Telefonnummer:</label>
-            <input type="tel" id="phone" name="phone" required>
+        <h2>Välj Produkter</h2>
+        <div id="product-section" class="product-section">
+            <!-- Produktkort läggs till här dynamiskt från JSON -->
         </div>
 
-        <h2>Välj dina produkter</h2>
-        <div class="order-products">
-            <div class="product" onclick="selectProduct(this)">
-                <h4>Hemsida</h4>
-                <p>En fullt fungerande webbplats. Pris: 400 kr</p>
-            </div>
-            <div class="product" onclick="selectProduct(this)">
-                <h4>Swish-integration</h4>
-                <p>Möjlighet för kunder att betala direkt med Swish. Pris: 300 kr</p>
-            </div>
-            <div class="product" onclick="selectProduct(this)">
-                <h4>Telegram-bot</h4>
-                <p>En bot som skickar alla beställningar direkt till Telegram. Pris: 100 kr</p>
-            </div>
-        </div>
-
-        <div class="checkbox-container">
-            <input type="checkbox" id="accept" name="accept">
-            <label for="accept">Jag godkänner villkoren</label>
-        </div>
-
-        <button onclick="validateForm()">Lägg till beställning</button>
+        <div id="total-price" class="total-price">Total: 0 kr</div>
+        <button id="submit-button" class="submit-button">Lägg till beställning</button>
     </div>
-    
     <script src="script.js"></script>
 </body>
 </html>
