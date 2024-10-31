@@ -1,33 +1,33 @@
 window.onload = function() {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const swishLink = document.getElementById('swish-link');
-    const swishQR = document.getElementById('swish-qr');
+    // Hämta och rendera produktdata
+    fetch('availableproducts.json')
+        .then(response => response.json())
+        .then(products => {
+            const productList = document.getElementById('product-list');
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.title}">
+                    <h4>${product.title}</h4>
+                    <p class="price">${product.price}</p>
+                    <p>${product.description}</p>
+                `;
+                productCard.onclick = () => productCard.classList.toggle('selected');
+                productList.appendChild(productCard);
+            });
+        });
 
-    if (isMobile) {
-        swishLink.style.display = 'block';
-        swishLink.href = 'swish://payment';
-    } else {
-        swishQR.style.display = 'block';
-    }
-
-    // Lägg till klickhändelse för produkter
-    const products = document.querySelectorAll('.product');
-    products.forEach(product => {
-        product.addEventListener('click', () => selectProduct(product));
-    });
+    // Formulärvalidering
+    document.querySelector("button").onclick = validateForm;
 };
 
-// Funktion för att växla produktval och styling
-function selectProduct(element) {
-    element.classList.toggle("selected");
-}
-
-// Formulärvalidering
+// Formulärvalideringsfunktion
 function validateForm() {
     const name = document.getElementById('name').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const acceptTerms = document.getElementById('accept').checked;
-    const selectedProducts = document.querySelectorAll('.product.selected');
+    const selectedProducts = document.querySelectorAll('.product-card.selected');
 
     if (name === "") {
         alert("Namn är obligatoriskt!");
@@ -49,6 +49,6 @@ function validateForm() {
         return false;
     }
 
-    // Om alla fält är giltiga, fortsätt med formulärinlämning
+    alert("Beställning skickad!");
     return true;
 }
