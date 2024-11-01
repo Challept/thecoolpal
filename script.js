@@ -1,5 +1,5 @@
+// Hämta och rendera produktdata från availableproducts.json
 window.onload = function() {
-    // Hämta och rendera produktdata
     fetch('availableproducts.json')
         .then(response => response.json())
         .then(products => {
@@ -7,6 +7,7 @@ window.onload = function() {
             products.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.classList.add('product-card');
+                productCard.setAttribute('data-price', product.price);
                 productCard.innerHTML = `
                     <h4>${product.title}</h4>
                     <p>${product.price} kr</p>
@@ -20,61 +21,57 @@ window.onload = function() {
 };
 
 let totalPrice = 0;
-let debounceTimeout;
 
 function toggleProductSelection(productCard, price) {
     productCard.classList.toggle('selected');
-    const priceAmount = parseInt(price);
-
     if (productCard.classList.contains('selected')) {
-        updateTotalPrice(totalPrice, totalPrice + priceAmount);
-        totalPrice += priceAmount;
+        totalPrice += price;
     } else {
-        updateTotalPrice(totalPrice, totalPrice - priceAmount);
-        totalPrice -= priceAmount;
+        totalPrice -= price;
     }
+    document.getElementById('total-price').innerText = totalPrice;
 }
 
-function updateTotalPrice(from, to) {
-    clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => animateTotalPrice(from, to), 1000); // 1000 ms debounce
-}
-
-function animateTotalPrice(from, to) {
-    const duration = 500; // Total tid för animationen i ms
-    const increment = (to - from) / (duration / 16); // Antal steg baserat på 60 FPS
-    let current = from;
-    const totalElement = document.getElementById('total-price');
-
-    function updateDisplay() {
-        if ((increment > 0 && current >= to) || (increment < 0 && current <= to)) {
-            totalElement.innerText = `Total: ${to} kr`;
-        } else {
-            current += increment;
-            totalElement.innerText = `Total: ${Math.round(current)} kr`;
-            requestAnimationFrame(updateDisplay);
-        }
-    }
-    updateDisplay();
-}
-
-// Formulärvalideringsfunktion
-function validateForm() {
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const address = document.getElementById('address').value.trim();
-    const additionalInfo = document.getElementById('additional-info').value.trim();
+// Skicka beställning till Telegram
+document.getElementById("submit-button").addEventListener("click", function() {
+    const name = document.getElementById('name').value;
+    const address = document.getElementById('address').value;
+    const phone = document.getElementById('phone').value;
     const selectedProducts = document.querySelectorAll('.product-card.selected');
-    const validationMessage = document.getElementById('validation-message');
 
-    if (name === "" || phone === "" || address === "" || selectedProducts.length === 0) {
-        validationMessage.style.display = "block";
-        validationMessage.style.color = "red";
-        validationMessage.innerText = "Du måste fylla i alla fält och välja minst en produkt!";
+    if (name && address && phone && selectedProducts.length > 0) {
+        const productsArray = [];
+        selectedProducts.forEach(function(productCard) {
+            const productTitle = productCard.querySelector('h4').innerText;
+            const price = parseInt(productCard.getAttribute('data-price'));
+            productsArray.push(`${productTitle} - ${price} kr`);
+        });
+
+        const message = `Ny beställning:\n\nNamn: ${name}\nAdress: ${address}\nTelefon: ${phone}\nProdukter:\n- ${productsArray.join('\n- ')}\n\nTotalpris: ${totalPrice} kr`;
+
+        fetch(`https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: '-1002482900933',
+                text: message
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                window.location.href = 'https://DIN_WEBBADRESS/val-sidan.html';  // Ändra till din bekräftelsesida
+            } else {
+                alert("Kunde inte skicka meddelandet till Telegram. Försök igen.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Ett tekniskt fel uppstod. Försök igen.");
+        });
     } else {
-        validationMessage.style.display = "none";
-        alert("Beställning skickad!");
-        // Exempel på vad som händer efter en lyckad validering
-        // Exempel: window.location.href = 'bekräftelsesida.html';
+        alert("Vänligen fyll i alla fält och välj minst en produkt.");
     }
-}
+});
