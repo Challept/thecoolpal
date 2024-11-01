@@ -4,24 +4,26 @@ document.getElementById('login-form').addEventListener('submit', function(event)
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
+    const errorMessage = document.getElementById('error-message');
 
-    // Här kommer vi att hämta och kontrollera data från Google Sheets
-    fetch('URL_TILL_GOOGLE_SHEETS_API')
+    // Anropa Google Apps Script för att hämta data från Google Sheets
+    fetch('https://script.google.com/macros/s/AKfycbxm783fL77u2c1jOqmTGDY2wJzuzcCexPkLvYQHB1NiyVxiV-dFhoNWbuuDrmFYt47sXg/exec')
         .then(response => response.json())
         .then(data => {
-            const validUser = data.some(row => row.name === name && row.email === email && row.phone === phone);
-            if (validUser) {
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('admin-section').style.display = 'block';
+            const user = data.find(user => user.name === name && user.email === email && user.phone === phone);
+
+            if (user) {
+                alert('Inloggning lyckades!');
+                // Dirigera användaren till adminpanelen eller dashboard-sidan
+                window.location.href = 'dashboard.html';
             } else {
-                document.getElementById('login-message').innerText = 'Felaktiga inloggningsuppgifter, försök igen.';
+                errorMessage.style.display = 'block';
+                errorMessage.innerText = 'Felaktiga uppgifter. Vänligen försök igen.';
             }
         })
-        .catch(error => console.error('Error fetching data:', error));
-});
-
-document.getElementById('logout-button').addEventListener('click', function() {
-    document.getElementById('login-section').style.display = 'block';
-    document.getElementById('admin-section').style.display = 'none';
-    document.getElementById('login-form').reset();
+        .catch(error => {
+            console.error('Fel vid inläsning av data:', error);
+            errorMessage.style.display = 'block';
+            errorMessage.innerText = 'Ett tekniskt fel uppstod. Vänligen försök igen senare.';
+        });
 });
