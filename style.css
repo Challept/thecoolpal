@@ -30,6 +30,16 @@ body, html {
     text-align: center;
     width: 100%;
     animation: fadeIn 1.5s ease;
+    flex-shrink: 0;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1.2em;
 }
 
 /* Main layout container */
@@ -56,15 +66,19 @@ body, html {
     .order-page {
         flex-direction: row;
         align-items: flex-start;
-        gap: 20px; /* Mellanrum mellan kolumner */
+        gap: 20px;
     }
 
-    .order-form, .product-selection {
+    .order-form, .order-products {
         width: 45%;
-        background-color: #e0e4e2; /* Grågrön bakgrundsfärg */
+        background-color: #b2c0d1;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
     }
 }
 
@@ -182,10 +196,6 @@ footer a:hover {
 
 /* Formulär */
 .order-form {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: left;
     animation: slideUp 0.5s ease forwards;
 }
@@ -194,7 +204,6 @@ footer a:hover {
     color: #4A90E2;
     font-size: 1.6em;
     text-align: center;
-    margin-bottom: 20px;
 }
 
 .order-form label {
@@ -223,14 +232,6 @@ footer a:hover {
 .order-form textarea {
     resize: vertical;
     min-height: 100px;
-}
-
-.order-form .error-message {
-    color: red;
-    font-size: 0.9em;
-    font-weight: bold;
-    margin-top: 10px;
-    text-align: center;
 }
 
 /* Produktkort */
