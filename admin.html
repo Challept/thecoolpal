@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+    <div class="login-container" id="login-section">
+        <h2>Admin Inloggning</h2>
+        <form id="login-form">
+            <label for="name">Namn:</label>
+            <input type="text" id="name" placeholder="Ditt namn" required>
+            <label for="email">E-post:</label>
+            <input type="email" id="email" placeholder="Din e-post" required>
+            <label for="phone">Telefonnummer:</label>
+            <input type="tel" id="phone" placeholder="Ditt telefonnummer" required>
+            <button type="submit">Logga in</button>
+        </form>
+        <p id="login-message" class="error-message"></p>
+    </div>
+
+    <div class="admin-panel" id="admin-section" style="display: none;">
+        <h2>Välkommen till Adminpanelen</h2>
+        <button id="logout-button">Logga ut</button>
+        <div id="content-section">
+            <!-- Plats för att visa och redigera innehåll -->
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
