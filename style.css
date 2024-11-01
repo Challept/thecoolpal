@@ -5,11 +5,10 @@ body, html {
     padding: 0;
     background: linear-gradient(to bottom right, #4A90E2, #D3D3D3);
     color: #333;
+    overflow-x: hidden; /* Förhindrar horisontell scroll */
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    overflow: hidden;
 }
 
 /* Animationer */
@@ -27,7 +26,7 @@ body, html {
 .header {
     background-color: #4A90E2;
     color: white;
-    padding: 20px;
+    padding: 40px;
     text-align: center;
     width: 100%;
     animation: fadeIn 1.5s ease;
@@ -35,12 +34,12 @@ body, html {
 }
 
 .header h1 {
-    font-size: 2em;
-    margin-bottom: 5px;
+    font-size: 2.5em;
+    margin-bottom: 10px;
 }
 
 .header p {
-    font-size: 1.1em;
+    font-size: 1.2em;
 }
 
 /* Vertikal layout för sektioner */
@@ -48,18 +47,18 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
     width: 100%;
     max-width: 800px;
-    padding: 10px;
+    padding: 20px;
     overflow-y: auto;
-    flex-grow: 1;
 }
 
 /* Om Oss */
 .about-us {
     background: #ffffff;
-    padding: 20px;
+    padding: 30px;
+    margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
@@ -68,21 +67,22 @@ body, html {
 }
 
 .about-us h2 {
-    font-size: 1.5em;
+    font-size: 2em;
     color: #4A90E2;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .about-us p {
-    font-size: 0.95em;
+    font-size: 1em;
     color: #555;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 /* Steg-för-steg sektion */
 .steps {
     background: #f0f4f8;
-    padding: 20px;
+    padding: 30px;
+    margin: 20px auto;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     animation: fadeIn 1.5s ease;
@@ -92,27 +92,27 @@ body, html {
 .steps h2 {
     text-align: center;
     color: #4A90E2;
-    font-size: 1.4em;
-    margin-bottom: 15px;
+    font-size: 1.8em;
+    margin-bottom: 20px;
 }
 
 .step {
     background: #ffffff;
-    padding: 10px;
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     transition: transform 0.3s ease;
 }
 
 .step h3 {
-    font-size: 1.2em;
+    font-size: 1.3em;
     color: #4A90E2;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .step p {
-    font-size: 0.9em;
+    font-size: 1em;
     color: #555;
 }
 
@@ -124,22 +124,21 @@ body, html {
 /* Beställningsknapp */
 .button-container {
     text-align: center;
-    margin: 20px 0;
+    margin: 30px 0;
     width: 100%;
 }
 
 .order-button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
-    font-size: 1.1em;
+    padding: 15px 30px;
+    font-size: 1.2em;
     font-weight: bold;
     border-radius: 25px;
     text-decoration: none;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     transition: background-color 0.3s ease, transform 0.3s ease;
     animation: fadeIn 1.5s ease;
-    display: inline-block;
 }
 
 .order-button:hover {
@@ -152,10 +151,20 @@ footer {
     background: #333;
     color: white;
     text-align: center;
-    padding: 15px;
+    padding: 20px;
     font-size: 0.9em;
     width: 100%;
-    border-radius: 0 0 10px 10px;
+}
+
+/* Länkfärg i footer */
+footer a {
+    color: #4CAF50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #81C784;
 }
 
 /* Responsiv design för mobil */
@@ -184,17 +193,17 @@ footer {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    gap: 15px;
-    margin-top: 15px;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .product-card {
     background: #f7f9fc;
-    padding: 15px;
+    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 2px solid transparent;
@@ -217,22 +226,22 @@ footer {
 }
 
 .product-card h4 {
-    font-size: 1.1em;
+    font-size: 1.2em;
     color: #4A90E2;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .product-card p {
-    font-size: 0.9em;
+    font-size: 1em;
     color: #555;
     margin: 5px 0;
 }
 
 /* Totalt pris */
 .total-price {
-    font-size: 1.4em;
+    font-size: 1.5em;
     font-weight: bold;
     color: #4A90E2;
-    margin-top: 10px;
+    margin-top: 20px;
     text-align: center;
 }
