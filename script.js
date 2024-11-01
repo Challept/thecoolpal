@@ -18,6 +18,14 @@ window.onload = function() {
             });
         })
         .catch(error => console.error('Error loading products:', error));
+
+    // Se till att knappen är tillgänglig innan addEventListener
+    const submitButton = document.getElementById("submit-button");
+    if (submitButton) {
+        submitButton.addEventListener("click", handleSubmit);
+    } else {
+        console.error("Kunde inte hitta submit-button");
+    }
 };
 
 let totalPrice = 0;
@@ -33,7 +41,7 @@ function toggleProductSelection(productCard, price) {
 }
 
 // Skicka beställning till Telegram
-document.getElementById("submit-button").addEventListener("click", function() {
+function handleSubmit() {
     const name = document.getElementById('name').value;
     const address = document.getElementById('address').value;
     const phone = document.getElementById('phone').value;
@@ -49,8 +57,6 @@ document.getElementById("submit-button").addEventListener("click", function() {
 
         const message = `Ny beställning:\n\nNamn: ${name}\nAdress: ${address}\nTelefon: ${phone}\nProdukter:\n- ${productsArray.join('\n- ')}\n\nTotalpris: ${totalPrice} kr`;
 
-        console.log("Skickar meddelande till Telegram:", message);  // Kontrollera meddelandet som skickas
-
         fetch(`https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage`, {
             method: 'POST',
             headers: {
@@ -64,10 +70,8 @@ document.getElementById("submit-button").addEventListener("click", function() {
         .then(response => response.json())
         .then(data => {
             if (data.ok) {
-                console.log("Meddelandet skickades till Telegram!");  // Bekräftelse på skickat meddelande
                 window.location.href = 'https://DIN_WEBBADRESS/val-sidan.html';  // Ändra till din bekräftelsesida
             } else {
-                console.error("Misslyckades att skicka meddelandet till Telegram:", data);
                 alert("Kunde inte skicka meddelandet till Telegram. Försök igen.");
             }
         })
@@ -78,4 +82,4 @@ document.getElementById("submit-button").addEventListener("click", function() {
     } else {
         alert("Vänligen fyll i alla fält och välj minst en produkt.");
     }
-});
+}
