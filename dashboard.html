@@ -5,32 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="dashboard-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div id="popup-container" class="popup hidden">
-        <div class="popup-content">
-            <h2>Välkommen till Dashboarden</h2>
-            <p>Du är nu inloggad och kan använda adminverktygen.</p>
-            <button onclick="closePopup()">Stäng</button>
-        </div>
+    <div class="sidebar">
+        <ul class="menu">
+            <li class="menu-item">
+                <i class="fas fa-home"></i><span class="menu-text">Hem</span>
+            </li>
+            <li class="menu-item">
+                <i class="fas fa-cogs"></i><span class="menu-text">Inställningar</span>
+            </li>
+            <li class="menu-item">
+                <i class="fas fa-chart-line"></i><span class="menu-text">Rapporter</span>
+            </li>
+            <li class="menu-item">
+                <i class="fas fa-users"></i><span class="menu-text">Användare</span>
+            </li>
+            <li class="menu-item">
+                <i class="fas fa-sign-out-alt"></i><span class="menu-text">Logga ut</span>
+            </li>
+        </ul>
     </div>
-
-    <script>
-        if (sessionStorage.getItem('loggedIn') !== 'true') {
-            window.location.href = 'admin.html';
-        }
-
-        // Funktion för att visa popup
-        function showPopup() {
-            document.getElementById('popup-container').classList.remove('hidden');
-            window.location.hash = `#${new Date().getTime()}`; // Skapa unik hash
-        }
-
-        function closePopup() {
-            document.getElementById('popup-container').classList.add('hidden');
-        }
-
-        showPopup(); // Visa popup direkt när sidan laddas
-    </script>
+    <div class="content">
+        <h1>Välkommen till Dashboard</h1>
+        <p>Här kan du se och hantera din data.</p>
+    </div>
 </body>
 </html>
