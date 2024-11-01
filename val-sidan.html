@@ -3,46 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Betala med Swish</title>
+    <title>Betalningsbekräftelse</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="confirmation-card">
-            <h2>Betala din beställning</h2>
-            <p>För att slutföra din beställning, använd Swish-knappen eller QR-koden nedan.</p>
-            
-            <!-- Swish-knapp -->
+    <div class="confirmation-card">
+        <h2>Betalningsinformation</h2>
+        <p>Tack för din beställning! Använd Swish-knappen nedan eller QR-koden för att slutföra betalningen.</p>
+
+        <div class="payment-section">
+            <h3 class="swish-info">Swish-knapp</h3>
             <button id="swish-button">Betala med Swish</button>
-            
-            <!-- QR-kod för Swish -->
-            <div id="qr-code-container">
-                <img id="qr-code" src="" alt="QR-kod för Swish-betalning">
-            </div>
-            
-            <p>Genom att klicka på knappen kommer du till Swish-appen med rätt belopp och meddelande för din betalning. Om du använder en dator, skanna QR-koden med din mobil.</p>
+            <p>Belopp: <span id="total-price">0</span> kr</p>
+        </div>
+
+        <div id="qr-code-container">
+            <h3 class="qr-info">Skanna QR-koden</h3>
+            <img id="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=swish://payment?source=val-sidan.html" alt="QR-kod för Swish">
         </div>
     </div>
+
     <script>
-        // Hämta URL-parametrar
-        const urlParams = new URLSearchParams(window.location.search);
-        const totalPrice = urlParams.get('totalPrice');
-        const message = urlParams.get('message');
-
-        // Telefonnummer för Swish
-        const swishNumber = "0739200006";
-
-        // Skapa Swish-länk med JSON-struktur
-        const swishLink = `swish://payment?data={"version":1,"payee":{"value":"${swishNumber}"},"amount":{"value":${totalPrice}},"message":{"value":"${message}"}}`;
-
-        // Länka Swish-knappen till Swish-länken
-        document.getElementById("swish-button").onclick = function() {
-            window.location.href = swishLink;
+        document.getElementById('swish-button').onclick = function() {
+            // Exempel Swish-länk med JSON-struktur
+            const totalPrice = document.getElementById("total-price").textContent;
+            const message = "Beställa webplats - thecoolpal";
+            const swishUrl = `swish://payment?phone=0739200006&amount=${totalPrice}&message=${encodeURIComponent(message)}`;
+            window.location.href = swishUrl;
         };
-
-        // Generera QR-kod för Swish-betalning via qrserver
-        const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(swishLink)}`;
-        document.getElementById("qr-code").src = qrCodeUrl;
     </script>
 </body>
 </html>
