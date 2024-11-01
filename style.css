@@ -245,3 +245,58 @@ footer a:hover {
     margin-top: 20px;
     text-align: center;
 }
+
+/* Snyggt formulär */
+.order-form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.order-form h2 {
+    color: #4A90E2;
+    font-size: 1.6em;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.order-form label {
+    font-size: 1em;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.order-form input[type="text"], .order-form input[type="tel"], .order-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.order-form input[type="text"]:focus, .order-form input[type="tel"]:focus, .order-form textarea:focus {
+    border-color: #4A90E2;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+    outline: none;
+}
+
+.order-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.order-form .error-message {
+    color: red;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
