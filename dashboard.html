@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboard-style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Välkommen till Dashboarden</h2>
+        <p>Du är nu inloggad och kan använda adminverktygen.</p>
+    </div>
+
+    <script>
+        // Kontrollera om användaren är inloggad
+        if (sessionStorage.getItem('loggedIn') !== 'true') {
+            // Omdirigera till inloggningssidan om inte inloggad
+            window.location.href = 'admin.html';
+        }
+    </script>
+</body>
+</html>
