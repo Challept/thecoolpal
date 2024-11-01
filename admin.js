@@ -4,13 +4,13 @@ const errorMessage = document.getElementById('error-message');
 
 // Funktion för att normalisera telefonnummer till 7-siffrigt format
 function normalizePhoneNumber(phone) {
-    phone = phone.replace(/\D/g, '');
+    phone = phone.replace(/\D/g, ''); // Ta bort alla icke-siffror
     if (phone.startsWith('+46')) {
-        phone = phone.slice(3);
+        phone = phone.slice(3); // Ta bort +46
     } else if (phone.startsWith('46')) {
-        phone = phone.slice(2);
+        phone = phone.slice(2); // Ta bort 46
     } else if (phone.startsWith('0')) {
-        phone = phone.slice(1);
+        phone = phone.slice(1); // Ta bort den inledande nollan
     }
     return phone;
 }
@@ -31,7 +31,7 @@ loginForm.addEventListener('submit', function (event) {
             const user = data.find(user => 
                 user.name.toLowerCase() === name.toLowerCase() &&
                 user.email.toLowerCase() === email.toLowerCase() &&
-                [user.phone.trim(), `0${user.phone.trim()}`, `+46${user.phone.trim()}`, `46${user.phone.trim()}`].includes(phone)
+                normalizePhoneNumber(String(user.phone).trim()) === phone
             );
 
             if (user) {
