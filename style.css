@@ -23,145 +23,25 @@ body, html {
     50% { transform: scale(1.05); }
 }
 
-/* Header */
-.header {
-    background-color: #4A90E2;
-    color: white;
-    padding: 40px;
-    text-align: center;
-    animation: fadeIn 1.5s ease;
-}
-
-.header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-.header p {
-    font-size: 1.2em;
-}
-
-/* Om Oss */
-.about-us {
-    background: #ffffff;
+/* Container */
+.container {
+    width: 90%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.15);
     padding: 30px;
-    margin: 20px auto;
-    max-width: 800px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    animation: slideUp 1s ease;
-}
-
-.about-us h2 {
-    font-size: 2em;
-    color: #4A90E2;
-    margin-bottom: 10px;
-}
-
-.about-us p {
-    font-size: 1em;
-    color: #555;
-    line-height: 1.6;
-}
-
-/* Steg-för-steg sektion */
-.steps {
-    background: #f0f4f8;
-    padding: 40px 20px;
-    margin: 20px auto;
-    max-width: 800px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     animation: fadeIn 1.5s ease;
 }
 
-.steps h2 {
-    text-align: center;
+/* Rubrik */
+h2 {
     color: #4A90E2;
-    font-size: 1.8em;
     margin-bottom: 20px;
-}
-
-.step {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin: 10px 0;
-    text-align: center;
-    transition: transform 0.3s ease;
-    animation: pulse 1.5s infinite ease-in-out;
-}
-
-.step h3 {
-    font-size: 1.4em;
-    color: #4A90E2;
-    margin-bottom: 10px;
-}
-
-.step p {
-    font-size: 1em;
-    color: #555;
-}
-
-.step:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* Beställningsknapp */
-.button-container {
-    text-align: center;
-    margin: 30px 0;
-}
-
-.order-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 30px;
-    font-size: 1.2em;
-    font-weight: bold;
-    border-radius: 25px;
-    text-decoration: none;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    animation: fadeIn 1.5s ease;
-}
-
-.order-button:hover {
-    background-color: #45a049;
-    transform: scale(1.05);
-}
-
-/* Footer */
-footer {
-    background: #333;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    font-size: 0.9em;
-}
-
-footer a {
-    color: #4CAF50;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #81C784;
-}
-
-/* Responsiv design för mobil */
-@media (max-width: 768px) {
-    .steps {
-        padding: 20px;
-    }
-
-    .step {
-        width: 100%;
-    }
 }
 
 /* Produktkort */
@@ -182,19 +62,19 @@ footer a:hover {
     width: 100%;
     max-width: 500px;
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    cursor: pointer;
     border: 2px solid transparent;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: slideUp 0.5s ease forwards;
-    opacity: 0;
 }
 
 .product-card:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.product-card.selected {
     border-color: #4A90E2;
+    background-color: #e6f2ff;
 }
 
 .product-card h4 {
@@ -207,4 +87,95 @@ footer a:hover {
     font-size: 1em;
     color: #555;
     margin: 5px 0;
+}
+
+/* Totalpris */
+#total-container {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* Formulärfält */
+.order-form {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.order-form label {
+    font-size: 1em;
+    color: #555;
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"], input[type="tel"], textarea {
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="tel"]:focus, textarea:focus {
+    border-color: #4A90E2;
+    outline: none;
+}
+
+/* Beställningsknapp */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 25px;
+    margin-top: 20px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+/* Felmeddelande */
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 1em;
+}
+
+/* Responsiv design för mobil */
+@media (max-width: 768px) {
+    .order-products {
+        width: 100%;
+    }
+
+    .product-card {
+        width: 90%;
+    }
+}
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #4CAF50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #81C784;
 }
