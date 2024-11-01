@@ -20,34 +20,42 @@ window.onload = function() {
 };
 
 let totalPrice = 0;
+let debounceTimeout;
 
 function toggleProductSelection(productCard, price) {
     productCard.classList.toggle('selected');
     const priceAmount = parseInt(price);
+
     if (productCard.classList.contains('selected')) {
-        animateTotalPrice(totalPrice, totalPrice + priceAmount);
+        updateTotalPrice(totalPrice, totalPrice + priceAmount);
         totalPrice += priceAmount;
     } else {
-        animateTotalPrice(totalPrice, totalPrice - priceAmount);
+        updateTotalPrice(totalPrice, totalPrice - priceAmount);
         totalPrice -= priceAmount;
     }
 }
 
-function animateTotalPrice(from, to) {
-    const duration = 500;
-    const stepTime = Math.abs(Math.floor(duration / (to - from)));
-    let current = from;
+function updateTotalPrice(from, to) {
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => animateTotalPrice(from, to), 200);
+}
 
-    const increment = to > from ? 1 : -1;
+function animateTotalPrice(from, to) {
+    const duration = 500; // Total tid för animationen i ms
+    const increment = (to - from) / (duration / 16); // Antal steg baserat på 60 FPS
+    let current = from;
     const totalElement = document.getElementById('total-price');
 
-    const timer = setInterval(() => {
-        current += increment;
-        totalElement.innerText = current;
-        if (current === to) {
-            clearInterval(timer);
+    function updateDisplay() {
+        if ((increment > 0 && current >= to) || (increment < 0 && current <= to)) {
+            totalElement.innerText = `Total: ${to} kr`;
+        } else {
+            current += increment;
+            totalElement.innerText = `Total: ${Math.round(current)} kr`;
+            requestAnimationFrame(updateDisplay);
         }
-    }, stepTime);
+    }
+    updateDisplay();
 }
 
 // Formulärvalideringsfunktion
@@ -59,7 +67,6 @@ function validateForm() {
     const selectedProducts = document.querySelectorAll('.product-card.selected');
     const validationMessage = document.getElementById('validation-message');
 
-    // Kontrollera att alla fält är ifyllda och minst en produkt är vald
     if (name === "" || phone === "" || address === "" || selectedProducts.length === 0) {
         validationMessage.style.display = "block";
         validationMessage.style.color = "red";
@@ -67,8 +74,7 @@ function validateForm() {
     } else {
         validationMessage.style.display = "none";
         alert("Beställning skickad!");
-
-        // Skicka data eller gör något annat när valideringen är godkänd
+        // Exempel på vad som händer efter en lyckad validering
         // Exempel: window.location.href = 'bekräftelsesida.html';
     }
 }
