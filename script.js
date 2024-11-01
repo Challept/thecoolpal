@@ -37,7 +37,7 @@ function toggleProductSelection(productCard, price) {
 
 function updateTotalPrice(from, to) {
     clearTimeout(debounceTimeout);
-    debounceTimeout = setTimeout(() => animateTotalPrice(from, to), 200);
+    debounceTimeout = setTimeout(() => animateTotalPrice(from, to), 1000); // 1000 ms debounce
 }
 
 function animateTotalPrice(from, to) {
