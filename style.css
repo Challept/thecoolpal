@@ -7,6 +7,22 @@ body, html {
     color: #333;
 }
 
+/* Animationer */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
 /* Header */
 .header {
     background-color: #4A90E2;
@@ -17,7 +33,7 @@ body, html {
 }
 
 .header h1 {
-    font-size: 2em;
+    font-size: 2.5em;
     margin-bottom: 10px;
 }
 
@@ -34,11 +50,11 @@ body, html {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    animation: fadeIn 1.5s ease;
+    animation: slideUp 1s ease;
 }
 
 .about-us h2 {
-    font-size: 1.8em;
+    font-size: 2em;
     color: #4A90E2;
     margin-bottom: 10px;
 }
@@ -49,34 +65,43 @@ body, html {
     line-height: 1.6;
 }
 
-/* Steg-för-steg */
+/* Steg-för-steg sektion */
 .steps {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin: 30px 20px;
+    background: #f0f4f8;
+    padding: 40px 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1.5s ease;
+}
+
+.steps h2 {
+    text-align: center;
+    color: #4A90E2;
+    font-size: 1.8em;
+    margin-bottom: 20px;
 }
 
 .step {
-    background: #f7f9fc;
+    background: #ffffff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 45%;
-    max-width: 300px;
+    margin: 10px 0;
     text-align: center;
     transition: transform 0.3s ease;
+    animation: pulse 1.5s infinite ease-in-out;
 }
 
 .step h3 {
-    font-size: 1.3em;
+    font-size: 1.4em;
     color: #4A90E2;
     margin-bottom: 10px;
 }
 
 .step p {
-    font-size: 0.95em;
+    font-size: 1em;
     color: #555;
 }
 
@@ -85,7 +110,7 @@ body, html {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-/* Knappstil */
+/* Beställningsknapp */
 .button-container {
     text-align: center;
     margin: 30px 0;
@@ -101,6 +126,7 @@ body, html {
     text-decoration: none;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     transition: background-color 0.3s ease, transform 0.3s ease;
+    animation: fadeIn 1.5s ease;
 }
 
 .order-button:hover {
@@ -117,15 +143,24 @@ footer {
     font-size: 0.9em;
 }
 
+footer a {
+    color: #4CAF50;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #81C784;
+}
+
 /* Responsiv design för mobil */
 @media (max-width: 768px) {
     .steps {
-        flex-direction: column;
-        align-items: center;
+        padding: 20px;
     }
 
     .step {
-        width: 80%;
+        width: 100%;
     }
 }
 
@@ -152,18 +187,8 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: slideIn 0.5s ease forwards;
+    animation: slideUp 0.5s ease forwards;
     opacity: 0;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
 }
 
 .product-card:hover {
