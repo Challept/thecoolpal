@@ -29,8 +29,8 @@
                     <p id="validation-message" class="error-message" style="display: none;">Du måste fylla i alla fält och välja minst en produkt!</p>
 
                     <!-- Beställningsknapp -->
-                <button id="submit-button" type="button">Beställ</button>
-            </div>
+                    <button id="submit-button" type="button">Beställ</button>
+                </div>
             </div>
 
             <!-- Höger sida: Produkter och totalpris -->
@@ -45,6 +45,32 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript -->
     <script src="script.js"></script>
+    <script>
+        // Eventlistener för Beställ-knappen
+        document.getElementById("submit-button").addEventListener("click", function() {
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const selectedProducts = document.querySelectorAll('.product-card.selected');
+            const totalPrice = document.getElementById('total-price').innerText.replace(" kr", "");
+            const validationMessage = document.getElementById('validation-message');
+
+            // Kontrollera att alla fält är ifyllda och att minst en produkt är vald
+            if (name && phone && address && selectedProducts.length > 0) {
+                validationMessage.style.display = "none";
+
+                // Skapa meddelande att skickas till Swish
+                const message = `Beställa webplats - ${name}`;
+
+                // Omdirigera till val-sidan med pris och meddelande som parametrar
+                window.location.href = `val-sidan.html?totalPrice=${totalPrice}&message=${encodeURIComponent(message)}`;
+            } else {
+                validationMessage.style.display = "block";
+            }
+        });
+    </script>
 </body>
 </html>
