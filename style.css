@@ -30,16 +30,6 @@ body, html {
     text-align: center;
     width: 100%;
     animation: fadeIn 1.5s ease;
-    flex-shrink: 0;
-}
-
-.header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-.header p {
-    font-size: 1.2em;
 }
 
 /* Main layout container */
@@ -51,7 +41,6 @@ body, html {
     width: 100%;
     max-width: 1000px;
     padding: 20px;
-    overflow-y: auto;
 }
 
 .order-page {
@@ -67,12 +56,12 @@ body, html {
         flex-direction: row;
         align-items: flex-start;
     }
-    
+
     .order-form {
         width: 45%;
     }
 
-    .order-products {
+    .product-selection {
         width: 50%;
     }
 }
@@ -196,8 +185,6 @@ footer a:hover {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: left;
-    width: 100%;
-    max-width: 500px;
     animation: slideUp 0.5s ease forwards;
 }
 
@@ -251,7 +238,6 @@ footer a:hover {
     align-items: center;
     width: 100%;
     gap: 20px;
-    margin-top: 20px;
 }
 
 .product-card {
@@ -260,7 +246,6 @@ footer a:hover {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
     width: 100%;
-    max-width: 500px;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 2px solid transparent;
@@ -268,7 +253,6 @@ footer a:hover {
     flex-direction: column;
     align-items: center;
     animation: slideUp 0.5s ease forwards;
-    opacity: 0;
 }
 
 .product-card:hover {
@@ -295,10 +279,10 @@ footer a:hover {
 }
 
 /* Totalt pris */
-.total-price {
+#total-container {
     font-size: 1.5em;
     font-weight: bold;
     color: #4A90E2;
-    margin-top: 20px;
     text-align: center;
+    margin-top: 20px;
 }
