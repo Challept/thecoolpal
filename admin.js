@@ -31,7 +31,7 @@ loginForm.addEventListener('submit', function (event) {
             const user = data.find(user => 
                 user.name.toLowerCase() === name.toLowerCase() &&
                 user.email.toLowerCase() === email.toLowerCase() &&
-                normalizePhoneNumber(user.phone.trim()) === phone
+                [user.phone.trim(), `0${user.phone.trim()}`, `+46${user.phone.trim()}`, `46${user.phone.trim()}`].includes(phone)
             );
 
             if (user) {
