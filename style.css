@@ -216,23 +216,40 @@ footer a:hover {
 /* Confirmation Card */
 .confirmation-card {
     background-color: #b2c0d1;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     text-align: center;
     width: 100%;
     max-width: 500px;
     margin: 20px auto;
+    animation: fadeIn 1s ease;
 }
 
 .confirmation-card h2 {
     color: #4A90E2;
-    margin-bottom: 15px;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    animation: slideDown 0.8s ease;
 }
 
 .confirmation-card p {
     color: #333;
-    margin: 10px 0;
+    font-size: 1em;
+    margin: 15px 0;
+    line-height: 1.6;
+    animation: fadeIn 1.2s ease;
+}
+
+.payment-section, #qr-code-container {
+    margin-top: 25px;
+}
+
+.swish-info, .qr-info {
+    color: #4A90E2;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease;
 }
 
 #swish-button {
@@ -244,42 +261,44 @@ footer a:hover {
     border-radius: 25px;
     text-decoration: none;
     border: none;
-    margin-top: 15px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    animation: pulse 1.5s infinite alternate;
 }
 
 #swish-button:hover {
     background-color: #45a049;
+    transform: scale(1.05);
+}
+
+#total-price {
+    font-weight: bold;
+    color: #333;
 }
 
 #qr-code-container {
-    margin: 20px auto;
+    margin-top: 20px;
+    text-align: center;
 }
 
 #qr-code {
     max-width: 150px;
+    animation: fadeIn 2s ease;
 }
 
-.order-form input[type="text"], .order-form input[type="tel"], .order-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    font-size: 1em;
-    transition: border-color 0.3s ease;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.order-form input[type="text"]:focus, .order-form input[type="tel"]:focus, .order-form textarea:focus {
-    border-color: #4A90E2;
-    box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
-    outline: none;
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.order-form textarea {
-    resize: vertical;
-    min-height: 100px;
+@keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
 }
 
 
