@@ -213,6 +213,54 @@ footer a:hover {
     display: block;
 }
 
+/* Confirmation Card */
+.confirmation-card {
+    background-color: #b2c0d1;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.confirmation-card h2 {
+    color: #4A90E2;
+    margin-bottom: 15px;
+}
+
+.confirmation-card p {
+    color: #333;
+    margin: 10px 0;
+}
+
+#swish-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#swish-button:hover {
+    background-color: #45a049;
+}
+
+#qr-code-container {
+    margin: 20px auto;
+}
+
+#qr-code {
+    max-width: 150px;
+}
+
 .order-form input[type="text"], .order-form input[type="tel"], .order-form textarea {
     width: 100%;
     padding: 12px;
@@ -233,6 +281,7 @@ footer a:hover {
     resize: vertical;
     min-height: 100px;
 }
+
 
 /* Produktkort */
 .order-products {
