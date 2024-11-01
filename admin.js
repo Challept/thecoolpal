@@ -2,16 +2,18 @@
 const loginForm = document.getElementById('login-form');
 const errorMessage = document.getElementById('error-message');
 
-// Funktion för att normalisera telefonnummer
+// Funktion för att normalisera telefonnummer till 7-siffrigt format
 function normalizePhoneNumber(phone) {
-    // Ta bort alla mellanslag
-    phone = phone.replace(/\s+/g, '');
+    // Ta bort alla mellanslag och symboler
+    phone = phone.replace(/\D/g, '');
 
-    // Konvertera nummer som börjar med +46 eller 0 till format 46...
+    // Om numret börjar med +46, 46 eller 0, ta bort dem
     if (phone.startsWith('+46')) {
-        phone = '46' + phone.slice(3);
+        phone = phone.slice(3);
+    } else if (phone.startsWith('46')) {
+        phone = phone.slice(2);
     } else if (phone.startsWith('0')) {
-        phone = '46' + phone.slice(1);
+        phone = phone.slice(1);
     }
 
     return phone;
