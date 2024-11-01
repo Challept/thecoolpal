@@ -7,17 +7,30 @@
     <link rel="stylesheet" href="dashboard-style.css">
 </head>
 <body>
-    <div class="dashboard-container">
-        <h2>Välkommen till Dashboarden</h2>
-        <p>Du är nu inloggad och kan använda adminverktygen.</p>
+    <div id="popup-container" class="popup hidden">
+        <div class="popup-content">
+            <h2>Välkommen till Dashboarden</h2>
+            <p>Du är nu inloggad och kan använda adminverktygen.</p>
+            <button onclick="closePopup()">Stäng</button>
+        </div>
     </div>
 
     <script>
-        // Kontrollera om användaren är inloggad
         if (sessionStorage.getItem('loggedIn') !== 'true') {
-            // Omdirigera till inloggningssidan om inte inloggad
             window.location.href = 'admin.html';
         }
+
+        // Funktion för att visa popup
+        function showPopup() {
+            document.getElementById('popup-container').classList.remove('hidden');
+            window.location.hash = `#${new Date().getTime()}`; // Skapa unik hash
+        }
+
+        function closePopup() {
+            document.getElementById('popup-container').classList.add('hidden');
+        }
+
+        showPopup(); // Visa popup direkt när sidan laddas
     </script>
 </body>
 </html>
