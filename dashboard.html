@@ -4,32 +4,108 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="dashboard-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="sidebar">
         <ul class="menu">
-            <li class="menu-item">
-                <i class="fas fa-home"></i><span class="menu-text">Hem</span>
+            <li class="menu-item" onclick="openPopup('#hem')">
+                <i class="icon">🏠</i>
+                <span class="menu-text">Hem</span>
             </li>
-            <li class="menu-item">
-                <i class="fas fa-cogs"></i><span class="menu-text">Inställningar</span>
+            <li class="menu-item" onclick="openPopup('#inställningar')">
+                <i class="icon">⚙️</i>
+                <span class="menu-text">Inställningar</span>
             </li>
-            <li class="menu-item">
-                <i class="fas fa-chart-line"></i><span class="menu-text">Rapporter</span>
+            <li class="menu-item" onclick="openPopup('#statistik')">
+                <i class="icon">📊</i>
+                <span class="menu-text">Statistik</span>
             </li>
-            <li class="menu-item">
-                <i class="fas fa-users"></i><span class="menu-text">Användare</span>
+            <li class="menu-item" onclick="openPopup('#användare')">
+                <i class="icon">👥</i>
+                <span class="menu-text">Användare</span>
             </li>
-            <li class="menu-item">
-                <i class="fas fa-sign-out-alt"></i><span class="menu-text">Logga ut</span>
+            <li class="menu-item" onclick="openPopup('#rapporter')">
+                <i class="icon">📈</i>
+                <span class="menu-text">Rapporter</span>
+            </li>
+            <li class="menu-item" onclick="openPopup('#hjälp')">
+                <i class="icon">❓</i>
+                <span class="menu-text">Hjälp</span>
+            </li>
+            <li class="menu-item" onclick="logout()">
+                <i class="icon">🔓</i>
+                <span class="menu-text">Logga ut</span>
             </li>
         </ul>
     </div>
-    <div class="content">
+
+    <div class="main-content">
         <h1>Välkommen till Dashboard</h1>
         <p>Här kan du se och hantera din data.</p>
+
+        <!-- Popups -->
+        <div id="hem" class="popup-container">
+            <div class="popup-content">
+                <h2>Hem</h2>
+                <p>Välkommen till din översikt.</p>
+                <button onclick="closePopup('#hem')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="inställningar" class="popup-container">
+            <div class="popup-content">
+                <h2>Inställningar</h2>
+                <p>Här kan du ändra dina inställningar.</p>
+                <button onclick="closePopup('#inställningar')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="statistik" class="popup-container">
+            <div class="popup-content">
+                <h2>Statistik</h2>
+                <p>Visa din statistik här.</p>
+                <button onclick="closePopup('#statistik')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="användare" class="popup-container">
+            <div class="popup-content">
+                <h2>Användare</h2>
+                <p>Hantera användare och rättigheter.</p>
+                <button onclick="closePopup('#användare')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="rapporter" class="popup-container">
+            <div class="popup-content">
+                <h2>Rapporter</h2>
+                <p>Granska rapporter och analysdata.</p>
+                <button onclick="closePopup('#rapporter')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="hjälp" class="popup-container">
+            <div class="popup-content">
+                <h2>Hjälp</h2>
+                <p>Behöver du hjälp? Här är informationen du behöver.</p>
+                <button onclick="closePopup('#hjälp')">Stäng</button>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function openPopup(popupId) {
+            document.querySelector(popupId).style.display = 'flex';
+        }
+
+        function closePopup(popupId) {
+            document.querySelector(popupId).style.display = 'none';
+        }
+
+        function logout() {
+            window.location.href = 'https://thecoolpal.com';
+        }
+    </script>
 </body>
 </html>
