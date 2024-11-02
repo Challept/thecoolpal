@@ -143,8 +143,7 @@
                    },
                    body: JSON.stringify(orderData),
                    mode: 'no-cors' // Add this for temporary testing only
-                 });
-                
+                 })
                 .then(response => {
                     console.log('Svar från Google Apps Script mottaget:', response);
                     if (!response.ok) {
