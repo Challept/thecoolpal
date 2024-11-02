@@ -70,7 +70,7 @@ function handleSubmit() {
         .then(response => response.json())
         .then(data => {
             if (data.ok) {
-                window.location.href = 'https://DIN_WEBBADRESS/val-sidan.html';  // Ändra till din bekräftelsesida
+                window.location.href = 'https://thecoolpal.com/admin';  // Ändra till din bekräftelsesida
             } else {
                 alert("Kunde inte skicka meddelandet till Telegram. Försök igen.");
             }
