@@ -70,7 +70,7 @@ function handleSubmit() {
         };
 
         // Skicka data till Google Apps Script
-        fetch('https://script.google.com/macros/s/AKfycbyMJGtdE1FvLzYzFLE5RFFwyS-Ldfk0C_zEKRKolqU6-gdPDdSE_XsnNZ3shWdkrD-QiQ/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbyd_dPGShAo1BnT-FHwOsNcezxV-wbZvVb_IgBTtUctSAG7r3VOhadiewyDIE_o2HdJWg/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -83,7 +83,7 @@ function handleSubmit() {
                 // Skicka beställning till Telegram
                 const message = `Ny beställning:\n\nNamn: ${name}\nAdress: ${address}\nTelefon: ${phone}\nProdukter:\n- ${productsArray.join('\n- ')}\n\nTotalpris: ${totalPrice} kr`;
 
-                fetch(`https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage`, {
+                fetch('https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
