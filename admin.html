@@ -50,16 +50,47 @@
         <p class="login-text">Du loggar in till din administratörspanel för att hantera din hemsida.</p>
     </div>
 
-    <script src="admin.js"></script>
     <script>
         document.getElementById('login-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            document.getElementById('loading-icon').style.display = 'block';
-            setTimeout(() => {
-                // Simulera inloggning och vidarebefordran
-                sessionStorage.setItem('loggedIn', 'true');
-                window.location.href = 'dashboard.html';
-            }, 800);
+            const loadingIcon = document.getElementById('loading-icon');
+            const errorMessage = document.getElementById('error-message');
+            loadingIcon.style.display = 'block';
+            errorMessage.style.display = 'none';
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            fetch('https://script.google.com/macros/s/AKfycbzNeQrY2s4igGV-eY0EHE8hAV4B7nImhpETsNP8w0y-F2rjA45BmijnAkTmBYu60xXOhw/exec')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Data från Google Sheets:', data);
+
+                    const user = data.find(user => 
+                        user.name.toLowerCase() === name.toLowerCase() &&
+                        user.email.toLowerCase() === email.toLowerCase() &&
+                        user.phone.trim() === phone
+                    );
+
+                    if (user) {
+                        sessionStorage.setItem('loggedIn', 'true');
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        loadingIcon.style.display = 'none';
+                        errorMessage.style.display = 'block';
+                        errorMessage.innerText = 'Felaktiga uppgifter. Vänligen försök igen.';
+                        setTimeout(() => {
+                            window.location.href = 'https://thecoolpal.com';
+                        }, 2000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    loadingIcon.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    errorMessage.innerText = 'Ett tekniskt fel uppstod. Vänligen försök igen senare.';
+                });
         });
     </script>
 </body>
