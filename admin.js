@@ -19,18 +19,16 @@ loginForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Förhindra att formuläret skickas och sidan laddas om
 
     const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
     const phone = normalizePhoneNumber(document.getElementById('phone').value.trim());
 
     fetch('https://script.google.com/macros/s/AKfycbzNeQrY2s4igGV-eY0EHE8hAV4B7nImhpETsNP8w0y-F2rjA45BmijnAkTmBYu60xXOhw/exec')
         .then(response => response.json())
         .then(data => {
             console.log('Data från Google Sheets:', data);
-            console.log('Inputvärden:', { name, email, phone });
+            console.log('Inputvärden:', { name, phone });
 
             const user = data.find(user => 
                 user.name.toLowerCase() === name.toLowerCase() &&
-                user.email.toLowerCase() === email.toLowerCase() &&
                 normalizePhoneNumber(String(user.phone).trim()) === phone
             );
 
