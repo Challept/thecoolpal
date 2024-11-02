@@ -133,6 +133,51 @@
                 });
         });
 
+        // Logga in med Google
+        document.getElementById("google-login-button").addEventListener("click", () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log("Inloggad med Google som:", result.user.email);
+                    document.getElementById("user-info").style.display = "block";
+                    document.getElementById("user-email").innerText = result.user.email;
+                    document.getElementById("logout-button").style.display = "block";
+                    document.getElementById("login-form").style.display = "none";
+                })
+                .catch((error) => {
+                    console.error("Fel vid Google-inloggning:", error);
+                });
+        });
+
+        // Logga in med Apple
+        document.getElementById("apple-login-button").addEventListener("click", () => {
+            const provider = new firebase.auth.OAuthProvider('apple.com');
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log("Inloggad med Apple som:", result.user.email);
+                    document.getElementById("user-info").style.display = "block";
+                    document.getElementById("user-email").innerText = result.user.email;
+                    document.getElementById("logout-button").style.display = "block";
+                    document.getElementById("login-form").style.display = "none";
+                })
+                .catch((error) => {
+                    console.error("Fel vid Apple-inloggning:", error);
+                });
+        });
+
+        document.getElementById("logout-button").addEventListener("click", () => {
+            auth.signOut()
+                .then(() => {
+                    console.log("Utloggad.");
+                    document.getElementById("user-info").style.display = "none";
+                    document.getElementById("logout-button").style.display = "none";
+                    document.getElementById("login-form").style.display = "block";
+                })
+                .catch((error) => {
+                    console.error("Fel vid utloggning:", error);
+                });
+        });
+
         // Hämta och rendera produktdata från availableproducts.json
         window.onload = function() {
             console.log('Laddar produktdata...');
