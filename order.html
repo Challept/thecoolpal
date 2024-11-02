@@ -49,6 +49,9 @@
     <!-- JavaScript -->
     <script src="script.js"></script>
     <script>
+        // Kontrollera om omdirigering ska vara på
+        let redirectEnabled = false; // Ändra till true om du vill aktivera omdirigering
+
         // Eventlistener för Beställ-knappen
         document.getElementById("submit-button").addEventListener("click", function() {
             const name = document.getElementById('name').value.trim();
@@ -65,10 +68,15 @@
                 // Skapa meddelande att skickas till Swish
                 const message = `Beställa webplats - ${name}`;
 
-                // Omdirigera till val-sidan med pris och meddelande som parametrar
-                window.location.href = `val-sidan.html?totalPrice=${totalPrice}&message=${encodeURIComponent(message)}`;
+                if (redirectEnabled) {
+                    console.log('Omdirigering är påslagen. Omdirigerar...');
+                    window.location.href = `val-sidan.html?totalPrice=${totalPrice}&message=${encodeURIComponent(message)}`;
+                } else {
+                    console.log('Omdirigering är avstängd. Stannar på sidan för testning.');
+                }
             } else {
                 validationMessage.style.display = "block";
+                console.warn("Validering misslyckades. Kontrollera att alla fält är ifyllda och minst en produkt är vald.");
             }
         });
     </script>
