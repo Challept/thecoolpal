@@ -53,7 +53,7 @@ function toggleProductSelection(productCard, price) {
 
 // Skicka beställning till Google Apps Script och Telegram
 function handleSubmit() {
-    console.log('Skickar beställning...');
+    console.log('Försöker skicka beställning...');
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
@@ -63,10 +63,10 @@ function handleSubmit() {
     const selectedProducts = document.querySelectorAll('.product-card.selected');
 
     console.log('Formulärvärden:', { name, email, phone, address, domainName, additionalInfo });
-    console.log('Valda produkter:', selectedProducts.length);
+    console.log('Antal valda produkter:', selectedProducts.length);
 
     if (name && email && address && phone && domainName && selectedProducts.length > 0) {
-        console.log('Alla fält är ifyllda. Skapar produktlista...');
+        console.log('Validering lyckades. Skapar produktlista...');
         const productsArray = [];
         selectedProducts.forEach(function(productCard) {
             const productTitle = productCard.querySelector('h4').innerText;
@@ -84,7 +84,7 @@ function handleSubmit() {
             totalPrice: `${totalPrice} kr`
         };
 
-        console.log('Skickar data till Google Apps Script:', orderData);
+        console.log('Försöker skicka data till Google Apps Script:', orderData);
         // Skicka data till Google Apps Script
         fetch('https://script.google.com/macros/s/AKfycbyd_dPGShAo1BnT-FHwOsNcezxV-wbZvVb_IgBTtUctSAG7r3VOhadiewyDIE_o2HdJWg/exec', {
             method: 'POST',
