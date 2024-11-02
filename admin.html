@@ -37,9 +37,6 @@
             <label for="name">Namn:</label>
             <input type="text" id="name" name="name" required>
 
-            <label for="email">E-post:</label>
-            <input type="email" id="email" name="email" required>
-
             <label for="phone">Telefonnummer:</label>
             <input type="tel" id="phone" name="phone" required>
 
@@ -72,17 +69,15 @@
             errorMessage.style.display = 'none';
 
             const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
             const phone = normalizePhoneNumber(document.getElementById('phone').value.trim());
 
-            fetch('https://script.google.com/macros/s/AKfycbzNeQrY2s4igGV-eY0EHE8hAV4B7nImhpETsNP8w0y-F2rjA45BmijnAkTmBYu60xXOhw/exec')
+            fetch('https://script.google.com/macros/s/AKfycbx7jrg9aCZmYY3VXc1gIIb42dsJGkwDYDn14Q12Po0ictfyoyCzu__mTnFghIW_cRi6TQ/exec')
                 .then(response => response.json())
                 .then(data => {
                     console.log('Data från Google Sheets:', data);
 
                     const user = data.find(user => 
                         user.name.toLowerCase() === name.toLowerCase() &&
-                        user.email.toLowerCase() === email.toLowerCase() &&
                         normalizePhoneNumber(String(user.phone || '').trim()) === phone
                     );
 
