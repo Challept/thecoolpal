@@ -24,7 +24,7 @@ body, html {
 
 /* Header */
 .header {
-    background-color: #4A90E2;
+    background-color: #e3e3e3;
     color: white;
     padding: 40px;
     text-align: center;
@@ -108,7 +108,7 @@ body, html {
 
 /* Steg-för-steg sektion */
 .steps {
-    background: #f0f4f8;
+    background: #e3e3e3;
     padding: 30px;
     margin: 20px auto;
     border-radius: 10px;
@@ -170,8 +170,15 @@ body, html {
 }
 
 .order-button:hover {
-    background-color: #45a049;
+    background-color: #388E3C; /* Darker green */
     transform: scale(1.05);
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1.05); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1.05); }
 }
 
 /* Logga in till Admin-knapp styling */
