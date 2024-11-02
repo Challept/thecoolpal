@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
@@ -52,6 +52,9 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         #auth-container button:hover {
             background-color: #1b5ecb;
@@ -80,7 +83,7 @@
         <input type="password" id="auth-password" placeholder="Lösenord">
         <button id="auth-button">Logga in</button>
         <button id="google-login-button">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" alt="Google logo">
+            <img src="https://image.similarpng.com/very-thumbnail/2020/06/Logo-google-icon-PNG.png" alt="Google logo">
             Logga in med Google
         </button>
         <p id="auth-error" class="error-message" style="display: none;">Fel vid autentisering.</p>
