@@ -25,14 +25,20 @@
         // Kontrollera inloggning vid sidladdning
         window.onload = function() {
             if (!sessionStorage.getItem('loggedIn')) {
-                showAlertMessage('Du har blivit utloggad. Logga in igen.');
-                setTimeout(() => {
-                    window.location.href = 'https://thecoolpal.com';
-                }, 5000);
+                sessionStorage.setItem('showLogoutAlert', 'true');
+                window.location.href = 'https://thecoolpal.com';
             } else {
                 showAlertMessage('Du blev automatiskt inloggad!');
             }
         };
+
+        // Visa alert om man blev utloggad
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('showLogoutAlert') === 'true') {
+                showAlertMessage('Du har blivit utloggad. Logga in igen.');
+                sessionStorage.removeItem('showLogoutAlert');
+            }
+        });
 
         function showAlertMessage(message) {
             const alertBox = document.createElement('div');
@@ -57,6 +63,7 @@
 
         function logout() {
             sessionStorage.removeItem('loggedIn');
+            sessionStorage.setItem('showLogoutAlert', 'true');
             window.location.href = 'https://thecoolpal.com';
         }
     </script>
