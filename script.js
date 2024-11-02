@@ -40,7 +40,7 @@ function toggleProductSelection(productCard, price) {
     document.getElementById('total-price').innerText = totalPrice;
 }
 
-// Skicka beställning till Google Apps Script
+// Skicka beställning till Google Apps Script och Telegram
 function handleSubmit() {
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
@@ -62,10 +62,14 @@ function handleSubmit() {
             name: name,
             email: email,
             phone: phone,
+            address: address,
             domainName: domainName,
-            products: productsArray.join(', ')
+            additionalInfo: additionalInfo,
+            products: productsArray.join(', '),
+            totalPrice: `${totalPrice} kr`
         };
 
+        // Skicka data till Google Apps Script
         fetch('https://script.google.com/macros/s/AKfycbyMJGtdE1FvLzYzFLE5RFFwyS-Ldfk0C_zEKRKolqU6-gdPDdSE_XsnNZ3shWdkrD-QiQ/exec', {
             method: 'POST',
             headers: {
@@ -75,15 +79,39 @@ function handleSubmit() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.status === 'success') {
-                window.location.href = 'confirmation.html'; // Ändra till din bekräftelsesida
+            if (data.result === 'success') {
+                // Skicka beställning till Telegram
+                const message = `Ny beställning:\n\nNamn: ${name}\nAdress: ${address}\nTelefon: ${phone}\nProdukter:\n- ${productsArray.join('\n- ')}\n\nTotalpris: ${totalPrice} kr`;
+
+                fetch(`https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: '-1002482900933',
+                        text: message
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        window.location.href = 'confirmation.html'; // Ändra till din bekräftelsesida
+                    } else {
+                        alert("Kunde inte skicka meddelandet till Telegram. Försök igen.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Ett tekniskt fel uppstod vid Telegram-integrationen. Försök igen.");
+                });
             } else {
-                alert("Kunde inte spara data. Försök igen.");
+                alert("Kunde inte spara data till Google Sheets. Försök igen.");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("Ett tekniskt fel uppstod. Försök igen.");
+            alert("Ett tekniskt fel uppstod vid Google Sheets-integrationen. Försök igen.");
         });
     } else {
         alert("Vänligen fyll i alla fält och välj minst en produkt.");
