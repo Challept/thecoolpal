@@ -5,10 +5,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Välkommen</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #333, #222);
+            color: #f0f0f0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1.5s;
+        }
+        .header h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+            animation: slideIn 1s;
+        }
+        .header p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1.5s;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 50px 0;
+            animation: zoomIn 1.2s;
+        }
+        .order-button, .admin-login-button {
+            background-color: #ff9800;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.4s, transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .order-button:hover, .admin-login-button:hover {
+            background-color: #e68900;
+            transform: translateY(-5px);
+        }
+        .about-us, .steps {
+            padding: 50px 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #1f1f1f;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 1.5s;
+        }
+        .about-us h2, .steps h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ff9800;
+        }
+        .steps .step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            animation: slideIn 1.2s;
+        }
+        .steps .step h3 {
+            font-size: 24px;
+            color: #ff9800;
+            flex-shrink: 0;
+        }
+        .steps .step p {
+            flex-grow: 1;
+            font-size: 16px;
+        }
+        .step img {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #f0f0f0;
+        }
+        footer p {
+            margin: 0;
+        }
+        footer a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+            .steps .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            .step img {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
-        <h1>Välkommen till WebbForma </h1>
+        <h1>Välkommen till WebbForma</h1>
         <p>WebbForma erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
 
@@ -25,25 +162,29 @@
     <section class="steps">
         <h2>Så Här Fungerar Det</h2>
         <div class="step">
+            <img src="https://via.placeholder.com/80" alt="Steg 1">
             <h3>1. Utforska Produkterna</h3>
             <p>Bläddra bland våra produkter och välj det som passar dina behov bäst.</p>
         </div>
         <div class="step">
+            <img src="https://via.placeholder.com/80" alt="Steg 2">
             <h3>2. Fyll i Dina Uppgifter</h3>
             <p>Fyll i din kontaktinformation så att vi kan bearbeta din beställning.</p>
         </div>
         <div class="step">
+            <img src="https://via.placeholder.com/80" alt="Steg 3">
             <h3>3. Välj Produkter</h3>
             <p>Välj de produkter du vill ha och se till att allt ser rätt ut.</p>
         </div>
         <div class="step">
+            <img src="https://via.placeholder.com/80" alt="Steg 4">
             <h3>4. Skicka Din Beställning</h3>
             <p>Klicka på beställningsknappen för att slutföra din beställning.</p>
         </div>
     </section>
 
     <footer>
-        <p>Kontakta oss på <a href="mailto:support@exempel.com">vildewretling@gmail.com</a> om du har några frågor.</p>
+        <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
     </footer>
 </body>
 </html>
