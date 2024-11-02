@@ -174,8 +174,8 @@ body, html {
     transform: scale(1.05);
 }
 
-/* Logga in-knapp styling */
-.login-button {
+/* Logga in till Admin-knapp styling */
+.admin-login-button {
     background-color: #FF0000; /* Röd färg */
     color: white;
     padding: 15px 30px;
@@ -189,7 +189,7 @@ body, html {
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.login-button:hover {
+.admin-login-button:hover {
     background-color: #CC0000; /* Mörkare röd vid hover */
     transform: scale(1.05);
 }
