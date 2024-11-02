@@ -62,6 +62,9 @@ function handleSubmit() {
     const additionalInfo = document.getElementById('additional-info').value;
     const selectedProducts = document.querySelectorAll('.product-card.selected');
 
+    console.log('Formulärvärden:', { name, email, phone, address, domainName, additionalInfo });
+    console.log('Valda produkter:', selectedProducts.length);
+
     if (name && email && address && phone && domainName && selectedProducts.length > 0) {
         console.log('Alla fält är ifyllda. Skapar produktlista...');
         const productsArray = [];
@@ -92,16 +95,16 @@ function handleSubmit() {
         })
         .then(response => {
             console.log('Svar från Google Apps Script mottaget:', response);
+            if (!response.ok) {
+                throw new Error(`HTTP-fel! Status: ${response.status}`);
+            }
             return response.json();
         })
         .then(data => {
+            console.log('Svar JSON från Google Apps Script:', data);
             if (data.result === 'success') {
                 console.log('Data har sparats framgångsrikt i Google Sheets.');
                 alert("Data har skickats till Google Sheets!");
-                setTimeout(() => {
-                    console.log('Omdirigerar till val-sidan...');
-                    window.location.href = `val-sidan.html?totalPrice=${totalPrice}&message=${encodeURIComponent(`Beställa webplats - ${name}`)}`;
-                }, 15000); // Vänta 15 sekunder innan omdirigering
             } else {
                 console.error('Kunde inte spara data till Google Sheets:', data);
                 alert("Kunde inte spara data till Google Sheets. Försök igen.");
@@ -109,7 +112,7 @@ function handleSubmit() {
         })
         .catch(error => {
             console.error('Error vid Google Sheets-integrationen:', error);
-            alert("Ett tekniskt fel uppstod vid Google Sheets-integrationen. Försök igen.");
+            alert("Ett tekniskt fel uppstod vid Google Sheets-integrationen. Kontrollera konsolen för mer information.");
         });
     } else {
         console.warn("Validering misslyckades. Alla fält måste vara ifyllda och minst en produkt vald.");
