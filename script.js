@@ -1,8 +1,13 @@
 // Hämta och rendera produktdata från availableproducts.json
 window.onload = function() {
+    console.log('Laddar produktdata...');
     fetch('availableproducts.json')
-        .then(response => response.json())
+        .then(response => {
+            console.log('Svar mottaget från availableproducts.json:', response);
+            return response.json();
+        })
         .then(products => {
+            console.log('Produkter laddade:', products);
             const productList = document.getElementById('product-list');
             products.forEach(product => {
                 const productCard = document.createElement('div');
@@ -17,11 +22,14 @@ window.onload = function() {
                 productList.appendChild(productCard);
             });
         })
-        .catch(error => console.error('Error loading products:', error));
+        .catch(error => {
+            console.error('Error loading products:', error);
+        });
 
     // Se till att knappen är tillgänglig innan addEventListener
     const submitButton = document.getElementById("submit-button");
     if (submitButton) {
+        console.log("Submit-knappen hittad och lyssnare läggs till.");
         submitButton.addEventListener("click", handleSubmit);
     } else {
         console.error("Kunde inte hitta submit-button");
@@ -34,14 +42,18 @@ function toggleProductSelection(productCard, price) {
     productCard.classList.toggle('selected');
     if (productCard.classList.contains('selected')) {
         totalPrice += price;
+        console.log(`Produkt vald: ${productCard.querySelector('h4').innerText}, pris: ${price} kr`);
     } else {
         totalPrice -= price;
+        console.log(`Produkt avmarkerad: ${productCard.querySelector('h4').innerText}, pris: ${price} kr`);
     }
     document.getElementById('total-price').innerText = totalPrice;
+    console.log('Uppdaterat totalpris:', totalPrice);
 }
 
 // Skicka beställning till Google Apps Script och Telegram
 function handleSubmit() {
+    console.log('Skickar beställning...');
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
@@ -51,6 +63,7 @@ function handleSubmit() {
     const selectedProducts = document.querySelectorAll('.product-card.selected');
 
     if (name && email && address && phone && domainName && selectedProducts.length > 0) {
+        console.log('Alla fält är ifyllda. Skapar produktlista...');
         const productsArray = [];
         selectedProducts.forEach(function(productCard) {
             const productTitle = productCard.querySelector('h4').innerText;
@@ -68,6 +81,7 @@ function handleSubmit() {
             totalPrice: `${totalPrice} kr`
         };
 
+        console.log('Skickar data till Google Apps Script:', orderData);
         // Skicka data till Google Apps Script
         fetch('https://script.google.com/macros/s/AKfycbyd_dPGShAo1BnT-FHwOsNcezxV-wbZvVb_IgBTtUctSAG7r3VOhadiewyDIE_o2HdJWg/exec', {
             method: 'POST',
@@ -76,20 +90,29 @@ function handleSubmit() {
             },
             body: JSON.stringify(orderData)
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Svar från Google Apps Script mottaget:', response);
+            return response.json();
+        })
         .then(data => {
             if (data.result === 'success') {
+                console.log('Data har sparats framgångsrikt i Google Sheets.');
                 alert("Data har skickats till Google Sheets!");
-                window.location.href = 'confirmation.html'; // Ändra till din bekräftelsesida
+                setTimeout(() => {
+                    console.log('Omdirigerar till val-sidan...');
+                    window.location.href = `val-sidan.html?totalPrice=${totalPrice}&message=${encodeURIComponent(`Beställa webplats - ${name}`)}`;
+                }, 15000); // Vänta 15 sekunder innan omdirigering
             } else {
+                console.error('Kunde inte spara data till Google Sheets:', data);
                 alert("Kunde inte spara data till Google Sheets. Försök igen.");
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error vid Google Sheets-integrationen:', error);
             alert("Ett tekniskt fel uppstod vid Google Sheets-integrationen. Försök igen.");
         });
     } else {
+        console.warn("Validering misslyckades. Alla fält måste vara ifyllda och minst en produkt vald.");
         alert("Vänligen fyll i alla fält och välj minst en produkt.");
     }
 }
