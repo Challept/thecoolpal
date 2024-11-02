@@ -62,8 +62,7 @@ function handleSubmit() {
             name: name,
             email: email,
             phone: phone,
-            address: address,
-            domainName: domainName,
+            domain: domainName,
             additionalInfo: additionalInfo,
             products: productsArray.join(', '),
             totalPrice: `${totalPrice} kr`
@@ -80,31 +79,8 @@ function handleSubmit() {
         .then(response => response.json())
         .then(data => {
             if (data.result === 'success') {
-                // Skicka beställning till Telegram
-                const message = `Ny beställning:\n\nNamn: ${name}\nAdress: ${address}\nTelefon: ${phone}\nProdukter:\n- ${productsArray.join('\n- ')}\n\nTotalpris: ${totalPrice} kr`;
-
-                fetch('https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        chat_id: '-1002482900933',
-                        text: message
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        window.location.href = 'confirmation.html'; // Ändra till din bekräftelsesida
-                    } else {
-                        alert("Kunde inte skicka meddelandet till Telegram. Försök igen.");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("Ett tekniskt fel uppstod vid Telegram-integrationen. Försök igen.");
-                });
+                alert("Data har skickats till Google Sheets!");
+                window.location.href = 'confirmation.html'; // Ändra till din bekräftelsesida
             } else {
                 alert("Kunde inte spara data till Google Sheets. Försök igen.");
             }
