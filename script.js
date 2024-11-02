@@ -40,14 +40,17 @@ function toggleProductSelection(productCard, price) {
     document.getElementById('total-price').innerText = totalPrice;
 }
 
-// Skicka beställning till Telegram
+// Skicka beställning till Google Apps Script
 function handleSubmit() {
     const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
+    const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const domainName = document.getElementById('domain').value;
+    const additionalInfo = document.getElementById('additional-info').value;
     const selectedProducts = document.querySelectorAll('.product-card.selected');
 
-    if (name && address && phone && selectedProducts.length > 0) {
+    if (name && email && address && phone && domainName && selectedProducts.length > 0) {
         const productsArray = [];
         selectedProducts.forEach(function(productCard) {
             const productTitle = productCard.querySelector('h4').innerText;
@@ -55,24 +58,27 @@ function handleSubmit() {
             productsArray.push(`${productTitle} - ${price} kr`);
         });
 
-        const message = `Ny beställning:\n\nNamn: ${name}\nAdress: ${address}\nTelefon: ${phone}\nProdukter:\n- ${productsArray.join('\n- ')}\n\nTotalpris: ${totalPrice} kr`;
+        const orderData = {
+            name: name,
+            email: email,
+            phone: phone,
+            domainName: domainName,
+            products: productsArray.join(', ')
+        };
 
-        fetch(`https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage`, {
+        fetch('https://script.google.com/macros/s/AKfycbyMJGtdE1FvLzYzFLE5RFFwyS-Ldfk0C_zEKRKolqU6-gdPDdSE_XsnNZ3shWdkrD-QiQ/exec', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                chat_id: '-1002482900933',
-                text: message
-            })
+            body: JSON.stringify(orderData)
         })
         .then(response => response.json())
         .then(data => {
-            if (data.ok) {
-                window.location.href = 'https://thecoolpal.com/admin';  // Ändra till din bekräftelsesida
+            if (data.status === 'success') {
+                window.location.href = 'confirmation.html'; // Ändra till din bekräftelsesida
             } else {
-                alert("Kunde inte skicka meddelandet till Telegram. Försök igen.");
+                alert("Kunde inte spara data. Försök igen.");
             }
         })
         .catch(error => {
