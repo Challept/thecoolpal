@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betalning</title>
+    <link rel="stylesheet" href="checkout.css">
+    <script src="https://js.stripe.com/v3/"></script>
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const totalPrice = urlParams.get('total');
+            if (totalPrice) {
+                document.getElementById('total-price').innerText = `${totalPrice} kr`;
+            }
+        });
+    </script>
+</head>
+<body>
+    <form id="payment-form">
+        <h2>Total: <span id="total-price">0</span></h2>
+        <div id="payment-element"></div>
+        <button id="submit">Betala nu</button>
+        <div id="payment-message" class="hidden"></div>
+    </form>
+    <script src="/static/checkout.js" defer></script>
+</body>
+</html>
