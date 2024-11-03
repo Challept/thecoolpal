@@ -25,107 +25,18 @@
                     <label for="additional-info">Ytterligare information (t.ex. önskat domännamn, stil och färg):</label>
                     <textarea id="additional-info" name="additional-info" rows="4" placeholder="Skriv dina önskemål här..."></textarea>
 
-                    <!-- Meddelande om validering -->
-                    <p id="validation-message" class="error-message" style="display: none;">Du måste fylla i alla fält och välja minst en produkt!</p>
+                    <!-- Stripe Buy Button -->
+                    <script async
+                        src="https://js.stripe.com/v3/buy-button.js">
+                    </script>
 
-                    <!-- Beställningsknapp -->
-                    <button id="submit-button" type="button">Beställ</button>
-                </div>
-            </div>
-
-            <!-- Höger sida: Produkter och totalpris -->
-            <div class="products-container">
-                <div class="order-products" id="product-list">
-                    <!-- Produktkorten kommer att läggas till här via JavaScript -->
-                </div>
-                <!-- Totalpris -->
-                <div id="total-container">
-                    <h3>Total: <span id="total-price">0</span> kr</h3>
+                    <stripe-buy-button
+                        buy-button-id="buy_btn_1QHBXdLnfTyXNYdEiDwPBwtK"
+                        publishable-key="pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu">
+                    </stripe-buy-button>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- JavaScript -->
-    <script>
-        // Hämta och rendera produktdata från availableproducts.json
-        window.onload = function() {
-            console.log('Laddar produktdata...');
-            fetch('availableproducts.json')
-                .then(response => {
-                    console.log('Svar mottaget från availableproducts.json:', response);
-                    if (!response.ok) {
-                        throw new Error(`HTTP-fel vid produktdata: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(products => {
-                    console.log('Produkter laddade:', products);
-                    const productList = document.getElementById('product-list');
-                    products.forEach(product => {
-                        const productCard = document.createElement('div');
-                        productCard.classList.add('product-card');
-                        productCard.setAttribute('data-price', product.price);
-                        productCard.innerHTML = `
-                            <h4>${product.title}</h4>
-                            <p>${product.price} kr</p>
-                            <p>${product.description}</p>
-                        `;
-                        productCard.onclick = () => toggleProductSelection(productCard, parseInt(product.price));
-                        productList.appendChild(productCard);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error loading products:', error);
-                    alert('Kunde inte ladda produktdata. Kontrollera konsolen för mer information.');
-                });
-
-            // Se till att knappen är tillgänglig innan addEventListener
-            const submitButton = document.getElementById("submit-button");
-            if (submitButton) {
-                console.log("Submit-knappen hittad och lyssnare läggs till.");
-                submitButton.addEventListener("click", handleSubmit);
-            } else {
-                console.error("Kunde inte hitta submit-button");
-            }
-        };
-
-        let totalPrice = 0;
-
-        function toggleProductSelection(productCard, price) {
-            productCard.classList.toggle('selected');
-            if (productCard.classList.contains('selected')) {
-                totalPrice += price;
-                console.log(`Produkt vald: ${productCard.querySelector('h4').innerText}, pris: ${price} kr`);
-            } else {
-                totalPrice -= price;
-                console.log(`Produkt avmarkerad: ${productCard.querySelector('h4').innerText}, pris: ${price} kr`);
-            }
-            document.getElementById('total-price').innerText = totalPrice;
-            console.log('Uppdaterat totalpris:', totalPrice);
-        }
-
-        function handleSubmit() {
-            console.log('Försöker skicka beställning...');
-            const name = document.getElementById('name').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const selectedProducts = document.querySelectorAll('.product-card.selected');
-
-            if (name && phone && address && selectedProducts.length > 0) {
-                const productsArray = [];
-                selectedProducts.forEach(function(productCard) {
-                    const productTitle = productCard.querySelector('h4').innerText;
-                    const price = parseInt(productCard.getAttribute('data-price'));
-                    productsArray.push(`${productTitle} - ${price} kr`);
-                });
-
-                // Omdirigera till checkout-sidan med totalpriset som URL-parameter
-                window.location.href = `checkout.html?total=${totalPrice}`;
-            } else {
-                alert("Vänligen fyll i alla fält och välj minst en produkt.");
-            }
-        }
-    </script>
 </body>
 </html>
