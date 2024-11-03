@@ -110,11 +110,7 @@
             const name = document.getElementById('name').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const address = document.getElementById('address').value.trim();
-            const additionalInfo = document.getElementById('additional-info').value.trim();
             const selectedProducts = document.querySelectorAll('.product-card.selected');
-
-            console.log('Formulärdata:', { name, phone, address, additionalInfo });
-            console.log('Antal valda produkter:', selectedProducts.length);
 
             if (name && phone && address && selectedProducts.length > 0) {
                 const productsArray = [];
@@ -124,31 +120,8 @@
                     productsArray.push(`${productTitle} - ${price} kr`);
                 });
 
-                // Skicka beställning till Telegram
-                const message = `Ny beställning:\n\nNamn: ${name}\nAdress: ${address}\nTelefon: ${phone}\nProdukter:\n- ${productsArray.join('\n- ')}\n\nTotalpris: ${totalPrice} kr`;
-
-                fetch('https://api.telegram.org/bot7871846421:AAHjgfl2Tvq_vvntDua6zpa6FBAKYEl2VIQ/sendMessage', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        chat_id: '-1002482900933',
-                        text: message
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        window.location.href = 'confirmation.html'; // Ändra till din bekräftelsesida
-                    } else {
-                        alert("Kunde inte skicka meddelandet till Telegram. Försök igen.");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("Ett tekniskt fel uppstod vid Telegram-integrationen. Försök igen.");
-                });
+                // Omdirigera till checkout-sidan med totalpriset som URL-parameter
+                window.location.href = `checkout.html?total=${totalPrice}`;
             } else {
                 alert("Vänligen fyll i alla fält och välj minst en produkt.");
             }
