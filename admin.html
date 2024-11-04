@@ -101,6 +101,7 @@
         // Add event listeners
         window.onload = () => {
             const authButton = document.getElementById("auth-button");
+            const googleLoginButton = document.getElementById("google-login-button");
             let isLoginMode = true;
 
             if (authButton) {
@@ -122,6 +123,20 @@
                     }
                 });
             }
+
+            if (googleLoginButton) {
+                googleLoginButton.addEventListener("click", () => {
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    auth.signInWithPopup(provider)
+                        .then(() => {
+                            console.log("Logged in with Google.");
+                            window.location.href = "dashboard.html";
+                        })
+                        .catch((error) => {
+                            console.error("Google login error:", error);
+                        });
+                });
+            }
         };
     </script>
 </head>
@@ -131,6 +146,10 @@
         <input type="email" id="auth-email" placeholder="Email">
         <input type="password" id="auth-password" placeholder="Lösenord">
         <button id="auth-button">Logga in</button>
+        <button id="google-login-button">
+            <img src="https://image.similarpng.com/very-thumbnail/2020/06/Logo-google-icon-PNG.png" alt="Google logo">
+            Logga in med Google
+        </button>
         <p id="auth-error" class="error-message" style="display: none;">Fel vid autentisering.</p>
         <p id="toggle-auth-mode">Har du inget konto? Gör en beställning för att göra ett konto! <a href="login.html" class="toggle-link">Gör en beställning här</a></p>
     </div>
