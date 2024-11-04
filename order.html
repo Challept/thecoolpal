@@ -6,10 +6,10 @@
     <link rel="icon" href="file.png" type="image/png">
     <title>Välkommen</title>
     <link rel="stylesheet" href="style.css">
-    <style>
+<style>
         body {
-            background-color: #696969; /* Mörk bakgrund */
-            color: #000000; /* Svart text */
+            background-color: #333; /* Djupare mörk bakgrund för en modern look */
+            color: #f0f0f0; /* Ljusare text för bättre kontrast */
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
@@ -21,19 +21,21 @@
             width: 100%;
             max-width: 1200px;
             margin: 20px auto;
-            padding: 20px;
-            background-color: #1e1e1e;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            overflow: hidden; /* Förhindra överflöd */
+            padding: 30px;
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
         }
 
         h2.main-title {
             text-align: center;
             color: #76c7c0;
             margin-bottom: 20px;
-            font-size: 32px;
+            font-size: 36px;
+            font-weight: bold;
             animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 10px #76c7c0;
         }
 
         @keyframes glow {
@@ -44,60 +46,65 @@
         .order-page {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 100%; /* Säkerställ att sidan tar upp hela bredden */
+            gap: 25px;
+            width: 100%;
         }
 
         .form-container {
-            padding: 20px;
-            background-color: #e8e8e8; /* Modern mörkare färg */
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            padding: 25px;
+            background-color: #252525; /* Modernare, mörkare färg */
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
             flex: 1;
-            min-width: 0; /* Förhindra att innehållet skärs av */
-            overflow: hidden; /* Förhindra överflöd */
+            min-width: 0;
+            overflow: hidden;
         }
 
         .order-form label {
-            font-weight: 600;
+            font-weight: 700;
             margin-top: 10px;
             display: block;
             color: #ffffff;
+            font-size: 16px;
         }
 
         .order-form input, .order-form textarea {
             width: 100%;
             padding: 12px;
             margin-top: 5px;
-            background-color: #444;
-            border: 1px solid #555;
-            border-radius: 4px;
+            background-color: #3b3b3b;
+            border: 1px solid #666;
+            border-radius: 6px;
             color: #e0e0e0;
+            font-size: 15px;
+            transition: border-color 0.3s, background-color 0.3s;
         }
 
         .order-form input:focus, .order-form textarea:focus {
             border-color: #76c7c0;
-            background-color: #555;
+            background-color: #484848;
         }
 
         .info-text {
             font-size: 14px;
-            color: #dcdcdc;
+            color: #bcbcbc;
+            margin-top: 5px;
         }
 
         .payment-container {
             text-align: center;
-            background-color: #2b2b2b;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            background-color: #252525;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
         }
 
         .payment-container img {
             margin-top: 20px;
-            max-width: 200px;
+            max-width: 220px;
             width: 100%;
             height: auto;
+            border-radius: 10px;
         }
 
         /* Layout för större skärmar */
@@ -107,7 +114,7 @@
             }
 
             .form-container, .payment-container {
-                width: 48%; /* Se till att kolumnerna har tillräckligt med plats */
+                width: 48%;
             }
         }
 
