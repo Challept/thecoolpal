@@ -25,6 +25,7 @@
             background-color: #1e1e1e;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            overflow: hidden; /* Förhindra överflöd */
         }
 
         h2.main-title {
@@ -44,6 +45,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            width: 100%; /* Säkerställ att sidan tar upp hela bredden */
         }
 
         .form-container, .payment-container {
@@ -52,6 +54,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             flex: 1;
+            min-width: 0; /* Förhindra att innehållet skärs av */
+            overflow: hidden; /* Förhindra överflöd */
         }
 
         .order-form label {
@@ -99,8 +103,14 @@
             }
 
             .form-container, .payment-container {
-                width: 48%;
+                width: 48%; /* Se till att kolumnerna har tillräckligt med plats */
             }
+        }
+
+        /* Gör att text och innehåll anpassar sig */
+        .payment-container p, .order-form p {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
     </style>
 </head>
