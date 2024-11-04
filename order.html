@@ -43,8 +43,8 @@
             background-color: #f9f9f9;
             border-radius: 8px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            width: 200%; /* Gör formen dubbelt så bred */
-}
+            width: 100%; /* Tar upp hela bredden av containern */
+        }
 
         .order-form label {
             font-weight: 600;
@@ -91,7 +91,7 @@
             }
 
             .form-container, .payment-container {
-                width: 48%;
+                width: 100%; /* Form-container och payment-container tar upp hela bredden */
             }
 
             .payment-container {
@@ -126,24 +126,25 @@
                 </div>
             </div>
 
-<!-- Höger sida: Stripe betalning -->
-<div class="payment-container">
-    <h2>Betalning</h2>
-    <p>Betala säkert med Stripe. Din information är skyddad.</p>
-    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-    <stripe-buy-button
-        buy-button-id="buy_btn_1QHPGyLnfTyXNYdEIRj8tzEM"
-        publishable-key="pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu">
-    </stripe-buy-button>
-    <div style="text-align: center; margin-top: 20px;">
-        <img src="stripeqrkod.png" alt="QR-kod för Stripe-betalning" style="max-width: 200px; width: 100%; height: auto;">
-    </div>
-    <div style="text-align: center; margin-top: 15px;">
-        <p>1. Skanna QR-koden för att starta betalningen.</p>
-        <p>2. Genomför betalningen säkert med Stripe.</p>
-        <p>3. När betalningen är klar kommer du att omdirigeras till din dashboard där du kan ändra och anpassa din sida.</p>
-    </div>
-</div>
+            <!-- Höger sida: Stripe betalning -->
+            <div class="payment-container">
+                <h2>Betalning</h2>
+                <p>Betala säkert med Stripe. Din information är skyddad.</p>
+                <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+                <stripe-buy-button
+                    buy-button-id="buy_btn_1QHPGyLnfTyXNYdEIRj8tzEM"
+                    publishable-key="pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu">
+                </stripe-buy-button>
+                <div style="text-align: center; margin-top: 20px;">
+                    <img src="stripeqrkod.png" alt="QR-kod för Stripe-betalning" style="max-width: 200px; width: 100%; height: auto;">
+                </div>
+                <div style="text-align: center; margin-top: 15px;">
+                    <p>1. Skanna QR-koden för att starta betalningen.</p>
+                    <p>2. Genomför betalningen säkert med Stripe.</p>
+                    <p>3. När betalningen är klar kommer du att omdirigeras till din dashboard där du kan ändra och anpassa din sida.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
