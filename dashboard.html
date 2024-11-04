@@ -21,15 +21,17 @@
             display: none;
         }
     </style>
-    <script>
+<script>
         // Kontrollera inloggning vid sidladdning
         window.onload = function() {
-            if (!sessionStorage.getItem('loggedIn')) {
-                sessionStorage.setItem('showLogoutAlert', 'true');
-                window.location.href = 'https://webstay.se/admin.html';
-            } else {
-                showAlertMessage('Du blev automatiskt inloggad!');
-            }
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    console.log("Användare inloggad:", user.email);
+                } else {
+                    sessionStorage.setItem('showLogoutAlert', 'true');
+                    window.location.href = 'admin.html';
+                }
+            });
         };
 
         // Visa alert om man blev utloggad
@@ -39,8 +41,8 @@
                 sessionStorage.removeItem('showLogoutAlert');
             }
         });
-
-        function showAlertMessage(message) {
+    
+    function showAlertMessage(message) {
             const alertBox = document.createElement('div');
             alertBox.classList.add('alert-message');
             alertBox.innerText = message;
@@ -53,18 +55,14 @@
             }, 5000);
         }
 
-        function openPopup(popupId) {
-            document.querySelector(popupId).style.display = 'flex';
-        }
-
-        function closePopup(popupId) {
-            document.querySelector(popupId).style.display = 'none';
-        }
-
         function logout() {
-            sessionStorage.removeItem('loggedIn');
-            sessionStorage.setItem('showLogoutAlert', 'true');
-            window.location.href = 'https://webstay.se/admin.html';
+            firebase.auth().signOut().then(() => {
+                sessionStorage.removeItem('loggedIn');
+                sessionStorage.setItem('showLogoutAlert', 'true');
+                window.location.href = 'admin.html';
+            }).catch((error) => {
+                console.error("Logout error:", error);
+            });
         }
     </script>
 </head>
