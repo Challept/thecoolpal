@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         body {
-            background-color: #121212; /* Mörk bakgrund */
+            background-color: #696969; /* Mörk bakgrund */
             color: #ffffff; /* Vit text */
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -48,9 +48,9 @@
             width: 100%; /* Säkerställ att sidan tar upp hela bredden */
         }
 
-        .form-container, .payment-container {
+        .form-container {
             padding: 20px;
-            background-color: #2b2b2b;
+            background-color: #3a3f44; /* Modern mörkare färg */
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             flex: 1;
@@ -69,15 +69,15 @@
             width: 100%;
             padding: 12px;
             margin-top: 5px;
-            background-color: #333;
-            border: 1px solid #444;
+            background-color: #444;
+            border: 1px solid #555;
             border-radius: 4px;
             color: #e0e0e0;
         }
 
         .order-form input:focus, .order-form textarea:focus {
             border-color: #76c7c0;
-            background-color: #444;
+            background-color: #555;
         }
 
         .info-text {
@@ -87,6 +87,10 @@
 
         .payment-container {
             text-align: center;
+            background-color: #2b2b2b;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
 
         .payment-container img {
@@ -138,24 +142,26 @@
                 </div>
             </div>
 
-            <!-- Höger sida: Stripe betalning -->
-            <div class="payment-container">
-                <h2>Betalning</h2>
-                <p>Betala säkert med Stripe. Din information är skyddad.</p>
-                <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                <stripe-buy-button
-                    buy-button-id="buy_btn_1QHPGyLnfTyXNYdEIRj8tzEM"
-                    publishable-key="pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu">
-                </stripe-buy-button>
-                <div>
-                    <img src="stripeqrkod.png" alt="QR-kod för Stripe-betalning">
-                </div>
-                <div style="margin-top: 15px; color: #dcdcdc;">
-                    <p>1. Skanna QR-koden för att starta betalningen.</p>
-                    <p>2. Genomför betalningen säkert med Stripe.</p>
-                    <p>3. När betalningen är klar kommer du att omdirigeras till din dashboard där du kan ändra och anpassa din sida.</p>
-                </div>
-            </div>
+<!-- Höger sida: Stripe betalning -->
+<div class="payment-container">
+    <h2>Betalning</h2>
+    <p>Betala säkert med Stripe. Din information är skyddad.</p>
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    <stripe-buy-button
+        buy-button-id="buy_btn_1QHPGyLnfTyXNYdEIRj8tzEM"
+        publishable-key="pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu"
+        success-url="https://webstay.se/dashboard.html"
+        cancel-url="https://webstay.se/cancel.html">
+    </stripe-buy-button>
+    <div>
+        <img src="stripeqrkod.png" alt="QR-kod för Stripe-betalning">
+    </div>
+    <div style="margin-top: 15px; color: #dcdcdc;">
+        <p>1. Skanna QR-koden för att starta betalningen.</p>
+        <p>2. Genomför betalningen säkert med Stripe.</p>
+        <p>3. När betalningen är klar kommer du att omdirigeras till din dashboard där du kan ändra och anpassa din sida.</p>
+    </div>
+</div>
         </div>
     </div>
 </body>
