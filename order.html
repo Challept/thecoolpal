@@ -7,123 +7,140 @@
     <title>Välkommen</title>
     <link rel="stylesheet" href="style.css">
 <style>
-        body {
-            background-color: #333; /* Djupare mörk bakgrund för en modern look */
-            color: #f0f0f0; /* Ljusare text för bättre kontrast */
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+    body {
+        background-color: #2b2b2b; /* Mörkare, elegant bakgrund */
+        color: #f0f0f0; /* Ljusare text för bättre kontrast */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 30px;
-            background-color: #1a1a1a;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 30px;
+        background-color: #1a1a1a;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 1s ease-out;
+        overflow: hidden;
+    }
 
-        h2.main-title {
-            text-align: center;
-            color: #76c7c0;
-            margin-bottom: 20px;
-            font-size: 36px;
-            font-weight: bold;
-            animation: glow 2s ease-in-out infinite alternate;
-            text-shadow: 0 0 10px #76c7c0;
-        }
+    h2.main-title {
+        text-align: center;
+        color: #76c7c0;
+        margin-bottom: 20px;
+        font-size: 36px;
+        font-weight: bold;
+        animation: glow 2s ease-in-out infinite alternate;
+        text-shadow: 0 0 15px #76c7c0;
+    }
 
-        @keyframes glow {
-            0% { text-shadow: 0 0 5px #76c7c0; }
-            100% { text-shadow: 0 0 20px #76c7c0; }
-        }
+    @keyframes glow {
+        0% { text-shadow: 0 0 10px #76c7c0; }
+        100% { text-shadow: 0 0 25px #76c7c0; }
+    }
 
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .order-page {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        width: 100%;
+    }
+
+    .form-container {
+        padding: 25px;
+        background: linear-gradient(135deg, #2d2d2d, #353535); /* Snygg gradient för ett modernare utseende */
+        border-radius: 15px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        animation: slideIn 1s ease-out;
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+
+    .order-form label {
+        font-weight: 700;
+        margin-top: 10px;
+        display: block;
+        color: #ffffff;
+        font-size: 16px;
+        animation: fadeIn 1.2s ease-out;
+    }
+
+    .order-form input, .order-form textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 8px;
+        background-color: #3c3c3c;
+        border: 1px solid #555;
+        border-radius: 6px;
+        color: #e0e0e0;
+        font-size: 15px;
+        transition: border-color 0.3s, background-color 0.3s;
+        animation: fadeIn 1.5s ease-out;
+    }
+
+    .order-form input:focus, .order-form textarea:focus {
+        border-color: #76c7c0;
+        background-color: #484848;
+        box-shadow: 0 0 8px rgba(118, 199, 192, 0.5);
+    }
+
+    .info-text {
+        font-size: 14px;
+        color: #bcbcbc;
+        margin-top: 5px;
+        animation: fadeIn 1.8s ease-out;
+    }
+
+    .payment-container {
+        text-align: center;
+        background: linear-gradient(135deg, #2d2d2d, #353535);
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        animation: slideIn 1s ease-out;
+    }
+
+    .payment-container img {
+        margin-top: 20px;
+        max-width: 220px;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    /* Layout för större skärmar */
+    @media (min-width: 768px) {
         .order-page {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            width: 100%;
+            flex-direction: row;
         }
 
-        .form-container {
-            padding: 25px;
-            background-color: #252525; /* Modernare, mörkare färg */
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-            flex: 1;
-            min-width: 0;
-            overflow: hidden;
+        .form-container, .payment-container {
+            width: 48%;
         }
+    }
 
-        .order-form label {
-            font-weight: 700;
-            margin-top: 10px;
-            display: block;
-            color: #ffffff;
-            font-size: 16px;
-        }
-
-        .order-form input, .order-form textarea {
-            width: 100%;
-            padding: 12px;
-            margin-top: 5px;
-            background-color: #3b3b3b;
-            border: 1px solid #666;
-            border-radius: 6px;
-            color: #e0e0e0;
-            font-size: 15px;
-            transition: border-color 0.3s, background-color 0.3s;
-        }
-
-        .order-form input:focus, .order-form textarea:focus {
-            border-color: #76c7c0;
-            background-color: #484848;
-        }
-
-        .info-text {
-            font-size: 14px;
-            color: #bcbcbc;
-            margin-top: 5px;
-        }
-
-        .payment-container {
-            text-align: center;
-            background-color: #252525;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
-        }
-
-        .payment-container img {
-            margin-top: 20px;
-            max-width: 220px;
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-
-        /* Layout för större skärmar */
-        @media (min-width: 768px) {
-            .order-page {
-                flex-direction: row;
-            }
-
-            .form-container, .payment-container {
-                width: 48%;
-            }
-        }
-
-        /* Gör att text och innehåll anpassar sig */
-        .payment-container p, .order-form p {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-    </style>
+    /* Gör att text och innehåll anpassar sig */
+    .payment-container p, .order-form p {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+</style>
 </head>
 <body>
     <div class="container">
