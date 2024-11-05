@@ -178,26 +178,55 @@
                     <label for="domain">Hemsida namn:</label>
                     <input type="text" id="domain" name="domain" required>
                     <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
+
+                    <button id="pay-button">Betala med Stripe</button>
                 </div>
             </div>
             <div class="payment-container">
                 <h2>Betalning</h2>
                 <p>Betala säkert med Stripe. Din information är skyddad.</p>
-                <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-                <stripe-buy-button
-                    buy-button-id="buy_btn_1QHPGyLnfTyXNYdEIRj8tzEM"
-                    publishable-key="pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu"
-                ></stripe-buy-button>
-                <div>
-                    <img src="stripeqrkod.png" alt="QR-kod för Stripe-betalning">
-                </div>
-                <div style="margin-top: 15px; color: #dcdcdc;">
-                    <p>1. Skanna QR-koden för att starta betalningen.</p>
-                    <p>2. Genomför betalningen säkert med Stripe.</p>
-                    <p>3. När betalningen är klar kommer du att omdirigeras till din dashboard där du kan ändra och anpassa din sida.</p>
-                </div>
             </div>
         </div>
     </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu');
+        
+        document.getElementById('pay-button').addEventListener('click', async () => {
+            const modelSelection = document.getElementById('model-selection').value;
+            const domainName = document.getElementById('domain').value;
+            const userName = document.getElementById('name').value;
+
+            if (!modelSelection || !domainName || !userName) {
+                alert('Vänligen fyll i alla fält innan du fortsätter.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: modelSelection,
+                        domain: domainName,
+                        userName: userName
+                    }),
+                });
+
+                const session = await response.json();
+                if (session.url) {
+                    window.location.href = session.url;
+                } else {
+                    alert('Något gick fel. Vänligen försök igen.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Ett fel inträffade vid skapandet av betalningen.');
+            }
+        });
+    </script>
 </body>
 </html>
