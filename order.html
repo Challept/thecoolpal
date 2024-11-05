@@ -125,14 +125,24 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
         }
 
-        .section-title {
-            margin-top: 40px;
-            margin-bottom: 20px;
-            font-size: 32px;
-            color: #f5f5f7;
-            text-align: left;
-            border-bottom: 2px solid #58a6ff;
-            padding-bottom: 10px;
+        .pay-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #5ac8fa;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pay-button:hover {
+            background-color: #007aff;
+            box-shadow: 0 12px 20px rgba(90, 200, 250, 0.4);
+            transform: translateY(-2px);
         }
 
         @media (min-width: 768px) {
@@ -178,55 +188,19 @@
                     <label for="domain">Hemsida namn:</label>
                     <input type="text" id="domain" name="domain" required>
                     <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
-
-                    <button id="pay-button">Betala med Stripe</button>
                 </div>
             </div>
             <div class="payment-container">
                 <h2>Betalning</h2>
                 <p>Betala säkert med Stripe. Din information är skyddad.</p>
+                <a href="https://buy.stripe.com/dR62a3c4T4Bidk43ce" class="pay-button">Betala med Stripe</a>
+                <div style="margin-top: 15px; color: #dcdcdc;">
+                    <p>1. Klicka på knappen för att starta betalningen.</p>
+                    <p>2. Genomför betalningen säkert med Stripe.</p>
+                    <p>3. När betalningen är klar kommer du att omdirigeras till din dashboard där du kan ändra och anpassa din sida.</p>
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        const stripe = Stripe('pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu');
-        
-        document.getElementById('pay-button').addEventListener('click', async () => {
-            const modelSelection = document.getElementById('model-selection').value;
-            const domainName = document.getElementById('domain').value;
-            const userName = document.getElementById('name').value;
-
-            if (!modelSelection || !domainName || !userName) {
-                alert('Vänligen fyll i alla fält innan du fortsätter.');
-                return;
-            }
-
-            try {
-                const response = await fetch('/create-checkout-session', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: modelSelection,
-                        domain: domainName,
-                        userName: userName
-                    }),
-                });
-
-                const session = await response.json();
-                if (session.url) {
-                    window.location.href = session.url;
-                } else {
-                    alert('Något gick fel. Vänligen försök igen.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Ett fel inträffade vid skapandet av betalningen.');
-            }
-        });
-    </script>
 </body>
 </html>
