@@ -1,14 +1,27 @@
-/* Allmänna inställningar */
+/* Allmänna inställningar för dashboard.html */
 body, html {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background: linear-gradient(135deg, #74ebd5, #9face6); /* Snygg gradientbakgrund */
     color: #333;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    min-height: 100vh;
     overflow-x: hidden;
+}
+
+/* Huvudlayout för dashboard */
+.main-content {
+    background-color: rgba(255, 255, 255, 0.9); /* Transparent vit bakgrund */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 /* Popup-styling */
@@ -31,7 +44,7 @@ body, html {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 90%;
-    max-width: 600px;
+    max-width: 500px;
     text-align: center;
     animation: fadeIn 0.5s ease;
 }
@@ -42,71 +55,51 @@ body, html {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Sidebar-styling */
+/* Sidebar-styling för dashboard */
 .sidebar {
-    width: 60px;
+    width: 100%;
     background-color: #f0f0f0;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transition: width 0.3s ease;
+    padding: 10px;
+    border-radius: 10px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 100;
-}
-
-.sidebar:hover {
-    width: 200px;
+    flex-direction: row;
+    justify-content: space-around;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .menu {
-    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
     padding: 0;
     margin: 0;
-    width: 100%;
 }
 
 .menu-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.menu-item:hover {
-    background-color: #e0e0e0;
-}
-
 .menu-item i {
     font-size: 24px;
-    margin-right: 10px;
+    margin-bottom: 5px;
+    color: #4A90E2;
 }
 
 .menu-text {
-    display: none;
-    font-size: 16px;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
-
-.sidebar:hover .menu-text {
-    display: inline;
-    opacity: 1;
+    font-size: 14px;
 }
 
 /* Container-styling för översikt */
 .overview-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
     margin: 20px 0;
-    width: 100%;
-    max-width: 600px;
 }
 
 .overview-box {
@@ -115,7 +108,6 @@ body, html {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    width: 100%;
 }
 
 .overview-box h3 {
@@ -131,9 +123,12 @@ body, html {
 
 /* Förhandsgranskning och redigeringsdelar */
 #live-preview-container, #editor {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
     width: 100%;
-    max-width: 600px;
-    margin: 20px 0;
 }
 
 #editor input, #editor textarea {
@@ -142,6 +137,7 @@ body, html {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    box-sizing: border-box;
 }
 
 #editor button {
@@ -153,45 +149,38 @@ body, html {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+    transition: background-color 0.3s;
 }
 
 #editor button:hover {
     background-color: #45a049;
 }
 
-/* Anpassning för desktop-vy */
-@media (min-width: 768px) {
-    body {
-        flex-direction: row;
+/* Anpassning för mobil- och desktop-vy */
+@media (max-width: 768px) {
+    .sidebar {
+        flex-direction: column;
+        align-items: center;
     }
 
-    .main-content {
-        display: flex;
+    .menu {
         flex-direction: row;
-        gap: 40px;
-        width: 80%;
-        max-width: 1200px;
-        padding: 40px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .overview-container {
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;
     }
 }
 
-/* Mobil-anpassning */
-@media (max-width: 767px) {
+@media (min-width: 768px) {
     .sidebar {
-        display: none; /* Dölj sidomenyn på mobil */
+        flex-direction: row;
     }
 
-    .main-content {
-        width: 100%;
-        padding: 10px;
-    }
-
-    .popup-content {
-        width: 95%;
+    .menu {
+        flex-direction: row;
+        justify-content: space-around;
     }
 }
