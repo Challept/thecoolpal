@@ -102,9 +102,11 @@ body, html {
 /* Container-styling för översikt */
 .overview-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 20px;
     margin: 20px 0;
+    width: 100%;
+    max-width: 600px;
 }
 
 .overview-box {
@@ -113,7 +115,7 @@ body, html {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
-    flex: 1;
+    width: 100%;
 }
 
 .overview-box h3 {
@@ -127,11 +129,40 @@ body, html {
     color: #333;
 }
 
+/* Förhandsgranskning och redigeringsdelar */
+#live-preview-container, #editor {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px 0;
+}
+
+#editor input, #editor textarea {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#editor button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#editor button:hover {
+    background-color: #45a049;
+}
+
 /* Anpassning för desktop-vy */
 @media (min-width: 768px) {
     body {
         flex-direction: row;
-        justify-content: space-between;
     }
 
     .main-content {
@@ -143,34 +174,21 @@ body, html {
         padding: 40px;
     }
 
-    .dashboard-sidebar {
-        width: 25%;
-        background-color: #f0f0f0;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .dashboard-main {
-        flex-grow: 1;
-        background-color: #f7f9fc;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    .overview-container {
+        flex-direction: row;
+        justify-content: space-between;
     }
 }
 
 /* Mobil-anpassning */
 @media (max-width: 767px) {
-    .dashboard-sidebar {
+    .sidebar {
         display: none; /* Dölj sidomenyn på mobil */
     }
 
-    .dashboard-main {
+    .main-content {
         width: 100%;
         padding: 10px;
-        border-radius: 0;
-        box-shadow: none;
     }
 
     .popup-content {
