@@ -5,8 +5,8 @@ body, html {
     padding: 0;
     background: #f0f4f8;
     color: #333;
-    display: flex;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 /* Sidebar */
@@ -23,10 +23,12 @@ body, html {
     padding-top: 20px;
     transition: width 0.3s ease;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    overflow-y: auto;
 }
 
 .sidebar:hover {
-    width: 220px;
+    width: 200px;
 }
 
 .menu {
@@ -68,6 +70,91 @@ body, html {
     display: inline-block;
 }
 
+/* Main content area */
+.main-content {
+    display: flex;
+    margin-left: 60px;
+    width: calc(100% - 60px);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Section Editor Panel (left column) */
+.editor-panel {
+    width: 250px;
+    background-color: #e3e7f1;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.section-list {
+    list-style: none;
+    padding: 0;
+}
+
+.section-item {
+    padding: 10px;
+    background-color: #ffffff;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.section-item:hover {
+    background-color: #cce4ff;
+}
+
+/* Live Preview (center column) */
+.live-preview {
+    flex-grow: 1;
+    padding: 10px;
+    background: #fff;
+    overflow-y: auto;
+    height: 100vh;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.live-preview iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Edit Panel (right column) */
+.edit-panel {
+    width: 250px;
+    background-color: #ffffff;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.edit-panel h3 {
+    color: #0072ff;
+}
+
+.edit-panel label, .edit-panel input, .edit-panel textarea {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.edit-panel input, .edit-panel textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.edit-panel input[type="color"] {
+    padding: 2px;
+    width: 100%;
+    height: 40px;
+}
+
 /* Popup styling */
 .popup {
     display: flex;
@@ -76,165 +163,34 @@ body, html {
     left: 60px;
     width: calc(100% - 60px);
     height: 100vh;
-    background-color: #ffffff;
+    background-color: rgba(249, 249, 249, 0.95);
     z-index: 1000;
     align-items: center;
-    justify-content: space-between;
-    padding: 20px;
+    justify-content: space-around;
 }
 
-/* Section Editor Panel (left) */
-.editor-panel {
-    width: 250px;
-    background-color: #f0f4f8;
-    padding: 20px;
-    border-right: 2px solid #ddd;
-    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    height: 90%;
+/* Scrollable content within sections */
+.editor-panel, .live-preview, .edit-panel {
+    scrollbar-width: thin;
+    scrollbar-color: #c0c0c0 #f0f0f0;
 }
 
-.editor-panel h3 {
-    color: #0072ff;
-    text-align: center;
+.editor-panel::-webkit-scrollbar, 
+.live-preview::-webkit-scrollbar, 
+.edit-panel::-webkit-scrollbar {
+    width: 8px;
 }
 
-.section-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
+.editor-panel::-webkit-scrollbar-track, 
+.live-preview::-webkit-scrollbar-track, 
+.edit-panel::-webkit-scrollbar-track {
+    background: #f0f0f0;
 }
 
-.section-item {
-    padding: 12px;
-    background-color: #ffffff;
-    margin: 8px 0;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-}
-
-.section-item:hover {
-    background-color: #e8f3ff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Add / Remove Section Buttons */
-.editor-panel button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.editor-panel button:hover {
-    background-color: #45a049;
-}
-
-/* Live Preview (center) */
-.live-preview {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #ffffff;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    height: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: auto;
-    transition: all 0.3s ease;
-}
-
-.live-preview iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Edit Panel (right) */
-.edit-panel {
-    width: 250px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-left: 2px solid #ddd;
-    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    height: 90%;
-}
-
-.edit-panel h3 {
-    color: #0072ff;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.edit-panel label {
-    display: block;
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 5px;
-}
-
-.edit-panel input, .edit-panel textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.edit-panel input:focus, .edit-panel textarea:focus {
-    border-color: #0072ff;
-    box-shadow: 0 0 8px rgba(0, 114, 255, 0.2);
-}
-
-.edit-panel input[type="color"] {
-    padding: 0;
-    width: 100%;
-    height: 40px;
-    border: none;
-}
-
-.edit-panel input[type="color"]:hover {
-    cursor: pointer;
-}
-
-/* Animations */
-@keyframes slideInLeft {
-    0% {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideInRight {
-    0% {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-.sidebar {
-    animation: slideInLeft 0.5s ease;
-}
-
-.popup-content, .editor-panel, .edit-panel {
-    animation: slideInRight 0.5s ease;
+.editor-panel::-webkit-scrollbar-thumb, 
+.live-preview::-webkit-scrollbar-thumb, 
+.edit-panel::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 10px;
+    border: 2px solid #f0f0f0;
 }
