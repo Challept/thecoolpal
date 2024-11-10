@@ -7,9 +7,10 @@
     <title>Välkommen</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* Bas-styling */
         body {
-            background-color: #121212; /* Mörk bakgrund */
-            color: #ffffff; /* Vit text */
+            background-color: #121212;
+            color: #ffffff;
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
@@ -17,21 +18,20 @@
             overflow-x: hidden;
         }
 
+        /* Header */
         .header {
             text-align: center;
             padding: 100px 20px;
-            background: linear-gradient(135deg, #1e1e1e, #2b2b2b); /* Mörkare gradient */
-            color: #76c7c0; /* Accentfärg för header */
+            background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
+            color: #76c7c0;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             animation: fadeIn 1.5s;
         }
-
         .header h1 {
             font-size: 60px;
             margin-bottom: 20px;
             animation: slideIn 1s;
         }
-
         .header p {
             font-size: 20px;
             max-width: 800px;
@@ -39,6 +39,7 @@
             animation: fadeInUp 1.5s;
         }
 
+        /* Button Styles */
         .button-container {
             display: flex;
             justify-content: center;
@@ -46,9 +47,8 @@
             margin: 60px 0;
             animation: zoomIn 1.2s;
         }
-
         .order-button, .admin-login-button {
-            background-color: #76c7c0; /* Accentfärg */
+            background-color: #76c7c0;
             color: #ffffff;
             border: none;
             padding: 15px 35px;
@@ -59,49 +59,46 @@
             transition: background-color 0.4s, transform 0.3s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-
         .order-button:hover, .admin-login-button:hover {
             background-color: #60a5a0;
             transform: translateY(-5px);
         }
 
-        .about-us, .steps, .services, .testimonials, .gallery, .contact {
+        /* Section Styles */
+        .about-us, .services, .testimonials, .gallery, .contact {
             padding: 60px 20px;
             max-width: 1200px;
             margin: 40px auto;
-            background-color: #1e1e1e; /* Mörkare sektioner */
+            background-color: #1e1e1e;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             animation: fadeIn 1.5s;
         }
-
-        .about-us h2, .steps h2, .services h2, .testimonials h2, .gallery h2, .contact h2 {
+        .about-us h2, .services h2, .testimonials h2, .gallery h2, .contact h2 {
             text-align: center;
             margin-bottom: 40px;
-            color: #76c7c0; /* Accentfärg */
+            color: #76c7c0;
         }
 
-        .steps .step, .services .service, .testimonials .testimonial {
+        /* Service, Testimonial and Gallery Styles */
+        .service, .testimonial {
             display: flex;
             align-items: center;
             gap: 30px;
             margin-bottom: 40px;
             animation: slideIn 1.2s;
         }
-
-        .steps .step h3, .services .service h3, .testimonials .testimonial h3 {
+        .service h3, .testimonial h3 {
             font-size: 26px;
-            color: #76c7c0; /* Accentfärg */
+            color: #76c7c0;
             flex-shrink: 0;
         }
-
-        .steps .step p, .services .service p, .testimonials .testimonial p {
+        .service p, .testimonial p {
             flex-grow: 1;
             font-size: 18px;
-            color: #dcdcdc; /* Ljusare text för kontrast */
+            color: #dcdcdc;
         }
-
-        .step img, .service img, .gallery img {
+        .service img, .testimonial img, .gallery img {
             width: 100px;
             height: 100px;
             border-radius: 10px;
@@ -109,7 +106,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: fadeInZoom 1.5s;
         }
-
         .gallery img {
             width: 48%;
             height: auto;
@@ -117,23 +113,21 @@
             margin-bottom: 15px;
             transition: transform 0.4s;
         }
-
         .gallery img:hover {
             transform: scale(1.05);
         }
-
         .gallery {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
         }
 
+        /* Contact Form Styles */
         .contact form {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
-
         .contact input, .contact textarea, .contact button {
             padding: 15px;
             border: 1px solid #444;
@@ -142,124 +136,95 @@
             font-size: 16px;
             color: #ffffff;
         }
-
         .contact button {
-            background-color: #76c7c0; /* Accentfärg */
+            background-color: #76c7c0;
             color: #ffffff;
             cursor: pointer;
             transition: background-color 0.4s;
         }
-
         .contact button:hover {
             background-color: #60a5a0;
         }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #76c7c0; /* Accentfärg */
-            color: #ffffff;
-            animation: fadeInUp 2s;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
-        footer a {
-            color: #ffffff;
-            text-decoration: underline;
-        }
-
-        footer a:hover {
-            color: #dcdcdc;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideIn {
-            from { transform: translateX(-50px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes zoomIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        @keyframes fadeInZoom {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 40px;
-            }
-            .steps .step, .services .service, .testimonials .testimonial {
-                flex-direction: column;
-                text-align: center;
-            }
-            .step img, .service img {
-                width: 80px;
-                height: 80px;
-                margin-bottom: 15px;
-            }
-            .gallery img {
-                width: 100%;
-            }
-            /* Ny stil för betalningsmetoder */
+        /* Payment Methods Section */
         .payment-container {
-            background: #fff;
-            color: #333;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-            width: 350px;
-            margin: 0 auto;
+            background: #1c1c1c;
+            color: #ffffff;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
+            width: 85%;
+            max-width: 600px;
+            margin: 2rem auto;
             text-align: center;
+            animation: fadeInUp 1s forwards;
         }
         .payment-container h1 {
-            font-size: 24px;
-            margin-bottom: 1rem;
-            color: #0072ff;
+            font-size: 28px;
+            color: #76c7c0;
+            margin-bottom: 1.5rem;
+        }
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
         }
         .payment-method {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            margin: 10px 0;
-            background: #f0f0f0;
-            border-radius: 5px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            justify-content: center;
+            flex-direction: column;
+            width: 150px;
+            padding: 1.5rem;
+            background: #2a2a2a;
+            border-radius: 10px;
+            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s, background-color 0.3s;
+            cursor: pointer;
+            color: #fff;
         }
         .payment-method:hover {
-            transform: scale(1.05);
+            transform: translateY(-5px);
+            background-color: #76c7c0;
+            color: #121212;
         }
         .method-name {
             font-size: 18px;
-            font-weight: 500;
+            font-weight: bold;
+            margin: 1rem 0 0.5rem;
         }
         .method-count {
-            font-size: 18px;
+            font-size: 26px;
             font-weight: bold;
-            color: #0072ff;
+            color: #76c7c0;
         }
-        .payment-methods {
-            opacity: 0;
-            animation: fadeInUp 1s forwards;
-            animation-delay: 0.5s;
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #76c7c0;
+            color: #ffffff;
+            animation: fadeInUp 2s;
         }
-        @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        footer p {
+            margin: 0;
         }
+        footer a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        footer a:hover {
+            color: #dcdcdc;
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateX(-50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes fadeInZoom { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -275,18 +240,18 @@
     
     <section class="about-us">
         <h2>Om Oss</h2>
-        <p>På WebStay brinner vi för att hjälpa företag och privatpersoner att skapa en stark och engagerande online-närvaro. Vi erbjuder skräddarsydda hemsidor och butiker anpassade efter dina unika behov och mål. Vårt team kombinerar kreativ design med teknisk expertis för att säkerställa att din webbplats inte bara ser bra ut utan också presterar på topp. Oavsett om du behöver en enkel informationssida eller en fullt utrustad webbutik, finns vi här för att förvandla dina idéer till verklighet. Välj WebbForma för en pålitlig partner som sätter ditt varumärke i fokus.</p>
+        <p>På WebStay brinner vi för att hjälpa företag och privatpersoner att skapa en stark och engagerande online-närvaro. Vi erbjuder skräddarsydda hemsidor och butiker anpassade efter dina unika behov och mål. Vårt team kombinerar kreativ design med teknisk expertis för att säkerställa att din webbplats inte bara ser bra ut utan också presterar på topp. Välj WebStay för en pålitlig partner som sätter ditt varumärke i fokus.</p>
     </section>
 
     <section class="services">
         <h2>Våra Tjänster</h2>
         <div class="service">
-            <img src="https://cdn-icons-png.freepik.com/512/9750/9750201.png?ga=GA1.1.1319881061.1730591114" alt="Webbutveckling">
+            <img src="https://cdn-icons-png.freepik.com/512/9750/9750201.png" alt="Webbutveckling">
             <h3>Webbutveckling</h3>
             <p>Vi skapar responsiva och användarvänliga webbplatser som är optimerade för både datorer och mobila enheter.</p>
         </div>
         <div class="service">
-            <img src="https://cdn-icons-png.freepik.com/512/13769/13769087.png?ga=GA1.1.1319881061.1730591114" alt="E-handel">
+            <img src="https://cdn-icons-png.freepik.com/512/13769/13769087.png" alt="E-handel">
             <h3>E-handel</h3>
             <p>Bygg en hel butik med våran hemsida på bara några minuter.</p>
         </div>
@@ -300,18 +265,17 @@
     <section class="testimonials">
         <h2>Vad Våra Kunder Säger</h2>
         <div class="testimonial">
-            <img src="https://img.freepik.com/free-photo/fair-haired-woman-looking-with-pleased-calm-expression_176420-15145.jpg?t=st=1730591261~exp=1730594861~hmac=7c9728a24cc43dcca30dc7c432a3fe8112681edc6db012750ce7bc7e8443b2e6&w=100" alt="Kund">
+            <img src="https://img.freepik.com/free-photo/fair-haired-woman-looking-with-pleased-calm-expression_176420-15145.jpg" alt="Kund">
             <h3>Anna Svensson</h3>
             <p>"WebStay skapade en fantastisk webbplats åt oss. Vi har fått fler kunder tack vare deras tjänster!"</p>
         </div>
         <div class="testimonial">
-            <img src="https://img.freepik.com/free-photo/portrait-handsome-bearded-man-suit_23-2149705920.jpg?t=st=1730591121~exp=1730594721~hmac=4631d644dfa9c71ca2bf48e8e56eff813aa080d9c67932489f428d097ed07239&w=100" alt="Kund">
+            <img src="https://img.freepik.com/free-photo/portrait-handsome-bearded-man-suit_23-2149705920.jpg" alt="Kund">
             <h3>Johan Lind</h3>
             <p>"Professionellt team som lyssnade på våra behov och levererade över förväntan."</p>
         </div>
     </section>
 
-        <!-- Nytt avsnitt för Betalningsmetoder -->
     <section class="payment-container">
         <h1>Betalningsmetoder</h1>
         <div class="payment-methods">
