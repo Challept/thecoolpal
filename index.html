@@ -267,6 +267,52 @@
                 flex-direction: column;
                 gap: 20px;
             }
+
+            /* Typing Game Section */
+        .typing-game {
+            background-color: #ffffff;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        .typing-game h2 {
+            font-size: 24px;
+            color: #0072ff;
+            margin-bottom: 20px;
+        }
+        .typing-sentence {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .typing-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #0072ff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .typing-stats {
+            font-size: 18px;
+            color: #555;
+            margin-top: 20px;
+        }
+        .start-button {
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .start-button:hover {
+            background-color: #005bb5;
         }
     </style>
 </head>
@@ -335,6 +381,51 @@
             <p>Gå live och nå dina kunder!</p>
         </div>
     </section>
+
+       <!-- Typing Game Section -->
+    <section class="typing-game">
+        <h2>Testa Din Skrifthastighet</h2>
+        <p class="typing-sentence" id="typing-sentence">Tryck på "Starta" för att börja och se hur snabbt du kan skriva!</p>
+        <input type="text" class="typing-input" id="typing-input" placeholder="Börja skriva här..." disabled>
+        <button class="start-button" onclick="startGame()">Starta</button>
+        <p class="typing-stats" id="typing-stats"></p>
+    </section>
+
+    <script>
+        const sentences = [
+            "WebStay erbjuder skräddarsydda hemsidor för att förbättra din online-närvaro.",
+            "Skapa en professionell hemsida med våra enkla verktyg.",
+            "Vi hjälper ditt företag att nå nya höjder online.",
+            "Håll kontakten med dina kunder genom en fantastisk webbplats."
+        ];
+
+        let startTime, sentence, typingInput, typingStats;
+
+        function startGame() {
+            sentence = sentences[Math.floor(Math.random() * sentences.length)];
+            document.getElementById("typing-sentence").textContent = sentence;
+            typingInput = document.getElementById("typing-input");
+            typingInput.value = "";
+            typingInput.disabled = false;
+            typingInput.focus();
+            startTime = new Date().getTime();
+            typingStats = document.getElementById("typing-stats");
+            typingStats.textContent = "Skriv meningen så snabbt du kan!";
+            typingInput.addEventListener("input", checkTyping);
+        }
+
+        function checkTyping() {
+            const typedText = typingInput.value;
+            if (typedText === sentence) {
+                const endTime = new Date().getTime();
+                const timeTaken = (endTime - startTime) / 1000;
+                const wordsPerMinute = Math.round((sentence.split(" ").length / timeTaken) * 60);
+                typingStats.textContent = `Bra jobbat! Din hastighet är ${wordsPerMinute} ord per minut.`;
+                typingInput.disabled = true;
+                typingInput.removeEventListener("input", checkTyping);
+            }
+        }
+    </script>
 
     <footer>
         <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
