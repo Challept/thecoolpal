@@ -6,43 +6,6 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="dashboard-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Styles for alert messages */
-        .alert-message {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #f44336;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 5px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: none;
-        }
-    </style>
-    <script>
-        // Function to open the selected popup and close any others
-        function openPopup(popupId) {
-            document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
-            document.querySelector(popupId).style.display = 'flex';
-        }
-
-        // Close a specific popup
-        function closePopup(popupId) {
-            document.querySelector(popupId).style.display = 'none';
-        }
-
-        // Profile popup functions
-        function openProfilePopup() {
-            document.getElementById('profile-popup').style.display = 'block';
-        }
-
-        function closeProfilePopup() {
-            document.getElementById('profile-popup').style.display = 'none';
-        }
-    </script>
 </head>
 <body>
     <!-- Sidebar -->
@@ -90,44 +53,42 @@
         <button onclick="closeProfilePopup()">Stäng</button>
     </div>
 
-    <!-- Popup Containers -->
-    <div id="home-popup" class="popup">
-        <div class="popup-content">
-            <h2>Hem</h2>
-            <p>Innehåll för hemsidan kommer här.</p>
-            <button onclick="closePopup('#home-popup')">Stäng</button>
-        </div>
-    </div>
-
+    <!-- Website Popup for editing -->
     <div id="website-popup" class="popup">
         <div class="popup-content">
-            <button class="close-btn" onclick="closePopup('#website-popup')">Stäng Förhandsgranskning</button>
-            <iframe src="https://kund5.webstay.se" width="100%" height="90%"></iframe>
+            <!-- Section Management Panel (left) -->
+            <div class="editor-panel">
+                <h3>Sidsektioner</h3>
+                <ul id="section-list" class="section-list">
+                    <li class="section-item" onclick="selectSection('header')">Header</li>
+                    <li class="section-item" onclick="selectSection('about')">Om Oss</li>
+                    <li class="section-item" onclick="selectSection('products')">Produkter</li>
+                    <li class="section-item" onclick="selectSection('contact')">Kontakt</li>
+                </ul>
+                <button onclick="addSection()">Lägg till Sektion</button>
+                <button onclick="deleteSection()">Ta bort Sektion</button>
+            </div>
+
+            <!-- Live Preview Area (middle) -->
+            <div class="live-preview">
+                <iframe id="live-preview" src="https://kund5.webstay.se" onload="initLiveEditor()" width="100%" height="90%"></iframe>
+            </div>
+
+            <!-- Edit Options (right) -->
+            <div id="edit-panel" class="edit-panel">
+                <h3>Redigera Sektion</h3>
+                <label for="section-heading">Rubrik:</label>
+                <input type="text" id="section-heading" placeholder="Redigera rubrik" oninput="updateSectionText('heading', this.value)">
+                
+                <label for="section-content">Innehåll:</label>
+                <textarea id="section-content" placeholder="Redigera innehåll" oninput="updateSectionText('content', this.value)"></textarea>
+                
+                <label for="section-color">Färg:</label>
+                <input type="color" id="section-color" onchange="updateSectionColor(this.value)">
+            </div>
         </div>
     </div>
 
-    <div id="settings-popup" class="popup">
-        <div class="popup-content">
-            <h2>Inställningar</h2>
-            <p>Inställningar för din hemsida.</p>
-            <button onclick="closePopup('#settings-popup')">Stäng</button>
-        </div>
-    </div>
-
-    <div id="statistics-popup" class="popup">
-        <div class="popup-content">
-            <h2>Statistik</h2>
-            <p>Statistikinformation för din hemsida.</p>
-            <button onclick="closePopup('#statistics-popup')">Stäng</button>
-        </div>
-    </div>
-
-    <div id="users-popup" class="popup">
-        <div class="popup-content">
-            <h2>Användare</h2>
-            <p>Hantera dina användare här.</p>
-            <button onclick="closePopup('#users-popup')">Stäng</button>
-        </div>
-    </div>
+    <script src="dashboard-script.js"></script>
 </body>
 </html>
