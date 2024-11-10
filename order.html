@@ -300,5 +300,36 @@
             }
         }
     </script>
+
+    <script>
+    // Function to get the query parameter by name
+    function getQueryParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    // Function to select the plan based on the URL parameter
+    function selectPlanBasedOnURL() {
+        const plan = getQueryParameter("plan");
+        
+        if (plan) {
+            // Replace these IDs or selectors with the correct IDs for your plan elements
+            document.querySelectorAll('.plan').forEach(plan => {
+                plan.classList.remove('selected'); // Ensure no other plan is selected
+            });
+
+            if (plan === "Start") {
+                document.getElementById("start-plan").classList.add("selected");
+            } else if (plan === "Premium") {
+                document.getElementById("premium-plan").classList.add("selected");
+            } else if (plan === "Ultimate") {
+                document.getElementById("ultimate-plan").classList.add("selected");
+            }
+        }
+    }
+
+    // Run the function on page load
+    window.onload = selectPlanBasedOnURL;
+</script>
 </body>
 </html>
