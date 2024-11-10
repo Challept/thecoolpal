@@ -161,6 +161,13 @@
             text-decoration: none;
             box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
             transition: background-color 0.3s, transform 0.3s;
+            pointer-events: none; /* Initially disabled */
+            opacity: 0.5; /* Grayed out */
+        }
+
+        .pay-button.enabled {
+            pointer-events: auto; /* Enable when validated */
+            opacity: 1;
         }
 
         .pay-button:hover {
@@ -196,7 +203,7 @@
                 </div>
                 <div class="order-form">
                     <label for="model-selection">Välj modell:</label>
-                    <select id="model-selection" name="model-selection" required>
+                    <select id="model-selection" name="model-selection" required onchange="validateForm()">
                         <option value="" disabled selected>Välj en modell</option>
                         <option value="butik">Butik</option>
                         <option value="webbplats">Webbplats</option>
@@ -204,16 +211,16 @@
                     </select>
 
                     <label for="name">Namn:</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" required oninput="validateForm()">
 
                     <label for="phone">Telefonnummer:</label>
-                    <input type="tel" id="phone" name="phone" required>
+                    <input type="tel" id="phone" name="phone" required oninput="validateForm()">
 
                     <label for="address">Adress:</label>
-                    <input type="text" id="address" name="address" required>
+                    <input type="text" id="address" name="address" required oninput="validateForm()">
 
                     <label for="domain">Hemsida namn:</label>
-                    <input type="text" id="domain" name="domain" required>
+                    <input type="text" id="domain" name="domain" required oninput="validateForm()">
                     <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
                 </div>
             </div>
@@ -221,23 +228,18 @@
                 <h2>Betalning</h2>
                 <p>Betala säkert med Stripe. Din information är skyddad.</p>
                 <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
-                <div style="margin-top: 15px; color: #dcdcdc;">
-                    <p>1. Klicka på knappen för att starta betalningen.</p>
-                    <p>2. Genomför betalningen säkert med Stripe.</p>
-                    <p>3. När betalningen är klar kommer du att omdirigeras till din dashboard där du kan ändra och anpassa din sida.</p>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
+        let selectedPlan = null;
+
         function selectPlan(plan) {
-            // Reset alla planers styling
             document.querySelectorAll('.pricing-plan').forEach(function(el) {
                 el.classList.remove('selected');
             });
 
-            // Markera den valda planen
             if (plan === 'basic') {
                 document.querySelector('.pricing-plan').classList.add('selected');
                 document.getElementById('pay-button').href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
@@ -249,8 +251,26 @@
                 document.getElementById('pay-button').href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
             }
 
-            // Visa betalningssektionen
+            selectedPlan = plan;
+            validateForm();
             document.getElementById('payment-container').style.display = 'block';
+        }
+
+        function validateForm() {
+            const model = document.getElementById('model-selection').value;
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const domain = document.getElementById('domain').value;
+
+            const isFormComplete = model && name && phone && address && domain && selectedPlan;
+
+            const payButton = document.getElementById('pay-button');
+            if (isFormComplete) {
+                payButton.classList.add('enabled');
+            } else {
+                payButton.classList.remove('enabled');
+            }
         }
     </script>
 </body>
