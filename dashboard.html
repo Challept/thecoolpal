@@ -23,49 +23,18 @@
         }
     </style>
     <script>
-        // Check login on page load
-        window.onload = function() {
-            firebase.auth().onAuthStateChanged((user) => {
-                if (user) {
-                    console.log("Användare inloggad:", user.email);
-                } else {
-                    sessionStorage.setItem('showLogoutAlert', 'true');
-                    window.location.href = 'admin.html';
-                }
-            });
-        };
-
-        // Show alert if logged out
-        window.addEventListener('load', function() {
-            if (sessionStorage.getItem('showLogoutAlert') === 'true') {
-                showAlertMessage('Du har blivit utloggad. Logga in igen.');
-                sessionStorage.removeItem('showLogoutAlert');
-            }
-        });
-
-        function showAlertMessage(message) {
-            const alertBox = document.createElement('div');
-            alertBox.classList.add('alert-message');
-            alertBox.innerText = message;
-            document.body.appendChild(alertBox);
-            alertBox.style.display = 'block';
-
-            setTimeout(() => {
-                alertBox.style.display = 'none';
-                document.body.removeChild(alertBox);
-            }, 5000);
+        // Function to open popups for each menu item
+        function openPopup(popupId) {
+            document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
+            document.querySelector(popupId).style.display = 'flex';
         }
 
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                sessionStorage.removeItem('loggedIn');
-                sessionStorage.setItem('showLogoutAlert', 'true');
-                window.location.href = 'admin.html';
-            }).catch((error) => {
-                console.error("Logout error:", error);
-            });
+        // Close specific popup
+        function closePopup(popupId) {
+            document.querySelector(popupId).style.display = 'none';
         }
 
+        // Profile popup functions
         function openProfilePopup() {
             document.getElementById('profile-popup').style.display = 'block';
         }
@@ -79,19 +48,19 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <ul class="menu">
-            <li class="menu-item" onclick="openPopup('#hem')">
+            <li class="menu-item" onclick="openPopup('#home-popup')">
                 <i class="fas fa-home"></i><span class="menu-text">Hem</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#website')">
+            <li class="menu-item" onclick="openPopup('#website-popup')">
                 <i class="fas fa-edit"></i><span class="menu-text">Hemsida</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#inställningar')">
+            <li class="menu-item" onclick="openPopup('#settings-popup')">
                 <i class="fas fa-cogs"></i><span class="menu-text">Inställningar</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#statistik')">
+            <li class="menu-item" onclick="openPopup('#statistics-popup')">
                 <i class="fas fa-chart-line"></i><span class="menu-text">Statistik</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#användare')">
+            <li class="menu-item" onclick="openPopup('#users-popup')">
                 <i class="fas fa-users"></i><span class="menu-text">Användare</span>
             </li>
             <li class="menu-item" onclick="logout()">
@@ -128,10 +97,44 @@
             <button onclick="closeProfilePopup()">Stäng</button>
         </div>
 
-        <!-- Live Preview Popup -->
-        <div id="website-popup" class="website-popup">
-            <button class="close-btn" onclick="closePopup('#website-popup')">Stäng Förhandsgranskning</button>
-            <iframe src="https://kund5.webstay.se" width="100%" height="100%"></iframe>
+        <!-- Popup Containers -->
+        <div id="home-popup" class="popup">
+            <div class="popup-content">
+                <h2>Hem</h2>
+                <p>Innehåll för hemsidan kommer här.</p>
+                <button onclick="closePopup('#home-popup')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="website-popup" class="popup">
+            <div class="popup-content">
+                <button class="close-btn" onclick="closePopup('#website-popup')">Stäng Förhandsgranskning</button>
+                <iframe src="https://kund5.webstay.se" width="100%" height="90%"></iframe>
+            </div>
+        </div>
+
+        <div id="settings-popup" class="popup">
+            <div class="popup-content">
+                <h2>Inställningar</h2>
+                <p>Inställningar för din hemsida.</p>
+                <button onclick="closePopup('#settings-popup')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="statistics-popup" class="popup">
+            <div class="popup-content">
+                <h2>Statistik</h2>
+                <p>Statistikinformation för din hemsida.</p>
+                <button onclick="closePopup('#statistics-popup')">Stäng</button>
+            </div>
+        </div>
+
+        <div id="users-popup" class="popup">
+            <div class="popup-content">
+                <h2>Användare</h2>
+                <p>Hantera dina användare här.</p>
+                <button onclick="closePopup('#users-popup')">Stäng</button>
+            </div>
         </div>
     </div>
 </body>
