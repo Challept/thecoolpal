@@ -1,56 +1,77 @@
-// Handle opening and closing popups
-function openPopup(popupId) {
-    document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
-    document.querySelector(popupId).style.display = 'flex';
-}
+// Firebase initialization (add this only if you haven't added it in firebase-config.js)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js";
+import { firebaseConfig } from './firebase-config.js';
 
-function closePopup(popupId) {
-    document.querySelector(popupId).style.display = 'none';
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// Section management
-function addSection() {
+// Function to render sections from Firestore in real-time
+function renderSections() {
     const sectionList = document.getElementById('section-list');
-    const newSection = document.createElement('li');
-    newSection.className = 'section-item';
-    newSection.textContent = 'Ny Sektion';
-    newSection.contentEditable = true;
-    sectionList.appendChild(newSection);
-}
+    sectionList.innerHTML = ''; // Clear the list before re-rendering
 
-function deleteSection() {
-    const sectionList = document.getElementById('section-list');
-    if (sectionList.lastElementChild) {
-        sectionList.removeChild(sectionList.lastElementChild);
-    }
-}
-
-// Live preview editing functions
-function initLiveEditor() {
-    const iframe = document.getElementById('live-preview').contentWindow.document;
-    iframe.querySelectorAll('*').forEach(element => {
-        element.addEventListener('click', function(e) {
-            e.preventDefault();
-            enableEditingMode(element);
-            document.getElementById('section-heading').value = element.textContent;
+    // Listen for changes in Firestore collection
+    onSnapshot(collection(db, 'sections'), (snapshot) => {
+        snapshot.forEach((doc) => {
+            const section = doc.data();
+            const listItem = document.createElement('li');
+            listItem.className = 'section-item';
+            listItem.textContent = section.name;
+            listItem.onclick = () => selectSection(doc.id, section.name, section.content);
+            sectionList.appendChild(listItem);
         });
     });
 }
 
-function enableEditingMode(element) {
-    element.setAttribute('contenteditable', 'true');
-    element.style.border = '1px dashed #0072ff';
-}
-
-function updateSectionText(type, value) {
-    const iframe = document.getElementById('live-preview').contentWindow.document;
-    const selectedElement = iframe.querySelector('.editable');
-    if (type === 'heading') {
-        selectedElement.querySelector('h1').textContent = value;
+// Function to add a new section
+async function addSection() {
+    const sectionName = prompt("Enter section name:");
+    if (sectionName) {
+        await addDoc(collection(db, 'sections'), {
+            name: sectionName,
+            content: "This is the content of " + sectionName
+        });
     }
 }
 
-function updateSectionColor(color) {
-    const iframe = document.getElementById('live-preview').contentWindow.document;
-    iframe.body.style.backgroundColor = color;
+// Function to delete a selected section
+async function deleteSection(sectionId) {
+    if (confirm("Are you sure you want to delete this section?")) {
+        await deleteDoc(doc(db, 'sections', sectionId));
+    }
 }
+
+// Function to select a section and display it in the edit panel
+function selectSection(sectionId, name, content) {
+    document.getElementById('section-heading').value = name;
+    document.getElementById('section-content').value = content;
+    document.getElementById('edit-panel').dataset.sectionId = sectionId;
+}
+
+// Function to update section content in Firestore
+async function updateSectionContent() {
+    const sectionId = document.getElementById('edit-panel').dataset.sectionId;
+    const newContent = document.getElementById('section-content').value;
+
+    if (sectionId) {
+        await updateDoc(doc(db, 'sections', sectionId), {
+            content: newContent
+        });
+    }
+}
+
+// Initialize the live editor
+function initLiveEditor() {
+    renderSections();
+
+    // Attach event listeners
+    document.getElementById('add-section-btn').addEventListener('click', addSection);
+    document.getElementById('delete-section-btn').addEventListener('click', () => {
+        const sectionId = document.getElementById('edit-panel').dataset.sectionId;
+        if (sectionId) deleteSection(sectionId);
+    });
+    document.getElementById('section-content').addEventListener('input', updateSectionContent);
+}
+
+document.addEventListener('DOMContentLoaded', initLiveEditor);
