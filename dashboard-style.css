@@ -7,6 +7,7 @@ body, html {
     color: #333;
     min-height: 100vh;
     overflow: hidden;
+    display: flex;
 }
 
 /* Sidebar */
@@ -24,7 +25,6 @@ body, html {
     transition: width 0.3s ease;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
     z-index: 1001;
-    overflow-y: auto;
 }
 
 .sidebar:hover {
@@ -70,18 +70,24 @@ body, html {
     display: inline-block;
 }
 
-/* Main content area */
-.main-content {
+/* Main popup layout */
+.popup {
     display: flex;
-    margin-left: 60px;
+    position: fixed;
+    top: 0;
+    left: 60px;
     width: calc(100% - 60px);
     height: 100vh;
+    background-color: #f9f9f9;
+    z-index: 1000;
+    align-items: flex-start;
+    justify-content: space-between;
     overflow: hidden;
 }
 
 /* Section Editor Panel (left column) */
 .editor-panel {
-    width: 250px;
+    width: 300px;
     background-color: #e3e7f1;
     padding: 20px;
     border-right: 1px solid #ddd;
@@ -114,8 +120,6 @@ body, html {
     background: #fff;
     overflow-y: auto;
     height: 100vh;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
 }
 
 .live-preview iframe {
@@ -126,11 +130,12 @@ body, html {
 
 /* Edit Panel (right column) */
 .edit-panel {
-    width: 250px;
+    width: 300px;
     background-color: #ffffff;
     padding: 20px;
     overflow-y: auto;
     height: 100vh;
+    border-left: 1px solid #ddd;
 }
 
 .edit-panel h3 {
@@ -153,20 +158,6 @@ body, html {
     padding: 2px;
     width: 100%;
     height: 40px;
-}
-
-/* Popup styling */
-.popup {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 60px;
-    width: calc(100% - 60px);
-    height: 100vh;
-    background-color: rgba(249, 249, 249, 0.95);
-    z-index: 1000;
-    align-items: center;
-    justify-content: space-around;
 }
 
 /* Scrollable content within sections */
