@@ -6,124 +6,100 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="dashboard-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Alert message styling */
-        .alert-message {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #f44336;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 5px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            display: none;
-        }
-    </style>
-    <script>
-        // Firebase authentication check on page load
-        window.onload = function() {
-            firebase.auth().onAuthStateChanged((user) => {
-                if (user) {
-                    console.log("Användare inloggad:", user.email);
-                } else {
-                    sessionStorage.setItem('showLogoutAlert', 'true');
-                    window.location.href = 'admin.html';
-                }
-            });
-        };
-
-        // Show logout alert if needed
-        window.addEventListener('load', function() {
-            if (sessionStorage.getItem('showLogoutAlert') === 'true') {
-                showAlertMessage('Du har blivit utloggad. Logga in igen.');
-                sessionStorage.removeItem('showLogoutAlert');
-            }
-        });
-
-        function showAlertMessage(message) {
-            const alertBox = document.createElement('div');
-            alertBox.classList.add('alert-message');
-            alertBox.innerText = message;
-            document.body.appendChild(alertBox);
-            alertBox.style.display = 'block';
-
-            setTimeout(() => {
-                alertBox.style.display = 'none';
-                document.body.removeChild(alertBox);
-            }, 5000);
-        }
-
-        function logout() {
-            firebase.auth().signOut().then(() => {
-                sessionStorage.removeItem('loggedIn');
-                sessionStorage.setItem('showLogoutAlert', 'true');
-                window.location.href = 'admin.html';
-            }).catch((error) => {
-                console.error("Logout error:", error);
-            });
-        }
-
-        // Live preview update
-        function openLiveView() {
-            const popup = document.createElement('div');
-            popup.classList.add('live-view-popup');
-            popup.innerHTML = `
-                <div class="popup-sidebar">
-                    <ul class="popup-menu">
-                        <li class="popup-menu-item"><i class="fas fa-home"></i> Hem</li>
-                        <li class="popup-menu-item"><i class="fas fa-edit"></i> Redigera</li>
-                        <li class="popup-menu-item"><i class="fas fa-cogs"></i> Inställningar</li>
-                        <li class="popup-menu-item"><i class="fas fa-chart-line"></i> Statistik</li>
-                        <li class="popup-menu-item"><i class="fas fa-question-circle"></i> Hjälp</li>
-                        <li class="popup-menu-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logga ut</li>
-                    </ul>
-                </div>
-                <div class="popup-content">
-                    <iframe src="https://kund5.webstay.se" width="100%" height="100%" frameborder="0"></iframe>
-                </div>
-                <div class="profile">
-                    <span>Butik: Kund 5</span>
-                    <i class="fas fa-user-circle"></i>
-                </div>
-            `;
-            document.body.appendChild(popup);
-            popup.addEventListener('click', () => popup.remove());
-        }
-    </script>
 </head>
 <body>
-    <!-- Sidebar with icons and expanding text on desktop -->
+    <!-- Sidebar med expanderande funktion på dator -->
     <div class="sidebar">
         <ul class="menu">
-            <li class="menu-item" onclick="openLiveView()">
+            <li class="menu-item" onclick="openPopup('#home')">
                 <i class="fas fa-home"></i><span class="menu-text">Hem</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#hemsida')">
+            <li class="menu-item" onclick="openLiveView('https://kund5.webstay.se')">
                 <i class="fas fa-edit"></i><span class="menu-text">Hemsida</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#inställningar')">
+            <li class="menu-item" onclick="openPopup('#settings')">
                 <i class="fas fa-cogs"></i><span class="menu-text">Inställningar</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#statistik')">
+            <li class="menu-item" onclick="openPopup('#statistics')">
                 <i class="fas fa-chart-line"></i><span class="menu-text">Statistik</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#användare')">
+            <li class="menu-item" onclick="openPopup('#users')">
                 <i class="fas fa-users"></i><span class="menu-text">Användare</span>
             </li>
-            <li class="menu-item" onclick="openPopup('#hjälp')">
-                <i class="fas fa-question-circle"></i><span class="menu-text">Hjälp</span>
+            <li class="menu-item" onclick="openProfilePopup()">
+                <i class="fas fa-user"></i><span class="menu-text">Profil</span>
             </li>
             <li class="menu-item" onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i><span class="menu-text">Logga ut</span>
             </li>
         </ul>
     </div>
+
+    <!-- Main Content -->
     <div class="main-content">
         <h1>Välkommen till din Dashboard</h1>
         <p>Här kan du se och hantera din hemsida</p>
+
+        <div id="editor">
+            <h2>Redigera Hemsida</h2>
+            <label for="edit-heading">Redigera Rubrik</label>
+            <input type="text" id="edit-heading" placeholder="Redigera rubriktext">
+            <label for="edit-content">Redigera Innehåll</label>
+            <textarea id="edit-content" placeholder="Redigera huvudinnehåll"></textarea>
+            <button onclick="saveChanges()">Spara Ändringar</button>
+        </div>
     </div>
+
+    <!-- Profil Popup -->
+    <div id="profile-popup" class="popup">
+        <div class="popup-content">
+            <h2>Profilinställningar</h2>
+            <label for="profile-name">Namn</label>
+            <input type="text" id="profile-name" placeholder="Ditt namn">
+            <label for="profile-email">E-post</label>
+            <input type="email" id="profile-email" placeholder="Din e-post">
+            <label for="profile-phone">Telefonnummer</label>
+            <input type="tel" id="profile-phone" placeholder="Ditt telefonnummer">
+            <label for="profile-store">Butiksnamn</label>
+            <input type="text" id="profile-store" placeholder="Ditt butiksnamn" maxlength="2">
+            <button onclick="saveProfileChanges()">Spara Ändringar</button>
+            <button onclick="closeProfilePopup()">Stäng</button>
+        </div>
+    </div>
+
+    <!-- Live View Popup -->
+    <div id="live-view-popup" class="popup">
+        <div class="popup-content">
+            <iframe id="live-view-iframe" width="100%" height="100%" style="border: none;"></iframe>
+            <button class="close-popup" onclick="closeLiveView()">Stäng Förhandsgranskning</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script>
+        function openProfilePopup() {
+            document.getElementById("profile-popup").style.display = "flex";
+        }
+
+        function closeProfilePopup() {
+            document.getElementById("profile-popup").style.display = "none";
+        }
+
+        function openLiveView(url) {
+            document.getElementById("live-view-iframe").src = url;
+            document.getElementById("live-view-popup").style.display = "flex";
+        }
+
+        function closeLiveView() {
+            document.getElementById("live-view-popup").style.display = "none";
+            document.getElementById("live-view-iframe").src = "";
+        }
+
+        function saveProfileChanges() {
+            alert("Profiländringar sparade!");
+            closeProfilePopup();
+        }
+    </script>
 </body>
 </html>
