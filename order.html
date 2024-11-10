@@ -67,6 +67,113 @@
             overflow: hidden;
         }
 
+.pricing-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1200px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.pricing-plan {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-plan:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.plan-title {
+    font-size: 1.5em;
+    color: #007bff;
+    margin: 0;
+}
+
+.plan-description {
+    font-size: 1em;
+    color: #666;
+    margin: 10px 0;
+}
+
+.plan-price {
+    font-size: 1.3em;
+    color: #333;
+    margin: 15px 0;
+    animation: fadeIn 0.5s ease;
+}
+
+.plan-price strong {
+    color: #444;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.plan-features {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.choose-plan {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.choose-plan:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Highlight den populära planen */
+.popular {
+    background-color: #e8f4ff;
+    border: 2px solid #007bff;
+    transform: scale(1.05);
+}
+
+.popular .plan-title {
+    color: #0056b3;
+}
+
+.popular .choose-plan {
+    background-color: #0056b3;
+}
+
+.popular:hover {
+    transform: scale(1.1);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsivt */
+@media (max-width: 900px) {
+    .pricing-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pricing-plan {
+        max-width: 90%;
+        margin-bottom: 20px;
+    }
         .order-form label {
             font-weight: 600;
             margin-top: 15px;
