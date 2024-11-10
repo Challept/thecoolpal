@@ -160,28 +160,6 @@
         }
     </style>
 </head>
-    <script>
-    // Funktion för att kolla om användaren är på en mobil enhet
-    function checkDevice() {
-        // Använd User-Agent för att upptäcka mobil enhet
-        if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            // Om det är en mobil enhet, visa ett meddelande och blockera sidan
-            document.body.innerHTML = `
-                <div style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center;">
-                    <div>
-                        <h1>Endast tillgängligt på dator</h1>
-                        <p>För att använda denna webbplats, vänligen använd en dator.</p>
-                    </div>
-                </div>
-            `;
-            document.body.style.backgroundColor = "#f8f9fa";
-        }
-    }
-
-    // Kör funktionen när sidan laddas
-    window.onload = checkDevice;
-</script>
-    
 <body>
     <header class="header">
         <h1>Välkommen till WebStay</h1>
@@ -190,6 +168,11 @@
 
     <div class="top-image"></div>
 
+<div class="button-container">
+    <a href="https://webstay.se/dashboard" class="custom-button">Gå till Dashboard</a>
+    <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
+</div>
+    
     <!-- Pricing Plans -->
     <section class="pricing-container">
         <div class="plan">
