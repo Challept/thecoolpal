@@ -9,17 +9,6 @@ body, html {
     min-height: 100vh;
 }
 
-/* Main content */
-.main-content {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 1000px;
-    margin-left: 250px; /* Space for sidebar */
-    margin-top: 20px;
-}
-
 /* Sidebar */
 .sidebar {
     position: fixed;
@@ -137,12 +126,12 @@ body, html {
     cursor: pointer;
 }
 
-/* Website preview popup */
+/* Full-screen popup */
 .popup {
     display: none;
     position: fixed;
     top: 0;
-    left: 60px; /* Adjusted to show the sidebar */
+    left: 60px; /* Space for sidebar */
     width: calc(100% - 60px);
     height: 100vh;
     background-color: rgba(255, 255, 255, 0.95);
@@ -152,8 +141,8 @@ body, html {
 }
 
 .popup-content {
-    width: 80%;
-    max-width: 700px;
+    width: 90%;
+    max-width: 800px;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
