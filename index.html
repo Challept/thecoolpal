@@ -9,204 +9,135 @@
     <style>
         /* Bas-styling */
         body {
-            background-color: #121212;
-            color: #ffffff;
+            background-color: #f2f8ff;
+            color: #333333;
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         /* Header */
         .header {
             text-align: center;
-            padding: 100px 20px;
-            background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
-            color: #76c7c0;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1.5s;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #ffffff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .header h1 {
-            font-size: 60px;
+            font-size: 50px;
             margin-bottom: 20px;
-            animation: slideIn 1s;
         }
         .header p {
             font-size: 20px;
             max-width: 800px;
             margin: 0 auto;
-            animation: fadeInUp 1.5s;
         }
 
-        /* Button Styles */
-        .button-container {
+        /* Bild under header */
+        .top-image {
+            width: 100%;
+            height: 180px;
+            background-image: url('image.jpg'); /* Lägg in din bild här */
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        /* Pricing Section */
+        .pricing-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 60px 0;
-            animation: zoomIn 1.2s;
-        }
-        .order-button, .admin-login-button {
-            background-color: #76c7c0;
-            color: #ffffff;
-            border: none;
-            padding: 15px 35px;
-            border-radius: 30px;
-            font-size: 20px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.4s, transform 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        .order-button:hover, .admin-login-button:hover {
-            background-color: #60a5a0;
-            transform: translateY(-5px);
-        }
-
-        /* Section Styles */
-        .about-us, .services, .testimonials, .gallery, .contact {
-            padding: 60px 20px;
-            max-width: 1200px;
-            margin: 40px auto;
-            background-color: #1e1e1e;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1.5s;
-        }
-        .about-us h2, .services h2, .testimonials h2, .gallery h2, .contact h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #76c7c0;
-        }
-
-        /* Service, Testimonial and Gallery Styles */
-        .service, .testimonial {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 40px;
-            animation: slideIn 1.2s;
-        }
-        .service h3, .testimonial h3 {
-            font-size: 26px;
-            color: #76c7c0;
-            flex-shrink: 0;
-        }
-        .service p, .testimonial p {
-            flex-grow: 1;
-            font-size: 18px;
-            color: #dcdcdc;
-        }
-        .service img, .testimonial img, .gallery img {
-            width: 100px;
-            height: 100px;
-            border-radius: 10px;
-            object-fit: cover;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            animation: fadeInZoom 1.5s;
-        }
-        .gallery img {
-            width: 48%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            transition: transform 0.4s;
-        }
-        .gallery img:hover {
-            transform: scale(1.05);
-        }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        /* Contact Form Styles */
-        .contact form {
-            display: flex;
-            flex-direction: column;
             gap: 20px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto 50px;
+            text-align: center;
         }
-        .contact input, .contact textarea, .contact button {
-            padding: 15px;
-            border: 1px solid #444;
-            background-color: #333;
-            border-radius: 10px;
-            font-size: 16px;
-            color: #ffffff;
+        .plan {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            transition: transform 0.3s;
+            animation: fadeInUp 1.2s;
         }
-        .contact button {
-            background-color: #76c7c0;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.4s;
+        .plan:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
         }
-        .contact button:hover {
-            background-color: #60a5a0;
+        .plan.popular {
+            border: 2px solid #0072ff;
+            background: #e0f3ff;
+            animation: pulse 1.5s infinite;
+        }
+        .plan h3 {
+            font-size: 24px;
+            color: #0072ff;
+            margin-bottom: 10px;
+        }
+        .plan p {
+            font-size: 18px;
+            color: #555;
+        }
+        .price {
+            font-size: 30px;
+            color: #333;
+            font-weight: bold;
+            margin: 20px 0;
         }
 
-        /* Payment Methods Section */
-        .payment-container {
-            background: #1c1c1c;
-            color: #ffffff;
-            padding: 3rem;
-            border-radius: 12px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.6);
-            width: 85%;
-            max-width: 600px;
-            margin: 2rem auto;
+        /* Animation */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Exempelbutiker */
+        .stores-section {
             text-align: center;
-            animation: fadeInUp 1s forwards;
+            padding: 40px 20px;
+            margin-bottom: 50px;
+            color: #333;
         }
-        .payment-container h1 {
+        .stores-section h2 {
             font-size: 28px;
-            color: #76c7c0;
-            margin-bottom: 1.5rem;
+            color: #0072ff;
+            margin-bottom: 20px;
         }
-        .payment-methods {
+        .stores-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
             justify-content: center;
+            gap: 15px;
         }
-        .payment-method {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            width: 150px;
-            padding: 1.5rem;
-            background: #2a2a2a;
-            border-radius: 10px;
-            box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s, background-color 0.3s;
-            cursor: pointer;
-            color: #fff;
-        }
-        .payment-method:hover {
-            transform: translateY(-5px);
-            background-color: #76c7c0;
-            color: #121212;
-        }
-        .method-name {
+        .store {
+            background-color: #0072ff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 5px;
             font-size: 18px;
-            font-weight: bold;
-            margin: 1rem 0 0.5rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
         }
-        .method-count {
-            font-size: 26px;
-            font-weight: bold;
-            color: #76c7c0;
+        .store:hover {
+            background-color: #005bb5;
         }
 
         /* Footer */
         footer {
             text-align: center;
             padding: 20px;
-            background-color: #76c7c0;
+            background-color: #0072ff;
             color: #ffffff;
-            animation: fadeInUp 2s;
         }
         footer p {
             margin: 0;
@@ -216,15 +147,8 @@
             text-decoration: underline;
         }
         footer a:hover {
-            color: #dcdcdc;
+            color: #e0f3ff;
         }
-
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateX(-50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeInUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes zoomIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes fadeInZoom { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -233,94 +157,39 @@
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
 
-    <div class="button-container">
-        <a href="login.html" class="order-button">Beställ Nu</a>
-        <button onclick="window.location.href='admin.html'" class="admin-login-button">Logga in till Admin</button>
-    </div>
-    
-    <section class="about-us">
-        <h2>Om Oss</h2>
-        <p>På WebStay brinner vi för att hjälpa företag och privatpersoner att skapa en stark och engagerande online-närvaro. Vi erbjuder skräddarsydda hemsidor och butiker anpassade efter dina unika behov och mål. Vårt team kombinerar kreativ design med teknisk expertis för att säkerställa att din webbplats inte bara ser bra ut utan också presterar på topp. Välj WebStay för en pålitlig partner som sätter ditt varumärke i fokus.</p>
-    </section>
+    <div class="top-image"></div>
 
-    <section class="services">
-        <h2>Våra Tjänster</h2>
-        <div class="service">
-            <img src="https://cdn-icons-png.freepik.com/512/9750/9750201.png" alt="Webbutveckling">
-            <h3>Webbutveckling</h3>
-            <p>Vi skapar responsiva och användarvänliga webbplatser som är optimerade för både datorer och mobila enheter.</p>
+    <!-- Pricing Plans -->
+    <section class="pricing-container">
+        <div class="plan">
+            <h3>The Basics</h3>
+            <p>Enkel och pålitlig</p>
+            <p class="price">300 kr engångsavgift + 10 kr/månad</p>
+            <p>Innehåller grundläggande funktioner för din hemsida</p>
         </div>
-        <div class="service">
-            <img src="https://cdn-icons-png.freepik.com/512/13769/13769087.png" alt="E-handel">
-            <h3>E-handel</h3>
-            <p>Bygg en hel butik med våran hemsida på bara några minuter.</p>
+        <div class="plan popular">
+            <h3>Populäraste Planen</h3>
+            <p>Mest valda paketet</p>
+            <p class="price">400 kr engångsavgift + 50 kr/månad</p>
+            <p>Innehåller de grundläggande funktionerna plus några extra</p>
         </div>
-        <div class="service">
-            <img src="https://get.pxhere.com/photo/seo-business-design-optimization-search-icon-logo-ranking-trend-content-technology-service-internet-web-list-system-website-analysis-concept-strategy-marketing-online-information-data-sign-text-font-graphics-brand-trademark-artwork-symbol-1624048.jpg" alt="SEO-Optimering">
-            <h3>SEO-optimering</h3>
-            <p>Vi hjälper din webbplats att ranka högre i sökmotorer för att öka din synlighet och trafik.</p>
+        <div class="plan">
+            <h3>Bästa Planen</h3>
+            <p>Full kontroll och alla funktioner</p>
+            <p class="price">1000 kr engångsavgift + 100 kr/månad</p>
+            <p>Innehåller alla funktioner för bästa upplevelsen</p>
         </div>
     </section>
 
-    <section class="testimonials">
-        <h2>Vad Våra Kunder Säger</h2>
-        <div class="testimonial">
-            <img src="https://img.freepik.com/free-photo/fair-haired-woman-looking-with-pleased-calm-expression_176420-15145.jpg" alt="Kund">
-            <h3>Anna Svensson</h3>
-            <p>"WebStay skapade en fantastisk webbplats åt oss. Vi har fått fler kunder tack vare deras tjänster!"</p>
+    <!-- Exempelbutiker byggda på plattformen -->
+    <section class="stores-section">
+        <h2>Exempelbutiker byggda med WebStay</h2>
+        <div class="stores-list">
+            <a href="https://vfparfym.com" class="store" target="_blank">VF Parfym</a>
+            <a href="https://archwi.com" class="store" target="_blank">Archwi</a>
+            <a href="https://dittforetag.com" class="store" target="_blank">Ditt Företag</a>
+            <a href="https://exempelbutik.com" class="store" target="_blank">Exempel Butik</a>
         </div>
-        <div class="testimonial">
-            <img src="https://img.freepik.com/free-photo/portrait-handsome-bearded-man-suit_23-2149705920.jpg" alt="Kund">
-            <h3>Johan Lind</h3>
-            <p>"Professionellt team som lyssnade på våra behov och levererade över förväntan."</p>
-        </div>
-    </section>
-
-    <section class="payment-container">
-        <h1>Betalningsmetoder</h1>
-        <div class="payment-methods">
-            <div class="payment-method">
-                <span class="method-name">Bankkort</span>
-                <span class="method-count">3</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">Swish</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">Klarna</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">Apple Pay</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">Google Pay</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">PayPal</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">SEPA Direct Debit</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">iDEAL</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">Bancontact</span>
-            </div>
-            <div class="payment-method">
-                <span class="method-name">Przelewy24 (P24)</span>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact">
-        <h2>Kontakta Oss</h2>
-        <form>
-            <input type="text" placeholder="Ditt namn" required>
-            <input type="email" placeholder="Din e-post" required>
-            <textarea placeholder="Ditt meddelande" rows="5" required></textarea>
-            <button type="submit">Skicka</button>
-        </form>
     </section>
 
     <footer>
