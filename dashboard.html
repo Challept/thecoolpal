@@ -5,48 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="dashboard-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"></script>
-    <!-- Firebase Configuration -->
-    <script src="firebase-config.js"></script>
 </head>
 <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <ul class="menu">
-            <li class="menu-item" onclick="openPopup('#website-popup')">
-                <i class="fas fa-edit"></i><span class="menu-text">Hemsida</span>
-            </li>
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#overview">Översikt</a></li>
+            <li><a href="#orders">Beställningar</a></li>
+            <li><a href="#products">Produkter</a></li>
+            <li><a href="#settings">Inställningar</a></li>
         </ul>
     </div>
 
-    <!-- Website Popup for editing -->
-    <div id="website-popup" class="popup">
-        <div class="popup-content">
-            <!-- Section Management Panel (left) -->
-            <div class="editor-panel">
-                <h3>Sidsektioner</h3>
-                <ul id="section-list" class="section-list"></ul>
-                <button id="add-section-btn">Lägg till Sektion</button>
-                <button id="delete-section-btn">Ta bort Sektion</button>
-            </div>
-
-            <!-- Live Preview Area (center) -->
-            <div class="live-preview">
-                <iframe id="live-preview" src="https://kund5.webstay.se" onload="initLiveEditor()" width="100%" height="100%"></iframe>
-            </div>
-
-            <!-- Edit Options (right) -->
-            <div id="edit-panel" class="edit-panel">
-                <h3>Redigera Sektion</h3>
-                <label for="section-heading">Rubrik:</label>
-                <input type="text" id="section-heading" placeholder="Redigera rubrik" oninput="updateSectionText()">
-                
-                <label for="section-content">Innehåll:</label>
-                <textarea id="section-content" placeholder="Redigera innehåll" oninput="updateSectionContent()"></textarea>
-            </div>
+    <!-- Main Dashboard Content -->
+    <div class="main-content">
+        <div id="overview" class="dashboard-section">
+            <h1>Välkommen till Dashboarden</h1>
+        </div>
+        <div id="orders" class="dashboard-section">
+            <h2>Beställningar</h2>
+            <div id="order-list"></div>
+        </div>
+        <div id="products" class="dashboard-section">
+            <h2>Produkter</h2>
+            <div id="product-list"></div>
+        </div>
+        <div id="settings" class="dashboard-section">
+            <h2>Inställningar</h2>
         </div>
     </div>
 
