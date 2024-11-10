@@ -1,165 +1,137 @@
-/* Allmänna inställningar för dashboard.html */
+/* Basinställningar */
 body, html {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #4facfe, #00f2fe); /* Modern gradientbakgrund */
+    background: #f0f2f5;
     color: #333;
+    height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow-x: hidden;
 }
 
-/* Huvudlayout för dashboard */
+/* Main content */
 .main-content {
-    background-color: rgba(255, 255, 255, 0.9); /* Transparent vit bakgrund */
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    margin-left: 80px;
     width: 100%;
     max-width: 800px;
     text-align: center;
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Sidebar-styling för dashboard */
+/* Sidebar */
 .sidebar {
-    width: 100%;
-    background-color: #ffffff;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    gap: 10px;
-}
-
-.menu {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.menu-item {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 80px;
+    background-color: #0072ff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
+    padding-top: 20px;
+}
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-item {
+    color: #ffffff;
+    padding: 20px 10px;
+    text-align: center;
+    width: 100%;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    border-radius: 8px;
-    flex: 1;
 }
 
 .menu-item:hover {
-    background-color: #e0f7fa;
+    background-color: #005bb5;
 }
 
 .menu-item i {
     font-size: 24px;
-    margin-bottom: 5px;
-    color: #4A90E2;
+    color: #ffffff;
 }
 
 .menu-text {
-    font-size: 14px;
-    color: #333;
+    display: none;
+    color: #ffffff;
 }
 
-/* Container-styling för översikt */
-.overview-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Profil Popup */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
 }
 
-.overview-box {
-    background-color: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-}
-
-.overview-box:hover {
-    transform: translateY(-5px);
-}
-
-.overview-box h3 {
-    margin: 0 0 10px;
-    color: #4A90E2;
-}
-
-.overview-box p {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-}
-
-/* Förhandsgranskning och redigeringsdelar */
-#live-preview-container, #editor {
+.popup-content {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
 }
 
-#editor input, #editor textarea {
+.popup-content input {
     width: 100%;
-    margin-top: 10px;
     padding: 10px;
+    margin-top: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
-    box-sizing: border-box;
 }
 
-#editor button {
+/* Live View Popup */
+#live-view-popup .popup-content {
     width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+    height: 100%;
+    border-radius: 0;
+    padding: 0;
+    position: relative;
+}
+
+.close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f44336;
+    color: #ffffff;
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
+    font-size: 16px;
     transition: background-color 0.3s;
 }
 
-#editor button:hover {
-    background-color: #45a049;
+.close-popup:hover {
+    background-color: #e53935;
 }
 
-/* Mobil- och desktop-anpassning */
-@media (max-width: 1024px) {
-    .sidebar {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-
-    .overview-container {
-        flex-direction: column;
-    }
+/* Animations and sidebar text on hover */
+.sidebar:hover .menu-item .menu-text {
+    display: inline;
+    padding-left: 10px;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
-@media (min-width: 1025px) {
-    .sidebar {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .overview-container {
-        flex-direction: column;
-    }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
