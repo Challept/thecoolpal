@@ -268,63 +268,61 @@
                 gap: 20px;
             }
 
-/* Reaction Game Section */
-.reaction-game {
-    background-color: #ffffff;
-    padding: 40px 20px;
-    text-align: center;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    margin: 40px auto;
-    transition: transform 0.3s ease;
-}
-.reaction-game:hover {
-    transform: scale(1.02);
-}
-.reaction-game h2 {
-    font-size: 26px;
-    color: #0072ff;
-    margin-bottom: 25px;
-    font-weight: bold;
-}
+        /* Reaction Game Section */
+        .reaction-game {
+            background-color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            transition: transform 0.3s ease;
+        }
+        .reaction-game:hover {
+            transform: scale(1.03);
+        }
+        .reaction-game h2 {
+            font-size: 26px;
+            color: #0072ff;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
 
-/* Reaction Button */
-.reaction-button {
-    padding: 20px 50px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #5ac8fa;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-.reaction-button.ready {
-    background-color: #28a745;
-}
-.reaction-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-}
+        /* Reaction Button */
+        .reaction-button {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #5ac8fa;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+        .reaction-button.ready {
+            background-color: #28a745;
+        }
+        .reaction-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
 
-/* Reaction Stats */
-.reaction-stats {
-    font-size: 22px;
-    color: #444;
-    margin-top: 30px;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-.reaction-stats.success {
-    color: #28a745;
-}
-.reaction-stats.failure {
-    color: #d9534f;
-}
-
+        /* Reaction Stats */
+        .reaction-stats {
+            font-size: 20px;
+            color: #444;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .reaction-stats.success {
+            color: #28a745;
+        }
+        .reaction-stats.failure {
+            color: #d9534f;
+        }
     </style>
 </head>
 <body>
@@ -393,55 +391,51 @@
         </div>
     </section>
 
-    <!-- Reaction Game Section -->
-    <section class="reaction-game">
+ <section class="reaction-game">
         <h2>Reaktionstidstest</h2>
-        <button class="reaction-button" id="reaction-button" onclick="handleClick()">Vänta...</button>
+        <button class="reaction-button" id="reaction-button">Klicka!</button>
         <p class="reaction-stats" id="reaction-stats">Tryck när knappen blir grön för att mäta din reaktionstid!</p>
     </section>
 
     <script>
-        let startTime, reactionButton, reactionStats;
-        let isReady = false;
-        let timeout;
-
-        document.addEventListener("DOMContentLoaded", () => {
-            reactionButton = document.getElementById("reaction-button");
-            reactionStats = document.getElementById("reaction-stats");
-            startGame();
-        });
+        const reactionButton = document.getElementById('reaction-button');
+        const reactionStats = document.getElementById('reaction-stats');
+        let startTime, timeoutID;
 
         function startGame() {
-            reactionButton.textContent = "Vänta...";
-            reactionButton.classList.remove("ready");
-            reactionStats.textContent = "Tryck när knappen blir grön för att mäta din reaktionstid!";
-            isReady = false;
-
-            timeout = setTimeout(() => {
-                reactionButton.classList.add("ready");
-                reactionButton.textContent = "Klicka!";
+            reactionButton.classList.remove('ready');
+            reactionButton.textContent = 'Vänta...';
+            reactionStats.textContent = 'Tryck när knappen blir grön för att mäta din reaktionstid!';
+            reactionStats.classList.remove('success', 'failure');
+            
+            // Random delay before turning the button green
+            timeoutID = setTimeout(() => {
+                reactionButton.classList.add('ready');
+                reactionButton.textContent = 'Klicka nu!';
                 startTime = new Date().getTime();
-                isReady = true;
-            }, Math.floor(Math.random() * 3000) + 1000); // Random delay between 1-4 seconds
+            }, Math.random() * 3000 + 2000); // Random delay between 2 and 5 seconds
         }
 
-        function handleClick() {
-            if (!isReady) {
-                clearTimeout(timeout);
-                reactionStats.textContent = "För tidigt! Försök igen.";
-                startGame();
-            } else {
+        reactionButton.addEventListener('click', () => {
+            if (reactionButton.classList.contains('ready')) {
                 const endTime = new Date().getTime();
                 const reactionTime = endTime - startTime;
-                reactionStats.textContent = `Bra jobbat! Din reaktionstid är ${reactionTime} ms.`;
-                reactionButton.textContent = "Starta om";
-                reactionButton.classList.remove("ready");
-                isReady = false;
-                reactionButton.onclick = startGame;
+                reactionStats.textContent = `Din reaktionstid: ${reactionTime} ms`;
+                reactionStats.classList.add('success');
+                reactionButton.textContent = 'Starta om';
+                reactionButton.classList.remove('ready');
+            } else if (reactionButton.textContent === 'Starta om') {
+                startGame();
+            } else {
+                clearTimeout(timeoutID);
+                reactionStats.textContent = 'För tidigt! Vänta tills knappen blir grön.';
+                reactionStats.classList.add('failure');
+                reactionButton.textContent = 'Starta om';
             }
-        }
-    </script>
+        });
 
+        startGame();
+    </script>
     <footer>
         <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
         <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
