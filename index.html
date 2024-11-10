@@ -268,8 +268,8 @@
                 gap: 20px;
             }
 
-            /* Typing Game Section */
-        .typing-game {
+        /* Reaction Game Section */
+        .reaction-game {
             background-color: #ffffff;
             padding: 40px 20px;
             text-align: center;
@@ -278,41 +278,29 @@
             max-width: 800px;
             margin: 30px auto;
         }
-        .typing-game h2 {
+        .reaction-game h2 {
             font-size: 24px;
             color: #0072ff;
             margin-bottom: 20px;
         }
-        .typing-sentence {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .typing-input {
-            width: 100%;
-            padding: 12px;
+        .reaction-button {
+            padding: 20px 40px;
             font-size: 18px;
-            border: 2px solid #0072ff;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .typing-stats {
-            font-size: 18px;
-            color: #555;
-            margin-top: 20px;
-        }
-        .start-button {
-            padding: 10px 25px;
-            font-size: 16px;
             font-weight: bold;
-            background-color: #007bff;
             color: #ffffff;
+            background-color: #5ac8fa;
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
-        .start-button:hover {
-            background-color: #005bb5;
+        .reaction-button.ready {
+            background-color: #28a745;
+        }
+        .reaction-stats {
+            font-size: 18px;
+            color: #555;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -382,51 +370,46 @@
         </div>
     </section>
 
-       <!-- Typing Game Section -->
-    <section class="typing-game">
-        <h2>Testa Din Skrifthastighet</h2>
-        <p class="typing-sentence" id="typing-sentence">Tryck på "Starta" för att börja och se hur snabbt du kan skriva!</p>
-        <input type="text" class="typing-input" id="typing-input" placeholder="Börja skriva här..." disabled>
-        <button class="start-button" onclick="startGame()">Starta</button>
-        <p class="typing-stats" id="typing-stats"></p>
+    <!-- Reaction Game Section -->
+    <section class="reaction-game">
+        <h2>Testa Din Reaktionstid</h2>
+        <p>Klicka på knappen så snabbt du kan när den ändrar färg till grönt!</p>
+        <button class="reaction-button" id="reaction-button" onclick="startReactionGame()">Vänta...</button>
+        <p class="reaction-stats" id="reaction-stats"></p>
     </section>
 
     <script>
-        const sentences = [
-            "WebStay erbjuder skräddarsydda hemsidor för att förbättra din online-närvaro.",
-            "Skapa en professionell hemsida med våra enkla verktyg.",
-            "Vi hjälper ditt företag att nå nya höjder online.",
-            "Håll kontakten med dina kunder genom en fantastisk webbplats."
-        ];
+        let startTime, timeout;
 
-        let startTime, sentence, typingInput, typingStats;
+        function startReactionGame() {
+            const button = document.getElementById("reaction-button");
+            const stats = document.getElementById("reaction-stats");
+            button.disabled = true;
+            button.classList.remove("ready");
+            button.textContent = "Vänta...";
 
-        function startGame() {
-            sentence = sentences[Math.floor(Math.random() * sentences.length)];
-            document.getElementById("typing-sentence").textContent = sentence;
-            typingInput = document.getElementById("typing-input");
-            typingInput.value = "";
-            typingInput.disabled = false;
-            typingInput.focus();
-            startTime = new Date().getTime();
-            typingStats = document.getElementById("typing-stats");
-            typingStats.textContent = "Skriv meningen så snabbt du kan!";
-            typingInput.addEventListener("input", checkTyping);
+            // Slumpmässig fördröjning innan knappen blir grön
+            timeout = setTimeout(() => {
+                startTime = new Date().getTime();
+                button.disabled = false;
+                button.classList.add("ready");
+                button.textContent = "Klicka nu!";
+            }, Math.random() * 2000 + 1000); // Mellan 1-3 sekunder
         }
 
-        function checkTyping() {
-            const typedText = typingInput.value;
-            if (typedText === sentence) {
-                const endTime = new Date().getTime();
-                const timeTaken = (endTime - startTime) / 1000;
-                const wordsPerMinute = Math.round((sentence.split(" ").length / timeTaken) * 60);
-                typingStats.textContent = `Bra jobbat! Din hastighet är ${wordsPerMinute} ord per minut.`;
-                typingInput.disabled = true;
-                typingInput.removeEventListener("input", checkTyping);
+        document.getElementById("reaction-button").addEventListener("click", function() {
+            if (this.classList.contains("ready")) {
+                const reactionTime = new Date().getTime() - startTime;
+                document.getElementById("reaction-stats").textContent = `Din reaktionstid är ${reactionTime} ms.`;
+                this.classList.remove("ready");
+                this.textContent = "Spela igen";
+                clearTimeout(timeout);
+            } else {
+                startReactionGame();
             }
-        }
+        });
     </script>
-
+    
     <footer>
         <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
         <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
