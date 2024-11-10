@@ -426,9 +426,10 @@
             <p>Gå live och nå dina kunder!</p>
         </div>
  
-        <!-- Popup Quiz -->
+<!-- Popup Quiz -->
 <div class="quiz-overlay" id="quiz-overlay">
     <div class="quiz-container">
+        <button class="close-button" onclick="closeQuiz()">X</button>
         <h2>Kund Quiz</h2>
         <div id="quiz-content">
             <p class="quiz-question" id="quiz-question">Fråga 1: Vilken typ av hemsida är du intresserad av?</p>
@@ -441,13 +442,14 @@
         </div>
         <div class="quiz-result" id="quiz-result">
             <h3>Rekommendation baserat på dina svar</h3>
-            <a href="https://webstay.se/order" class="order-button">Beställ nu på WebStay</a>
+            <a href="#" id="order-button" class="order-button">Beställ nu på WebStay</a>
         </div>
     </div>
 </div>
 
 <script>
     let currentQuestion = 0;
+    let recommendedPlan = "Start"; // Default plan
     const questions = [
         { question: "Vilken typ av hemsida är du intresserad av?", options: ["E-handel", "Blogg", "Portfolio", "Företagssida"] },
         { question: "Vad är viktigast för din hemsida?", options: ["Design", "Funktionalitet", "Snabbhet", "Enkelhet"] },
@@ -474,23 +476,55 @@
                 optionsContainer.appendChild(button);
             });
         } else {
-            showResult();
+            determineRecommendation();
         }
     }
 
     function nextQuestion(answerIndex) {
-        // Store answer if necessary, then proceed to the next question
+        if (currentQuestion === questions.length - 1) {
+            // If we're on the budget question, set recommendedPlan based on the answer
+            if (answerIndex === 0) recommendedPlan = "Start";
+            else if (answerIndex === 1) recommendedPlan = "Premium";
+            else if (answerIndex === 2 || answerIndex === 3) recommendedPlan = "Ultimate";
+        }
         showQuestion(currentQuestion + 1);
     }
 
-    function showResult() {
+    function determineRecommendation() {
         document.getElementById("quiz-content").style.display = "none";
         document.getElementById("quiz-result").style.display = "block";
+        const orderButton = document.getElementById("order-button");
+        orderButton.href = `https://webstay.se/order?plan=${recommendedPlan}`;
     }
 
-    // Automatically start the quiz on page load, or call startQuiz() based on your needs
+    function closeQuiz() {
+        document.getElementById("quiz-overlay").style.display = "none";
+    }
+
     window.onload = startQuiz;
 </script>
+
+<style>
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .close-button:hover {
+        background-color: #c9302c;
+    }
+</style>
     
     <footer>
         <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
