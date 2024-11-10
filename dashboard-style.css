@@ -5,8 +5,9 @@ body, html {
     padding: 0;
     background: #f0f4f8;
     color: #333;
-    min-height: 100vh;
+    height: 100vh;
     overflow: hidden;
+    display: flex;
 }
 
 /* Sidebar */
@@ -70,10 +71,11 @@ body, html {
     display: inline-block;
 }
 
-/* Main content area */
+/* Popup content container */
 .popup-content {
     display: flex;
-    width: 100%;
+    width: calc(100% - 60px); /* Leaves space for sidebar */
+    margin-left: 60px; /* Offset for sidebar */
     height: 100vh;
 }
 
