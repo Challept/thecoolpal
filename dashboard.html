@@ -35,7 +35,7 @@
 
             <!-- Live Preview Area (middle) -->
             <div class="live-preview">
-                <iframe id="live-preview" src="https://kund5.webstay.se" onload="initLiveEditor()" width="100%" height="90%"></iframe>
+                <iframe id="live-preview" src="https://kund5.webstay.se" onload="initLiveEditor()" width="100%" height="100%"></iframe>
             </div>
 
             <!-- Edit Options (right) -->
@@ -46,6 +46,9 @@
                 
                 <label for="section-content">Innehåll:</label>
                 <textarea id="section-content" placeholder="Redigera innehåll" oninput="updateSectionContent()"></textarea>
+                
+                <label for="section-color">Färg:</label>
+                <input type="color" id="section-color" onchange="updateSectionColor()">
             </div>
         </div>
     </div>
