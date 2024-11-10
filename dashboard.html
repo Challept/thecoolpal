@@ -36,6 +36,22 @@
         </div>
         <div id="website" class="dashboard-section">
             <h2>Hemsida</h2>
+            <!-- Iframe för live view -->
+            <div class="live-view">
+                <iframe id="livePreview" src="https://kund5.webstay.se" width="100%" height="500px"></iframe>
+            </div>
+
+            <!-- Enkel redigeringspanel -->
+            <div class="edit-panel">
+                <h3>Redigera sektion</h3>
+                <label for="sectionId">Välj sektion (ID):</label>
+                <input type="text" id="sectionId" placeholder="Ex: header">
+                
+                <label for="newContent">Ny text:</label>
+                <textarea id="newContent" rows="4" placeholder="Skriv ny text här"></textarea>
+                
+                <button onclick="editSection()">Uppdatera sektion</button>
+            </div>
         </div>
     </div>
 
