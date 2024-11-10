@@ -3,19 +3,20 @@ body {
     margin: 0;
     font-family: 'Helvetica Neue', Arial, sans-serif;
     display: flex;
-    background-color: #f8f9fb;
+    background-color: #f4f6f9;
+    color: #333;
 }
 
 /* Sidebar */
 .sidebar {
     width: 60px;
-    background-color: #1e1e2d;
+    background-color: #1f2a48;
     color: #fff;
     height: 100vh;
     position: fixed;
     overflow-x: hidden;
     transition: width 0.3s ease;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar:hover {
@@ -32,11 +33,12 @@ body {
     padding: 20px 10px;
     text-align: left;
     white-space: nowrap;
-    transition: background 0.3s;
+    transition: background 0.3s, padding-left 0.3s;
 }
 
 .sidebar ul li:hover {
-    background-color: #2d2d3a;
+    background-color: #2b3a5d;
+    padding-left: 20px;
     cursor: pointer;
 }
 
@@ -71,7 +73,7 @@ body {
 }
 
 .sidebar ul li a.active {
-    color: #00b4d8;
+    color: #00c8ff;
 }
 
 .sidebar ul li a.active .icon {
@@ -86,9 +88,10 @@ body {
 /* Huvudinnehåll */
 .main-content {
     margin-left: 60px;
-    padding: 20px;
+    padding: 30px;
     width: 100%;
     display: flex;
+    gap: 20px;
     transition: margin-left 0.3s ease;
 }
 
@@ -102,13 +105,20 @@ body {
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
     margin-right: 20px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInLeft 0.5s ease;
+}
+
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 .left-column:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .right-column {
@@ -116,13 +126,18 @@ body {
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    animation: slideIn 0.5s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    animation: fadeInRight 0.5s ease;
+    transition: box-shadow 0.3s ease;
 }
 
-@keyframes slideIn {
+@keyframes fadeInRight {
     from { opacity: 0; transform: translateX(20px); }
     to { opacity: 1; transform: translateX(0); }
+}
+
+.right-column:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Live View */
@@ -142,12 +157,22 @@ body {
 /* Redigeringspanel */
 .edit-panel {
     margin-top: 20px;
+    background-color: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .edit-panel h3 {
-    font-size: 1.2em;
+    font-size: 1.4em;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .edit-panel label {
@@ -159,29 +184,30 @@ body {
 
 .edit-panel input, .edit-panel textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 0.9em;
     transition: border-color 0.3s;
 }
 
 .edit-panel input:focus, .edit-panel textarea:focus {
-    border-color: #00b4d8;
+    border-color: #00c8ff;
 }
 
 .edit-panel button {
-    background-color: #00b4d8;
+    background-color: #00c8ff;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 20px;
     border: none;
     border-radius: 4px;
     font-size: 1em;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .edit-panel button:hover {
-    background-color: #008bbd;
+    background-color: #009ec3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
