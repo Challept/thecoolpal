@@ -1,10 +1,5 @@
-// Firebase initialization (add this only if you haven't added it in firebase-config.js)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js";
-import { firebaseConfig } from './firebase-config.js';
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// Firebase already initialized in firebase-config.js
+const db = firebase.firestore();
 
 // Function to render sections from Firestore in real-time
 function renderSections() {
@@ -12,7 +7,7 @@ function renderSections() {
     sectionList.innerHTML = ''; // Clear the list before re-rendering
 
     // Listen for changes in Firestore collection
-    onSnapshot(collection(db, 'sections'), (snapshot) => {
+    db.collection('sections').onSnapshot((snapshot) => {
         snapshot.forEach((doc) => {
             const section = doc.data();
             const listItem = document.createElement('li');
@@ -28,7 +23,7 @@ function renderSections() {
 async function addSection() {
     const sectionName = prompt("Enter section name:");
     if (sectionName) {
-        await addDoc(collection(db, 'sections'), {
+        await db.collection('sections').add({
             name: sectionName,
             content: "This is the content of " + sectionName
         });
@@ -36,9 +31,10 @@ async function addSection() {
 }
 
 // Function to delete a selected section
-async function deleteSection(sectionId) {
-    if (confirm("Are you sure you want to delete this section?")) {
-        await deleteDoc(doc(db, 'sections', sectionId));
+function deleteSection() {
+    const sectionId = document.getElementById('edit-panel').dataset.sectionId;
+    if (sectionId && confirm("Are you sure you want to delete this section?")) {
+        db.collection('sections').doc(sectionId).delete();
     }
 }
 
@@ -50,27 +46,24 @@ function selectSection(sectionId, name, content) {
 }
 
 // Function to update section content in Firestore
-async function updateSectionContent() {
+function updateSectionContent() {
     const sectionId = document.getElementById('edit-panel').dataset.sectionId;
     const newContent = document.getElementById('section-content').value;
 
     if (sectionId) {
-        await updateDoc(doc(db, 'sections', sectionId), {
+        db.collection('sections').doc(sectionId).update({
             content: newContent
         });
     }
 }
 
-// Initialize the live editor
+// Function to initialize the live editor
 function initLiveEditor() {
     renderSections();
 
     // Attach event listeners
     document.getElementById('add-section-btn').addEventListener('click', addSection);
-    document.getElementById('delete-section-btn').addEventListener('click', () => {
-        const sectionId = document.getElementById('edit-panel').dataset.sectionId;
-        if (sectionId) deleteSection(sectionId);
-    });
+    document.getElementById('delete-section-btn').addEventListener('click', deleteSection);
     document.getElementById('section-content').addEventListener('input', updateSectionContent);
 }
 
