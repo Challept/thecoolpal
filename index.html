@@ -35,22 +35,19 @@
             margin: 0 auto;
         }
 
-        /* Bild under header */
-        .top-image {
-            width: 100%;
-            height: 180px;
-            background-image: url('image.jpg'); /* Lägg in din bild här */
-            background-size: cover;
-            background-position: center;
-            margin-bottom: 30px;
-            border-radius: 5px;
-        }
+.top-video {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Justera höjden efter behov */
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
 
-    .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
+.top-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .custom-button {
