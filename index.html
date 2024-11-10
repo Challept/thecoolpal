@@ -212,6 +212,53 @@
             .gallery img {
                 width: 100%;
             }
+            /* Ny stil för betalningsmetoder */
+        .payment-container {
+            background: #fff;
+            color: #333;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+            width: 350px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .payment-container h1 {
+            font-size: 24px;
+            margin-bottom: 1rem;
+            color: #0072ff;
+        }
+        .payment-method {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 10px 0;
+            background: #f0f0f0;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .payment-method:hover {
+            transform: scale(1.05);
+        }
+        .method-name {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .method-count {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0072ff;
+        }
+        .payment-methods {
+            opacity: 0;
+            animation: fadeInUp 1s forwards;
+            animation-delay: 0.5s;
+        }
+        @keyframes fadeInUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
@@ -261,6 +308,44 @@
             <img src="https://img.freepik.com/free-photo/portrait-handsome-bearded-man-suit_23-2149705920.jpg?t=st=1730591121~exp=1730594721~hmac=4631d644dfa9c71ca2bf48e8e56eff813aa080d9c67932489f428d097ed07239&w=100" alt="Kund">
             <h3>Johan Lind</h3>
             <p>"Professionellt team som lyssnade på våra behov och levererade över förväntan."</p>
+        </div>
+    </section>
+
+        <!-- Nytt avsnitt för Betalningsmetoder -->
+    <section class="payment-container">
+        <h1>Betalningsmetoder</h1>
+        <div class="payment-methods">
+            <div class="payment-method">
+                <span class="method-name">Bankkort</span>
+                <span class="method-count">3</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">Swish</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">Klarna</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">Apple Pay</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">Google Pay</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">PayPal</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">SEPA Direct Debit</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">iDEAL</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">Bancontact</span>
+            </div>
+            <div class="payment-method">
+                <span class="method-name">Przelewy24 (P24)</span>
+            </div>
         </div>
     </section>
 
