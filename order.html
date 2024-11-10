@@ -7,8 +7,8 @@
     <title>Välkommen</title>
     <style>
         body {
-            background-color: #1c1c1e;
-            color: #f5f5f7;
+            background-color: #f0f4ff;
+            color: #333;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -20,24 +20,24 @@
             max-width: 1200px;
             margin: 50px auto;
             padding: 30px;
-            background-color: #2c2c2e;
+            background-color: #ffffff;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             animation: fadeIn 0.8s ease-in-out;
         }
 
         h2.main-title {
             text-align: center;
-            color: #a3d4ff;
+            color: #007bff;
             font-size: 36px;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(163, 212, 255, 0.5);
+            text-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
         @keyframes glow {
-            0% { text-shadow: 0 0 10px rgba(163, 212, 255, 0.5); }
-            100% { text-shadow: 0 0 30px rgba(163, 212, 255, 1); }
+            0% { text-shadow: 0 0 10px rgba(0, 123, 255, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(0, 123, 255, 0.6); }
         }
 
         @keyframes fadeIn {
@@ -52,6 +52,15 @@
             width: 100%;
         }
 
+        .form-container, .payment-container {
+            background: linear-gradient(135deg, #e6f3ff, #d0e7ff);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
         .pricing-container {
             display: flex;
             gap: 20px;
@@ -62,6 +71,7 @@
         .pricing-plan {
             position: relative;
             background-color: #ffffff;
+            border: 1px solid #007bff;
             border-radius: 10px;
             padding: 20px;
             width: 100%;
@@ -74,11 +84,12 @@
 
         .pricing-plan:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 24px rgba(0, 123, 255, 0.15);
         }
 
         .pricing-plan.selected {
             border: 2px solid #007bff;
+            background-color: #d0e7ff;
         }
 
         .plan-title {
@@ -89,7 +100,7 @@
 
         .plan-description {
             font-size: 1em;
-            color: #666;
+            color: #555;
             margin: 10px 0;
         }
 
@@ -130,7 +141,7 @@
         /* Form */
         .order-form label {
             font-weight: 600;
-            color: #f5f5f7;
+            color: #333;
             margin-top: 15px;
             display: block;
         }
@@ -139,26 +150,26 @@
             width: 100%;
             padding: 12px;
             margin-top: 8px;
-            background-color: #3a3a3c;
-            border: 1px solid #48484a;
+            background-color: #f5f8ff;
+            border: 1px solid #ccd5e0;
             border-radius: 8px;
-            color: #f0f0f0;
+            color: #333;
             font-size: 16px;
+            transition: border-color 0.3s;
         }
 
         .order-form input:focus, .order-form select:focus {
-            border-color: #5ac8fa;
-            background-color: #48484a;
-            box-shadow: 0 0 10px rgba(90, 200, 250, 0.3);
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
         }
 
         /* Payment Section */
         .payment-container {
             text-align: center;
-            background: linear-gradient(135deg, #333335, #2c2c2e);
+            background: linear-gradient(135deg, #e6f3ff, #d0e7ff);
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             display: none;
         }
 
@@ -168,11 +179,11 @@
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
-            background-color: #5ac8fa;
+            background-color: #007bff;
             border: none;
             border-radius: 8px;
             text-decoration: none;
-            box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
+            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
             transition: background-color 0.3s, transform 0.3s;
             pointer-events: none;
             opacity: 0.5;
@@ -184,7 +195,7 @@
         }
 
         .pay-button:hover {
-            background-color: #007aff;
+            background-color: #005bb5;
             transform: translateY(-3px);
         }
     </style>
@@ -193,27 +204,51 @@
     <div class="container">
         <h2 class="main-title">Köp Grymma Hemsidor!</h2>
         <div class="order-page">
-            <div class="pricing-container">
-                <div class="pricing-plan" onclick="selectPlan('basic')">
-                    <div class="selected-label">Vald</div>
-                    <h3 class="plan-title">Start</h3>
-                    <p class="plan-description">Enkel och pålitlig</p>
-                    <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
-                    <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
+            <div class="form-container">
+                <div class="pricing-container">
+                    <div class="pricing-plan" onclick="selectPlan('basic')">
+                        <div class="selected-label">Vald</div>
+                        <h3 class="plan-title">Start</h3>
+                        <p class="plan-description">Enkel och pålitlig</p>
+                        <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
+                        <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
+                    </div>
+                    <div class="pricing-plan popular" onclick="selectPlan('popular')">
+                        <div class="selected-label">Vald</div>
+                        <h3 class="plan-title">Premium</h3>
+                        <p class="plan-description">Mest valda paketet</p>
+                        <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
+                        <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
+                    </div>
+                    <div class="pricing-plan" onclick="selectPlan('premium')">
+                        <div class="selected-label">Vald</div>
+                        <h3 class="plan-title">Ultimate</h3>
+                        <p class="plan-description">Full kontroll och alla funktioner</p>
+                        <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
+                        <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
+                    </div>
                 </div>
-                <div class="pricing-plan popular" onclick="selectPlan('popular')">
-                    <div class="selected-label">Vald</div>
-                    <h3 class="plan-title">Premium</h3>
-                    <p class="plan-description">Mest valda paketet</p>
-                    <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
-                    <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
-                </div>
-                <div class="pricing-plan" onclick="selectPlan('premium')">
-                    <div class="selected-label">Vald</div>
-                    <h3 class="plan-title">Ultimate</h3>
-                    <p class="plan-description">Full kontroll och alla funktioner</p>
-                    <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
-                    <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
+                <div class="order-form">
+                    <label for="model-selection">Välj modell:</label>
+                    <select id="model-selection" name="model-selection" required onchange="validateForm()">
+                        <option value="" disabled selected>Välj en modell</option>
+                        <option value="butik">Butik</option>
+                        <option value="webbplats">Webbplats</option>
+                        <option value="vlogg">Vlogg</option>
+                    </select>
+
+                    <label for="name">Namn:</label>
+                    <input type="text" id="name" name="name" required oninput="validateForm()">
+
+                    <label for="phone">Telefonnummer:</label>
+                    <input type="tel" id="phone" name="phone" required oninput="validateForm()">
+
+                    <label for="address">Adress:</label>
+                    <input type="text" id="address" name="address" required oninput="validateForm()">
+
+                    <label for="domain">Hemsida namn:</label>
+                    <input type="text" id="domain" name="domain" required oninput="validateForm()">
+                    <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
                 </div>
             </div>
             <div class="payment-container" id="payment-container">
@@ -249,11 +284,11 @@
         }
 
         function validateForm() {
-            const model = document.getElementById('model-selection')?.value;
-            const name = document.getElementById('name')?.value;
-            const phone = document.getElementById('phone')?.value;
-            const address = document.getElementById('address')?.value;
-            const domain = document.getElementById('domain')?.value;
+            const model = document.getElementById('model-selection').value;
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const domain = document.getElementById('domain').value;
 
             const isFormComplete = model && name && phone && address && domain && selectedPlan;
 
