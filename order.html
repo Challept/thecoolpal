@@ -52,15 +52,6 @@
             width: 100%;
         }
 
-        .form-container, .payment-container {
-            background: linear-gradient(135deg, #333335, #2c2c2e);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-            flex: 1;
-            animation: fadeIn 1s ease-out;
-        }
-
         .pricing-container {
             display: flex;
             gap: 20px;
@@ -69,6 +60,7 @@
         }
 
         .pricing-plan {
+            position: relative;
             background-color: #ffffff;
             border-radius: 10px;
             padding: 20px;
@@ -114,7 +106,28 @@
             margin-bottom: 15px;
         }
 
-        /* Formulär */
+        .selected-label {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 5px 10px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pricing-plan.selected .selected-label {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Form */
         .order-form label {
             font-weight: 600;
             color: #f5f5f7;
@@ -139,7 +152,7 @@
             box-shadow: 0 0 10px rgba(90, 200, 250, 0.3);
         }
 
-        /* Betalningssektion */
+        /* Payment Section */
         .payment-container {
             text-align: center;
             background: linear-gradient(135deg, #333335, #2c2c2e);
@@ -161,12 +174,12 @@
             text-decoration: none;
             box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
             transition: background-color 0.3s, transform 0.3s;
-            pointer-events: none; /* Initially disabled */
-            opacity: 0.5; /* Grayed out */
+            pointer-events: none;
+            opacity: 0.5;
         }
 
         .pay-button.enabled {
-            pointer-events: auto; /* Enable when validated */
+            pointer-events: auto;
             opacity: 1;
         }
 
@@ -180,48 +193,27 @@
     <div class="container">
         <h2 class="main-title">Köp Grymma Hemsidor!</h2>
         <div class="order-page">
-            <div class="form-container">
-                <div class="pricing-container">
-                    <div class="pricing-plan" onclick="selectPlan('basic')">
-                        <h3 class="plan-title">The Basics</h3>
-                        <p class="plan-description">Enkel och pålitlig</p>
-                        <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
-                        <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
-                    </div>
-                    <div class="pricing-plan popular" onclick="selectPlan('popular')">
-                        <h3 class="plan-title">Populäraste Planen</h3>
-                        <p class="plan-description">Mest valda paketet</p>
-                        <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
-                        <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
-                    </div>
-                    <div class="pricing-plan" onclick="selectPlan('premium')">
-                        <h3 class="plan-title">Bästa Planen</h3>
-                        <p class="plan-description">Full kontroll och alla funktioner</p>
-                        <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
-                        <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
-                    </div>
+            <div class="pricing-container">
+                <div class="pricing-plan" onclick="selectPlan('basic')">
+                    <div class="selected-label">Vald</div>
+                    <h3 class="plan-title">Start</h3>
+                    <p class="plan-description">Enkel och pålitlig</p>
+                    <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
+                    <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
                 </div>
-                <div class="order-form">
-                    <label for="model-selection">Välj modell:</label>
-                    <select id="model-selection" name="model-selection" required onchange="validateForm()">
-                        <option value="" disabled selected>Välj en modell</option>
-                        <option value="butik">Butik</option>
-                        <option value="webbplats">Webbplats</option>
-                        <option value="vlogg">Vlogg</option>
-                    </select>
-
-                    <label for="name">Namn:</label>
-                    <input type="text" id="name" name="name" required oninput="validateForm()">
-
-                    <label for="phone">Telefonnummer:</label>
-                    <input type="tel" id="phone" name="phone" required oninput="validateForm()">
-
-                    <label for="address">Adress:</label>
-                    <input type="text" id="address" name="address" required oninput="validateForm()">
-
-                    <label for="domain">Hemsida namn:</label>
-                    <input type="text" id="domain" name="domain" required oninput="validateForm()">
-                    <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
+                <div class="pricing-plan popular" onclick="selectPlan('popular')">
+                    <div class="selected-label">Vald</div>
+                    <h3 class="plan-title">Premium</h3>
+                    <p class="plan-description">Mest valda paketet</p>
+                    <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
+                    <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
+                </div>
+                <div class="pricing-plan" onclick="selectPlan('premium')">
+                    <div class="selected-label">Vald</div>
+                    <h3 class="plan-title">Ultimate</h3>
+                    <p class="plan-description">Full kontroll och alla funktioner</p>
+                    <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
+                    <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
                 </div>
             </div>
             <div class="payment-container" id="payment-container">
@@ -241,7 +233,7 @@
             });
 
             if (plan === 'basic') {
-                document.querySelector('.pricing-plan').classList.add('selected');
+                document.querySelectorAll('.pricing-plan')[0].classList.add('selected');
                 document.getElementById('pay-button').href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
             } else if (plan === 'popular') {
                 document.querySelectorAll('.pricing-plan')[1].classList.add('selected');
@@ -257,11 +249,11 @@
         }
 
         function validateForm() {
-            const model = document.getElementById('model-selection').value;
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const address = document.getElementById('address').value;
-            const domain = document.getElementById('domain').value;
+            const model = document.getElementById('model-selection')?.value;
+            const name = document.getElementById('name')?.value;
+            const phone = document.getElementById('phone')?.value;
+            const address = document.getElementById('address')?.value;
+            const domain = document.getElementById('domain')?.value;
 
             const isFormComplete = model && name && phone && address && domain && selectedPlan;
 
