@@ -425,99 +425,72 @@
             <h3>4</h3>
             <p>Gå live och nå dina kunder!</p>
         </div>
-    </section>
+ 
+        <!-- Popup Quiz -->
+<div class="quiz-overlay" id="quiz-overlay">
+    <div class="quiz-container">
+        <h2>Kund Quiz</h2>
+        <div id="quiz-content">
+            <p class="quiz-question" id="quiz-question">Fråga 1: Vilken typ av hemsida är du intresserad av?</p>
+            <div class="quiz-options">
+                <button onclick="nextQuestion(1)">E-handel</button>
+                <button onclick="nextQuestion(2)">Blogg</button>
+                <button onclick="nextQuestion(3)">Portfolio</button>
+                <button onclick="nextQuestion(4)">Företagssida</button>
+            </div>
+        </div>
+        <div class="quiz-result" id="quiz-result">
+            <h3>Rekommendation baserat på dina svar</h3>
+            <a href="https://webstay.se/order" class="order-button">Beställ nu på WebStay</a>
+        </div>
+    </div>
+</div>
 
-        /* Popup Quiz Styling */
-        .quiz-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
+<script>
+    let currentQuestion = 0;
+    const questions = [
+        { question: "Vilken typ av hemsida är du intresserad av?", options: ["E-handel", "Blogg", "Portfolio", "Företagssida"] },
+        { question: "Vad är viktigast för din hemsida?", options: ["Design", "Funktionalitet", "Snabbhet", "Enkelhet"] },
+        { question: "Hur mycket trafik förväntar du dig?", options: ["Lite", "Måttligt", "Mycket", "Väldigt mycket"] },
+        { question: "Vilken målgrupp har du?", options: ["Lokala", "Nationella", "Internationella", "Globalt"] },
+        { question: "Vad är din budget?", options: ["Under 500 kr", "500-1000 kr", "1000-5000 kr", "Över 5000 kr"] }
+    ];
 
-        .quiz-container {
-            background-color: #ffffff;
-            width: 90%;
-            max-width: 500px;
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.5s ease;
-        }
+    function startQuiz() {
+        document.getElementById("quiz-overlay").style.display = "flex";
+        showQuestion(0);
+    }
 
-        .quiz-container h2 {
-            font-size: 24px;
-            color: #0072ff;
-            margin-bottom: 20px;
+    function showQuestion(index) {
+        if (index < questions.length) {
+            currentQuestion = index;
+            document.getElementById("quiz-question").textContent = questions[index].question;
+            const optionsContainer = document.querySelector(".quiz-options");
+            optionsContainer.innerHTML = "";
+            questions[index].options.forEach((option, i) => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => nextQuestion(i);
+                optionsContainer.appendChild(button);
+            });
+        } else {
+            showResult();
         }
+    }
 
-        .quiz-question {
-            font-size: 18px;
-            margin: 15px 0;
-        }
+    function nextQuestion(answerIndex) {
+        // Store answer if necessary, then proceed to the next question
+        showQuestion(currentQuestion + 1);
+    }
 
-        .quiz-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+    function showResult() {
+        document.getElementById("quiz-content").style.display = "none";
+        document.getElementById("quiz-result").style.display = "block";
+    }
 
-        .quiz-options button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #333333;
-            background-color: #f2f8ff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .quiz-options button:hover {
-            background-color: #e0f3ff;
-        }
-
-        .quiz-result {
-            display: none;
-        }
-
-        .quiz-result h3 {
-            font-size: 22px;
-            color: #28a745;
-            margin-bottom: 15px;
-        }
-
-        .order-button {
-            padding: 12px 25px;
-            font-size: 18px;
-            color: #ffffff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .order-button:hover {
-            background-color: #0056b3;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
+    // Automatically start the quiz on page load, or call startQuiz() based on your needs
+    window.onload = startQuiz;
+</script>
     
     <footer>
         <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
