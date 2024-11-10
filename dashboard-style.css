@@ -1,4 +1,4 @@
-/* Basic reset and settings */
+/* General reset and settings */
 body, html {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -64,106 +64,86 @@ body, html {
     display: inline-block;
 }
 
-/* Profile card styling */
-.profile-card {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+/* Popup styling */
+.popup {
     display: flex;
+    position: fixed;
+    top: 0;
+    left: 60px;
+    width: calc(100% - 60px);
+    height: 100vh;
+    background-color: #f9f9f9;
+    z-index: 1000;
     align-items: center;
-    background-color: #0072ff;
-    color: #fff;
+    justify-content: space-around;
+}
+
+/* Section Editor Panel */
+.editor-panel {
+    width: 250px;
+    background-color: #e3e7f1;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.section-list {
+    list-style: none;
+    padding: 0;
+}
+
+.section-item {
     padding: 10px;
+    background-color: #ffffff;
+    margin: 5px 0;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.profile-card i {
-    margin-left: 10px;
+.section-item:hover {
+    background-color: #cce4ff;
 }
 
-/* Profile popup styling */
-.profile-popup {
-    display: none;
-    position: fixed;
-    top: 100px;
-    right: 20px;
-    width: 300px;
-    background-color: #fff;
+/* Live Preview */
+.live-preview {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+
+.live-preview iframe {
+    width: 100%;
+    height: 90%;
+    border: none;
+}
+
+/* Edit Panel */
+.edit-panel {
+    width: 250px;
+    background-color: #ffffff;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+    border-left: 1px solid #ddd;
 }
 
-.profile-popup h3 {
-    margin-top: 0;
+.edit-panel h3 {
     color: #0072ff;
 }
 
-.profile-popup label {
+.edit-panel label, .edit-panel input, .edit-panel textarea {
     display: block;
-    margin-top: 10px;
-    color: #333;
+    width: 100%;
+    margin: 10px 0;
 }
 
-.profile-popup input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 5px;
+.edit-panel input, .edit-panel textarea {
+    padding: 10px;
     border: 1px solid #ddd;
-}
-
-.profile-popup button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 15px;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
     border-radius: 5px;
-    cursor: pointer;
 }
 
-/* Full-screen popup */
-.popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 60px; /* Space for sidebar */
-    width: calc(100% - 60px);
-    height: 100vh;
-    background-color: rgba(255, 255, 255, 0.95);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
-
-.popup-content {
-    width: 90%;
-    max-width: 800px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
-
-.popup iframe {
-    border: none;
+.edit-panel input[type="color"] {
+    padding: 2px;
     width: 100%;
-    height: 80vh;
-}
-
-/* Close button */
-.close-btn {
-    background-color: #f44336;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    margin-bottom: 10px;
-    border-radius: 5px;
+    height: 40px;
 }
