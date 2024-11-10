@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="file.png" type="image/png">
     <title>Välkommen</title>
-    <link rel="stylesheet" href="style.css">
     <style>
         body {
             background-color: #1c1c1e;
@@ -48,10 +47,9 @@
 
         .order-page {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-between;
-            margin-top: 30px;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
         }
 
         .form-container, .payment-container {
@@ -60,7 +58,6 @@
             padding: 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
             flex: 1;
-            min-width: 300px;
             animation: fadeIn 1s ease-out;
         }
 
@@ -79,12 +76,17 @@
             max-width: 280px;
             text-align: center;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .pricing-plan:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-plan.selected {
+            border: 2px solid #007bff;
         }
 
         .plan-title {
@@ -110,36 +112,6 @@
             font-size: 0.9em;
             color: #777;
             margin-bottom: 15px;
-        }
-
-        .choose-plan {
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .choose-plan:hover {
-            background-color: #0056b3;
-            transform: scale(1.05);
-        }
-
-        /* Highlight den populära planen */
-        .popular {
-            background-color: #e8f4ff;
-            border: 2px solid #007bff;
-        }
-
-        /* Responsiv layout */
-        @media (max-width: 900px) {
-            .order-page {
-                flex-direction: column;
-                align-items: center;
-            }
         }
 
         /* Formulär */
@@ -174,6 +146,7 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            display: none;
         }
 
         .pay-button {
@@ -202,33 +175,52 @@
         <div class="order-page">
             <div class="form-container">
                 <div class="pricing-container">
-                    <div class="pricing-plan">
+                    <div class="pricing-plan" onclick="selectPlan('basic')">
                         <h3 class="plan-title">The Basics</h3>
                         <p class="plan-description">Enkel och pålitlig</p>
                         <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
                         <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
-                        <button class="choose-plan">Välj Plan</button>
                     </div>
-                    <div class="pricing-plan popular">
+                    <div class="pricing-plan popular" onclick="selectPlan('popular')">
                         <h3 class="plan-title">Populäraste Planen</h3>
                         <p class="plan-description">Mest valda paketet</p>
                         <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
                         <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
-                        <button class="choose-plan">Välj Plan</button>
                     </div>
-                    <div class="pricing-plan">
+                    <div class="pricing-plan" onclick="selectPlan('premium')">
                         <h3 class="plan-title">Bästa Planen</h3>
                         <p class="plan-description">Full kontroll och alla funktioner</p>
                         <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
                         <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
-                        <button class="choose-plan">Välj Plan</button>
                     </div>
                 </div>
+                <div class="order-form">
+                    <label for="model-selection">Välj modell:</label>
+                    <select id="model-selection" name="model-selection" required>
+                        <option value="" disabled selected>Välj en modell</option>
+                        <option value="butik">Butik</option>
+                        <option value="webbplats">Webbplats</option>
+                        <option value="vlogg">Vlogg</option>
+                    </select>
+
+                    <label for="name">Namn:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="phone">Telefonnummer:</label>
+                    <input type="tel" id="phone" name="phone" required>
+
+                    <label for="address">Adress:</label>
+                    <input type="text" id="address" name="address" required>
+
+                    <label for="domain">Hemsida namn:</label>
+                    <input type="text" id="domain" name="domain" required>
+                    <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
+                </div>
             </div>
-            <div class="payment-container">
+            <div class="payment-container" id="payment-container">
                 <h2>Betalning</h2>
                 <p>Betala säkert med Stripe. Din information är skyddad.</p>
-                <a href="https://buy.stripe.com/dR62a3c4T4Bidk43ce" class="pay-button">Betala med Stripe</a>
+                <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
                 <div style="margin-top: 15px; color: #dcdcdc;">
                     <p>1. Klicka på knappen för att starta betalningen.</p>
                     <p>2. Genomför betalningen säkert med Stripe.</p>
@@ -237,5 +229,29 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function selectPlan(plan) {
+            // Reset alla planers styling
+            document.querySelectorAll('.pricing-plan').forEach(function(el) {
+                el.classList.remove('selected');
+            });
+
+            // Markera den valda planen
+            if (plan === 'basic') {
+                document.querySelector('.pricing-plan').classList.add('selected');
+                document.getElementById('pay-button').href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
+            } else if (plan === 'popular') {
+                document.querySelectorAll('.pricing-plan')[1].classList.add('selected');
+                document.getElementById('pay-button').href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
+            } else if (plan === 'premium') {
+                document.querySelectorAll('.pricing-plan')[2].classList.add('selected');
+                document.getElementById('pay-button').href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
+            }
+
+            // Visa betalningssektionen
+            document.getElementById('payment-container').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
