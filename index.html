@@ -35,40 +35,41 @@
             margin: 0 auto;
         }
 
-.top-video {
-    position: relative;
-    width: 100%;
-    height: 400px; /* Justera höjden efter behov */
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
+        .top-video {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
 
-.top-video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+        .top-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.custom-button {
-    display: inline-block;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #5ac8fa;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-}
+        .custom-button {
+            display: inline-block;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #5ac8fa;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin: 10px;
+        }
 
-.custom-button:hover {
-    background-color: #007aff;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 20px rgba(90, 200, 250, 0.4);
-}
+        .custom-button:hover {
+            background-color: #007aff;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(90, 200, 250, 0.4);
+        }
 
         /* Pricing Section */
         .pricing-container {
@@ -80,6 +81,7 @@
             margin: 0 auto 50px;
             text-align: center;
         }
+
         .plan {
             background-color: #ffffff;
             border: 1px solid #ddd;
@@ -90,24 +92,29 @@
             transition: transform 0.3s;
             animation: fadeInUp 1.2s;
         }
+
         .plan:hover {
             transform: scale(1.05);
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
         }
+
         .plan.popular {
             border: 2px solid #0072ff;
             background: #e0f3ff;
             animation: pulse 1.5s infinite;
         }
+
         .plan h3 {
             font-size: 24px;
             color: #0072ff;
             margin-bottom: 10px;
         }
+
         .plan p {
             font-size: 18px;
             color: #555;
         }
+
         .price {
             font-size: 30px;
             color: #333;
@@ -120,9 +127,76 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
+
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* About Section */
+        .about-section {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin: 40px auto;
+            max-width: 900px;
+        }
+
+        .about-section h2 {
+            font-size: 30px;
+            color: #0072ff;
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            font-size: 18px;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Step Section */
+        .steps-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .step {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f8f9fd;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .step:hover {
+            transform: scale(1.05);
+        }
+
+        .step h3 {
+            font-size: 50px;
+            color: #4facfe;
+            margin: 0;
+            animation: bounce 1.2s infinite alternate;
+        }
+
+        .step p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Stores Counter */
+        .counter-section {
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            color: #0072ff;
+            font-weight: bold;
         }
 
         /* Exempelbutiker */
@@ -132,26 +206,20 @@
             margin-bottom: 50px;
             color: #333;
         }
+
         .stores-section h2 {
             font-size: 28px;
             color: #0072ff;
             margin-bottom: 20px;
         }
+
         .stores-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 15px;
         }
-        .iframe-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 20px auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-}
+
         .store {
             background-color: #0072ff;
             color: #ffffff;
@@ -161,6 +229,7 @@
             text-decoration: none;
             transition: background-color 0.3s;
         }
+
         .store:hover {
             background-color: #005bb5;
         }
@@ -172,15 +241,32 @@
             background-color: #0072ff;
             color: #ffffff;
         }
+
         footer p {
             margin: 0;
         }
+
         footer a {
             color: #ffffff;
             text-decoration: underline;
         }
+
         footer a:hover {
             color: #e0f3ff;
+        }
+
+        /* Animations */
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .steps-container {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
     </style>
 </head>
@@ -190,18 +276,18 @@
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
 
-<div class="top-video">
-    <video autoplay muted loop playsinline>
-        <source src="startanu.mp4" type="video/mp4">
-        Din webbläsare stödjer inte videouppspelning.
-    </video>
-</div>
+    <div class="top-video">
+        <video autoplay muted loop playsinline>
+            <source src="startanu.mp4" type="video/mp4">
+            Din webbläsare stödjer inte videouppspelning.
+        </video>
+    </div>
 
-<div class="button-container">
-    <a href="https://webstay.se/order" class="custom-button">Köp en Hemsida</a>
-    <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
-</div>
-    
+    <div class="button-container">
+        <a href="https://webstay.se/order" class="custom-button">Köp en Hemsida</a>
+        <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
+    </div>
+
     <!-- Pricing Plans -->
     <section class="pricing-container">
         <div class="plan">
@@ -224,23 +310,53 @@
         </div>
     </section>
 
-    <!-- Exempelbutiker byggda på plattformen -->
-<section class="stores-section">
-    <h2>Exempelbutiker byggda med WebStay</h2>
-    <div class="stores-list">
-        <!-- Knapp för att öppna sidan i ny flik -->
-        <a href="https://vfparfym.com" class="store" target="_blank">Besök VF Parfym i ny flik</a>
-    </div>
+    <!-- About Us Section -->
+    <section class="about-section">
+        <h2>Om Oss</h2>
+        <p>På WebStay brinner vi för att skapa professionella och användarvänliga webbplatser och butiker. Vi hjälper företag att nå sina mål och skapa en stark online-närvaro.</p>
+    </section>
 
-    <!-- Inbäddad live-visning av vfparfym.com -->
-    <div class="iframe-container">
-        <iframe src="https://vfparfym.com" width="100%" height="600px" style="border: none;" scrolling="yes" sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
-    </div>
-</section>
+    <!-- How It Works - Steps -->
+    <section class="steps-container">
+        <div class="step">
+            <h3>1</h3>
+            <p>Välj din plan och registrera dig.</p>
+        </div>
+        <div class="step">
+            <h3>2</h3>
+            <p>Ge oss information om ditt företag.</p>
+        </div>
+        <div class="step">
+            <h3>3</h3>
+            <p>Anpassa din hemsida med våra verktyg.</p>
+        </div>
+        <div class="step">
+            <h3>4</h3>
+            <p>Gå live och nå dina kunder!</p>
+        </div>
+    </section>
+
+    <!-- Counter Section -->
+    <section class="counter-section">
+        <p>Butiker byggda hos oss: <span id="store-counter">12538</span>+</p>
+    </section>
 
     <footer>
         <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
         <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
     </footer>
+
+    <script>
+        // Store counter animation
+        let counter = 12538;
+        const counterElement = document.getElementById('store-counter');
+
+        function incrementCounter() {
+            counter++;
+            counterElement.textContent = counter;
+        }
+
+        setInterval(incrementCounter, 5000); // Update the counter every 5 seconds
+    </script>
 </body>
 </html>
