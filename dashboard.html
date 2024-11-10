@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="dashboard-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Styles for the alert message */
+        /* Styles for alert messages */
         .alert-message {
             position: fixed;
             top: 20px;
@@ -23,13 +23,13 @@
         }
     </style>
     <script>
-        // Function to open popups for each menu item
+        // Function to open the selected popup and close any others
         function openPopup(popupId) {
             document.querySelectorAll('.popup').forEach(popup => popup.style.display = 'none');
             document.querySelector(popupId).style.display = 'flex';
         }
 
-        // Close specific popup
+        // Close a specific popup
         function closePopup(popupId) {
             document.querySelector(popupId).style.display = 'none';
         }
@@ -69,72 +69,64 @@
         </ul>
     </div>
 
-    <!-- Main content -->
-    <div class="main-content">
-        <div class="header">
-            <h1>Välkommen till din Dashboard</h1>
-            <p>Här kan du se och hantera din hemsida</p>
-        </div>
+    <!-- Profile card in the top-right corner -->
+    <div class="profile-card" onclick="openProfilePopup()">
+        <span>Butik: VF Parfym</span>
+        <i class="fas fa-user-circle"></i>
+    </div>
 
-        <!-- Profile card at top-right corner -->
-        <div class="profile-card" onclick="openProfilePopup()">
-            <span>Butik: VF Parfym</span>
-            <i class="fas fa-user-circle"></i>
-        </div>
+    <!-- Profile Popup -->
+    <div id="profile-popup" class="profile-popup">
+        <h3>Profilinställningar</h3>
+        <label>Namn</label>
+        <input type="text" placeholder="Ditt namn">
+        <label>E-post</label>
+        <input type="email" placeholder="Din e-post">
+        <label>Telefonnummer</label>
+        <input type="tel" placeholder="Ditt telefonnummer">
+        <label>Butiksnamn</label>
+        <input type="text" placeholder="Ditt butiksnamn" readonly>
+        <button onclick="saveProfile()">Spara Ändringar</button>
+        <button onclick="closeProfilePopup()">Stäng</button>
+    </div>
 
-        <!-- Profile Popup -->
-        <div id="profile-popup" class="profile-popup">
-            <h3>Profilinställningar</h3>
-            <label>Namn</label>
-            <input type="text" placeholder="Ditt namn">
-            <label>E-post</label>
-            <input type="email" placeholder="Din e-post">
-            <label>Telefonnummer</label>
-            <input type="tel" placeholder="Ditt telefonnummer">
-            <label>Butiksnamn</label>
-            <input type="text" placeholder="Ditt butiksnamn" readonly>
-            <button onclick="saveProfile()">Spara Ändringar</button>
-            <button onclick="closeProfilePopup()">Stäng</button>
+    <!-- Popup Containers -->
+    <div id="home-popup" class="popup">
+        <div class="popup-content">
+            <h2>Hem</h2>
+            <p>Innehåll för hemsidan kommer här.</p>
+            <button onclick="closePopup('#home-popup')">Stäng</button>
         </div>
+    </div>
 
-        <!-- Popup Containers -->
-        <div id="home-popup" class="popup">
-            <div class="popup-content">
-                <h2>Hem</h2>
-                <p>Innehåll för hemsidan kommer här.</p>
-                <button onclick="closePopup('#home-popup')">Stäng</button>
-            </div>
+    <div id="website-popup" class="popup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('#website-popup')">Stäng Förhandsgranskning</button>
+            <iframe src="https://kund5.webstay.se" width="100%" height="90%"></iframe>
         </div>
+    </div>
 
-        <div id="website-popup" class="popup">
-            <div class="popup-content">
-                <button class="close-btn" onclick="closePopup('#website-popup')">Stäng Förhandsgranskning</button>
-                <iframe src="https://kund5.webstay.se" width="100%" height="90%"></iframe>
-            </div>
+    <div id="settings-popup" class="popup">
+        <div class="popup-content">
+            <h2>Inställningar</h2>
+            <p>Inställningar för din hemsida.</p>
+            <button onclick="closePopup('#settings-popup')">Stäng</button>
         </div>
+    </div>
 
-        <div id="settings-popup" class="popup">
-            <div class="popup-content">
-                <h2>Inställningar</h2>
-                <p>Inställningar för din hemsida.</p>
-                <button onclick="closePopup('#settings-popup')">Stäng</button>
-            </div>
+    <div id="statistics-popup" class="popup">
+        <div class="popup-content">
+            <h2>Statistik</h2>
+            <p>Statistikinformation för din hemsida.</p>
+            <button onclick="closePopup('#statistics-popup')">Stäng</button>
         </div>
+    </div>
 
-        <div id="statistics-popup" class="popup">
-            <div class="popup-content">
-                <h2>Statistik</h2>
-                <p>Statistikinformation för din hemsida.</p>
-                <button onclick="closePopup('#statistics-popup')">Stäng</button>
-            </div>
-        </div>
-
-        <div id="users-popup" class="popup">
-            <div class="popup-content">
-                <h2>Användare</h2>
-                <p>Hantera dina användare här.</p>
-                <button onclick="closePopup('#users-popup')">Stäng</button>
-            </div>
+    <div id="users-popup" class="popup">
+        <div class="popup-content">
+            <h2>Användare</h2>
+            <p>Hantera dina användare här.</p>
+            <button onclick="closePopup('#users-popup')">Stäng</button>
         </div>
     </div>
 </body>
