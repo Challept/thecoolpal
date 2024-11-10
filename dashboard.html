@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="dashboard-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Alert message styling */
         .alert-message {
             position: fixed;
             top: 20px;
@@ -20,36 +21,9 @@
             z-index: 1000;
             display: none;
         }
-        #live-preview-container {
-            margin-top: 20px;
-        }
-        #editor {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 600px;
-        }
-        #editor label, #editor input, #editor textarea, #editor button {
-            display: block;
-            width: 100%;
-            margin-top: 10px;
-        }
-        #editor button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #editor button:hover {
-            background-color: #45a049;
-        }
     </style>
     <script>
-        // Kontrollera inloggning vid sidladdning
+        // Firebase authentication check on page load
         window.onload = function() {
             firebase.auth().onAuthStateChanged((user) => {
                 if (user) {
@@ -61,7 +35,7 @@
             });
         };
 
-        // Visa alert om man blev utloggad
+        // Show logout alert if needed
         window.addEventListener('load', function() {
             if (sessionStorage.getItem('showLogoutAlert') === 'true') {
                 showAlertMessage('Du har blivit utloggad. Logga in igen.');
@@ -92,38 +66,39 @@
             });
         }
 
-        // Innehåll för redigeringsfunktionen
-        const initialContent = {
-            heading: "Välkommen till Min Butik",
-            content: "Detta är innehållet på din hemsida. Redigera texten här."
-        };
-
-        function updateLivePreview() {
-            const iframe = document.getElementById('live-preview').contentWindow.document;
-            iframe.querySelector('#heading').textContent = document.getElementById('edit-heading').value;
-            iframe.querySelector('#content').textContent = document.getElementById('edit-content').value;
+        // Live preview update
+        function openLiveView() {
+            const popup = document.createElement('div');
+            popup.classList.add('live-view-popup');
+            popup.innerHTML = `
+                <div class="popup-sidebar">
+                    <ul class="popup-menu">
+                        <li class="popup-menu-item"><i class="fas fa-home"></i> Hem</li>
+                        <li class="popup-menu-item"><i class="fas fa-edit"></i> Redigera</li>
+                        <li class="popup-menu-item"><i class="fas fa-cogs"></i> Inställningar</li>
+                        <li class="popup-menu-item"><i class="fas fa-chart-line"></i> Statistik</li>
+                        <li class="popup-menu-item"><i class="fas fa-question-circle"></i> Hjälp</li>
+                        <li class="popup-menu-item" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logga ut</li>
+                    </ul>
+                </div>
+                <div class="popup-content">
+                    <iframe src="https://kund5.webstay.se" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+                <div class="profile">
+                    <span>Butik: Kund 5</span>
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            `;
+            document.body.appendChild(popup);
+            popup.addEventListener('click', () => popup.remove());
         }
-
-        function saveChanges() {
-            initialContent.heading = document.getElementById('edit-heading').value;
-            initialContent.content = document.getElementById('edit-content').value;
-            alert("Ändringar sparade!");
-            updateLivePreview();
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('edit-heading').value = initialContent.heading;
-            document.getElementById('edit-content').value = initialContent.content;
-
-            document.getElementById('edit-heading').addEventListener('input', updateLivePreview);
-            document.getElementById('edit-content').addEventListener('input', updateLivePreview);
-        });
     </script>
 </head>
 <body>
+    <!-- Sidebar with icons and expanding text on desktop -->
     <div class="sidebar">
         <ul class="menu">
-            <li class="menu-item" onclick="openPopup('#hem')">
+            <li class="menu-item" onclick="openLiveView()">
                 <i class="fas fa-home"></i><span class="menu-text">Hem</span>
             </li>
             <li class="menu-item" onclick="openPopup('#hemsida')">
@@ -149,20 +124,6 @@
     <div class="main-content">
         <h1>Välkommen till din Dashboard</h1>
         <p>Här kan du se och hantera din hemsida</p>
-
-        <div id="live-preview-container">
-            <h2>Förhandsgranskning</h2>
-            <iframe id="live-preview" src="https://kund5.webstay.se" width="100%" height="500px"></iframe>
-        </div>
-
-        <div id="editor">
-            <h2>Redigera Hemsida</h2>
-            <label for="edit-heading">Redigera Rubrik</label>
-            <input type="text" id="edit-heading" placeholder="Redigera rubriktext">
-            <label for="edit-content">Redigera Innehåll</label>
-            <textarea id="edit-content" placeholder="Redigera huvudinnehåll"></textarea>
-            <button onclick="saveChanges()">Spara Ändringar</button>
-        </div>
     </div>
 </body>
 </html>
