@@ -273,47 +273,56 @@
         </div>
     </div>
 
-    <script>
-        let selectedPlan = null;
+<script>
+    let selectedPlan = null;
 
-        function selectPlan(plan) {
-            document.querySelectorAll('.pricing-plan').forEach(function(el) {
-                el.classList.remove('selected');
-            });
+    function selectPlan(plan) {
+        // Remove 'selected' class from all plans and add it to the selected one
+        document.querySelectorAll('.pricing-plan').forEach(function(el) {
+            el.classList.remove('selected');
+        });
 
-            if (plan === 'basic') {
-                document.querySelectorAll('.pricing-plan')[0].classList.add('selected');
-                document.getElementById('pay-button').href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
-            } else if (plan === 'popular') {
-                document.querySelectorAll('.pricing-plan')[1].classList.add('selected');
-                document.getElementById('pay-button').href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
-            } else if (plan === 'premium') {
-                document.querySelectorAll('.pricing-plan')[2].classList.add('selected');
-                document.getElementById('pay-button').href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
-            }
-
-            selectedPlan = plan;
-            validateForm();
-            document.getElementById('payment-container').style.display = 'block';
+        // Set the pay button link and selected plan text based on the chosen plan
+        const payButton = document.getElementById('pay-button');
+        if (plan === 'basic') {
+            document.querySelectorAll('.pricing-plan')[0].classList.add('selected');
+            payButton.href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
+            document.getElementById('selected-plan-text').textContent = "Vald plan: Start";
+        } else if (plan === 'popular') {
+            document.querySelectorAll('.pricing-plan')[1].classList.add('selected');
+            payButton.href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
+            document.getElementById('selected-plan-text').textContent = "Vald plan: Premium";
+        } else if (plan === 'premium') {
+            document.querySelectorAll('.pricing-plan')[2].classList.add('selected');
+            payButton.href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
+            document.getElementById('selected-plan-text').textContent = "Vald plan: Ultimate";
         }
 
-        function validateForm() {
-            const model = document.getElementById('model-selection').value;
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const address = document.getElementById('address').value;
-            const domain = document.getElementById('domain').value;
+        selectedPlan = plan;
+        validateForm();
+        document.getElementById('payment-container').style.display = 'block';
+    }
 
-            const isFormComplete = model && name && phone && address && domain && selectedPlan;
+    function validateForm() {
+        // Check that all fields are filled out
+        const model = document.getElementById('model-selection').value;
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+        const domain = document.getElementById('domain').value;
 
-            const payButton = document.getElementById('pay-button');
-            if (isFormComplete) {
-                payButton.classList.add('enabled');
-            } else {
-                payButton.classList.remove('enabled');
-            }
+        // Enable pay button only if all fields are filled and a plan is selected
+        const isFormComplete = model && name && phone && address && domain && selectedPlan;
+        const payButton = document.getElementById('pay-button');
+        if (isFormComplete) {
+            payButton.classList.add('enabled');
+            payButton.style.pointerEvents = "auto"; // Enable clicking
+        } else {
+            payButton.classList.remove('enabled');
+            payButton.style.pointerEvents = "none"; // Disable clicking
         }
-    </script>
+    }
+</script>
 
     <script>
     // Function to get the query parameter by name
