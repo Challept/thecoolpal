@@ -433,16 +433,16 @@
         <h2>Kund Quiz</h2>
         <div id="quiz-content">
             <p class="quiz-question" id="quiz-question">Fråga 1: Vilken typ av hemsida är du intresserad av?</p>
-            <div class="quiz-options">
+            <div class="quiz-options" id="quiz-options">
                 <button onclick="nextQuestion(1)">E-handel</button>
                 <button onclick="nextQuestion(2)">Blogg</button>
                 <button onclick="nextQuestion(3)">Portfolio</button>
                 <button onclick="nextQuestion(4)">Företagssida</button>
             </div>
         </div>
-        <div class="quiz-result" id="quiz-result">
+        <div class="quiz-result" id="quiz-result" style="display: none;">
             <h3>Rekommendation baserat på dina svar</h3>
-            <a href="#" id="order-button" class="order-button">Beställ nu på WebStay</a>
+            <a href="https://webstay.se/order" id="order-button" class="order-button">Beställ nu på WebStay</a>
         </div>
     </div>
 </div>
@@ -467,7 +467,7 @@
         if (index < questions.length) {
             currentQuestion = index;
             document.getElementById("quiz-question").textContent = questions[index].question;
-            const optionsContainer = document.querySelector(".quiz-options");
+            const optionsContainer = document.getElementById("quiz-options");
             optionsContainer.innerHTML = "";
             questions[index].options.forEach((option, i) => {
                 const button = document.createElement("button");
@@ -481,11 +481,14 @@
     }
 
     function nextQuestion(answerIndex) {
+        // If we're on the budget question, set recommendedPlan based on the answer
         if (currentQuestion === questions.length - 1) {
-            // If we're on the budget question, set recommendedPlan based on the answer
             if (answerIndex === 0) recommendedPlan = "Start";
             else if (answerIndex === 1) recommendedPlan = "Premium";
             else if (answerIndex === 2 || answerIndex === 3) recommendedPlan = "Ultimate";
+
+            // Save the recommendation to localStorage
+            localStorage.setItem('recommendedPlan', recommendedPlan);
         }
         showQuestion(currentQuestion + 1);
     }
@@ -493,8 +496,6 @@
     function determineRecommendation() {
         document.getElementById("quiz-content").style.display = "none";
         document.getElementById("quiz-result").style.display = "block";
-        const orderButton = document.getElementById("order-button");
-        orderButton.href = `https://webstay.se/order?plan=${recommendedPlan}`;
     }
 
     function closeQuiz() {
