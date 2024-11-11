@@ -679,69 +679,149 @@ footer .social-icons img {
     }
 </style>
 
-    <div class="name-generator-container">
-        <h2 class="section-title">Generera Företagsnamn</h2>
-        <p class="section-subtitle">Fyll i nyckelord och välj en kategori för att få skräddarsydda förslag!</p>
+<div class="name-generator-container">
+    <h2 class="section-title">Generera Företagsnamn</h2>
+    <p class="section-subtitle">Fyll i nyckelord, välj en kategori och ett språk för att få skräddarsydda förslag!</p>
 
-        <div class="input-container">
-            <label for="keywords">Nyckelord:</label>
-            <input type="text" id="keywords" placeholder="Ange några nyckelord...">
-        </div>
-
-        <div class="input-container">
-            <label for="category">Kategori:</label>
-            <select id="category">
-                <option value="modern">Modern</option>
-                <option value="teknik">Teknik</option>
-                <option value="miljö">Miljö</option>
-                <option value="samhällsservice">Samhällsservice</option>
-                <option value="hälsa">Hälsa</option>
-            </select>
-        </div>
-
-        <button class="generate-button" onclick="generateNames()">Generera Företagsnamn</button>
-
-        <div class="loader" id="loader" style="display: none;"></div>
-
-        <div class="result-container" id="result-container" style="display: none;">
-            <h3>Förslag på företagsnamn:</h3>
-            <ul id="name-list"></ul>
-            <button class="generate-button" onclick="generateNames()">Generera om</button>
-        </div>
+    <div class="input-container">
+        <label for="keywords">Nyckelord:</label>
+        <input type="text" id="keywords" placeholder="Ange några nyckelord...">
     </div>
 
-    <script>
-        function generateNames() {
-            // Visa loader och dölj resultatkontainern
-            document.getElementById("loader").style.display = "block";
-            document.getElementById("result-container").style.display = "none";
+    <div class="input-container">
+        <label for="category">Kategori:</label>
+        <select id="category">
+            <option value="modern">Modern</option>
+            <option value="teknik">Teknik</option>
+            <option value="miljö">Miljö</option>
+            <option value="samhällsservice">Samhällsservice</option>
+            <option value="hälsa">Hälsa</option>
+        </select>
+    </div>
 
-            // Mockup-fördröjning för att simulera laddning
-            setTimeout(() => {
-                document.getElementById("loader").style.display = "none";
-                document.getElementById("result-container").style.display = "block";
+    <div class="input-container">
+        <label for="language">Språk:</label>
+        <select id="language">
+            <option value="svenska">Svenska</option>
+            <option value="engelska">Engelska</option>
+        </select>
+    </div>
 
-                // Generera företagsnamn baserat på input (simulerat här)
-                const keywords = document.getElementById("keywords").value;
-                const category = document.getElementById("category").value;
-                const names = [
-                    `${keywords} Solutions`,
-                    `${keywords} Innovations`,
-                    `${keywords} Labs`,
-                    `${category} Dynamics`,
-                    `Global ${keywords}`
-                ];
+    <button class="generate-button" onclick="generateNames()">Generera Företagsnamn</button>
 
-                const nameList = document.getElementById("name-list");
-                nameList.innerHTML = ""; // Rensa gamla namn
-                names.forEach(name => {
-                    const li = document.createElement("li");
-                    li.textContent = name;
-                    nameList.appendChild(li);
-                });
-            }, 2000); // 2 sekunders fördröjning
-        }
-    </script>
+    <div class="loader" id="loader" style="display: none;">Laddar...</div>
+
+    <div class="result-container" id="result-container" style="display: none;">
+        <h3>Förslag på företagsnamn:</h3>
+        <ul id="name-list"></ul>
+        <button class="generate-button" onclick="generateNames()">Generera om</button>
+    </div>
+</div>
+
+<script>
+    function generateNames() {
+        // Visa loader och dölj resultatkontainern
+        document.getElementById("loader").style.display = "block";
+        document.getElementById("result-container").style.display = "none";
+
+        // Simulera en kort laddningstid
+        setTimeout(() => {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("result-container").style.display = "block";
+
+            // Hämta användarinput
+            const keywords = document.getElementById("keywords").value;
+            const category = document.getElementById("category").value;
+            const language = document.getElementById("language").value;
+
+            // Lista med företagsnamn baserat på språket
+            const nameSuggestions = language === "svenska" 
+                ? [`${keywords} Konsult`, `${category} Teknik`, `Nordic ${keywords}`, `${keywords} Affärspartner`, `${keywords} Grupp`, `Din ${keywords}`]
+                : [`${keywords} Solutions`, `${keywords} Innovations`, `${keywords} Labs`, `${category} Dynamics`, `Global ${keywords}`, `${keywords} Partners`];
+            
+            // Generera en uppsättning av 5 unika namn
+            const nameList = document.getElementById("name-list");
+            nameList.innerHTML = ""; // Rensa tidigare resultat
+            const randomNames = [];
+            while (randomNames.length < 5) {
+                const randomName = nameSuggestions[Math.floor(Math.random() * nameSuggestions.length)];
+                if (!randomNames.includes(randomName)) randomNames.push(randomName);
+            }
+
+            // Visa de slumpmässigt valda företagsnamnen
+            randomNames.forEach(name => {
+                const li = document.createElement("li");
+                li.textContent = name;
+                nameList.appendChild(li);
+            });
+        }, 1000); // 1 sekunds fördröjning för laddningsanimation
+    }
+</script>
+
+<style>
+    /* Snygga CSS-stilar för namn-generatorn */
+    .name-generator-container {
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .input-container {
+        margin-bottom: 15px;
+    }
+
+    .input-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .input-container input, .input-container select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .generate-button {
+        padding: 12px 20px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .generate-button:hover {
+        background-color: #0056b3;
+    }
+
+    .loader {
+        font-size: 16px;
+        color: #555;
+        margin: 10px 0;
+    }
+
+    .result-container {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .result-container ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .result-container li {
+        padding: 8px 12px;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
     
 <!-- New Footer Section -->
 <footer>
