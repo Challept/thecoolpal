@@ -265,12 +265,14 @@
                     <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
                 </div>
             </div>
-            <div class="payment-container" id="payment-container">
-                <h2>Betalning</h2>
-                <p>Betala säkert med Stripe. Din information är skyddad.</p>
-                <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
-            </div>
-        </div>
+           <div class="payment-container" id="payment-container">
+    <p id="selected-plan-text">Vänligen välj en plan ovanför.</p>
+    <h2>Betalning</h2>
+    <p>Betala säkert med Stripe. Din information är skyddad.</p>
+    <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
+    <p id="error-text" style="display: none; color: red; font-size: 14px; margin-top: 10px;"></p>
+</div>
+</div>
     </div>
 
 <script>
@@ -314,68 +316,21 @@
         // Enable pay button only if all fields are filled and a plan is selected
         const isFormComplete = model && name && phone && address && domain && selectedPlan;
         const payButton = document.getElementById('pay-button');
+        const errorText = document.getElementById('error-text');
+
         if (isFormComplete) {
             payButton.classList.add('enabled');
             payButton.style.pointerEvents = "auto"; // Enable clicking
+            payButton.style.opacity = "1"; // Make it fully opaque
+            errorText.style.display = "none"; // Hide the error text
         } else {
             payButton.classList.remove('enabled');
             payButton.style.pointerEvents = "none"; // Disable clicking
+            payButton.style.opacity = "0.5"; // Make it look disabled
+            errorText.style.display = "block"; // Show the error text
+            errorText.textContent = "Vänligen fyll i alla fält och välj en plan för att aktivera knappen.";
         }
     }
-</script>
-
-    <script>
-    // Function to get the query parameter by name
-    function getQueryParameter(name) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(name);
-    }
-
-    // Function to select the plan based on the URL parameter
-    function selectPlanBasedOnURL() {
-        const plan = getQueryParameter("plan");
-        
-        if (plan) {
-            // Replace these IDs or selectors with the correct IDs for your plan elements
-            document.querySelectorAll('.plan').forEach(plan => {
-                plan.classList.remove('selected'); // Ensure no other plan is selected
-            });
-
-            if (plan === "Start") {
-                document.getElementById("start-plan").classList.add("selected");
-            } else if (plan === "Premium") {
-                document.getElementById("premium-plan").classList.add("selected");
-            } else if (plan === "Ultimate") {
-                document.getElementById("ultimate-plan").classList.add("selected");
-            }
-        }
-    }
-
-    // Run the function on page load
-    window.onload = selectPlanBasedOnURL;
-</script>
-
-    <script>
-    function selectPlan(plan) {
-        // Remove 'selected' class from all plans
-        document.querySelectorAll('.pricing-plan').forEach(planElement => {
-            planElement.classList.remove('selected');
-        });
-
-        // Add 'selected' class to the clicked plan
-        document.querySelector(`.pricing-plan[onclick="selectPlan('${plan}')"]`).classList.add('selected');
-
-        // Store the selected plan in localStorage for use on other pages
-        localStorage.setItem('selectedPlan', plan);
-    }
-
-    // Automatically highlight the selected plan on page load if stored in localStorage
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedPlan = localStorage.getItem('selectedPlan');
-        if (savedPlan) {
-            selectPlan(savedPlan);
-        }
-    });
 </script>
     
 </body>
