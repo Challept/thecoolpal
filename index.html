@@ -157,7 +157,7 @@
         margin: 0 auto;
     }
 
-/* Flex container to ensure footer stays at the bottom */
+/* Reset body and HTML for full height layout */
 body, html {
     display: flex;
     flex-direction: column;
@@ -166,41 +166,121 @@ body, html {
 }
 
 .container {
-    flex: 1; /* Allows content to take up available space */
+    flex: 1; /* Main content area */
 }
 
-/* Footer */
+/* Step-by-Step Section */
+.steps-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 1200px;
+    gap: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #e8f0ff, #cce1ff);
+    border-radius: 10px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.step {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.step:hover {
+    transform: scale(1.05);
+    background-color: #f2f8ff;
+}
+
+.step h3 {
+    font-size: 40px;
+    color: #0074d9;
+    margin: 0;
+    animation: bounce 1.2s infinite alternate;
+}
+
+.step p {
+    font-size: 16px;
+    color: #444;
+}
+
+/* New Footer Design */
 footer {
     text-align: center;
-    padding: 20px;
-    background-color: #0072ff;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #004a99, #0066cc);
     color: #ffffff;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+footer .footer-links {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+footer .footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+footer .footer-links a:hover {
+    color: #ffdd57;
 }
 
 footer p {
     margin: 0;
+    opacity: 0.8;
 }
 
-footer a {
-    color: #ffffff;
-    text-decoration: underline;
+/* Footer Social Icons */
+footer .social-icons {
+    display: flex;
+    gap: 15px;
 }
 
-footer a:hover {
-    color: #e0f3ff;
+footer .social-icons a {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #005bb5;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
 }
 
-/* Animations */
+footer .social-icons a:hover {
+    background-color: #ffdd57;
+}
+
+footer .social-icons img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Bounce Animation */
 @keyframes bounce {
     from { transform: translateY(0); }
     to { transform: translateY(-10px); }
 }
 
-/* Responsive Design */
+/* Responsive Design for Step-by-Step Section */
 @media (max-width: 768px) {
     .steps-container {
         flex-direction: column;
-        gap: 20px;
+        padding: 20px;
     }
 }
 
@@ -342,24 +422,25 @@ footer a:hover {
         <p>På WebStay brinner vi för att skapa professionella och användarvänliga webbplatser och butiker. Vi hjälper företag att nå sina mål och skapa en stark online-närvaro.</p>
     </section>
 
-    <!-- How It Works - Steps -->
-    <section class="steps-container">
-        <div class="step">
-            <h3>1</h3>
-            <p>Välj din plan och registrera dig.</p>
-        </div>
-        <div class="step">
-            <h3>2</h3>
-            <p>Ge oss information om ditt företag.</p>
-        </div>
-        <div class="step">
-            <h3>3</h3>
-            <p>Anpassa din hemsida med våra verktyg.</p>
-        </div>
-        <div class="step">
-            <h3>4</h3>
-            <p>Gå live och nå dina kunder!</p>
-        </div>
+<!-- Step-by-Step Section -->
+<section class="steps-container">
+    <div class="step">
+        <h3>1</h3>
+        <p>Välj din plan och registrera dig.</p>
+    </div>
+    <div class="step">
+        <h3>2</h3>
+        <p>Ge oss information om ditt företag.</p>
+    </div>
+    <div class="step">
+        <h3>3</h3>
+        <p>Anpassa din hemsida med våra verktyg.</p>
+    </div>
+    <div class="step">
+        <h3>4</h3>
+        <p>Gå live och nå dina kunder!</p>
+    </div>
+</section>
  
 <!-- Popup Quiz -->
 <div class="quiz-overlay" id="quiz-overlay">
@@ -462,10 +543,22 @@ footer a:hover {
     }
 </style>
     
-    <footer>
-        <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
-        <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
-    </footer>
+<!-- New Footer Section -->
+<footer>
+    <div class="footer-links">
+        <a href="#">Hem</a>
+        <a href="#">Om oss</a>
+        <a href="#">Kontakt</a>
+        <a href="#">Tjänster</a>
+    </div>
+    <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
+    <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
+    <div class="social-icons">
+        <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
+        <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
+        <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
+    </div>
+</footer>
     
 </body>
 </html>
