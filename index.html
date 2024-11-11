@@ -17,25 +17,49 @@
         line-height: 1.6;
     }
 
-    /* Header */
-    .header {
-        text-align: center;
-        padding: 60px 20px;
-        background: linear-gradient(135deg, #4facfe, #00f2fe);
-        color: #ffffff;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-    .header h1 {
-        font-size: 50px;
-        margin-bottom: 20px;
-    }
-    .header p {
-        font-size: 20px;
-        max-width: 800px;
-        margin: 0 auto;
-    }
+    /* Base Styles */
+body, html {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4ff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
 
-   .top-video {
+.container {
+    flex: 1;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.header h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+.header p {
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Video Section */
+.top-video {
     position: relative;
     width: 100%;
     height: 400px;
@@ -43,189 +67,152 @@
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
-
 .top-video video {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
-
-/* Adjust for smaller screens */
-@media (max-width: 768px) { /* Tablet and smaller */
+@media (max-width: 768px) {
     .top-video {
-        height: 250px; /* Reduce height for smaller screens */
+        height: 250px;
     }
 }
-
-@media (max-width: 480px) { /* Mobile devices */
+@media (max-width: 480px) {
     .top-video {
-        height: 200px; /* Further reduce height for mobile */
+        height: 200px;
     }
-
     .top-video video {
-        object-fit: contain; /* Ensure the full video fits within the container */
+        object-fit: contain;
     }
 }
-    .custom-button {
-        display: inline-block;
-        padding: 12px 30px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #ffffff;
-        background-color: #5ac8fa;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
-        box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
-        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-        margin: 10px;
-    }
 
-    .custom-button:hover {
-        background-color: #007aff;
-        transform: translateY(-3px);
-        box-shadow: 0 12px 20px rgba(90, 200, 250, 0.4);
-    }
+/* Button */
+.custom-button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #5ac8fa;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+.custom-button:hover {
+    background-color: #007aff;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 20px rgba(90, 200, 250, 0.4);
+}
 
-    /* Pricing Section */
-    .pricing-container {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        padding: 40px 20px;
-        max-width: 1200px;
-        margin: 0 auto 50px;
-        text-align: center;
-    }
-
-    .plan {
-        background-color: #ffffff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 30px;
-        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-        flex: 1;
-        transition: transform 0.3s;
-        animation: fadeInUp 1.2s;
-    }
-
-    .plan:hover {
-        transform: scale(1.05);
-        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .plan.popular {
-        border: 2px solid #0072ff;
-        background: #e0f3ff;
-        animation: pulse 1.5s infinite;
-    }
-
-    .plan h3 {
-        font-size: 24px;
-        color: #0072ff;
-        margin-bottom: 10px;
-    }
-
-    .plan p {
-        font-size: 18px;
-        color: #555;
-    }
-
-    .price {
-        font-size: 30px;
-        color: #333;
-        font-weight: bold;
-        margin: 20px 0;
-    }
-
-    /* Animation */
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-    }
-
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* About Section */
-    .about-section {
-        text-align: center;
-        padding: 60px 20px;
-        background-color: #ffffff;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        margin: 40px auto;
-        max-width: 900px;
-    }
-
-    .about-section h2 {
-        font-size: 30px;
-        color: #0072ff;
-        margin-bottom: 20px;
-    }
-
-    .about-section p {
-        font-size: 18px;
-        color: #555;
-        max-width: 700px;
-        margin: 0 auto;
-    }
-
-/* Reset body and HTML for full height layout */
-body, html {
+/* Pricing Section */
+.pricing-container {
     display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 50px 20px;
+    justify-content: center;
+    text-align: center;
+}
+.plan {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 30px;
+    flex: 1 1 280px;
+    transition: transform 0.3s;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 280px;
+}
+.plan:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+}
+.plan.popular {
+    border: 2px solid #0072ff;
+    background: #e0f3ff;
+    animation: pulse 1.5s infinite;
+}
+.plan h3 {
+    font-size: 22px;
+    color: #0072ff;
+    margin-bottom: 10px;
+}
+.plan p {
+    font-size: 16px;
+    color: #555;
+}
+.price {
+    font-size: 26px;
+    color: #333;
+    font-weight: bold;
+    margin: 15px 0;
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
 }
 
-.container {
-    flex: 1; /* Main content area */
+/* About Section */
+.about-section {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin: 40px auto;
+    max-width: 900px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+.about-section h2 {
+    font-size: 28px;
+    color: #0072ff;
+    margin-bottom: 20px;
+}
+.about-section p {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 /* Step-by-Step Section */
 .steps-container {
     display: flex;
-    justify-content: space-around;
-    margin: 40px auto;
-    padding: 20px;
-    max-width: 1200px;
+    flex-wrap: wrap;
     gap: 20px;
-    text-align: center;
+    padding: 30px;
+    margin: 40px auto;
     background: linear-gradient(135deg, #e8f0ff, #cce1ff);
-    border-radius: 10px;
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
 }
-
 .step {
-    flex: 1;
+    flex: 1 1 200px;
     padding: 20px;
     background-color: #ffffff;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
+    text-align: center;
 }
-
 .step:hover {
     transform: scale(1.05);
     background-color: #f2f8ff;
 }
-
 .step h3 {
-    font-size: 40px;
+    font-size: 36px;
     color: #0074d9;
     margin: 0;
-    animation: bounce 1.2s infinite alternate;
 }
-
 .step p {
     font-size: 16px;
     color: #444;
 }
 
-/* New Footer Design */
+/* Footer */
 footer {
     text-align: center;
     padding: 40px 20px;
@@ -237,35 +224,28 @@ footer {
     align-items: center;
     gap: 15px;
 }
-
 footer .footer-links {
     display: flex;
     gap: 20px;
     justify-content: center;
 }
-
 footer .footer-links a {
     color: #ffffff;
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease;
 }
-
 footer .footer-links a:hover {
     color: #ffdd57;
 }
-
 footer p {
     margin: 0;
     opacity: 0.8;
 }
-
-/* Footer Social Icons */
 footer .social-icons {
     display: flex;
     gap: 15px;
 }
-
 footer .social-icons a {
     width: 35px;
     height: 35px;
@@ -276,25 +256,17 @@ footer .social-icons a {
     border-radius: 50%;
     transition: background-color 0.3s ease;
 }
-
 footer .social-icons a:hover {
     background-color: #ffdd57;
 }
-
 footer .social-icons img {
     width: 20px;
     height: 20px;
 }
 
-/* Bounce Animation */
-@keyframes bounce {
-    from { transform: translateY(0); }
-    to { transform: translateY(-10px); }
-}
-
-/* Responsive Design for Step-by-Step Section */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .steps-container {
+    .pricing-container, .steps-container {
         flex-direction: column;
         padding: 20px;
     }
