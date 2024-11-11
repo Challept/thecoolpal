@@ -373,6 +373,115 @@ footer .social-icons img {
         margin-bottom: 15px;
     }
 
+    .name-generator-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 28px;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.input-container {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-container label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-container input,
+.input-container select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.input-container input:focus,
+.input-container select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.generate-button {
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2);
+    margin-top: 15px;
+}
+
+.generate-button:hover {
+    background-color: #0056b3;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #007bff;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.result-container {
+    margin-top: 20px;
+}
+
+.result-container h3 {
+    font-size: 20px;
+    color: #007bff;
+}
+
+.result-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.result-container li {
+    font-size: 18px;
+    color: #333;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.result-container li:last-child {
+    border-bottom: none;
+}
+
     .order-button {
         padding: 12px 25px;
         font-size: 18px;
@@ -569,6 +678,70 @@ footer .social-icons img {
         background-color: #c9302c;
     }
 </style>
+
+    <div class="name-generator-container">
+        <h2 class="section-title">Generera Företagsnamn</h2>
+        <p class="section-subtitle">Fyll i nyckelord och välj en kategori för att få skräddarsydda förslag!</p>
+
+        <div class="input-container">
+            <label for="keywords">Nyckelord:</label>
+            <input type="text" id="keywords" placeholder="Ange några nyckelord...">
+        </div>
+
+        <div class="input-container">
+            <label for="category">Kategori:</label>
+            <select id="category">
+                <option value="modern">Modern</option>
+                <option value="teknik">Teknik</option>
+                <option value="miljö">Miljö</option>
+                <option value="samhällsservice">Samhällsservice</option>
+                <option value="hälsa">Hälsa</option>
+            </select>
+        </div>
+
+        <button class="generate-button" onclick="generateNames()">Generera Företagsnamn</button>
+
+        <div class="loader" id="loader" style="display: none;"></div>
+
+        <div class="result-container" id="result-container" style="display: none;">
+            <h3>Förslag på företagsnamn:</h3>
+            <ul id="name-list"></ul>
+            <button class="generate-button" onclick="generateNames()">Generera om</button>
+        </div>
+    </div>
+
+    <script>
+        function generateNames() {
+            // Visa loader och dölj resultatkontainern
+            document.getElementById("loader").style.display = "block";
+            document.getElementById("result-container").style.display = "none";
+
+            // Mockup-fördröjning för att simulera laddning
+            setTimeout(() => {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("result-container").style.display = "block";
+
+                // Generera företagsnamn baserat på input (simulerat här)
+                const keywords = document.getElementById("keywords").value;
+                const category = document.getElementById("category").value;
+                const names = [
+                    `${keywords} Solutions`,
+                    `${keywords} Innovations`,
+                    `${keywords} Labs`,
+                    `${category} Dynamics`,
+                    `Global ${keywords}`
+                ];
+
+                const nameList = document.getElementById("name-list");
+                nameList.innerHTML = ""; // Rensa gamla namn
+                names.forEach(name => {
+                    const li = document.createElement("li");
+                    li.textContent = name;
+                    nameList.appendChild(li);
+                });
+            }, 2000); // 2 sekunders fördröjning
+        }
+    </script>
     
 <!-- New Footer Section -->
 <footer>
