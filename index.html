@@ -272,6 +272,39 @@ footer .social-icons img {
     }
 }
 
+/* Pricing Plans Title */
+.plans-title-container {
+    text-align: center;
+    margin: 50px 0 30px;
+    padding: 10px;
+}
+
+.plans-title {
+    font-size: 42px;
+    color: #007bff;
+    font-weight: bold;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.plans-title:hover {
+    transform: scale(1.05);
+    text-shadow: 0 6px 12px rgba(0, 123, 255, 0.5);
+}
+
+.plans-subtitle {
+    font-size: 18px;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
     /* Popup Quiz Styling */
     .quiz-overlay {
         position: fixed;
@@ -382,6 +415,12 @@ footer .social-icons img {
         <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
     </div>
 
+<!-- Title for Pricing Plans Section -->
+<div class="plans-title-container">
+    <h2 class="plans-title">Våra Prisplaner</h2>
+    <p class="plans-subtitle">Välj den perfekta planen som passar dina behov</p>
+</div>
+    
     <!-- Pricing Plans -->
     <section class="pricing-container">
         <div class="plan">
