@@ -173,6 +173,21 @@
             display: none;
         }
 
+        /* Recommended Plan Message Styling */
+.recommended-plan-message {
+    text-align: center;
+    font-size: 18px;
+    color: #0072ff;
+    background-color: #e8f0ff;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto 20px auto; /* Center and add spacing below */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+}
+
         .pay-button {
             display: inline-block;
             padding: 12px 25px;
@@ -219,6 +234,8 @@
         }
     };
 </script>
+
+ <div id="recommendedPlanMessage" class="recommended-plan-message"></div>
                     
                     <div class="pricing-plan" onclick="selectPlan('basic')">
                         <div class="selected-label">Vald</div>
