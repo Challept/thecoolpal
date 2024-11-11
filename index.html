@@ -157,82 +157,40 @@
         margin: 0 auto;
     }
 
-    /* Step Section */
-    .steps-container {
-        display: flex;
-        justify-content: space-around;
-        margin: 40px 0;
-        text-align: center;
-    }
+/* Step Section */
+.steps-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    gap: 20px;
+    text-align: center;
+    margin-bottom: 0; /* Removes unnecessary bottom margin */
+}
 
-    .step {
-        flex: 1;
-        padding: 20px;
-        border-radius: 8px;
-        background-color: #f8f9fd;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
+.step {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f8f9fd;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
 
-    .step:hover {
-        transform: scale(1.05);
-    }
+.step:hover {
+    transform: scale(1.05);
+}
 
-    .step h3 {
-        font-size: 50px;
-        color: #4facfe;
-        margin: 0;
-        animation: bounce 1.2s infinite alternate;
-    }
+.step h3 {
+    font-size: 50px;
+    color: #4facfe;
+    margin: 0;
+    animation: bounce 1.2s infinite alternate;
+}
 
-    .step p {
-        font-size: 18px;
-        color: #333;
-    }
-
-    /* Stores Counter */
-    .counter-section {
-        text-align: center;
-        padding: 20px;
-        font-size: 24px;
-        color: #0072ff;
-        font-weight: bold;
-    }
-
-    /* Exempelbutiker */
-    .stores-section {
-        text-align: center;
-        padding: 40px 20px;
-        margin-bottom: 50px;
-        color: #333;
-    }
-
-    .stores-section h2 {
-        font-size: 28px;
-        color: #0072ff;
-        margin-bottom: 20px;
-    }
-
-    .stores-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .store {
-        background-color: #0072ff;
-        color: #ffffff;
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 18px;
-        text-decoration: none;
-        transition: background-color 0.3s;
-    }
-
-    .store:hover {
-        background-color: #005bb5;
-    }
+.step p {
+    font-size: 18px;
+    color: #333;
+}
 
 /* Footer */
 footer {
@@ -240,7 +198,7 @@ footer {
     padding: 20px;
     background-color: #0072ff;
     color: #ffffff;
-    margin-top: auto; /* Pushes the footer to the bottom */
+    margin-top: auto; /* Keeps the footer at the bottom */
 }
 
 footer p {
@@ -256,11 +214,11 @@ footer a:hover {
     color: #e0f3ff;
 }
 
-    /* Animations */
-    @keyframes bounce {
-        from { transform: translateY(0); }
-        to { transform: translateY(-10px); }
-    }
+/* Animations */
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+}
 
     /* Responsive Design */
     @media (max-width: 768px) {
