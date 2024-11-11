@@ -206,6 +206,20 @@
         <div class="order-page">
             <div class="form-container">
                 <div class="pricing-container">
+
+<!-- Place this above the pricing plans in order.html -->
+<div id="recommendedPlanMessage" style="text-align: center; font-size: 18px; color: #0072ff; margin-bottom: 20px;">
+</div>
+
+<script>
+    window.onload = () => {
+        const recommendedPlan = localStorage.getItem('recommendedPlan');
+        if (recommendedPlan) {
+            document.getElementById('recommendedPlanMessage').innerText = `Rekommenderad plan: ${recommendedPlan}`;
+        }
+    };
+</script>
+                    
                     <div class="pricing-plan" onclick="selectPlan('basic')">
                         <div class="selected-label">Vald</div>
                         <h3 class="plan-title">Start</h3>
