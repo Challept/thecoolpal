@@ -157,13 +157,24 @@
         margin: 0 auto;
     }
 
+/* Flex container to ensure footer stays at the bottom */
+body, html {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    flex: 1; /* Allows content to take up available space */
+}
+
 /* Footer */
 footer {
     text-align: center;
     padding: 20px;
     background-color: #0072ff;
     color: #ffffff;
-    margin-top: auto; /* Keeps the footer at the bottom */
 }
 
 footer p {
@@ -185,13 +196,13 @@ footer a:hover {
     to { transform: translateY(-10px); }
 }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .steps-container {
-            flex-direction: column;
-            gap: 20px;
-        }
+/* Responsive Design */
+@media (max-width: 768px) {
+    .steps-container {
+        flex-direction: column;
+        gap: 20px;
     }
+}
 
     /* Popup Quiz Styling */
     .quiz-overlay {
