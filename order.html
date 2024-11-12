@@ -312,17 +312,38 @@
                 </div>
             </div>
 
-                    <!-- order.html -->
+<!-- order.html -->
 <button onclick="testCreateStore()" class="test-button">Testa Skapa Butik</button>
 
 <script>
+    // Firebase-konfiguration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+        authDomain: "webbforma1.firebaseapp.com",
+        projectId: "webbforma1",
+        storageBucket: "webbforma1.firebasestorage.app",
+        messagingSenderId: "875335609008",
+        appId: "1:875335609008:web:1d3cca6d257937a8526975",
+        measurementId: "G-QRXDZ5R2ZH"
+    };
+
+    // Initiera Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
     function testCreateStore() {
-        // Hämta användarens UID från session storage
-        const userId = sessionStorage.getItem('userUID');
-        
+        // Hämta användarens UID från sessionStorage eller Firebase
+        let userId = sessionStorage.getItem('userUID');
+
         if (!userId) {
-            alert('Ingen användare inloggad. Logga in först.');
-            return;
+            const user = firebase.auth().currentUser;
+            if (user) {
+                userId = user.uid;
+                sessionStorage.setItem('userUID', userId);  // Spara till sessionStorage för framtida användning
+            } else {
+                alert('Ingen användare inloggad. Logga in först.');
+                return;
+            }
         }
 
         // Skicka en POST-begäran till backend för att skapa en butik
