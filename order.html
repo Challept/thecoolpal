@@ -315,72 +315,12 @@
 <!-- order.html -->
 <button onclick="testCreateStore()" class="test-button">Testa Skapa Butik</button>
 
-    <script>
-        // Kontrollera om Firebase redan har initierats
-        if (!firebase.apps.length) {
-            // Firebase-konfiguration
-            const firebaseConfig = {
-                apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
-                authDomain: "webbforma1.firebaseapp.com",
-                projectId: "webbforma1",
-                storageBucket: "webbforma1.firebasestorage.app",
-                messagingSenderId: "875335609008",
-                appId: "1:875335609008:web:1d3cca6d257937a8526975",
-                measurementId: "G-QRXDZ5R2ZH"
-            };
-            // Initiera Firebase
-            firebase.initializeApp(firebaseConfig);
-        }
-        const auth = firebase.auth();
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
-        // Kontrollera användarens inloggningsstatus och visa användarinformation eller logga in-knapp
-        auth.onAuthStateChanged((user) => {
-            const userInfo = document.getElementById('user-info');
-            if (user) {
-                console.log("User logged in:", user.email);
-                sessionStorage.setItem('userUID', user.uid);  // Spara UID i sessionStorage
-                userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
-            } else {
-                userInfo.textContent = "Ej inloggad";
-            }
-        });
-
-        // Funktion för att skapa en butik
-        function testCreateStore() {
-            // Hämta användarens UID från sessionStorage
-            const userId = sessionStorage.getItem('userUID');
-            
-            if (!userId) {
-                alert('Ingen användare inloggad. Logga in först.');
-                return;
-            }
-
-            // Skicka en POST-begäran till backend för att skapa en butik
-            fetch('/api/create-store', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ userId: userId })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Butiken har skapats och associerats med ditt konto!');
-                    window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
-                } else {
-                    alert('Det gick inte att skapa butiken. Försök igen.');
-                }
-            })
-            .catch(error => console.error('Fel vid skapandet av butiken:', error));
-        }
-    </script>
-            
-    <!-- Firebase App och Auth (version 8.x för kompatibilitet med vanliga HTML-sidor) -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-
-    <script>
+<script>
+    // Kontrollera om Firebase redan har initierats
+    if (!firebase.apps.length) {
         // Firebase-konfiguration
         const firebaseConfig = {
             apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
@@ -391,31 +331,69 @@
             appId: "1:875335609008:web:1d3cca6d257937a8526975",
             measurementId: "G-QRXDZ5R2ZH"
         };
-
         // Initiera Firebase
         firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+    }
+    
+    const auth = firebase.auth();
 
-        // Kontrollera användarens inloggningsstatus och visa användarinformation eller logga in-knapp
-        auth.onAuthStateChanged((user) => {
-            const userInfo = document.getElementById('user-info');
-            const loginButton = document.getElementById('login-button');
+    // Kontrollera användarens inloggningsstatus och visa användarinformation eller logga in-knapp
+    auth.onAuthStateChanged((user) => {
+        const userInfo = document.getElementById('user-info');
+        const loginButton = document.getElementById('login-button');
 
-            if (user) {
-                console.log("User logged in:", user.email);
-                userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
-                loginButton.style.display = "none";  // Dölj logga in-knappen om användaren är inloggad
-            } else {
-                userInfo.style.display = "none";  // Dölj användarinformationen
-                loginButton.style.display = "inline-block";  // Visa logga in-knappen om användaren inte är inloggad
-            }
-        });
-
-        // Funktion för att omdirigera till inloggningssidan
-        function redirectToLogin() {
-            window.location.href = "login.html?redirect=false";
+        if (user) {
+            console.log("User logged in:", user.email);
+            sessionStorage.setItem('userUID', user.uid);  // Spara UID i sessionStorage
+            userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
+            if (loginButton) loginButton.style.display = "none";  // Dölj logga in-knappen om användaren är inloggad
+        } else {
+            userInfo.textContent = "Ej inloggad";
+            if (loginButton) loginButton.style.display = "inline-block";  // Visa logga in-knappen om användaren inte är inloggad
         }
-    </script>
+    });
+
+    // Funktion för att skapa en butik
+    function testCreateStore() {
+        // Hämta användarens UID från sessionStorage
+        const userId = sessionStorage.getItem('userUID');
+        
+        if (!userId) {
+            alert('Ingen användare inloggad. Logga in först.');
+            return;
+        }
+
+        // Skicka en POST-begäran till backend för att skapa en butik
+        fetch('/api/create-store', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId: userId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Butiken har skapats och associerats med ditt konto!');
+                window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
+            } else {
+                alert('Det gick inte att skapa butiken. Försök igen.');
+            }
+        })
+        .catch(error => console.error('Fel vid skapandet av butiken:', error));
+    }
+</script>
+
+<!-- Skapa en container för användarinformation -->
+<div id="user-info">Laddar användarinformation...</div>
+<div id="login-button" onclick="redirectToLogin()">Logga in</div>
+
+<script>
+    // Funktion för att omdirigera till inloggningssidan
+    function redirectToLogin() {
+        window.location.href = "login.html?redirect=false";
+    }
+</script>
             
            <div class="payment-container" id="payment-container">
     <p id="selected-plan-text">Vänligen välj en plan ovanför.</p>
