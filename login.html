@@ -74,90 +74,93 @@
             text-decoration: underline;
         }
     </style>
-    <script>
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
-            authDomain: "webbforma1.firebaseapp.com",
-            projectId: "webbforma1",
-            storageBucket: "webbforma1.firebasestorage.app",
-            messagingSenderId: "875335609008",
-            appId: "1:875335609008:web:1d3cca6d257937a8526975",
-            measurementId: "G-QRXDZ5R2ZH"
-        };
+<script>
+    // Firebase-konfiguration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+        authDomain: "webbforma1.firebaseapp.com",
+        projectId: "webbforma1",
+        storageBucket: "webbforma1.firebasestorage.app",
+        messagingSenderId: "875335609008",
+        appId: "1:875335609008:web:1d3cca6d257937a8526975",
+        measurementId: "G-QRXDZ5R2ZH"
+    };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+    // Initiera Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-        // Check if user is already logged in
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                console.log("User logged in:", user.email);
-                window.location.href = "order.html"; // Redirect to protected page if logged in
-            }
-        });
+    // Kolla om användaren är inloggad och hantera omdirigering
+    auth.onAuthStateChanged((user) => {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get("redirect") !== "false";  // Kontrollera om redirect=false finns i URL:en
 
-        // Add event listeners
-        window.onload = () => {
-            const authButton = document.getElementById("auth-button");
-            const googleLoginButton = document.getElementById("google-login-button");
-            const toggleAuthModeButton = document.getElementById("toggle-to-signup");
-            let isLoginMode = true;
+        if (user && redirect) {
+            console.log("User logged in:", user.email);
+            window.location.href = "order.html"; // Omdirigera till order.html om inloggad och redirect tillåten
+        }
+    });
 
-            if (authButton) {
-                authButton.addEventListener("click", () => {
-                    const email = document.getElementById("auth-email").value;
-                    const password = document.getElementById("auth-password").value;
+    // Inloggnings- och registreringshantering
+    window.onload = () => {
+        const authButton = document.getElementById("auth-button");
+        const googleLoginButton = document.getElementById("google-login-button");
+        const toggleAuthModeButton = document.getElementById("toggle-to-signup");
+        let isLoginMode = true;
 
-                    if (isLoginMode) {
-                        auth.signInWithEmailAndPassword(email, password)
-                            .then(() => {
-                                console.log("Logged in successfully.");
-                                window.location.href = "order.html";
-                            })
-                            .catch((error) => {
-                                console.error("Login error:", error);
-                                document.getElementById("auth-error").style.display = "block";
-                            });
-                    } else {
-                        auth.createUserWithEmailAndPassword(email, password)
-                            .then(() => {
-                                console.log("Registered successfully.");
-                                window.location.href = "order.html";
-                            })
-                            .catch((error) => {
-                                console.error("Registration error:", error);
-                                document.getElementById("auth-error").style.display = "block";
-                            });
-                    }
-                });
-            }
+        if (authButton) {
+            authButton.addEventListener("click", () => {
+                const email = document.getElementById("auth-email").value;
+                const password = document.getElementById("auth-password").value;
 
-            if (googleLoginButton) {
-                googleLoginButton.addEventListener("click", () => {
-                    const provider = new firebase.auth.GoogleAuthProvider();
-                    auth.signInWithPopup(provider)
+                if (isLoginMode) {
+                    auth.signInWithEmailAndPassword(email, password)
                         .then(() => {
-                            console.log("Logged in with Google.");
+                            console.log("Logged in successfully.");
                             window.location.href = "order.html";
                         })
                         .catch((error) => {
-                            console.error("Google login error:", error);
+                            console.error("Login error:", error);
+                            document.getElementById("auth-error").style.display = "block";
                         });
-                });
-            }
+                } else {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .then(() => {
+                            console.log("Registered successfully.");
+                            window.location.href = "order.html";
+                        })
+                        .catch((error) => {
+                            console.error("Registration error:", error);
+                            document.getElementById("auth-error").style.display = "block";
+                        });
+                }
+            });
+        }
 
-            if (toggleAuthModeButton) {
-                toggleAuthModeButton.addEventListener("click", () => {
-                    isLoginMode = !isLoginMode;
-                    document.getElementById("form-title").innerText = isLoginMode ? "Logga in" : "Registrera dig";
-                    authButton.innerText = isLoginMode ? "Logga in" : "Registrera";
-                    toggleAuthModeButton.innerText = isLoginMode ? "Har du inget konto? Registrera dig här" : "Har du redan ett konto? Logga in här";
-                });
-            }
-        };
-    </script>
+        if (googleLoginButton) {
+            googleLoginButton.addEventListener("click", () => {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then(() => {
+                        console.log("Logged in with Google.");
+                        window.location.href = "order.html";
+                    })
+                    .catch((error) => {
+                        console.error("Google login error:", error);
+                    });
+            });
+        }
+
+        if (toggleAuthModeButton) {
+            toggleAuthModeButton.addEventListener("click", () => {
+                isLoginMode = !isLoginMode;
+                document.getElementById("form-title").innerText = isLoginMode ? "Logga in" : "Registrera dig";
+                authButton.innerText = isLoginMode ? "Logga in" : "Registrera";
+                toggleAuthModeButton.innerText = isLoginMode ? "Har du inget konto? Registrera dig här" : "Har du redan ett konto? Logga in här";
+            });
+        }
+    };
+</script>
 </head>
 <body>
     <div id="auth-container">
