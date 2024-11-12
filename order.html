@@ -346,28 +346,57 @@
     }
 </script>
 
-    <script>
-        // Hämta användarnamnet eller e-post från session storage
-        document.addEventListener('DOMContentLoaded', function() {
-            const userInfo = document.getElementById('user-info');
-            const username = sessionStorage.getItem('username');  // Justera namnet om nyckeln är annorlunda
-            const userEmail = sessionStorage.getItem('userEmail');  // Justera om du använder en annan nyckel
+<div id="user-info-container">
+    <span id="user-info">Laddar användarinformation...</span>
+    <button id="create-store-button" onclick="createStore()" style="display: none;">Skapa Butik</button>
+</div>
 
-            // Visa antingen namn eller e-post om de finns
-            if (username) {
-                userInfo.textContent = `Inloggad som: ${username}`;
-            } else if (userEmail) {
-                userInfo.textContent = `Inloggad som: ${userEmail}`;
-            } else {
-                userInfo.textContent = "Ej inloggad";
-            }
-        });
+<script>
+    // Firebase-konfiguration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+        authDomain: "webbforma1.firebaseapp.com",
+        projectId: "webbforma1",
+        storageBucket: "webbforma1.firebasestorage.app",
+        messagingSenderId: "875335609008",
+        appId: "1:875335609008:web:1d3cca6d257937a8526975",
+        measurementId: "G-QRXDZ5R2ZH"
+    };
 
-        // Mockup-funktion för att skapa butik (kan ändras vid implementering)
-        function createStore() {
-            alert("Butik har skapats för teständamål!");
+    // Initiera Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Kontrollera användarens inloggningsstatus och visa användarinformation
+    auth.onAuthStateChanged((user) => {
+        const userInfo = document.getElementById('user-info');
+        const createStoreButton = document.getElementById('create-store-button');
+
+        if (user) {
+            console.log("User logged in:", user.email);
+            userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
+            sessionStorage.setItem('userEmail', user.email);
+            sessionStorage.setItem('username', user.displayName || user.email);
+            createStoreButton.style.display = "block";  // Visa knappen för att skapa butik
+        } else {
+            userInfo.innerHTML = `<a href="login.html?redirect=false" class="login-button">Logga in</a>`;
+            createStoreButton.style.display = "none";  // Dölj knappen för att skapa butik
         }
-    </script>
+    });
+
+    // Mock-funktion för att skapa en butik
+    function createStore() {
+        const username = sessionStorage.getItem('username');
+        const userEmail = sessionStorage.getItem('userEmail');
+
+        if (username || userEmail) {
+            alert(`Butik har skapats för ${username || userEmail}!`);
+            // Här kan man lägga till den faktiska funktionen för att skapa butik när den implementeras
+        } else {
+            alert("Logga in för att skapa butik.");
+        }
+    }
+</script>
             
            <div class="payment-container" id="payment-container">
     <p id="selected-plan-text">Vänligen välj en plan ovanför.</p>
