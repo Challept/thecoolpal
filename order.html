@@ -249,40 +249,6 @@
         <div class="order-page">
             <div class="form-container">
                 <div class="pricing-container">
-
-                    <!-- order.html -->
-<button onclick="testCreateStore()" class="test-button">Testa Skapa Butik</button>
-
-<script>
-    function testCreateStore() {
-        // Hämta användarens UID från session storage
-        const userId = sessionStorage.getItem('userUID');
-        
-        if (!userId) {
-            alert('Ingen användare inloggad. Logga in först.');
-            return;
-        }
-
-        // Skicka en POST-begäran till backend för att skapa en butik
-        fetch('/api/create-store', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ userId: userId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Butiken har skapats och associerats med ditt konto!');
-                window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
-            } else {
-                alert('Det gick inte att skapa butiken. Försök igen.');
-            }
-        })
-        .catch(error => console.error('Fel vid skapandet av butiken:', error));
-    }
-</script>
                     
                     <div class="pricing-plan" onclick="selectPlan('basic')">
                         <div class="selected-label">Vald</div>
@@ -329,6 +295,41 @@
                     <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
                 </div>
             </div>
+
+                    <!-- order.html -->
+<button onclick="testCreateStore()" class="test-button">Testa Skapa Butik</button>
+
+<script>
+    function testCreateStore() {
+        // Hämta användarens UID från session storage
+        const userId = sessionStorage.getItem('userUID');
+        
+        if (!userId) {
+            alert('Ingen användare inloggad. Logga in först.');
+            return;
+        }
+
+        // Skicka en POST-begäran till backend för att skapa en butik
+        fetch('/api/create-store', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId: userId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Butiken har skapats och associerats med ditt konto!');
+                window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
+            } else {
+                alert('Det gick inte att skapa butiken. Försök igen.');
+            }
+        })
+        .catch(error => console.error('Fel vid skapandet av butiken:', error));
+    }
+</script>
+            
            <div class="payment-container" id="payment-container">
     <p id="selected-plan-text">Vänligen välj en plan ovanför.</p>
     <h2>Betalning</h2>
