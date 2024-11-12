@@ -56,7 +56,6 @@
             100% { transform: translateY(0); opacity: 1; }
         }
         .button {
-            background-color: #76c7c0;
             border: none;
             border-radius: 25px;
             color: #ffffff;
@@ -66,8 +65,17 @@
             text-decoration: none;
             transition: background-color 0.3s, transform 0.3s;
             animation: pulse 2s infinite;
+            opacity: 0.5; /* Initial state for unconfirmed payment */
+            background-color: #4f4f4f; /* Transparent for unpaid */
+            pointer-events: none; /* Disable button initially */
         }
-        .button:hover {
+        .button.confirmed {
+            opacity: 1;
+            background-color: #76c7c0; /* Color for confirmed state */
+            pointer-events: auto;
+            box-shadow: 0 8px 15px rgba(118, 199, 192, 0.4);
+        }
+        .button.confirmed:hover {
             background-color: #5fa59b;
             transform: translateY(-5px);
         }
@@ -83,7 +91,22 @@
         <div class="card">
             <p>Din beställning har behandlats framgångsrikt. Du kan nu gå vidare till din dashboard för att börja anpassa och använda dina tjänster.</p>
         </div>
-        <a href="dashboard.html" class="button">Gå till Dashboard</a>
+        <!-- Button with dynamic class based on payment confirmation -->
+        <a id="confirmButton" href="https://webstay.se/order" class="button">Gå till Dashboard</a>
     </div>
+
+    <script>
+        // Simulate payment confirmation check
+        const paymentConfirmed = /* true or false based on actual confirmation logic */;
+
+        const confirmButton = document.getElementById("confirmButton");
+
+        if (paymentConfirmed) {
+            confirmButton.classList.add("confirmed");
+            confirmButton.href = "https://webstay.se/dashboard"; // Redirect to dashboard if payment is confirmed
+        } else {
+            confirmButton.textContent = "Betalning ej bekräftad. Gå till Order";
+        }
+    </script>
 </body>
 </html>
