@@ -92,6 +92,34 @@
             background-color: #d0e7ff;
         }
 
+        /* CSS för testknappen */
+.test-button {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(135deg, #76c7c0, #5fa59b);
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    margin: 20px 0;
+}
+
+.test-button:hover {
+    background: linear-gradient(135deg, #5fa59b, #76c7c0);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.test-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
         .plan-title {
             font-size: 1.4em;
             color: #007bff;
@@ -221,6 +249,40 @@
         <div class="order-page">
             <div class="form-container">
                 <div class="pricing-container">
+
+                    <!-- order.html -->
+<button onclick="testCreateStore()" class="test-button">Testa Skapa Butik</button>
+
+<script>
+    function testCreateStore() {
+        // Hämta användarens UID från session storage
+        const userId = sessionStorage.getItem('userUID');
+        
+        if (!userId) {
+            alert('Ingen användare inloggad. Logga in först.');
+            return;
+        }
+
+        // Skicka en POST-begäran till backend för att skapa en butik
+        fetch('/api/create-store', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId: userId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Butiken har skapats och associerats med ditt konto!');
+                window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
+            } else {
+                alert('Det gick inte att skapa butiken. Försök igen.');
+            }
+        })
+        .catch(error => console.error('Fel vid skapandet av butiken:', error));
+    }
+</script>
                     
                     <div class="pricing-plan" onclick="selectPlan('basic')">
                         <div class="selected-label">Vald</div>
