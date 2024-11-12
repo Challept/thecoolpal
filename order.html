@@ -352,42 +352,46 @@
     }
 </script>
 
-<script>
-    // Firebase-konfiguration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
-        authDomain: "webbforma1.firebaseapp.com",
-        projectId: "webbforma1",
-        storageBucket: "webbforma1.firebasestorage.app",
-        messagingSenderId: "875335609008",
-        appId: "1:875335609008:web:1d3cca6d257937a8526975",
-        measurementId: "G-QRXDZ5R2ZH"
-    };
+    <!-- Firebase App (nödvändigt för Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
 
-    // Initiera Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    <script>
+        // Firebase-konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+            authDomain: "webbforma1.firebaseapp.com",
+            projectId: "webbforma1",
+            storageBucket: "webbforma1.firebasestorage.app",
+            messagingSenderId: "875335609008",
+            appId: "1:875335609008:web:1d3cca6d257937a8526975",
+            measurementId: "G-QRXDZ5R2ZH"
+        };
 
-    // Kontrollera användarens inloggningsstatus och visa användarinformation eller logga in-knapp
-    auth.onAuthStateChanged((user) => {
-        const userInfo = document.getElementById('user-info');
-        const loginButton = document.getElementById('login-button');
+        // Initiera Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-        if (user) {
-            console.log("User logged in:", user.email);
-            userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
-            loginButton.style.display = "none";  // Dölj logga in-knappen om användaren är inloggad
-        } else {
-            userInfo.style.display = "none";  // Dölj användarinformationen
-            loginButton.style.display = "inline-block";  // Visa logga in-knappen om användaren inte är inloggad
+        // Kontrollera användarens inloggningsstatus och visa användarinformation eller logga in-knapp
+        auth.onAuthStateChanged((user) => {
+            const userInfo = document.getElementById('user-info');
+            const loginButton = document.getElementById('login-button');
+
+            if (user) {
+                console.log("User logged in:", user.email);
+                userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
+                loginButton.style.display = "none";  // Dölj logga in-knappen om användaren är inloggad
+            } else {
+                userInfo.style.display = "none";  // Dölj användarinformationen
+                loginButton.style.display = "inline-block";  // Visa logga in-knappen om användaren inte är inloggad
+            }
+        });
+
+        // Funktion för att omdirigera till inloggningssidan
+        function redirectToLogin() {
+            window.location.href = "login.html?redirect=false";
         }
-    });
-
-    // Funktion för att omdirigera till inloggningssidan
-    function redirectToLogin() {
-        window.location.href = "login.html?redirect=false";
-    }
-</script>
+    </script>
             
            <div class="payment-container" id="payment-container">
     <p id="selected-plan-text">Vänligen välj en plan ovanför.</p>
