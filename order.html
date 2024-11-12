@@ -260,6 +260,12 @@
         <!-- Container för att visa användarnamn eller e-post -->
     <div class="user-info" id="user-info"></div>
     
+    <div id="user-info-container" style="position: absolute; top: 20px; right: 20px;">
+    <span id="user-info">Laddar användarinformation...</span>
+    <button id="login-button" onclick="redirectToLogin()" style="display: none;">Logga in</button>
+</div>
+
+    
     <div class="container">
         <h2 class="main-title">Köp Grymma Hemsidor!</h2>
         <div class="order-page">
@@ -346,15 +352,10 @@
     }
 </script>
 
-<div id="user-info-container">
-    <span id="user-info">Laddar användarinformation...</span>
-    <button id="create-store-button" onclick="createStore()" style="display: none;">Skapa Butik</button>
-</div>
-
 <script>
     // Firebase-konfiguration
     const firebaseConfig = {
-        apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+        apiKey: "API_KEY",
         authDomain: "webbforma1.firebaseapp.com",
         projectId: "webbforma1",
         storageBucket: "webbforma1.firebasestorage.app",
@@ -367,34 +368,24 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Kontrollera användarens inloggningsstatus och visa användarinformation
+    // Kontrollera användarens inloggningsstatus och visa användarinformation eller logga in-knapp
     auth.onAuthStateChanged((user) => {
         const userInfo = document.getElementById('user-info');
-        const createStoreButton = document.getElementById('create-store-button');
+        const loginButton = document.getElementById('login-button');
 
         if (user) {
             console.log("User logged in:", user.email);
             userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
-            sessionStorage.setItem('userEmail', user.email);
-            sessionStorage.setItem('username', user.displayName || user.email);
-            createStoreButton.style.display = "block";  // Visa knappen för att skapa butik
+            loginButton.style.display = "none";  // Dölj logga in-knappen om användaren är inloggad
         } else {
-            userInfo.innerHTML = `<a href="login.html?redirect=false" class="login-button">Logga in</a>`;
-            createStoreButton.style.display = "none";  // Dölj knappen för att skapa butik
+            userInfo.style.display = "none";  // Dölj användarinformationen
+            loginButton.style.display = "inline-block";  // Visa logga in-knappen om användaren inte är inloggad
         }
     });
 
-    // Mock-funktion för att skapa en butik
-    function createStore() {
-        const username = sessionStorage.getItem('username');
-        const userEmail = sessionStorage.getItem('userEmail');
-
-        if (username || userEmail) {
-            alert(`Butik har skapats för ${username || userEmail}!`);
-            // Här kan man lägga till den faktiska funktionen för att skapa butik när den implementeras
-        } else {
-            alert("Logga in för att skapa butik.");
-        }
+    // Funktion för att omdirigera till inloggningssidan
+    function redirectToLogin() {
+        window.location.href = "login.html?redirect=false";
     }
 </script>
             
