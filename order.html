@@ -62,9 +62,15 @@
             background-color: #d0e7ff;
         }
 
-        .pay-button {
+        .button-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .pay-button,
+        .create-store-button {
             display: none;
-            margin-top: 20px;
+            margin: 10px;
             padding: 12px 25px;
             font-size: 16px;
             font-weight: bold;
@@ -77,7 +83,8 @@
             cursor: pointer;
         }
 
-        .pay-button:hover {
+        .pay-button:hover,
+        .create-store-button:hover {
             background-color: #005bb5;
             transform: translateY(-3px);
         }
@@ -87,29 +94,29 @@
     <div class="container">
         <h2 class="main-title">Välj din plan</h2>
         <div class="pricing-container">
-           <div class="pricing-plan" onclick="selectPlan('basic')">
-                        <div class="selected-label">Vald</div>
+                       <div class="pricing-plan" onclick="selectPlan('basic')">
                         <h3 class="plan-title">Start</h3>
                         <p class="plan-description">Enkel och pålitlig</p>
                         <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
                         <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
                     </div>
                     <div class="pricing-plan popular" onclick="selectPlan('popular')">
-                        <div class="selected-label">Vald</div>
                         <h3 class="plan-title">Premium</h3>
                         <p class="plan-description">Mest valda paketet</p>
                         <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
                         <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
                     </div>
                     <div class="pricing-plan" onclick="selectPlan('premium')">
-                        <div class="selected-label">Vald</div>
                         <h3 class="plan-title">Ultimate</h3>
                         <p class="plan-description">Full kontroll och alla funktioner</p>
                         <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
                         <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
                     </div>
         </div>
-        <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
+        <div class="button-container">
+            <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
+            <button id="create-store-button" class="create-store-button" onclick="createStore()">Skapa Butik</button>
+        </div>
     </div>
 
     <script>
@@ -125,6 +132,8 @@
 
             // Visa betalningsknappen med rätt länk
             const payButton = document.getElementById('pay-button');
+            const createStoreButton = document.getElementById('create-store-button');
+
             if (plan === 'basic') {
                 payButton.href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
             } else if (plan === 'premium') {
@@ -133,8 +142,13 @@
                 payButton.href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
             }
 
-            // Visa knappen
+            // Visa knappar
             payButton.style.display = "inline-block";
+            createStoreButton.style.display = "inline-block";
+        }
+
+        function createStore() {
+            alert('Butik skapad!'); // Byt ut med din backend-logik om nödvändigt
         }
     </script>
 </body>
