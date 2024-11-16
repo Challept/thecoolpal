@@ -353,43 +353,45 @@
         }
     });
 
-// Funktion för att skapa en butik
-function testCreateStore() {
-    // Hämta användarens UID från sessionStorage
-    const userId = sessionStorage.getItem('userUID');
-    
-    if (!userId) {
-        alert('Ingen användare inloggad. Logga in först.');
-        return;
-    }
+<script>
+    // Funktion för att skapa en butik
+    function testCreateStore() {
+        // Hämta användarens UID från sessionStorage
+        const userId = sessionStorage.getItem('userUID');
+        
+        if (!userId) {
+            alert('Ingen användare inloggad. Logga in först.');
+            return;
+        }
 
-    // Skicka en POST-begäran till backend för att skapa en butik
-    fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', { // Byt till din aktuella Ngrok-URL
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId: userId }) // Skicka användarens UID till backend
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Servern returnerade ett fel: ${response.statusText}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            alert(data.message); // Visa meddelandet från servern
-            window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
-        } else {
-            alert('Det gick inte att skapa butiken. Försök igen.');
-        }
-    })
-    .catch(error => {
-        console.error('Fel vid skapandet av butiken:', error);
-        alert('Ett fel uppstod. Kontrollera din anslutning eller försök igen senare.');
-    });
-}
+        // Skicka en POST-begäran till backend för att skapa en butik
+        fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', { // Byt till aktuell Ngrok-URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userId: userId })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Servern returnerade ett fel: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert(data.message); // Visa meddelandet från servern
+                window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
+            } else {
+                alert('Det gick inte att skapa butiken. Försök igen.');
+            }
+        })
+        .catch(error => {
+            console.error('Fel vid skapandet av butiken:', error);
+            alert('Ett fel uppstod. Kontrollera din anslutning eller försök igen senare.');
+        });
+    }
+</script>
 
 <!-- Skapa en container för användarinformation -->
 <div id="user-info">Laddar användarinformation...</div>
