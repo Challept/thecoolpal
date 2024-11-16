@@ -364,6 +364,21 @@
             return;
         }
 
+        // Visa en laddningsindikator
+        const loadingMessage = document.createElement('div');
+        loadingMessage.id = 'loading-message';
+        loadingMessage.style.position = 'fixed';
+        loadingMessage.style.top = '50%';
+        loadingMessage.style.left = '50%';
+        loadingMessage.style.transform = 'translate(-50%, -50%)';
+        loadingMessage.style.background = '#fff';
+        loadingMessage.style.color = '#000';
+        loadingMessage.style.padding = '20px';
+        loadingMessage.style.borderRadius = '10px';
+        loadingMessage.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.2)';
+        loadingMessage.innerHTML = '<strong>Skapar butik...</strong>';
+        document.body.appendChild(loadingMessage);
+
         // Skicka en POST-begäran till backend för att skapa en butik
         fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', { // Byt till aktuell Ngrok-URL
             method: 'POST',
@@ -379,6 +394,9 @@
             return response.json();
         })
         .then(data => {
+            // Ta bort laddningsindikatorn
+            document.body.removeChild(loadingMessage);
+
             if (data.success) {
                 alert(data.message); // Visa meddelandet från servern
                 window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
@@ -387,6 +405,9 @@
             }
         })
         .catch(error => {
+            // Ta bort laddningsindikatorn
+            document.body.removeChild(loadingMessage);
+
             console.error('Fel vid skapandet av butiken:', error);
             alert('Ett fel uppstod. Kontrollera din anslutning eller försök igen senare.');
         });
