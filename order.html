@@ -168,22 +168,31 @@
             const loadingOverlay = createLoadingOverlay();
             document.body.appendChild(loadingOverlay);
 
+            const payload = { plan: selectedPlan };
+
+            console.log("Skickar data till servern:", payload);
+
             const response = await fetch('https://0a56-83-250-213-73.ngrok-free.app/api/create-store', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
-                body: JSON.stringify({ plan: selectedPlan }),
+                body: JSON.stringify(payload),
             });
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Fel från servern:', errorText);
                 throw new Error(`Servern svarade med status: ${response.status}`);
             }
 
             const data = await response.json();
 
+            console.log("Serverns svar:", data);
+
             if (data.success) {
-                // Vänta 3 sekunder innan omdirigering
+                // Vänta 3 sekunder för att visa laddningsindikatorn innan omdirigering
                 setTimeout(() => {
                     window.location.href = '/butikaicre.html';
                 }, 3000);
@@ -192,7 +201,7 @@
             }
         } catch (error) {
             console.error('Fel vid skapandet av butiken:', error);
-            alert('Ett fel uppstod vid skapandet av din butik. Försök igen.');
+            alert(`Ett fel uppstod vid skapandet av din butik: ${error.message}`);
         } finally {
             // Ta bort laddningsindikatorn och återaktivera knappen
             const loadingOverlay = document.getElementById('loading-overlay');
