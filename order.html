@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="file.png" type="image/png">
-    <title>Beställ..</title>
+    <title>Beställ</title>
     <style>
         body {
             background-color: #f0f4ff;
@@ -12,7 +12,6 @@
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            overflow-x: hidden;
         }
 
         .container {
@@ -23,7 +22,6 @@
             background-color: #ffffff;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.8s ease-in-out;
         }
 
         h2.main-title {
@@ -31,47 +29,7 @@
             color: #007bff;
             font-size: 36px;
             font-weight: bold;
-            text-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            0% { text-shadow: 0 0 10px rgba(0, 123, 255, 0.3); }
-            100% { text-shadow: 0 0 20px rgba(0, 123, 255, 0.6); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .order-page {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 100%;
-        }
-
-        /* CSS för användarinformation i övre högra hörnet */
-.user-info {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 16px;
-    color: #ffffff;
-    background-color: #0072ff;
-    padding: 8px 15px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-        .form-container, .payment-container {
-            background: linear-gradient(135deg, #e6f3ff, #d0e7ff);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            flex: 1;
-            animation: fadeIn 1s ease-out;
+            margin-bottom: 20px;
         }
 
         .pricing-container {
@@ -82,7 +40,6 @@
         }
 
         .pricing-plan {
-            position: relative;
             background-color: #ffffff;
             border: 1px solid #007bff;
             border-radius: 10px;
@@ -105,132 +62,9 @@
             background-color: #d0e7ff;
         }
 
-        /* CSS för testknappen */
-.test-button {
-    display: inline-block;
-    padding: 12px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    background: linear-gradient(135deg, #76c7c0, #5fa59b);
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-    margin: 20px 0;
-}
-
-.test-button:hover {
-    background: linear-gradient(135deg, #5fa59b, #76c7c0);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-.test-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-}
-
-        .plan-title {
-            font-size: 1.4em;
-            color: #007bff;
-            font-weight: bold;
-        }
-
-        .plan-description {
-            font-size: 1em;
-            color: #555;
-            margin: 10px 0;
-        }
-
-        .plan-price {
-            font-size: 1.2em;
-            color: #333;
-            font-weight: bold;
-            margin: 15px 0;
-        }
-
-        .plan-features {
-            font-size: 0.9em;
-            color: #777;
-            margin-bottom: 15px;
-        }
-
-        .selected-label {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #007bff;
-            color: #ffffff;
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 0.9em;
-            font-weight: bold;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .pricing-plan.selected .selected-label {
-            display: block;
-            opacity: 1;
-        }
-
-        /* Form */
-        .order-form label {
-            font-weight: 600;
-            color: #333;
-            margin-top: 15px;
-            display: block;
-        }
-
-        .order-form input, .order-form select {
-            width: 100%;
-            padding: 12px;
-            margin-top: 8px;
-            background-color: #f5f8ff;
-            border: 1px solid #ccd5e0;
-            border-radius: 8px;
-            color: #333;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .order-form input:focus, .order-form select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-        }
-
-        /* Payment Section */
-        .payment-container {
-            text-align: center;
-            background: linear-gradient(135deg, #e6f3ff, #d0e7ff);
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        /* Recommended Plan Message Styling */
-.recommended-plan-message {
-    text-align: center;
-    font-size: 18px;
-    color: #0072ff;
-    background-color: #e8f0ff;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    max-width: 600px;
-    margin: 0 auto 20px auto; /* Center and add spacing below */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-}
-
         .pay-button {
-            display: inline-block;
+            display: none;
+            margin-top: 20px;
             padding: 12px 25px;
             font-size: 16px;
             font-weight: bold;
@@ -240,14 +74,7 @@
             border-radius: 8px;
             text-decoration: none;
             box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
-            transition: background-color 0.3s, transform 0.3s;
-            pointer-events: none;
-            opacity: 0.5;
-        }
-
-        .pay-button.enabled {
-            pointer-events: auto;
-            opacity: 1;
+            cursor: pointer;
         }
 
         .pay-button:hover {
@@ -257,16 +84,10 @@
     </style>
 </head>
 <body>
-        <!-- Container för att visa användarnamn eller e-post -->
-    <div class="user-info" id="user-info"></div>
-    
     <div class="container">
-        <h2 class="main-title">Köp Grymma Hemsidor!</h2>
-        <div class="order-page">
-            <div class="form-container">
-                <div class="pricing-container">
-                    
-                    <div class="pricing-plan" onclick="selectPlan('basic')">
+        <h2 class="main-title">Välj din plan</h2>
+        <div class="pricing-container">
+           <div class="pricing-plan" onclick="selectPlan('basic')">
                         <div class="selected-label">Vald</div>
                         <h3 class="plan-title">Start</h3>
                         <p class="plan-description">Enkel och pålitlig</p>
@@ -287,246 +108,34 @@
                         <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
                         <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
                     </div>
-                </div>
-                <div class="order-form">
-                    <label for="model-selection">Välj modell:</label>
-                    <select id="model-selection" name="model-selection" required onchange="validateForm()">
-                        <option value="" disabled selected>Välj en modell</option>
-                        <option value="butik">Butik</option>
-                        <option value="webbplats">Webbplats</option>
-                        <option value="vlogg">Vlogg</option>
-                    </select>
-
-                    <label for="name">Namn:</label>
-                    <input type="text" id="name" name="name" required oninput="validateForm()">
-
-                    <label for="phone">Telefonnummer:</label>
-                    <input type="tel" id="phone" name="phone" required oninput="validateForm()">
-
-                    <label for="address">Adress:</label>
-                    <input type="text" id="address" name="address" required oninput="validateForm()">
-
-                    <label for="domain">Hemsida namn:</label>
-                    <input type="text" id="domain" name="domain" required oninput="validateForm()">
-                    <p class="info-text">Ange namnet på den webbplats du vill ha. Du kan lägga till en egen köpt domän senare.</p>
-                </div>
-            </div>
-
-<!-- order.html -->
-<button onclick="testCreateStore()" class="test-button">Testa Skapa Butik</button>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-
-<script>
-    // Kontrollera om Firebase redan har initierats
-    if (!firebase.apps.length) {
-        // Firebase-konfiguration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
-            authDomain: "webbforma1.firebaseapp.com",
-            projectId: "webbforma1",
-            storageBucket: "webbforma1.firebasestorage.app",
-            messagingSenderId: "875335609008",
-            appId: "1:875335609008:web:1d3cca6d257937a8526975",
-            measurementId: "G-QRXDZ5R2ZH"
-        };
-        // Initiera Firebase
-        firebase.initializeApp(firebaseConfig);
-    }
-    
-    const auth = firebase.auth();
-
-    // Kontrollera användarens inloggningsstatus och visa användarinformation eller logga in-knapp
-    auth.onAuthStateChanged((user) => {
-        const userInfo = document.getElementById('user-info');
-        const loginButton = document.getElementById('login-button');
-
-        if (user) {
-            console.log("User logged in:", user.email);
-            sessionStorage.setItem('userUID', user.uid);  // Spara UID i sessionStorage
-            userInfo.textContent = `Inloggad som: ${user.displayName || user.email}`;
-            if (loginButton) loginButton.style.display = "none";  // Dölj logga in-knappen om användaren är inloggad
-        } else {
-            userInfo.textContent = "Ej inloggad";
-            if (loginButton) loginButton.style.display = "inline-block";  // Visa logga in-knappen om användaren inte är inloggad
-        }
-    });
-
-// Funktion för att skapa en butik
-function testCreateStore() {
-    // Hämta användarens UID från sessionStorage
-    const userId = sessionStorage.getItem('userUID');
-    
-    if (!userId) {
-        alert('Ingen användare inloggad. Logga in först.');
-        return;
-    }
-
-    // Visa en laddningsindikator
-    const loadingOverlay = createLoadingOverlay();
-    document.body.appendChild(loadingOverlay);
-
-    // Backend-URL för att skapa butiken
-    const apiUrl = 'https://6dcb-83-250-213-73.ngrok-free.app/api/create-store'; // Byt till aktuell Ngrok-URL
-
-    // Skicka en POST-begäran till backend
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userId: userId })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Servern returnerade ett fel: ${response.statusText}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Ta bort laddningsindikatorn
-        document.body.removeChild(loadingOverlay);
-
-        if (data.success) {
-            alert(data.message || 'Butik skapades framgångsrikt!');
-            window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
-        } else {
-            alert(data.message || 'Det gick inte att skapa butiken. Försök igen.');
-        }
-    })
-    .catch(error => {
-        // Ta bort laddningsindikatorn
-        document.body.removeChild(loadingOverlay);
-
-        console.error('Fel vid skapandet av butiken:', error);
-        alert('Ett fel uppstod. Kontrollera din anslutning eller försök igen senare.');
-    });
-}
-
-// Skapar en laddningsindikator
-function createLoadingOverlay() {
-    const overlay = document.createElement('div');
-    overlay.id = 'loading-overlay';
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.background = 'rgba(0, 0, 0, 0.6)';
-    overlay.style.display = 'flex';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.style.zIndex = '1000';
-
-    const message = document.createElement('div');
-    message.style.background = '#fff';
-    message.style.color = '#000';
-    message.style.padding = '20px 40px';
-    message.style.borderRadius = '10px';
-    message.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
-    message.style.fontSize = '18px';
-    message.style.fontWeight = 'bold';
-    message.innerHTML = `
-        <div style="text-align: center;">
-            <div class="spinner" style="margin-bottom: 10px; width: 40px; height: 40px; border: 5px solid #f3f3f3; border-top: 5px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-            Skapar butik...
         </div>
-    `;
-
-    overlay.appendChild(message);
-
-    // Lägg till spinner-animationen via CSS
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    `;
-    document.head.appendChild(style);
-
-    return overlay;
-}
-
-<!-- Skapa en container för användarinformation -->
-<div id="user-info">Laddar användarinformation...</div>
-<div id="login-button" onclick="redirectToLogin()">Logga in</div>
-
-<script>
-    // Funktion för att omdirigera till inloggningssidan
-    function redirectToLogin() {
-        window.location.href = "login.html?redirect=false";
-    }
-</script>
-            
-           <div class="payment-container" id="payment-container">
-    <p id="selected-plan-text">Vänligen välj en plan ovanför.</p>
-    <h2>Betalning</h2>
-    <p>Betala säkert med Stripe. Din information är skyddad.</p>
-    <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
-    <p id="error-text" style="display: none; color: red; font-size: 14px; margin-top: 10px;"></p>
-</div>
-</div>
+        <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
     </div>
 
-<script>
-    let selectedPlan = null;
+    <script>
+        function selectPlan(plan) {
+            // Ta bort 'selected' från alla planer
+            document.querySelectorAll('.pricing-plan').forEach(planEl => {
+                planEl.classList.remove('selected');
+            });
 
-    function selectPlan(plan) {
-        // Remove 'selected' class from all plans and add it to the selected one
-        document.querySelectorAll('.pricing-plan').forEach(function(el) {
-            el.classList.remove('selected');
-        });
+            // Markera vald plan
+            const selectedPlan = document.querySelector(`.pricing-plan[onclick="selectPlan('${plan}')"]`);
+            selectedPlan.classList.add('selected');
 
-        // Set the pay button link and selected plan text based on the chosen plan
-        const payButton = document.getElementById('pay-button');
-        if (plan === 'basic') {
-            document.querySelectorAll('.pricing-plan')[0].classList.add('selected');
-            payButton.href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
-            document.getElementById('selected-plan-text').textContent = "Vald plan: Start";
-        } else if (plan === 'popular') {
-            document.querySelectorAll('.pricing-plan')[1].classList.add('selected');
-            payButton.href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
-            document.getElementById('selected-plan-text').textContent = "Vald plan: Premium";
-        } else if (plan === 'premium') {
-            document.querySelectorAll('.pricing-plan')[2].classList.add('selected');
-            payButton.href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
-            document.getElementById('selected-plan-text').textContent = "Vald plan: Ultimate";
+            // Visa betalningsknappen med rätt länk
+            const payButton = document.getElementById('pay-button');
+            if (plan === 'basic') {
+                payButton.href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
+            } else if (plan === 'premium') {
+                payButton.href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
+            } else if (plan === 'ultimate') {
+                payButton.href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
+            }
+
+            // Visa knappen
+            payButton.style.display = "inline-block";
         }
-
-        selectedPlan = plan;
-        validateForm();
-        document.getElementById('payment-container').style.display = 'block';
-    }
-
-    function validateForm() {
-        // Check that all fields are filled out
-        const model = document.getElementById('model-selection').value;
-        const name = document.getElementById('name').value;
-        const phone = document.getElementById('phone').value;
-        const address = document.getElementById('address').value;
-        const domain = document.getElementById('domain').value;
-
-        // Enable pay button only if all fields are filled and a plan is selected
-        const isFormComplete = model && name && phone && address && domain && selectedPlan;
-        const payButton = document.getElementById('pay-button');
-        const errorText = document.getElementById('error-text');
-
-        if (isFormComplete) {
-            payButton.classList.add('enabled');
-            payButton.style.pointerEvents = "auto"; // Enable clicking
-            payButton.style.opacity = "1"; // Make it fully opaque
-            errorText.style.display = "none"; // Hide the error text
-        } else {
-            payButton.classList.remove('enabled');
-            payButton.style.pointerEvents = "none"; // Disable clicking
-            payButton.style.opacity = "0.5"; // Make it look disabled
-            errorText.style.display = "block"; // Show the error text
-            errorText.textContent = "Vänligen fyll i alla fält och välj en plan för att aktivera knappen.";
-        }
-    }
-</script>
-    
+    </script>
 </body>
 </html>
