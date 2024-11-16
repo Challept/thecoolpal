@@ -22,10 +22,10 @@
             background-color: #ffffff;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         h2.main-title {
-            text-align: center;
             color: #007bff;
             font-size: 36px;
             font-weight: bold;
@@ -94,24 +94,24 @@
     <div class="container">
         <h2 class="main-title">Välj din plan</h2>
         <div class="pricing-container">
-                       <div class="pricing-plan" onclick="selectPlan('basic')">
-                        <h3 class="plan-title">Start</h3>
-                        <p class="plan-description">Enkel och pålitlig</p>
-                        <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
-                        <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
-                    </div>
-                    <div class="pricing-plan popular" onclick="selectPlan('popular')">
-                        <h3 class="plan-title">Premium</h3>
-                        <p class="plan-description">Mest valda paketet</p>
-                        <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
-                        <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
-                    </div>
-                    <div class="pricing-plan" onclick="selectPlan('premium')">
-                        <h3 class="plan-title">Ultimate</h3>
-                        <p class="plan-description">Full kontroll och alla funktioner</p>
-                        <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
-                        <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
-                    </div>
+            <div class="pricing-plan" onclick="selectPlan('basic')">
+                <h3 class="plan-title">Start</h3>
+                <p class="plan-description">Enkel och pålitlig</p>
+                <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
+                <p class="plan-features">Innehåller grundläggande funktioner för din hemsida</p>
+            </div>
+            <div class="pricing-plan" onclick="selectPlan('premium')">
+                <h3 class="plan-title">Premium</h3>
+                <p class="plan-description">Mest valda paketet</p>
+                <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
+                <p class="plan-features">Innehåller de grundläggande funktionerna plus några extra</p>
+            </div>
+            <div class="pricing-plan" onclick="selectPlan('ultimate')">
+                <h3 class="plan-title">Ultimate</h3>
+                <p class="plan-description">Full kontroll och alla funktioner</p>
+                <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
+                <p class="plan-features">Innehåller alla funktioner för bästa upplevelsen</p>
+            </div>
         </div>
         <div class="button-container">
             <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
@@ -120,6 +120,8 @@
     </div>
 
     <script>
+        let selectedPlan = null;
+
         function selectPlan(plan) {
             // Ta bort 'selected' från alla planer
             document.querySelectorAll('.pricing-plan').forEach(planEl => {
@@ -127,18 +129,23 @@
             });
 
             // Markera vald plan
-            const selectedPlan = document.querySelector(`.pricing-plan[onclick="selectPlan('${plan}')"]`);
-            selectedPlan.classList.add('selected');
+            const selectedPlanEl = document.querySelector(`.pricing-plan[onclick="selectPlan('${plan}')"]`);
+            selectedPlanEl.classList.add('selected');
 
-            // Visa betalningsknappen med rätt länk
+            // Spara vald plan och uppdatera knappar
+            selectedPlan = plan;
+            updateButtons();
+        }
+
+        function updateButtons() {
             const payButton = document.getElementById('pay-button');
             const createStoreButton = document.getElementById('create-store-button');
 
-            if (plan === 'basic') {
+            if (selectedPlan === 'basic') {
                 payButton.href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
-            } else if (plan === 'premium') {
+            } else if (selectedPlan === 'premium') {
                 payButton.href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
-            } else if (plan === 'ultimate') {
+            } else if (selectedPlan === 'ultimate') {
                 payButton.href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
             }
 
@@ -148,7 +155,26 @@
         }
 
         function createStore() {
-            alert('Butik skapad!'); // Byt ut med din backend-logik om nödvändigt
+            if (!selectedPlan) {
+                alert("Vänligen välj en plan först.");
+                return;
+            }
+
+            // Simulera backend-anrop
+            fetch('/api/create-store', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ plan: selectedPlan })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Ett fel uppstod vid skapandet av butiken.');
+                return response.json();
+            })
+            .then(data => {
+                // Omdirigera till butikaicre.html
+                window.location.href = '/butikaicre.html';
+            })
+            .catch(error => alert(error.message));
         }
     </script>
 </body>
