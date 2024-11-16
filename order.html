@@ -161,20 +161,18 @@
             }
 
             // Simulera backend-anrop
-            fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ plan: selectedPlan })
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Ett fel uppstod vid skapandet av butiken.');
-                return response.json();
-            })
-            .then(data => {
-                // Omdirigera till butikaicre.html
-                window.location.href = '/butikaicre.html';
-            })
-            .catch(error => alert(error.message));
+fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    mode: 'no-cors', // OBS: Begränsar åtkomst till responsdata
+    body: JSON.stringify({ plan: selectedPlan })
+})
+.then(() => {
+    window.location.href = '/butikaicre.html';
+})
+.catch(error => console.error('Fel vid skapandet av butiken:', error));
         }
     </script>
 </body>
