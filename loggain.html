@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logga in</title>
+    <style>
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #2575fc;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1b5ecb;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Logga in</h3>
+    <input type="email" id="auth-email" placeholder="Email">
+    <input type="password" id="auth-password" placeholder="Lösenord">
+    <button id="auth-button">Logga in</button>
+    <button id="google-login-button">Logga in med Google</button>
+    <p id="auth-error" class="error-message" style="display: none;"></p>
+    <p>Har du inget konto? <span id="toggle-to-signup" style="color: blue; cursor: pointer;">Registrera dig här</span></p>
+
+    <script>
+        const auth = firebase.auth();
+
+        document.getElementById('auth-button').addEventListener('click', () => {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    console.log("Inloggad!");
+                    window.location.href = "order.html";
+                })
+                .catch((error) => {
+                    console.error("Fel vid inloggning:", error);
+                    const errorElement = document.getElementById('auth-error');
+                    errorElement.textContent = "Fel vid inloggning. Kontrollera dina uppgifter.";
+                    errorElement.style.display = "block";
+                });
+        });
+
+        document.getElementById('google-login-button').addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(() => {
+                    console.log("Inloggad med Google!");
+                    window.location.href = "order.html";
+                })
+                .catch((error) => {
+                    console.error("Google-login fel:", error);
+                });
+        });
+    </script>
+</body>
+</html>
