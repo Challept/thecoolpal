@@ -353,93 +353,91 @@
         }
     });
 
-<script>
-    // Funktion för att skapa en butik
-    function testCreateStore() {
-        // Hämta användarens UID från sessionStorage
-        const userId = sessionStorage.getItem('userUID');
-        
-        if (!userId) {
-            alert('Ingen användare inloggad. Logga in först.');
-            return;
-        }
-
-        // Visa en laddningsindikator
-        const loadingOverlay = document.createElement('div');
-        loadingOverlay.id = 'loading-overlay';
-        loadingOverlay.style.position = 'fixed';
-        loadingOverlay.style.top = '0';
-        loadingOverlay.style.left = '0';
-        loadingOverlay.style.width = '100%';
-        loadingOverlay.style.height = '100%';
-        loadingOverlay.style.background = 'rgba(0, 0, 0, 0.6)';
-        loadingOverlay.style.display = 'flex';
-        loadingOverlay.style.justifyContent = 'center';
-        loadingOverlay.style.alignItems = 'center';
-        loadingOverlay.style.zIndex = '1000';
-
-        const loadingMessage = document.createElement('div');
-        loadingMessage.style.background = '#fff';
-        loadingMessage.style.color = '#000';
-        loadingMessage.style.padding = '20px 40px';
-        loadingMessage.style.borderRadius = '10px';
-        loadingMessage.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
-        loadingMessage.style.fontSize = '18px';
-        loadingMessage.style.fontWeight = 'bold';
-        loadingMessage.innerHTML = `
-            <div style="text-align: center;">
-                <div class="spinner" style="margin-bottom: 10px; width: 40px; height: 40px; border: 5px solid #f3f3f3; border-top: 5px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                Skapar butik...
-            </div>
-        `;
-
-        loadingOverlay.appendChild(loadingMessage);
-        document.body.appendChild(loadingOverlay);
-
-        // Spinner-animation med CSS
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-
-        // Skicka en POST-begäran till backend för att skapa en butik
-        fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', { // Byt till aktuell Ngrok-URL
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ userId: userId })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Servern returnerade ett fel: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Ta bort laddningsindikatorn
-            document.body.removeChild(loadingOverlay);
-
-            if (data.success) {
-                alert(data.message); // Visa meddelandet från servern
-                window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
-            } else {
-                alert('Det gick inte att skapa butiken. Försök igen.');
-            }
-        })
-        .catch(error => {
-            // Ta bort laddningsindikatorn
-            document.body.removeChild(loadingOverlay);
-
-            console.error('Fel vid skapandet av butiken:', error);
-            alert('Ett fel uppstod. Kontrollera din anslutning eller försök igen senare.');
-        });
+// Funktion för att skapa en butik
+function testCreateStore() {
+    // Hämta användarens UID från sessionStorage
+    const userId = sessionStorage.getItem('userUID');
+    
+    if (!userId) {
+        alert('Ingen användare inloggad. Logga in först.');
+        return;
     }
-</script>
+
+    // Visa en laddningsindikator
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.id = 'loading-overlay';
+    loadingOverlay.style.position = 'fixed';
+    loadingOverlay.style.top = '0';
+    loadingOverlay.style.left = '0';
+    loadingOverlay.style.width = '100%';
+    loadingOverlay.style.height = '100%';
+    loadingOverlay.style.background = 'rgba(0, 0, 0, 0.6)';
+    loadingOverlay.style.display = 'flex';
+    loadingOverlay.style.justifyContent = 'center';
+    loadingOverlay.style.alignItems = 'center';
+    loadingOverlay.style.zIndex = '1000';
+
+    const loadingMessage = document.createElement('div');
+    loadingMessage.style.background = '#fff';
+    loadingMessage.style.color = '#000';
+    loadingMessage.style.padding = '20px 40px';
+    loadingMessage.style.borderRadius = '10px';
+    loadingMessage.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
+    loadingMessage.style.fontSize = '18px';
+    loadingMessage.style.fontWeight = 'bold';
+    loadingMessage.innerHTML = `
+        <div style="text-align: center;">
+            <div class="spinner" style="margin-bottom: 10px; width: 40px; height: 40px; border: 5px solid #f3f3f3; border-top: 5px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            Skapar butik...
+        </div>
+    `;
+
+    loadingOverlay.appendChild(loadingMessage);
+    document.body.appendChild(loadingOverlay);
+
+    // Spinner-animation med CSS
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Skicka en POST-begäran till backend för att skapa en butik
+    fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', { // Byt till aktuell Ngrok-URL
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: userId })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Servern returnerade ett fel: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Ta bort laddningsindikatorn
+        document.body.removeChild(loadingOverlay);
+
+        if (data.success) {
+            alert(data.message); // Visa meddelandet från servern
+            window.location.href = '/dashboard'; // Omdirigera användaren till dashboard
+        } else {
+            alert('Det gick inte att skapa butiken. Försök igen.');
+        }
+    })
+    .catch(error => {
+        // Ta bort laddningsindikatorn
+        document.body.removeChild(loadingOverlay);
+
+        console.error('Fel vid skapandet av butiken:', error);
+        alert('Ett fel uppstod. Kontrollera din anslutning eller försök igen senare.');
+    });
+}
 
 <!-- Skapa en container för användarinformation -->
 <div id="user-info">Laddar användarinformation...</div>
