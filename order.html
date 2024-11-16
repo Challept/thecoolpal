@@ -161,7 +161,7 @@
             }
 
             // Simulera backend-anrop
-            fetch('/api/create-store', {
+            fetch('https://6dcb-83-250-213-73.ngrok-free.app/api/create-store', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ plan: selectedPlan })
