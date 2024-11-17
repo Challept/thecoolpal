@@ -267,53 +267,6 @@
         document.head.appendChild(style);
 
         return overlay;
-    }
-
-        // Firebase-konfiguration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
-            authDomain: "webbforma1.firebaseapp.com",
-            projectId: "webbforma1",
-            storageBucket: "webbforma1.firebasestorage.app",
-            messagingSenderId: "875335609008",
-            appId: "1:875335609008:web:1d3cca6d257937a8526975",
-            measurementId: "G-QRXDZ5R2ZH"
-        };
-
-        // Initiera Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Kolla om användaren är inloggad
-        auth.onAuthStateChanged((user) => {
-            if (!user) {
-                showPopup();
-            } else {
-                console.log(`Inloggad som: ${user.email}`);
-            }
-        });
-
-        // Visa popup om inte inloggad
-        function showPopup() {
-            const popup = document.getElementById('popup-overlay');
-            popup.style.display = 'flex';
-        }
-
-        // Stäng popup
-        function closePopup() {
-            const popup = document.getElementById('popup-overlay');
-            popup.style.display = 'none';
-        }
-
-        // Ladda inloggningsformulär från loggain.html
-        async function loadLoginForm() {
-            const container = document.getElementById('popup-content');
-            const response = await fetch('loggain.html');
-            const html = await response.text();
-            container.innerHTML = html;
-        }
-
-        window.onload = loadLoginForm;
     </script>
     
 </body>
