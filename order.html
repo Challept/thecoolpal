@@ -176,7 +176,7 @@
             popup.style.display = 'flex';
             return;
         }
-        
+
         const createStoreButton = document.getElementById('create-store-button');
         createStoreButton.disabled = true;
 
@@ -267,7 +267,23 @@
         document.head.appendChild(style);
 
         return overlay;
-    </script>
+    }
+
+    // Stäng popup
+    function closePopup() {
+        const popup = document.getElementById('login-popup');
+        popup.style.display = 'none';
+    }
+
+    async function loadLoginPopup() {
+        const popupContent = document.getElementById('popup-content');
+        const response = await fetch('loggain.html');
+        const html = await response.text();
+        popupContent.innerHTML = html;
+    }
+
+    window.onload = loadLoginPopup;
+</script>
     
 </body>
 </html>
