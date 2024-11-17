@@ -89,15 +89,6 @@
     // Initiera Firebase
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
-
-    // Kolla om användaren är inloggad och hantera omdirigering
-    auth.onAuthStateChanged((user) => {
-        const params = new URLSearchParams(window.location.search);
-        const redirect = params.get("redirect") !== "false";  // Kontrollera om redirect=false finns i URL:en
-
-        if (user && redirect) {
-            console.log("User logged in:", user.email);
-            window.location.href = "order.html"; // Omdirigera till order.html om inloggad och redirect tillåten
         }
     });
 
@@ -117,7 +108,6 @@
                     auth.signInWithEmailAndPassword(email, password)
                         .then(() => {
                             console.log("Logged in successfully.");
-                            window.location.href = "order.html";
                         })
                         .catch((error) => {
                             console.error("Login error:", error);
@@ -127,7 +117,6 @@
                     auth.createUserWithEmailAndPassword(email, password)
                         .then(() => {
                             console.log("Registered successfully.");
-                            window.location.href = "order.html";
                         })
                         .catch((error) => {
                             console.error("Registration error:", error);
@@ -143,7 +132,6 @@
                 auth.signInWithPopup(provider)
                     .then(() => {
                         console.log("Logged in with Google.");
-                        window.location.href = "order.html";
                     })
                     .catch((error) => {
                         console.error("Google login error:", error);
