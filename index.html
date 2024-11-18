@@ -382,78 +382,32 @@ footer .social-icons img {
     text-align: center;
 }
 
-/* Global styling */
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(120deg, #4e54c8, #8f94fb);
-  color: white;
-  overflow: hidden;
-}
-
-/* Hero section */
+/* Placera sektionerna längre ned */
 .hero {
   position: relative;
-  height: 100vh;
+  height: 60vh; /* Gör sektionen mindre så den inte tar för mycket plats */
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow: hidden;
+  padding-top: 50px; /* Flytta ner lite */
+  margin-top: 20px; /* Lägg till extra avstånd från tidigare innehåll */
 }
 
-/* Typing Effect */
-.typing-effect {
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
+.globe-section {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px; /* Flytta ner i förhållande till hero */
 }
 
-.cursor {
-  display: inline-block;
-  width: 10px;
-  height: 40px;
-  background-color: white;
-  animation: blink 0.7s infinite;
+.parallax-section {
+  height: 50vh;
+  position: relative;
+  margin-top: 50px; /* Flytta ner */
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-/* Jordglob */
-.globe-container {
-  position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 150px;
-}
-
-.globe {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: radial-gradient(circle, #87CEEB, #1E90FF);
-  animation: spin 8s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Parallax Boxar */
 .parallax-box {
   position: absolute;
   padding: 15px 30px;
@@ -467,41 +421,35 @@ body {
 }
 
 .parallax-box:nth-child(1) {
-  top: 30%;
+  top: 20%; /* Flytta boxen lite högre */
   left: 10%;
 }
 
 .parallax-box:nth-child(2) {
-  top: 50%;
+  top: 40%; /* Justera placering för jämn balans */
   right: 15%;
 }
 
 .parallax-box:nth-child(3) {
-  top: 70%;
+  top: 60%; /* Justera position */
   left: 20%;
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+/* Justering för hela sidan */
+body, html {
+  scroll-behavior: smooth; /* Gör sidan smidigare vid scrollning */
+}
 
 .section-title {
-    font-size: 28px;
-    color: #007bff;
-    margin-bottom: 10px;
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .section-subtitle {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 30px;
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 .input-container {
