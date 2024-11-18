@@ -5,494 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="file.png" type="image/png">
     <title>Köp nu!</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-    /* Bas-styling */
-    body {
-        background-color: #f0f4ff;
-        color: #333333;
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        line-height: 1.6;
-    }
-
-    /* Base Styles */
-body, html {
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f4ff;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-.container {
-    flex: 1;
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
-}
-
-/* Header */
-.header {
-    text-align: center;
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    color: #ffffff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-}
-.header h1 {
-    font-size: 48px;
-    margin-bottom: 15px;
-    text-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-}
-.header p {
-    font-size: 18px;
-    max-width: 700px;
-    margin: 0 auto;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Video Section */
-.top-video {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-}
-.top-video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-@media (max-width: 768px) {
-    .top-video {
-        height: 250px;
-    }
-}
-@media (max-width: 480px) {
-    .top-video {
-        height: 200px;
-    }
-    .top-video video {
-        object-fit: contain;
-    }
-}
-
-/* Button */
-.custom-button {
-    display: inline-block;
-    padding: 12px 25px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #5ac8fa;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
-    transition: all 0.3s ease;
-    margin: 10px;
-}
-.custom-button:hover {
-    background-color: #007aff;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 20px rgba(90, 200, 250, 0.4);
-}
-
-/* Pricing Section */
-.pricing-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 50px 20px;
-    justify-content: center;
-    text-align: center;
-}
-.plan {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 30px;
-    flex: 1 1 280px;
-    transition: transform 0.3s;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
-    max-width: 280px;
-}
-.plan:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
-}
-.plan.popular {
-    border: 2px solid #0072ff;
-    background: #e0f3ff;
-    animation: pulse 1.5s infinite;
-}
-.plan h3 {
-    font-size: 22px;
-    color: #0072ff;
-    margin-bottom: 10px;
-}
-.plan p {
-    font-size: 16px;
-    color: #555;
-}
-.price {
-    font-size: 26px;
-    color: #333;
-    font-weight: bold;
-    margin: 15px 0;
-}
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-/* About Section */
-.about-section {
-    text-align: center;
-    padding: 60px 20px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    margin: 40px auto;
-    max-width: 900px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-.about-section h2 {
-    font-size: 28px;
-    color: #0072ff;
-    margin-bottom: 20px;
-}
-.about-section p {
-    font-size: 18px;
-    color: #555;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-/* Step-by-Step Section */
-.steps-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 30px;
-    margin: 40px auto;
-    background: linear-gradient(135deg, #e8f0ff, #cce1ff);
-    border-radius: 15px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    max-width: 1200px;
-}
-.step {
-    flex: 1 1 200px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    text-align: center;
-}
-.step:hover {
-    transform: scale(1.05);
-    background-color: #f2f8ff;
-}
-.step h3 {
-    font-size: 36px;
-    color: #0074d9;
-    margin: 0;
-}
-.step p {
-    font-size: 16px;
-    color: #444;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #004a99, #0066cc);
-    color: #ffffff;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-footer .footer-links {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-}
-footer .footer-links a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-footer .footer-links a:hover {
-    color: #ffdd57;
-}
-footer p {
-    margin: 0;
-    opacity: 0.8;
-}
-footer .social-icons {
-    display: flex;
-    gap: 15px;
-}
-footer .social-icons a {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #005bb5;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-}
-footer .social-icons a:hover {
-    background-color: #ffdd57;
-}
-footer .social-icons img {
-    width: 20px;
-    height: 20px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .pricing-container, .steps-container {
-        flex-direction: column;
-        padding: 20px;
-    }
-}
-
-/* Pricing Plans Title */
-.plans-title-container {
-    text-align: center;
-    margin: 50px 0 30px;
-    padding: 10px;
-}
-
-.plans-title {
-    font-size: 42px;
-    color: #007bff;
-    font-weight: bold;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, text-shadow 0.3s ease;
-}
-
-.plans-title:hover {
-    transform: scale(1.05);
-    text-shadow: 0 6px 12px rgba(0, 123, 255, 0.5);
-}
-
-.plans-subtitle {
-    font-size: 18px;
-    color: #555;
-    max-width: 600px;
-    margin: 0 auto;
-    font-weight: 400;
-    opacity: 0.8;
-}
-
-    /* Popup Quiz Styling */
-    .quiz-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .quiz-container {
-        background-color: #ffffff;
-        width: 90%;
-        max-width: 500px;
-        padding: 30px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        animation: fadeIn 0.5s ease;
-    }
-
-    .quiz-container h2 {
-        font-size: 24px;
-        color: #0072ff;
-        margin-bottom: 20px;
-    }
-
-    .quiz-question {
-        font-size: 18px;
-        margin: 15px 0;
-    }
-
-    .quiz-options {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    .quiz-options button {
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #333333;
-        background-color: #f2f8ff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .quiz-options button:hover {
-        background-color: #e0f3ff;
-    }
-
-    .quiz-result {
-        display: none;
-    }
-
-    .quiz-result h3 {
-        font-size: 22px;
-        color: #28a745;
-        margin-bottom: 15px;
-    }
-
-    .name-generator-container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    text-align: center;
-}
-
-.input-container {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.input-container label {
-    font-weight: bold;
-    color: #333;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.input-container input,
-.input-container select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-}
-
-.input-container input:focus,
-.input-container select:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.generate-button {
-    padding: 12px 25px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 5px 10px rgba(0, 123, 255, 0.2);
-    margin-top: 15px;
-}
-
-.generate-button:hover {
-    background-color: #0056b3;
-}
-
-.loader {
-    border: 5px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 5px solid #007bff;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.result-container {
-    margin-top: 20px;
-}
-
-.result-container h3 {
-    font-size: 20px;
-    color: #007bff;
-}
-
-.result-container ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.result-container li {
-    font-size: 18px;
-    color: #333;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-}
-
-.result-container li:last-child {
-    border-bottom: none;
-}
-
-    .order-button {
-        padding: 12px 25px;
-        font-size: 18px;
-        color: #ffffff;
-        background-color: #007bff;
-        border: none;
-        border-radius: 8px;
-        text-decoration: none;
-        display: inline-block;
-        margin-top: 10px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .order-button:hover {
-        background-color: #0056b3;
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    </style>   
+    <link rel="stylesheet" href="style.css">  
 </head>
 <body>
     <header class="header">
@@ -540,85 +53,55 @@ footer .social-icons img {
         </div>
     </section>
 
-<!-- Parallax-scrollning -->
-<section class="parallax-container" style="position: relative; height: 100vh; background: #f0f4ff; overflow: hidden;">
+<section class="parallax-container">
     <!-- Parallax-element -->
-    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 120%; background-image: url('icon-layer1.svg'); background-size: contain; background-repeat: no-repeat; opacity: 0.3;"></div>
-    <div class="parallax-layer" style="position: absolute; top: 10%; right: 10%; width: 60px; height: 60px; background: #0074d9; border-radius: 50%; animation: float 4s infinite ease-in-out;"></div>
-    <div class="parallax-layer" style="position: absolute; bottom: 20%; left: 15%; width: 80px; height: 80px; background: #00aaff; border-radius: 50%; animation: float 6s infinite ease-in-out;"></div>
+    <div class="parallax-layer layer1"></div>
+    <div class="parallax-layer layer2"></div>
+    <div class="parallax-layer layer3"></div>
 
     <!-- Text-innehåll -->
-    <div style="position: relative; z-index: 1; text-align: center; padding: 50px;">
-        <h2 style="color: #0074d9; font-size: 3rem; margin-bottom: 20px;">Utforska Nya Höjder</h2>
-        <p style="color: #333; font-size: 1.25rem; max-width: 700px; margin: 0 auto;">
-            Med vår innovativa teknik kan du skapa framtidens lösningar redan idag.
-        </p>
+    <div class="parallax-text">
+        <h2>Utforska Nya Höjder</h2>
+        <p>Med vår innovativa teknik kan du skapa framtidens lösningar redan idag.</p>
     </div>
-
-    <style>
-        .parallax-layer {
-            position: absolute;
-            will-change: transform;
-        }
-        .parallax-container {
-            perspective: 1px;
-            perspective-origin: center center;
-        }
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-    </style>
 </section>
 
-<!-- Effektiva Lösningar (Feature Showcase) -->
-<section class="feature-showcase" style="padding: 60px; background: #f0f4ff; text-align: center;">
-    <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px;">Effektiva Lösningar</h2>
-    <p style="color: #555; margin-bottom: 40px;">Utforska våra kraftfulla funktioner som gör din hemsida unik.</p>
+<section class="feature-showcase">
+    <h2>Effektiva Lösningar</h2>
+    <p>Utforska våra kraftfulla funktioner som gör din hemsida unik.</p>
 
-    <div class="features" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 30px;">
+    <div class="features">
         <!-- Funktion 1 -->
-        <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <img src="https://img.icons8.com/ios/100/0074d9/cloud.png" alt="Snabba Laddtider" style="width: 80px; height: 80px; margin: 0 auto; display: block;">
-            <h3 style="color: #0074d9; margin: 15px 0;">Snabba Laddtider</h3>
-            <p style="color: #777;">Din hemsida är optimerad för snabbhet och prestanda.</p>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/ios/100/0074d9/cloud.png" alt="Snabba Laddtider">
+            <h3>Snabba Laddtider</h3>
+            <p>Din hemsida är optimerad för snabbhet och prestanda.</p>
         </div>
 
         <!-- Funktion 2 -->
-        <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <img src="https://img.icons8.com/ios/100/0074d9/design.png" alt="Modern Design" style="width: 80px; height: 80px; margin: 0 auto; display: block;">
-            <h3 style="color: #0074d9; margin: 15px 0;">Modern Design</h3>
-            <p style="color: #777;">Stilrena och moderna layouter för alla behov.</p>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/ios/100/0074d9/design.png" alt="Modern Design">
+            <h3>Modern Design</h3>
+            <p>Stilrena och moderna layouter för alla behov.</p>
         </div>
 
         <!-- Funktion 3 -->
-        <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <img src="https://img.icons8.com/ios/100/0074d9/edit--v1.png" alt="Enkel Redigering" style="width: 80px; height: 80px; margin: 0 auto; display: block;">
-            <h3 style="color: #0074d9; margin: 15px 0;">Enkel Redigering</h3>
-            <p style="color: #777;">Bygg och redigera din hemsida på bara några klick.</p>
+        <div class="feature-card">
+            <img src="https://img.icons8.com/ios/100/0074d9/edit--v1.png" alt="Enkel Redigering">
+            <h3>Enkel Redigering</h3>
+            <p>Bygg och redigera din hemsida på bara några klick.</p>
         </div>
     </div>
-
-    <style>
-        .feature-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-    </style>
 </section>
     
-<section class="pricing-calculator" style="padding: 60px; background: #f0f4ff; text-align: center;">
-    <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px; animation: fadeIn 1s;">Beräkna din kostnad</h2>
-    <p style="color: #555; margin-bottom: 40px; animation: fadeIn 1.2s;">Välj en plan och dra reglaget för att se ditt totalpris.</p>
+<section class="pricing-calculator">
+    <h2>Beräkna din kostnad</h2>
+    <p>Välj en plan och dra reglaget för att se ditt totalpris.</p>
 
-    <div class="plans" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 40px;">
+    <div class="plans">
         <!-- Start Plan -->
         <label class="plan-label">
-            <input type="radio" name="plan" value="Start" data-setup="300" data-monthly="10" style="display: none;">
+            <input type="radio" name="plan" value="Start" data-setup="300" data-monthly="10">
             <div class="plan-card">
                 <img src="https://img.icons8.com/color/96/star.png" alt="Start Icon" class="plan-icon">
                 <h3>Start</h3>
@@ -629,7 +112,7 @@ footer .social-icons img {
 
         <!-- Premium Plan -->
         <label class="plan-label">
-            <input type="radio" name="plan" value="Premium" data-setup="400" data-monthly="50" style="display: none;">
+            <input type="radio" name="plan" value="Premium" data-setup="400" data-monthly="50">
             <div class="plan-card popular">
                 <img src="https://img.icons8.com/color/96/medal.png" alt="Premium Icon" class="plan-icon">
                 <h3>Premium</h3>
@@ -640,7 +123,7 @@ footer .social-icons img {
 
         <!-- Ultimate Plan -->
         <label class="plan-label">
-            <input type="radio" name="plan" value="Ultimate" data-setup="1000" data-monthly="100" style="display: none;">
+            <input type="radio" name="plan" value="Ultimate" data-setup="1000" data-monthly="100">
             <div class="plan-card">
                 <img src="https://img.icons8.com/color/96/crown.png" alt="Ultimate Icon" class="plan-icon">
                 <h3>Ultimate</h3>
@@ -651,132 +134,69 @@ footer .social-icons img {
     </div>
 
     <!-- Subscription Length Slider -->
-    <div style="margin-bottom: 20px;">
-        <label for="subscription-length" style="font-size: 1.1rem; color: #333;">
+    <div>
+        <label for="subscription-length">
             Abonnemangets längd: <span id="months-display">12</span> månader
         </label>
-        <input type="range" id="subscription-length" min="1" max="120" value="12" style="width: 80%;">
+        <input type="range" id="subscription-length" min="1" max="120" value="12">
     </div>
 
     <!-- Total Price Display -->
-    <div class="total-price-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div class="total-price-container">
         <!-- WebStay Total -->
-        <div class="total-price-display" style="animation: bounceIn 1.5s;">
+        <div class="total-price-display">
             <h3>Vårt Totalpris</h3>
-            <p id="total-price" style="font-size: 2rem; font-weight: bold; color: #333;">0 kr</p>
+            <p id="total-price">0 kr</p>
         </div>
 
         <!-- Shopify Total -->
-        <div class="total-price-display" style="animation: bounceIn 1.5s;">
+        <div class="total-price-display">
             <h3>Shopify Totalpris</h3>
-            <p id="shopify-price" style="font-size: 2rem; font-weight: bold; color: #333;">0 kr</p>
+            <p id="shopify-price">0 kr</p>
         </div>
     </div>
-
-    <style>
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes bounceIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); }
-        }
-        .plans {
-            gap: 40px;
-        }
-        .plan-label {
-            cursor: pointer;
-        }
-        .plan-card {
-            width: 250px;
-            height: 350px;
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 3px solid transparent;
-        }
-        .plan-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        .plan-card.selected {
-            border-color: #0074d9;
-            box-shadow: 0 15px 30px rgba(0, 116, 217, 0.3);
-        }
-        .plan-card h3 {
-            color: #0074d9;
-            font-size: 1.5rem;
-        }
-        .plan-card p {
-            color: #555;
-        }
-        .plan-icon {
-            width: 80px;
-            margin-bottom: 10px;
-        }
-        .popular {
-            background: #e0f3ff;
-        }
-        .total-price-container {
-            margin-top: 20px;
-            gap: 30px;
-        }
-        .total-price-display {
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            text-align: center;
-        }
-    </style>
-
-    <script>
-        const plans = document.querySelectorAll("input[name='plan']");
-        const slider = document.getElementById("subscription-length");
-        const monthsDisplay = document.getElementById("months-display");
-        const totalPriceDisplay = document.getElementById("total-price");
-        const shopifyPriceDisplay = document.getElementById("shopify-price");
-
-        function calculateTotal() {
-            const selectedPlan = document.querySelector("input[name='plan']:checked");
-            document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
-
-            if (selectedPlan) {
-                const parentCard = selectedPlan.parentNode.querySelector('.plan-card');
-                parentCard.classList.add('selected');
-
-                const setupCost = parseInt(selectedPlan.dataset.setup);
-                const monthlyCost = parseInt(selectedPlan.dataset.monthly);
-                const months = parseInt(slider.value);
-                const total = setupCost + monthlyCost * months;
-
-                totalPriceDisplay.textContent = `${total} kr`;
-            } else {
-                totalPriceDisplay.textContent = "Välj en plan!";
-            }
-
-            // Calculate Shopify total
-            const shopifyMonthlyCost = 410;
-            const shopifyTotal = shopifyMonthlyCost * parseInt(slider.value);
-            shopifyPriceDisplay.textContent = `${shopifyTotal} kr`;
-        }
-
-        plans.forEach(plan => plan.addEventListener("change", calculateTotal));
-        slider.addEventListener("input", () => {
-            monthsDisplay.textContent = slider.value;
-            calculateTotal();
-        });
-
-        // Initial calculation
-        calculateTotal();
-    </script>
 </section>
+
+<script>
+    const plans = document.querySelectorAll("input[name='plan']");
+    const slider = document.getElementById("subscription-length");
+    const monthsDisplay = document.getElementById("months-display");
+    const totalPriceDisplay = document.getElementById("total-price");
+    const shopifyPriceDisplay = document.getElementById("shopify-price");
+
+    function calculateTotal() {
+        const selectedPlan = document.querySelector("input[name='plan']:checked");
+        document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
+
+        if (selectedPlan) {
+            const parentCard = selectedPlan.parentNode.querySelector('.plan-card');
+            parentCard.classList.add('selected');
+
+            const setupCost = parseInt(selectedPlan.dataset.setup);
+            const monthlyCost = parseInt(selectedPlan.dataset.monthly);
+            const months = parseInt(slider.value);
+            const total = setupCost + monthlyCost * months;
+
+            totalPriceDisplay.textContent = `${total} kr`;
+        } else {
+            totalPriceDisplay.textContent = "Välj en plan!";
+        }
+
+        // Calculate Shopify total
+        const shopifyMonthlyCost = 410;
+        const shopifyTotal = shopifyMonthlyCost * parseInt(slider.value);
+        shopifyPriceDisplay.textContent = `${shopifyTotal} kr`;
+    }
+
+    plans.forEach(plan => plan.addEventListener("change", calculateTotal));
+    slider.addEventListener("input", () => {
+        monthsDisplay.textContent = slider.value;
+        calculateTotal();
+    });
+
+    // Initial calculation
+    calculateTotal();
+</script>
     
     <!-- About Us Section -->
     <section class="about-section">
