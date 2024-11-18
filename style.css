@@ -702,7 +702,6 @@ footer .social-icons img {
     display: inline-block;
     text-align: center;
 }
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -723,6 +722,120 @@ footer .social-icons img {
     }
     100% {
         transform: scale(1);
+    }
+
+    /* För mobila enheter (max 768px bredd) */
+@media (max-width: 768px) {
+    body, html {
+        font-size: 90%; /* Minska textstorleken */
+    }
+
+    .container {
+        width: 95%;
+        padding: 0 10px;
+    }
+
+    .header {
+        padding: 50px 10px;
+    }
+
+    .header h1 {
+        font-size: 36px; /* Justera rubrikstorlek */
+    }
+
+    .header p {
+        font-size: 16px; /* Mindre textstorlek */
+    }
+
+    .top-video {
+        height: 200px; /* Lägre höjd för videosektion */
+    }
+
+    .pricing-container, .steps-container {
+        flex-direction: column; /* Stapla sektionerna vertikalt */
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .plan {
+        max-width: 100%; /* Anpassa bredd till skärmen */
+        margin: 0 auto;
+    }
+
+    .about-section {
+        padding: 30px 10px; /* Mindre padding för mobil */
+    }
+
+    .feature-card {
+        width: 100%; /* Gör varje funktion kort 100% bred */
+        margin-bottom: 20px; /* Lägg till avstånd mellan kort */
+    }
+
+    .plans {
+        flex-direction: column; /* Vertikal layout för planer */
+        align-items: center;
+    }
+
+    .plan-card {
+        width: 90%; /* Begränsa planerna till 90% av bredden */
+    }
+
+    .total-price-container {
+        gap: 15px; /* Mindre avstånd mellan totalpris-element */
+    }
+}
+
+/* För surfplattor (max 1024px bredd) */
+@media (max-width: 1024px) {
+    .container {
+        width: 90%; /* Större marginaler för surfplatta */
+    }
+
+    .header {
+        padding: 60px 20px;
+    }
+
+    .header h1 {
+        font-size: 42px; /* Anpassa rubrikstorlek */
+    }
+
+    .header p {
+        font-size: 18px; /* Justera textstorlek för läsbarhet */
+    }
+
+    .plans {
+        gap: 20px; /* Minska mellanrummen något */
+    }
+
+    .plan-card {
+        width: 45%; /* Två planer bredvid varandra */
+    }
+
+    .feature-card {
+        width: 48%; /* Visa två funktioner bredvid varandra */
+    }
+
+    .top-video {
+        height: 300px; /* Öka höjden något för större skärm */
+    }
+}
+
+/* För stora skärmar (minst 1200px bredd) */
+@media (min-width: 1200px) {
+    .container {
+        width: 80%; /* Minska marginalerna för bredare skärmar */
+    }
+
+    .plan-card {
+        width: 30%; /* Visa flera planer bredvid varandra */
+    }
+
+    .feature-card {
+        width: 30%; /* Visa flera funktioner bredvid varandra */
+    }
+
+    .top-video {
+        height: 400px; /* Standardhöjd för stora skärmar */
     }
 }
     </style>
