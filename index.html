@@ -611,7 +611,7 @@ footer .social-icons img {
     </style>
 </section>
     
-<section class="pricing-calculator" style="padding: 60px; background: #e8e8e8; text-align: center;">
+<section class="pricing-calculator" style="padding: 60px; background: #f2f8ff; text-align: center;">
     <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px; animation: fadeIn 1s;">Beräkna din kostnad</h2>
     <p style="color: #555; margin-bottom: 40px; animation: fadeIn 1.2s;">Välj en plan och dra reglaget för att se ditt totalpris.</p>
 
@@ -659,9 +659,19 @@ footer .social-icons img {
     </div>
 
     <!-- Total Price Display -->
-    <div class="total-price-display" style="animation: bounceIn 1.5s;">
-        <h3>Totalpris</h3>
-        <p id="total-price">0 kr</p>
+    <div class="total-price-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+        <!-- WebStay Total -->
+        <div class="total-price-display" style="animation: bounceIn 1.5s;">
+            <h3>Vårt Totalpris</h3>
+            <p id="total-price" style="font-size: 2rem; font-weight: bold; color: #333;">0 kr</p>
+        </div>
+
+        <!-- Shopify Price Comparison -->
+        <div class="total-price-display shopify-comparison" style="animation: slideIn 1.5s;">
+            <h3>Shopify Totalpris</h3>
+            <p style="font-size: 1.8rem; font-weight: bold; color: #d9534f;">410 kr/månad</p>
+            <p style="font-size: 1rem; color: #777;">(Ingen engångsavgift)</p>
+        </div>
     </div>
 
     <style>
@@ -673,6 +683,10 @@ footer .social-icons img {
             0% { transform: scale(0.5); opacity: 0; }
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(1); }
+        }
+        @keyframes slideIn {
+            0% { transform: translateX(-100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
         }
         .plans {
             gap: 40px;
@@ -713,23 +727,21 @@ footer .social-icons img {
         .popular {
             background: #e0f3ff;
         }
-        .total-price-display {
+        .total-price-container {
             margin-top: 20px;
+            gap: 30px;
+        }
+        .total-price-display {
             padding: 20px;
             background: #ffffff;
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
             display: inline-block;
-            animation: bounceIn 1.5s;
+            text-align: center;
         }
-        .total-price-display h3 {
-            color: #0074d9;
-            font-size: 1.5rem;
-        }
-        .total-price-display p {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #333;
+        .shopify-comparison {
+            background: #ffe5e5;
+            border: 2px dashed #d9534f;
         }
     </style>
 
