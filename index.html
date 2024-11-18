@@ -666,11 +666,10 @@ footer .social-icons img {
             <p id="total-price" style="font-size: 2rem; font-weight: bold; color: #333;">0 kr</p>
         </div>
 
-        <!-- Shopify Price Comparison -->
-        <div class="total-price-display shopify-comparison" style="animation: slideIn 1.5s;">
+        <!-- Shopify Total -->
+        <div class="total-price-display" style="animation: bounceIn 1.5s;">
             <h3>Shopify Totalpris</h3>
-            <p style="font-size: 1.8rem; font-weight: bold; color: #d9534f;">410 kr/månad</p>
-            <p style="font-size: 1rem; color: #777;">(Ingen engångsavgift)</p>
+            <p id="shopify-price" style="font-size: 2rem; font-weight: bold; color: #333;">0 kr</p>
         </div>
     </div>
 
@@ -683,10 +682,6 @@ footer .social-icons img {
             0% { transform: scale(0.5); opacity: 0; }
             50% { transform: scale(1.2); opacity: 1; }
             100% { transform: scale(1); }
-        }
-        @keyframes slideIn {
-            0% { transform: translateX(-100%); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
         }
         .plans {
             gap: 40px;
@@ -739,10 +734,6 @@ footer .social-icons img {
             display: inline-block;
             text-align: center;
         }
-        .shopify-comparison {
-            background: #ffe5e5;
-            border: 2px dashed #d9534f;
-        }
     </style>
 
     <script>
@@ -750,6 +741,7 @@ footer .social-icons img {
         const slider = document.getElementById("subscription-length");
         const monthsDisplay = document.getElementById("months-display");
         const totalPriceDisplay = document.getElementById("total-price");
+        const shopifyPriceDisplay = document.getElementById("shopify-price");
 
         function calculateTotal() {
             const selectedPlan = document.querySelector("input[name='plan']:checked");
@@ -768,6 +760,11 @@ footer .social-icons img {
             } else {
                 totalPriceDisplay.textContent = "Välj en plan!";
             }
+
+            // Calculate Shopify total
+            const shopifyMonthlyCost = 410;
+            const shopifyTotal = shopifyMonthlyCost * parseInt(slider.value);
+            shopifyPriceDisplay.textContent = `${shopifyTotal} kr`;
         }
 
         plans.forEach(plan => plan.addEventListener("change", calculateTotal));
@@ -775,6 +772,9 @@ footer .social-icons img {
             monthsDisplay.textContent = slider.value;
             calculateTotal();
         });
+
+        // Initial calculation
+        calculateTotal();
     </script>
 </section>
     
