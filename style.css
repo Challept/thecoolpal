@@ -7,6 +7,7 @@
         margin: 0;
         padding: 0;
         line-height: 1.6;
+        overflow-x: hidden; /* Förhindra horisontell scrollning */
     }
 
     /* Base Styles */
@@ -723,11 +724,12 @@ footer .social-icons img {
     100% {
         transform: scale(1);
     }
-
-    /* För mobila enheter (max 768px bredd) */
+    
+/* För mobila enheter (max 768px bredd) */
 @media (max-width: 768px) {
     body, html {
         font-size: 90%; /* Minska textstorleken */
+        overflow-x: hidden; /* Förhindra horisontell scrollning */
     }
 
     .container {
@@ -778,6 +780,7 @@ footer .social-icons img {
 
     .plan-card {
         width: 90%; /* Begränsa planerna till 90% av bredden */
+        padding: 15px; /* Mindre padding för mobil */
     }
 
     .total-price-container {
@@ -787,6 +790,10 @@ footer .social-icons img {
 
 /* För surfplattor (max 1024px bredd) */
 @media (max-width: 1024px) {
+    body, html {
+        overflow-x: hidden; /* Förhindra horisontell scrollning */
+    }
+
     .container {
         width: 90%; /* Större marginaler för surfplatta */
     }
@@ -805,10 +812,13 @@ footer .social-icons img {
 
     .plans {
         gap: 20px; /* Minska mellanrummen något */
+        flex-wrap: wrap; /* Låta element anpassa sig */
+        justify-content: center;
     }
 
     .plan-card {
         width: 45%; /* Två planer bredvid varandra */
+        margin: 10px 0; /* Mellanrum mellan rader */
     }
 
     .feature-card {
