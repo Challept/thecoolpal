@@ -540,63 +540,64 @@ footer .social-icons img {
         </div>
     </section>
 
-<section class="parallax-container" style="position: relative; height: 100vh; overflow: hidden; background: linear-gradient(120deg, #f2f8ff, #cce1ff);">
-    <!-- Lagers med parallax-effekt -->
-    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 150%; background-image: url('layer1.png'); background-size: cover; transform: translateZ(-1px) scale(2); z-index: -1;"></div>
-    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 150%; background-image: url('layer2.png'); background-size: cover; transform: translateZ(-0.5px) scale(1.5); z-index: -2;"></div>
-    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 150%; background-image: url('layer3.png'); background-size: cover; transform: translateZ(0px) scale(1); z-index: -3;"></div>
+<!-- Parallax-scrollning -->
+<section class="parallax-container" style="position: relative; height: 100vh; background: #f2f8ff; overflow: hidden;">
+    <!-- Parallax-element -->
+    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 120%; background-image: url('icon-layer1.svg'); background-size: contain; background-repeat: no-repeat; opacity: 0.3;"></div>
+    <div class="parallax-layer" style="position: absolute; top: 10%; right: 10%; width: 60px; height: 60px; background: #0074d9; border-radius: 50%; animation: float 4s infinite ease-in-out;"></div>
+    <div class="parallax-layer" style="position: absolute; bottom: 20%; left: 15%; width: 80px; height: 80px; background: #00aaff; border-radius: 50%; animation: float 6s infinite ease-in-out;"></div>
 
-    <!-- Innehåll -->
+    <!-- Text-innehåll -->
     <div style="position: relative; z-index: 1; text-align: center; padding: 50px;">
-        <h2 style="color: #0074d9; font-size: 3rem; margin-bottom: 20px;">Välkommen till framtiden</h2>
+        <h2 style="color: #0074d9; font-size: 3rem; margin-bottom: 20px;">Utforska Nya Höjder</h2>
         <p style="color: #333; font-size: 1.25rem; max-width: 700px; margin: 0 auto;">
-            Vi tar din idé till nästa nivå med avancerade lösningar och modern design.
+            Med vår innovativa teknik kan du skapa framtidens lösningar redan idag.
         </p>
     </div>
 
     <style>
-        .parallax-container .parallax-layer {
+        .parallax-layer {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             will-change: transform;
         }
-
         .parallax-container {
             perspective: 1px;
             perspective-origin: center center;
         }
-
-        .parallax-layer {
-            transform-style: preserve-3d;
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
         }
     </style>
 </section>
 
-    <section class="feature-showcase" style="padding: 60px; background: linear-gradient(135deg, #e8f0ff, #d6e9f5); text-align: center;">
+<!-- Effektiva Lösningar (Feature Showcase) -->
+<section class="feature-showcase" style="padding: 60px; background: #f2f8ff; text-align: center;">
     <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px;">Effektiva Lösningar</h2>
     <p style="color: #555; margin-bottom: 40px;">Utforska våra kraftfulla funktioner som gör din hemsida unik.</p>
 
     <div class="features" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 30px;">
         <!-- Funktion 1 -->
         <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <img src="feature1.png" alt="Funktion 1" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
+            <img src="https://img.icons8.com/ios/100/0074d9/cloud.png" alt="Snabba Laddtider" style="width: 80px; height: 80px; margin: 0 auto; display: block;">
             <h3 style="color: #0074d9; margin: 15px 0;">Snabba Laddtider</h3>
             <p style="color: #777;">Din hemsida är optimerad för snabbhet och prestanda.</p>
         </div>
 
         <!-- Funktion 2 -->
         <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <img src="feature2.png" alt="Funktion 2" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
+            <img src="https://img.icons8.com/ios/100/0074d9/design.png" alt="Modern Design" style="width: 80px; height: 80px; margin: 0 auto; display: block;">
             <h3 style="color: #0074d9; margin: 15px 0;">Modern Design</h3>
             <p style="color: #777;">Stilrena och moderna layouter för alla behov.</p>
         </div>
 
         <!-- Funktion 3 -->
         <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
-            <img src="feature3.png" alt="Funktion 3" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
+            <img src="https://img.icons8.com/ios/100/0074d9/edit--v1.png" alt="Enkel Redigering" style="width: 80px; height: 80px; margin: 0 auto; display: block;">
             <h3 style="color: #0074d9; margin: 15px 0;">Enkel Redigering</h3>
             <p style="color: #777;">Bygg och redigera din hemsida på bara några klick.</p>
         </div>
