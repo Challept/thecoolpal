@@ -541,7 +541,7 @@ footer .social-icons img {
     </section>
 
 <!-- Parallax-scrollning -->
-<section class="parallax-container" style="position: relative; height: 100vh; background: #f2f8ff; overflow: hidden;">
+<section class="parallax-container" style="position: relative; height: 100vh; background: #e8e8e8; overflow: hidden;">
     <!-- Parallax-element -->
     <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 120%; background-image: url('icon-layer1.svg'); background-size: contain; background-repeat: no-repeat; opacity: 0.3;"></div>
     <div class="parallax-layer" style="position: absolute; top: 10%; right: 10%; width: 60px; height: 60px; background: #0074d9; border-radius: 50%; animation: float 4s infinite ease-in-out;"></div>
@@ -576,7 +576,7 @@ footer .social-icons img {
 </section>
 
 <!-- Effektiva Lösningar (Feature Showcase) -->
-<section class="feature-showcase" style="padding: 60px; background: #f2f8ff; text-align: center;">
+<section class="feature-showcase" style="padding: 60px; background: #e8e8e8; text-align: center;">
     <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px;">Effektiva Lösningar</h2>
     <p style="color: #555; margin-bottom: 40px;">Utforska våra kraftfulla funktioner som gör din hemsida unik.</p>
 
@@ -611,67 +611,127 @@ footer .social-icons img {
     </style>
 </section>
     
-    <section class="pricing-calculator" style="padding: 60px; background: linear-gradient(135deg, #f0f4ff, #d6e9f5); text-align: center;">
-    <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px;">Beräkna din kostnad</h2>
-    <p style="color: #555; margin-bottom: 40px;">Välj en plan och dra reglaget för att se ditt totalpris.</p>
+<section class="pricing-calculator" style="padding: 60px; background: #e8e8e8; text-align: center;">
+    <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px; animation: fadeIn 1s;">Beräkna din kostnad</h2>
+    <p style="color: #555; margin-bottom: 40px; animation: fadeIn 1.2s;">Välj en plan och dra reglaget för att se ditt totalpris.</p>
 
     <div class="plans" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 40px;">
         <!-- Start Plan -->
-        <label style="cursor: pointer;">
+        <label class="plan-label">
             <input type="radio" name="plan" value="Start" data-setup="300" data-monthly="10" style="display: none;">
-            <div class="plan-card" style="width: 250px; height: 350px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s;">
-                <h3 style="color: #0074d9; margin-bottom: 15px;">Start</h3>
-                <p style="font-size: 1rem; margin-bottom: 10px;">Enkel och pålitlig</p>
-                <p style="font-size: 1.25rem; font-weight: bold; margin-bottom: 15px;">300 kr engångsavgift</p>
-                <p style="font-size: 1rem; color: #777;">+ 10 kr/månad</p>
-                <div style="margin-top: 20px; padding: 10px; background: #f2f8ff; border-radius: 8px; font-size: 0.9rem; color: #333;">
-                    Passar nybörjare som vill komma igång snabbt.
-                </div>
+            <div class="plan-card">
+                <img src="https://img.icons8.com/color/96/star.png" alt="Start Icon" class="plan-icon">
+                <h3>Start</h3>
+                <p>300 kr engångsavgift</p>
+                <p>+ 10 kr/månad</p>
             </div>
         </label>
 
         <!-- Premium Plan -->
-        <label style="cursor: pointer;">
+        <label class="plan-label">
             <input type="radio" name="plan" value="Premium" data-setup="400" data-monthly="50" style="display: none;">
-            <div class="plan-card popular" style="width: 250px; height: 350px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s;">
-                <h3 style="color: #0074d9; margin-bottom: 15px;">Premium</h3>
-                <p style="font-size: 1rem; margin-bottom: 10px;">Mest valda paketet</p>
-                <p style="font-size: 1.25rem; font-weight: bold; margin-bottom: 15px;">400 kr engångsavgift</p>
-                <p style="font-size: 1rem; color: #777;">+ 50 kr/månad</p>
-                <div style="margin-top: 20px; padding: 10px; background: #e0f3ff; border-radius: 8px; font-size: 0.9rem; color: #333;">
-                    Inkluderar extra funktioner för fler möjligheter.
-                </div>
+            <div class="plan-card popular">
+                <img src="https://img.icons8.com/color/96/medal.png" alt="Premium Icon" class="plan-icon">
+                <h3>Premium</h3>
+                <p>400 kr engångsavgift</p>
+                <p>+ 50 kr/månad</p>
             </div>
         </label>
 
         <!-- Ultimate Plan -->
-        <label style="cursor: pointer;">
+        <label class="plan-label">
             <input type="radio" name="plan" value="Ultimate" data-setup="1000" data-monthly="100" style="display: none;">
-            <div class="plan-card" style="width: 250px; height: 350px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s;">
-                <h3 style="color: #0074d9; margin-bottom: 15px;">Ultimate</h3>
-                <p style="font-size: 1rem; margin-bottom: 10px;">Full kontroll och alla funktioner</p>
-                <p style="font-size: 1.25rem; font-weight: bold; margin-bottom: 15px;">1000 kr engångsavgift</p>
-                <p style="font-size: 1rem; color: #777;">+ 100 kr/månad</p>
-                <div style="margin-top: 20px; padding: 10px; background: #d6e9f5; border-radius: 8px; font-size: 0.9rem; color: #333;">
-                    Perfekt för avancerade användare med stora krav.
-                </div>
+            <div class="plan-card">
+                <img src="https://img.icons8.com/color/96/crown.png" alt="Ultimate Icon" class="plan-icon">
+                <h3>Ultimate</h3>
+                <p>1000 kr engångsavgift</p>
+                <p>+ 100 kr/månad</p>
             </div>
         </label>
     </div>
 
     <!-- Subscription Length Slider -->
     <div style="margin-bottom: 20px;">
-        <label for="subscription-length" style="display: block; margin-bottom: 15px; font-size: 1.1rem; color: #333;">
-            Välj abonnemangets längd: <span id="months-display">12</span> månader
+        <label for="subscription-length" style="font-size: 1.1rem; color: #333;">
+            Abonnemangets längd: <span id="months-display">12</span> månader
         </label>
         <input type="range" id="subscription-length" min="1" max="120" value="12" style="width: 80%;">
     </div>
 
     <!-- Total Price Display -->
-    <div style="margin-top: 20px; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); display: inline-block;">
-        <h3 style="color: #0074d9; font-size: 1.5rem; margin-bottom: 10px;">Totalpris</h3>
-        <p id="total-price" style="font-size: 2rem; font-weight: bold; color: #333;">0 kr</p>
+    <div class="total-price-display" style="animation: bounceIn 1.5s;">
+        <h3>Totalpris</h3>
+        <p id="total-price">0 kr</p>
     </div>
+
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .plans {
+            gap: 40px;
+        }
+        .plan-label {
+            cursor: pointer;
+        }
+        .plan-card {
+            width: 250px;
+            height: 350px;
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid transparent;
+        }
+        .plan-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .plan-card.selected {
+            border-color: #0074d9;
+            box-shadow: 0 15px 30px rgba(0, 116, 217, 0.3);
+        }
+        .plan-card h3 {
+            color: #0074d9;
+            font-size: 1.5rem;
+        }
+        .plan-card p {
+            color: #555;
+        }
+        .plan-icon {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+        .popular {
+            background: #e0f3ff;
+        }
+        .total-price-display {
+            margin-top: 20px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            animation: bounceIn 1.5s;
+        }
+        .total-price-display h3 {
+            color: #0074d9;
+            font-size: 1.5rem;
+        }
+        .total-price-display p {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
 
     <script>
         const plans = document.querySelectorAll("input[name='plan']");
@@ -681,15 +741,21 @@ footer .social-icons img {
 
         function calculateTotal() {
             const selectedPlan = document.querySelector("input[name='plan']:checked");
-            if (!selectedPlan) {
+            document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
+
+            if (selectedPlan) {
+                const parentCard = selectedPlan.parentNode.querySelector('.plan-card');
+                parentCard.classList.add('selected');
+
+                const setupCost = parseInt(selectedPlan.dataset.setup);
+                const monthlyCost = parseInt(selectedPlan.dataset.monthly);
+                const months = parseInt(slider.value);
+                const total = setupCost + monthlyCost * months;
+
+                totalPriceDisplay.textContent = `${total} kr`;
+            } else {
                 totalPriceDisplay.textContent = "Välj en plan!";
-                return;
             }
-            const setupCost = parseInt(selectedPlan.dataset.setup);
-            const monthlyCost = parseInt(selectedPlan.dataset.monthly);
-            const months = parseInt(slider.value);
-            const total = setupCost + monthlyCost * months;
-            totalPriceDisplay.textContent = `${total} kr`;
         }
 
         plans.forEach(plan => plan.addEventListener("change", calculateTotal));
