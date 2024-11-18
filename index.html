@@ -382,6 +382,116 @@ footer .social-icons img {
     text-align: center;
 }
 
+/* Global styling */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(120deg, #4e54c8, #8f94fb);
+  color: white;
+  overflow: hidden;
+}
+
+/* Hero section */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Typing Effect */
+.typing-effect {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
+.cursor {
+  display: inline-block;
+  width: 10px;
+  height: 40px;
+  background-color: white;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Jordglob */
+.globe-container {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 150px;
+}
+
+.globe {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #87CEEB, #1E90FF);
+  animation: spin 8s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Parallax Boxar */
+.parallax-box {
+  position: absolute;
+  padding: 15px 30px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  animation: float 10s linear infinite;
+  will-change: transform;
+}
+
+.parallax-box:nth-child(1) {
+  top: 30%;
+  left: 10%;
+}
+
+.parallax-box:nth-child(2) {
+  top: 50%;
+  right: 15%;
+}
+
+.parallax-box:nth-child(3) {
+  top: 70%;
+  left: 20%;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+
 .section-title {
     font-size: 28px;
     color: #007bff;
@@ -552,6 +662,28 @@ footer .social-icons img {
         </div>
     </section>
 
+  <section class="hero">
+    <!-- Animerad Text -->
+    <div class="typing-effect">
+      <span id="typed-text"></span>
+      <span class="cursor">|</span>
+    </div>
+  </section>
+
+  <section class="globe-section">
+    <!-- Jordglob -->
+    <div class="globe-container">
+      <div class="globe"></div>
+    </div>
+  </section>
+
+  <section class="parallax-section">
+    <!-- Flygande Boxar -->
+    <div class="parallax-box" style="--speed: -1;">Automatiska subdomäner</div>
+    <div class="parallax-box" style="--speed: 1.5;">Full frihet att anpassa</div>
+    <div class="parallax-box" style="--speed: -0.5;">Färdiga mallar att välja mellan</div>
+  </section>
+    
     <!-- About Us Section -->
     <section class="about-section">
         <h2>Om Oss</h2>
