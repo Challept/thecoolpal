@@ -540,64 +540,148 @@ footer .social-icons img {
         </div>
     </section>
 
-    <section class="pricing-calculator" style="padding: 40px; background: linear-gradient(135deg, #f0f4ff, #d6e9f5); text-align: center;">
-    <h2 style="color: #0074d9; font-size: 2rem;">Beräkna din kostnad</h2>
-    <p style="color: #555; margin-bottom: 20px;">Välj en plan och dra för att ställa in abonnemangets längd.</p>
+<section class="parallax-container" style="position: relative; height: 100vh; overflow: hidden; background: linear-gradient(120deg, #f2f8ff, #cce1ff);">
+    <!-- Lagers med parallax-effekt -->
+    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 150%; background-image: url('layer1.png'); background-size: cover; transform: translateZ(-1px) scale(2); z-index: -1;"></div>
+    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 150%; background-image: url('layer2.png'); background-size: cover; transform: translateZ(-0.5px) scale(1.5); z-index: -2;"></div>
+    <div class="parallax-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 150%; background-image: url('layer3.png'); background-size: cover; transform: translateZ(0px) scale(1); z-index: -3;"></div>
 
-    <div class="plans" style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+    <!-- Innehåll -->
+    <div style="position: relative; z-index: 1; text-align: center; padding: 50px;">
+        <h2 style="color: #0074d9; font-size: 3rem; margin-bottom: 20px;">Välkommen till framtiden</h2>
+        <p style="color: #333; font-size: 1.25rem; max-width: 700px; margin: 0 auto;">
+            Vi tar din idé till nästa nivå med avancerade lösningar och modern design.
+        </p>
+    </div>
+
+    <style>
+        .parallax-container .parallax-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .parallax-container {
+            perspective: 1px;
+            perspective-origin: center center;
+        }
+
+        .parallax-layer {
+            transform-style: preserve-3d;
+        }
+    </style>
+</section>
+
+    <section class="feature-showcase" style="padding: 60px; background: linear-gradient(135deg, #e8f0ff, #d6e9f5); text-align: center;">
+    <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px;">Effektiva Lösningar</h2>
+    <p style="color: #555; margin-bottom: 40px;">Utforska våra kraftfulla funktioner som gör din hemsida unik.</p>
+
+    <div class="features" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 30px;">
+        <!-- Funktion 1 -->
+        <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+            <img src="feature1.png" alt="Funktion 1" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
+            <h3 style="color: #0074d9; margin: 15px 0;">Snabba Laddtider</h3>
+            <p style="color: #777;">Din hemsida är optimerad för snabbhet och prestanda.</p>
+        </div>
+
+        <!-- Funktion 2 -->
+        <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+            <img src="feature2.png" alt="Funktion 2" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
+            <h3 style="color: #0074d9; margin: 15px 0;">Modern Design</h3>
+            <p style="color: #777;">Stilrena och moderna layouter för alla behov.</p>
+        </div>
+
+        <!-- Funktion 3 -->
+        <div class="feature-card" style="width: 300px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
+            <img src="feature3.png" alt="Funktion 3" style="width: 100px; height: 100px; margin: 0 auto; display: block;">
+            <h3 style="color: #0074d9; margin: 15px 0;">Enkel Redigering</h3>
+            <p style="color: #777;">Bygg och redigera din hemsida på bara några klick.</p>
+        </div>
+    </div>
+
+    <style>
+        .feature-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</section>
+    
+    <section class="pricing-calculator" style="padding: 60px; background: linear-gradient(135deg, #f0f4ff, #d6e9f5); text-align: center;">
+    <h2 style="color: #0074d9; font-size: 2.5rem; margin-bottom: 20px;">Beräkna din kostnad</h2>
+    <p style="color: #555; margin-bottom: 40px;">Välj en plan och dra reglaget för att se ditt totalpris.</p>
+
+    <div class="plans" style="display: flex; justify-content: center; gap: 30px; margin-bottom: 40px;">
         <!-- Start Plan -->
-        <label style="display: flex; flex-direction: column; align-items: center;">
+        <label style="cursor: pointer;">
             <input type="radio" name="plan" value="Start" data-setup="300" data-monthly="10" style="display: none;">
-            <div class="plan-card" style="background: #fff; border-radius: 10px; padding: 20px; width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer; transition: transform 0.3s;">
-                <h3 style="color: #0074d9;">Start</h3>
-                <p>300 kr engångsavgift</p>
-                <p>+ 10 kr/månad</p>
+            <div class="plan-card" style="width: 250px; height: 350px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s;">
+                <h3 style="color: #0074d9; margin-bottom: 15px;">Start</h3>
+                <p style="font-size: 1rem; margin-bottom: 10px;">Enkel och pålitlig</p>
+                <p style="font-size: 1.25rem; font-weight: bold; margin-bottom: 15px;">300 kr engångsavgift</p>
+                <p style="font-size: 1rem; color: #777;">+ 10 kr/månad</p>
+                <div style="margin-top: 20px; padding: 10px; background: #f2f8ff; border-radius: 8px; font-size: 0.9rem; color: #333;">
+                    Passar nybörjare som vill komma igång snabbt.
+                </div>
             </div>
         </label>
+
         <!-- Premium Plan -->
-        <label style="display: flex; flex-direction: column; align-items: center;">
+        <label style="cursor: pointer;">
             <input type="radio" name="plan" value="Premium" data-setup="400" data-monthly="50" style="display: none;">
-            <div class="plan-card" style="background: #fff; border-radius: 10px; padding: 20px; width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer; transition: transform 0.3s;">
-                <h3 style="color: #0074d9;">Premium</h3>
-                <p>400 kr engångsavgift</p>
-                <p>+ 50 kr/månad</p>
+            <div class="plan-card popular" style="width: 250px; height: 350px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s;">
+                <h3 style="color: #0074d9; margin-bottom: 15px;">Premium</h3>
+                <p style="font-size: 1rem; margin-bottom: 10px;">Mest valda paketet</p>
+                <p style="font-size: 1.25rem; font-weight: bold; margin-bottom: 15px;">400 kr engångsavgift</p>
+                <p style="font-size: 1rem; color: #777;">+ 50 kr/månad</p>
+                <div style="margin-top: 20px; padding: 10px; background: #e0f3ff; border-radius: 8px; font-size: 0.9rem; color: #333;">
+                    Inkluderar extra funktioner för fler möjligheter.
+                </div>
             </div>
         </label>
+
         <!-- Ultimate Plan -->
-        <label style="display: flex; flex-direction: column; align-items: center;">
+        <label style="cursor: pointer;">
             <input type="radio" name="plan" value="Ultimate" data-setup="1000" data-monthly="100" style="display: none;">
-            <div class="plan-card" style="background: #fff; border-radius: 10px; padding: 20px; width: 150px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer; transition: transform 0.3s;">
-                <h3 style="color: #0074d9;">Ultimate</h3>
-                <p>1000 kr engångsavgift</p>
-                <p>+ 100 kr/månad</p>
+            <div class="plan-card" style="width: 250px; height: 350px; background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s;">
+                <h3 style="color: #0074d9; margin-bottom: 15px;">Ultimate</h3>
+                <p style="font-size: 1rem; margin-bottom: 10px;">Full kontroll och alla funktioner</p>
+                <p style="font-size: 1.25rem; font-weight: bold; margin-bottom: 15px;">1000 kr engångsavgift</p>
+                <p style="font-size: 1rem; color: #777;">+ 100 kr/månad</p>
+                <div style="margin-top: 20px; padding: 10px; background: #d6e9f5; border-radius: 8px; font-size: 0.9rem; color: #333;">
+                    Perfekt för avancerade användare med stora krav.
+                </div>
             </div>
         </label>
     </div>
 
     <!-- Subscription Length Slider -->
     <div style="margin-bottom: 20px;">
-        <label for="subscription-length" style="display: block; margin-bottom: 10px; color: #333;">Välj abonnemangets längd: <span id="months-display">12</span> månader</label>
+        <label for="subscription-length" style="display: block; margin-bottom: 15px; font-size: 1.1rem; color: #333;">
+            Välj abonnemangets längd: <span id="months-display">12</span> månader
+        </label>
         <input type="range" id="subscription-length" min="1" max="120" value="12" style="width: 80%;">
     </div>
 
     <!-- Total Price Display -->
-    <div style="margin-top: 20px; padding: 20px; background: #ffffff; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); max-width: 300px; margin: 0 auto;">
-        <h3 style="color: #0074d9;">Totalpris</h3>
-        <p id="total-price" style="font-size: 1.5rem; font-weight: bold;">0 kr</p>
+    <div style="margin-top: 20px; padding: 20px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); display: inline-block;">
+        <h3 style="color: #0074d9; font-size: 1.5rem; margin-bottom: 10px;">Totalpris</h3>
+        <p id="total-price" style="font-size: 2rem; font-weight: bold; color: #333;">0 kr</p>
     </div>
 
     <script>
-        // Variables
         const plans = document.querySelectorAll("input[name='plan']");
         const slider = document.getElementById("subscription-length");
         const monthsDisplay = document.getElementById("months-display");
         const totalPriceDisplay = document.getElementById("total-price");
 
-        // Function to calculate total price
         function calculateTotal() {
             const selectedPlan = document.querySelector("input[name='plan']:checked");
             if (!selectedPlan) {
-                totalPriceDisplay.textContent = "Välj en plan först!";
+                totalPriceDisplay.textContent = "Välj en plan!";
                 return;
             }
             const setupCost = parseInt(selectedPlan.dataset.setup);
@@ -607,11 +691,7 @@ footer .social-icons img {
             totalPriceDisplay.textContent = `${total} kr`;
         }
 
-        // Event Listeners
-        plans.forEach(plan => {
-            plan.addEventListener("change", calculateTotal);
-        });
-
+        plans.forEach(plan => plan.addEventListener("change", calculateTotal));
         slider.addEventListener("input", () => {
             monthsDisplay.textContent = slider.value;
             calculateTotal();
