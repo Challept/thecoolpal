@@ -1,51 +1,52 @@
 /* Bas-styling */
 body {
-    background-color: #f0f4ff;
-    color: #333333;
-    font-family: 'Arial', sans-serif;
+    background-color: #f9fafb;
+    color: #1a202c;
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Grundläggande layout */
 body, html {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    height: 100%;
+    overflow-x: hidden;
 }
 
 /* Behållare för centrerat innehåll */
 .container {
-    flex: 1;
     width: 90%;
     max-width: 1200px;
     margin: auto;
+    text-align: center;
 }
 
 /* Header-styling */
 .header {
-    text-align: center;
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
     color: #ffffff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-radius: 15px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .header h1 {
-    font-size: 3rem;
-    margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
 .header p {
     font-size: 1.2rem;
-    max-width: 800px;
+    max-width: 700px;
     margin: 0 auto;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
 }
 
 /* Video-sektion */
@@ -53,9 +54,10 @@ body, html {
     position: relative;
     width: 100%;
     height: 500px;
-    overflow: hidden;
     border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .top-video video {
@@ -68,200 +70,293 @@ body, html {
 .custom-button {
     display: inline-block;
     padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1rem;
+    font-weight: 600;
     color: #ffffff;
-    background-color: #5ac8fa;
+    background-color: #4f46e5;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     text-decoration: none;
-    box-shadow: 0 8px 15px rgba(90, 200, 250, 0.3);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
     transition: all 0.3s ease;
-    margin: 20px;
+    margin: 15px;
 }
 
 .custom-button:hover {
-    background-color: #007aff;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 20px rgba(90, 200, 250, 0.4);
+    background-color: #4338ca;
+    box-shadow: 0 6px 16px rgba(79, 70, 229, 0.6);
+}
+
+/* Titel för prisplaner */
+.plans-title-container {
+    margin-bottom: 40px;
+}
+
+.plans-title {
+    font-size: 2.5rem;
+    color: #4f46e5;
+    font-weight: 700;
+}
+
+.plans-subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-top: 10px;
 }
 
 /* Prissektion */
 .pricing-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 30px;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 50px 20px;
-    max-width: 1200px;
-    margin: 50px auto;
-    text-align: center;
 }
 
 .plan {
-    flex: 1 1 30%;
+    flex: 1 1 300px;
+    max-width: 300px;
     background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+    border-radius: 15px;
     padding: 30px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .plan:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.plan.popular {
+    border: 2px solid #4f46e5;
+    background-color: #f5f7ff;
 }
 
 .plan h3 {
-    font-size: 1.8rem;
-    color: #0072ff;
+    font-size: 1.5rem;
+    color: #4f46e5;
     margin-bottom: 10px;
 }
 
 .plan p {
-    font-size: 1.2rem;
-    color: #555;
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 10px 0;
 }
 
-.plan.popular {
-    border: 2px solid #0072ff;
-    background: #e0f3ff;
-    animation: pulse 1.5s infinite;
+.plan .price {
+    font-size: 1.8rem;
+    color: #1a202c;
+    font-weight: 700;
 }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
-
-/* Om Oss */
+/* About-sektion */
 .about-section {
-    text-align: center;
     padding: 60px 20px;
     background-color: #ffffff;
     border-radius: 15px;
-    margin: 50px auto;
-    max-width: 900px;
+    margin-bottom: 50px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .about-section h2 {
-    font-size: 2.2rem;
-    color: #0072ff;
+    font-size: 2rem;
+    color: #4f46e5;
     margin-bottom: 20px;
+    font-weight: 700;
 }
 
 .about-section p {
-    font-size: 1.2rem;
-    color: #555;
+    font-size: 1rem;
+    color: #6b7280;
     max-width: 700px;
     margin: 0 auto;
+    line-height: 1.8;
 }
 
-/* Stegvis-sektion */
-.steps-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 50px;
-    max-width: 1200px;
-    margin: 50px auto;
-}
-
-.step {
-    flex: 1;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+/* Parallax-sektion */
+.parallax-container {
+    position: relative;
+    height: 400px;
+    background: linear-gradient(135deg, #e0e7ff, #f3f4f6);
+    border-radius: 15px;
+    overflow: hidden;
     text-align: center;
-    transition: transform 0.3s ease;
+    padding: 60px 20px;
+    margin-bottom: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.step:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-}
-
-.step h3 {
-    font-size: 2.5rem;
-    color: #0072ff;
-    margin-bottom: 10px;
-}
-
-.step p {
-    font-size: 1.2rem;
-    color: #555;
-}
-
-/* Quiz-popup */
-.quiz-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.quiz-container {
-    background-color: #ffffff;
-    width: 90%;
-    max-width: 500px;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.quiz-container h2 {
+.parallax-text h2 {
     font-size: 2rem;
-    color: #0072ff;
+    color: #4f46e5;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.parallax-text p {
+    font-size: 1rem;
+    color: #6b7280;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Feature Showcase */
+.feature-showcase {
+    padding: 60px 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-bottom: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.feature-showcase h2 {
+    font-size: 2rem;
+    color: #4f46e5;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.feature-showcase p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 40px;
+}
+
+.features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    flex: 1 1 250px;
+    max-width: 250px;
+    background-color: #f9fafb;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card img {
+    width: 60px;
+    height: 60px;
     margin-bottom: 20px;
 }
 
-.quiz-options button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    margin: 5px 0;
-    color: #0072ff;
-    border: 1px solid #0072ff;
-    background-color: #ffffff;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+.feature-card h3 {
+    font-size: 1.2rem;
+    color: #4f46e5;
+    margin-bottom: 10px;
 }
 
-.quiz-options button:hover {
-    background-color: #0072ff;
-    color: #ffffff;
+.feature-card p {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+/* Pricing Calculator */
+.pricing-calculator {
+    padding: 60px 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-bottom: 50px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.pricing-calculator h2 {
+    font-size: 2rem;
+    color: #4f46e5;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.pricing-calculator p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 40px;
+}
+
+.plans {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.plan-card {
+    flex: 1 1 250px;
+    max-width: 250px;
+    background-color: #f9fafb;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.plan-card h3 {
+    font-size: 1.2rem;
+    color: #4f46e5;
+    margin-bottom: 10px;
+}
+
+.plan-card p {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+.total-price-display {
+    padding: 20px;
+    background-color: #f3f4f6;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 400px;
 }
 
 /* Footer */
 footer {
-    text-align: center;
     padding: 40px 20px;
-    background: linear-gradient(135deg, #004a99, #0066cc);
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
     color: #ffffff;
-    font-size: 1rem;
+    text-align: center;
+    border-radius: 15px;
+    margin-top: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 footer .footer-links {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 20px;
 }
 
 footer .footer-links a {
     color: #ffffff;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
     transition: color 0.3s ease;
 }
 
@@ -270,6 +365,7 @@ footer .footer-links a:hover {
 }
 
 footer p {
-    margin: 0;
-    opacity: 0.8;
+    font-size: 0.9rem;
+    margin: 5px 0;
+    opacity: 0.9;
 }
