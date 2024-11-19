@@ -357,6 +357,125 @@ body {
     margin: 0 auto;
 }
 
+/* Quiz Overlay */
+.quiz-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Quiz Container */
+.quiz-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.5s ease;
+}
+
+/* Close Button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-button:hover {
+    background: #ff1a1a;
+}
+
+/* Quiz Question */
+.quiz-question {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Quiz Options */
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.quiz-option {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #007aff, #00d4ff);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0, 122, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    background: linear-gradient(135deg, #0056b3, #008fcc);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.5);
+}
+
+/* Quiz Result */
+.quiz-result {
+    text-align: center;
+}
+
+.quiz-result h3 {
+    font-size: 1.5rem;
+    color: #007aff;
+    margin-bottom: 20px;
+}
+
+.order-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: white;
+    background: #007aff;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 6px 15px rgba(0, 122, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.order-button:hover {
+    background: #0056b3;
+    box-shadow: 0 8px 20px rgba(0, 122, 255, 0.5);
+}
+
+/* Animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+    
 /* Footer */
 footer {
     background: linear-gradient(135deg, #0044cc, #007aff);
@@ -617,154 +736,79 @@ footer p {
         <div id="quiz-content">
             <p class="quiz-question" id="quiz-question">Fråga 1: Vilken typ av hemsida är du intresserad av?</p>
             <div class="quiz-options" id="quiz-options">
-                <button onclick="nextQuestion(1)">E-handel</button>
-                <button onclick="nextQuestion(2)">Blogg</button>
-                <button onclick="nextQuestion(3)">Portfolio</button>
-                <button onclick="nextQuestion(4)">Företagssida</button>
+                <button class="quiz-option" onclick="nextQuestion(0)">E-handel</button>
+                <button class="quiz-option" onclick="nextQuestion(1)">Blogg</button>
+                <button class="quiz-option" onclick="nextQuestion(2)">Portfolio</button>
+                <button class="quiz-option" onclick="nextQuestion(3)">Företagssida</button>
             </div>
         </div>
-        <div class="quiz-result" id="quiz-result" style="display: none;">
+        <div id="quiz-result" style="display: none;">
             <h3>Rekommendation baserat på dina svar</h3>
+            <p id="recommended-plan">Start</p>
             <a href="https://webstay.se/order" id="order-button" class="order-button">Beställ nu på WebStay</a>
         </div>
     </div>
 </div>
 
 <script>
-    let currentQuestion = 0;
-    let recommendedPlan = "Start"; // Default plan
     const questions = [
         { question: "Vilken typ av hemsida är du intresserad av?", options: ["E-handel", "Blogg", "Portfolio", "Företagssida"] },
         { question: "Vad är viktigast för din hemsida?", options: ["Design", "Funktionalitet", "Snabbhet", "Enkelhet"] },
         { question: "Hur mycket trafik förväntar du dig?", options: ["Lite", "Måttligt", "Mycket", "Väldigt mycket"] },
-        { question: "Vilken målgrupp har du?", options: ["Lokala", "Nationella", "Internationella", "Globalt"] },
         { question: "Vad är din budget?", options: ["Under 500 kr", "500-1000 kr", "1000-5000 kr", "Över 5000 kr"] }
     ];
 
+    const recommendations = ["Start", "Premium", "Ultimate"];
+    let currentQuestionIndex = 0;
+
     function startQuiz() {
         document.getElementById("quiz-overlay").style.display = "flex";
-        showQuestion(0);
+        showQuestion();
     }
 
-    function showQuestion(index) {
-        if (index < questions.length) {
-            currentQuestion = index;
-            document.getElementById("quiz-question").textContent = questions[index].question;
-            const optionsContainer = document.getElementById("quiz-options");
-            optionsContainer.innerHTML = "";
-            questions[index].options.forEach((option, i) => {
-                const button = document.createElement("button");
-                button.textContent = option;
-                button.onclick = () => nextQuestion(i);
-                optionsContainer.appendChild(button);
-            });
+    function showQuestion() {
+        const currentQuestion = questions[currentQuestionIndex];
+        document.getElementById("quiz-question").textContent = currentQuestion.question;
+
+        const optionsContainer = document.getElementById("quiz-options");
+        optionsContainer.innerHTML = "";
+
+        currentQuestion.options.forEach((option, index) => {
+            const button = document.createElement("button");
+            button.classList.add("quiz-option");
+            button.textContent = option;
+            button.onclick = () => nextQuestion(index);
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function nextQuestion(selectedOption) {
+        if (currentQuestionIndex === questions.length - 1) {
+            showResult(selectedOption);
         } else {
-            determineRecommendation();
+            currentQuestionIndex++;
+            showQuestion();
         }
     }
 
-    function nextQuestion(answerIndex) {
-        // If we're on the budget question, set recommendedPlan based on the answer
-        if (currentQuestion === questions.length - 1) {
-            if (answerIndex === 0) recommendedPlan = "Start";
-            else if (answerIndex === 1) recommendedPlan = "Premium";
-            else if (answerIndex === 2 || answerIndex === 3) recommendedPlan = "Ultimate";
-
-            // Save the recommendation to localStorage
-            localStorage.setItem('recommendedPlan', recommendedPlan);
-        }
-        showQuestion(currentQuestion + 1);
-    }
-
-    function determineRecommendation() {
+    function showResult(selectedOption) {
         document.getElementById("quiz-content").style.display = "none";
         document.getElementById("quiz-result").style.display = "block";
+
+        const recommendationIndex = Math.min(selectedOption, recommendations.length - 1);
+        document.getElementById("recommended-plan").textContent = recommendations[recommendationIndex];
     }
 
     function closeQuiz() {
         document.getElementById("quiz-overlay").style.display = "none";
+        document.getElementById("quiz-content").style.display = "block";
+        document.getElementById("quiz-result").style.display = "none";
+        currentQuestionIndex = 0;
+        showQuestion();
     }
 
+    // Start quiz automatically on page load
     window.onload = startQuiz;
-</script>
-
-<div class="name-generator-container">
-    <h2 class="section-title">Generera Företagsnamn</h2>
-    <p class="section-subtitle">Fyll i nyckelord, välj en kategori och ett språk för att få skräddarsydda förslag!</p>
-
-    <div class="input-container">
-        <label for="keywords">Nyckelord:</label>
-        <input type="text" id="keywords" placeholder="Ange några nyckelord...">
-    </div>
-
-    <div class="input-container">
-        <label for="category">Kategori:</label>
-        <select id="category">
-            <option value="modern">Modern</option>
-            <option value="teknik">Teknik</option>
-            <option value="miljö">Miljö</option>
-            <option value="samhällsservice">Samhällsservice</option>
-            <option value="hälsa">Hälsa</option>
-        </select>
-    </div>
-
-    <div class="input-container">
-        <label for="language">Språk:</label>
-        <select id="language">
-            <option value="svenska">Svenska</option>
-            <option value="engelska">Engelska</option>
-        </select>
-    </div>
-
-    <button class="generate-button" onclick="generateNames()">Generera Företagsnamn</button>
-
-    <div class="loader" id="loader" style="display: none;">Laddar...</div>
-
-    <div class="result-container" id="result-container" style="display: none;">
-        <h3>Förslag på företagsnamn:</h3>
-        <ul id="name-list"></ul>
-        <button class="generate-button" onclick="generateNames()">Generera om</button>
-    </div>
-</div>
-
-<script>
-    function generateNames() {
-        // Visa loader och dölj resultatkontainern
-        document.getElementById("loader").style.display = "block";
-        document.getElementById("result-container").style.display = "none";
-
-        // Simulera en kort laddningstid
-        setTimeout(() => {
-            document.getElementById("loader").style.display = "none";
-            document.getElementById("result-container").style.display = "block";
-
-            // Hämta användarinput
-            const keywords = document.getElementById("keywords").value;
-            const category = document.getElementById("category").value;
-            const language = document.getElementById("language").value;
-
-            // Lista med företagsnamn baserat på språket
-            const nameSuggestions = language === "svenska" 
-                ? [`${keywords} Konsult`, `${category} Teknik`, `Nordic ${keywords}`, `${keywords} Affärspartner`, `${keywords} Grupp`, `Din ${keywords}`]
-                : [`${keywords} Solutions`, `${keywords} Innovations`, `${keywords} Labs`, `${category} Dynamics`, `Global ${keywords}`, `${keywords} Partners`];
-            
-            // Generera en uppsättning av 5 unika namn
-            const nameList = document.getElementById("name-list");
-            nameList.innerHTML = ""; // Rensa tidigare resultat
-            const randomNames = [];
-            while (randomNames.length < 5) {
-                const randomName = nameSuggestions[Math.floor(Math.random() * nameSuggestions.length)];
-                if (!randomNames.includes(randomName)) randomNames.push(randomName);
-            }
-
-            // Visa de slumpmässigt valda företagsnamnen
-            randomNames.forEach(name => {
-                const li = document.createElement("li");
-                li.textContent = name;
-                nameList.appendChild(li);
-            });
-        }, 1000); // 1 sekunds fördröjning för laddningsanimation
-    }
 </script>
     
 <!-- New Footer Section -->
