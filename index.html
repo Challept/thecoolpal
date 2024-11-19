@@ -210,6 +210,127 @@ body {
     line-height: 1.6;
 }
 
+/* Pricing Calculator Section */
+.pricing-calculator {
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #f3f4f6, #eef2ff);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.pricing-calculator .section-title {
+    font-size: 2.5rem;
+    color: #007aff;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.pricing-calculator .section-subtitle {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.plans {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.plan-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    flex: 1 1 300px;
+    max-width: 350px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.plan-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plan-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.plan-card img {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+.plan-card h3 {
+    font-size: 1.8rem;
+    color: #007aff;
+    margin-bottom: 10px;
+}
+
+.plan-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.plan-card.selected {
+    border: 2px solid #007aff;
+    box-shadow: 0 12px 30px rgba(0, 122, 255, 0.3);
+}
+
+/* Subscription Length Slider */
+.pricing-calculator label {
+    font-size: 1.2rem;
+    color: #555;
+    display: block;
+    margin: 20px 0 10px;
+}
+
+#subscription-length {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Total Price Display */
+.total-price-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.total-price-display {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    flex: 1 1 200px;
+    max-width: 250px;
+}
+
+.total-price-display h3 {
+    font-size: 1.5rem;
+    color: #007aff;
+    margin-bottom: 10px;
+}
+
+.total-price-display p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+}
+    
 /* Om Oss */
 .about-section {
     padding: 70px 20px;
