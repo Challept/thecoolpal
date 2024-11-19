@@ -132,30 +132,82 @@ body {
     color: #333;
 }
 
-/* Parallax-sektion */
+/* Parallax Sektion */
 .parallax-container {
-    background: linear-gradient(135deg, #eef2ff, #f9f9fc);
-    padding: 70px 20px;
+    position: relative;
+    height: 600px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #eef2ff, #f3f4f6);
+}
+
+/* Parallax Layers */
+.parallax-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.layer1 {
+    background-image: url('https://via.placeholder.com/1920x1080?text=Layer+1');
+    z-index: 1;
+}
+
+.layer2 {
+    background-image: url('https://via.placeholder.com/1920x1080?text=Layer+2');
+    z-index: 2;
+}
+
+.layer3 {
+    background-image: url('https://via.placeholder.com/1920x1080?text=Layer+3');
+    z-index: 3;
+}
+
+/* Text Content */
+.parallax-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
-    border-radius: 20px;
-    max-width: 1200px;
-    margin: 50px auto;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    z-index: 4;
+    color: #333;
 }
 
 .parallax-text h2 {
-    font-size: 2.5rem;
-    color: #007aff;
-    margin-bottom: 20px;
+    font-size: 3rem;
     font-weight: bold;
+    margin-bottom: 10px;
+    color: #007aff;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .parallax-text p {
     font-size: 1.2rem;
-    color: #666;
-    max-width: 700px;
-    margin: 0 auto;
-    line-height: 1.8;
+    color: #555;
+}
+
+/* Bubblor */
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    border-radius: 50%;
+    background: rgba(0, 123, 255, 0.2);
+    animation: floatUp infinite;
+    z-index: 5;
+}
+
+/* Bubbelanimation */
+@keyframes floatUp {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(-100vh);
+        opacity: 0.3;
+    }
 }
 
 /* Funktioner */
@@ -558,17 +610,56 @@ footer p {
     </section>
 
 <section class="parallax-container">
-    <!-- Parallax-element -->
+    <!-- Parallax Layers -->
     <div class="parallax-layer layer1"></div>
     <div class="parallax-layer layer2"></div>
     <div class="parallax-layer layer3"></div>
 
-    <!-- Text-innehåll -->
+    <!-- Floating Bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+
+    <!-- Text Content -->
     <div class="parallax-text">
         <h2>Utforska Nya Höjder</h2>
         <p>Med vår innovativa teknik kan du skapa framtidens lösningar redan idag.</p>
     </div>
 </section>
+
+<script>
+    // Parallax Scrolling Effekt
+    document.addEventListener('scroll', () => {
+        const layers = document.querySelectorAll('.parallax-layer');
+        const scrollPosition = window.scrollY;
+
+        layers.forEach((layer, index) => {
+            const speed = (index + 1) * 0.2; // Olika hastigheter för varje lager
+            layer.style.transform = `translateY(${scrollPosition * speed}px)`;
+        });
+    });
+
+    // Bubble Animation
+    const bubbles = document.querySelectorAll('.bubble');
+
+    bubbles.forEach((bubble) => {
+        const animateBubble = () => {
+            const size = Math.random() * 100 + 50; // Storlek mellan 50px och 150px
+            const positionX = Math.random() * window.innerWidth;
+            const duration = Math.random() * 20 + 10; // Varaktighet mellan 10s och 30s
+
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${positionX}px`;
+            bubble.style.animationDuration = `${duration}s`;
+        };
+
+        animateBubble();
+        bubble.addEventListener('animationiteration', animateBubble); // Återställ vid slutet av animationen
+    });
+</script>
 
 <section class="feature-showcase">
     <h2>Effektiva Lösningar</h2>
