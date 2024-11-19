@@ -615,49 +615,49 @@ footer p {
     <div class="parallax-layer layer2"></div>
     <div class="parallax-layer layer3"></div>
 
-    <!-- Floating Bubbles -->
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
-    <div class="bubble"></div>
+    <!-- Animated Neon Circles -->
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
 
     <!-- Text Content -->
     <div class="parallax-text">
-        <h2>Utforska Nya Höjder</h2>
-        <p>Med vår innovativa teknik kan du skapa framtidens lösningar redan idag.</p>
+        <h2>Utforska Nya Möjligheter</h2>
+        <p>Med framtidens teknik tar vi dig till nästa nivå.</p>
     </div>
 </section>
 
 <script>
-    // Parallax Scrolling Effekt
+    // Parallax Scrolling Effect
     document.addEventListener('scroll', () => {
         const layers = document.querySelectorAll('.parallax-layer');
         const scrollPosition = window.scrollY;
 
         layers.forEach((layer, index) => {
-            const speed = (index + 1) * 0.2; // Olika hastigheter för varje lager
+            const speed = (index + 1) * 0.3; // Different speeds for each layer
             layer.style.transform = `translateY(${scrollPosition * speed}px)`;
         });
     });
 
-    // Bubble Animation
-    const bubbles = document.querySelectorAll('.bubble');
+    // Neon Circle Animation Reset
+    const circles = document.querySelectorAll('.neon-circle');
 
-    bubbles.forEach((bubble) => {
-        const animateBubble = () => {
-            const size = Math.random() * 100 + 50; // Storlek mellan 50px och 150px
+    circles.forEach((circle) => {
+        const animateCircle = () => {
+            const size = Math.random() * 100 + 50; // Size between 50px and 150px
             const positionX = Math.random() * window.innerWidth;
-            const duration = Math.random() * 20 + 10; // Varaktighet mellan 10s och 30s
+            const duration = Math.random() * 10 + 5; // Duration between 5s and 15s
 
-            bubble.style.width = `${size}px`;
-            bubble.style.height = `${size}px`;
-            bubble.style.left = `${positionX}px`;
-            bubble.style.animationDuration = `${duration}s`;
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            circle.style.left = `${positionX}px`;
+            circle.style.animationDuration = `${duration}s`;
         };
 
-        animateBubble();
-        bubble.addEventListener('animationiteration', animateBubble); // Återställ vid slutet av animationen
+        animateCircle();
+        circle.addEventListener('animationiteration', animateCircle); // Reset animation on iteration
     });
 </script>
 
