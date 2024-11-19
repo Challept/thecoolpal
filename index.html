@@ -132,12 +132,12 @@ body {
     color: #333;
 }
 
-/* Parallax Sektion */
+/* Parallax Section */
 .parallax-container {
     position: relative;
-    height: 600px;
+    height: 700px;
     overflow: hidden;
-    background: linear-gradient(135deg, #eef2ff, #f3f4f6);
+    background: linear-gradient(135deg, #1e1e30, #2a2a45);
 }
 
 /* Parallax Layers */
@@ -157,11 +157,13 @@ body {
 .layer2 {
     background-image: url('https://via.placeholder.com/1920x1080?text=Layer+2');
     z-index: 2;
+    opacity: 0.7;
 }
 
 .layer3 {
     background-image: url('https://via.placeholder.com/1920x1080?text=Layer+3');
     z-index: 3;
+    opacity: 0.5;
 }
 
 /* Text Content */
@@ -172,41 +174,41 @@ body {
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 4;
-    color: #333;
+    color: #fff;
 }
 
 .parallax-text h2 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #007aff;
-    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    color: #f7a8ff;
+    text-shadow: 0 4px 6px rgba(247, 168, 255, 0.5);
 }
 
 .parallax-text p {
-    font-size: 1.2rem;
-    color: #555;
+    font-size: 1.3rem;
+    color: #b3b3ff;
 }
 
-/* Bubblor */
-.bubble {
+/* Neon Circles */
+.neon-circle {
     position: absolute;
     bottom: -100px;
     border-radius: 50%;
-    background: rgba(0, 123, 255, 0.2);
+    background: radial-gradient(circle, #ff57b9, #ff2f92, transparent);
+    box-shadow: 0 0 20px 5px #ff57b9, 0 0 50px 10px #ff2f92;
     animation: floatUp infinite;
-    z-index: 5;
 }
 
-/* Bubbelanimation */
+/* Neon Animation */
 @keyframes floatUp {
     from {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
         opacity: 1;
     }
     to {
-        transform: translateY(-100vh);
-        opacity: 0.3;
+        transform: translateY(-120vh) scale(0.7);
+        opacity: 0.2;
     }
 }
 
