@@ -563,6 +563,86 @@ footer p {
     font-size: 1rem;
     opacity: 0.9;
 }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 255, 0.5);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            z-index: 9999;
+        }
+
+        .popup h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .popup p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            animation: fadeIn 2s ease-in-out 1s;
+        }
+
+        .popup .countdown {
+            font-size: 2rem;
+            margin: 20px 0;
+            font-weight: bold;
+            animation: fadeIn 2s ease-in-out 2s;
+        }
+
+        .popup input {
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+            outline: none;
+            animation: fadeIn 2s ease-in-out 3s;
+        }
+
+        .popup button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: white;
+            color: blue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+
+        .popup button:hover {
+            background-color: #f0f0f0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
 </style>
 </head>
 <body>
@@ -570,6 +650,52 @@ footer p {
         <h1>Välkommen till WebStay</h1>
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
+
+        <div class="popup" id="popup">
+        <h1>🎉 Webbstay öppnar snart! 🎉</h1>
+        <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
+        <div class="countdown" id="countdown">Räknar ner...</div>
+        <input type="text" id="codeInput" placeholder="Ange koden här">
+        <button id="submitButton">Enter</button>
+    </div>
+
+    <script>
+        // Nedräkning
+        const countdownElement = document.getElementById("countdown");
+        const launchDate = new Date("2024-12-27T00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const timeLeft = launchDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            countdownElement.innerText = `${days} dagar, ${hours} timmar, ${minutes} minuter, ${seconds} sekunder`;
+        }
+
+        setInterval(updateCountdown, 1000);
+
+        // Kodsäkerhet
+        const submitButton = document.getElementById("submitButton");
+        const codeInput = document.getElementById("codeInput");
+        const popup = document.getElementById("popup");
+
+        submitButton.addEventListener("click", () => {
+            const enteredCode = codeInput.value;
+            if (enteredCode === "Sse201107") {
+                popup.style.display = "none";
+                document.body.style.overflow = "auto";
+            } else {
+                alert("Fel kod! Försök igen.");
+            }
+        });
+
+        // Hindra rullning
+        document.body.style.overflow = "hidden";
+    </script>
 
     <div class="top-video">
         <video autoplay muted loop playsinline>
