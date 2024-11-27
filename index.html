@@ -685,7 +685,7 @@ footer p {
 
         submitButton.addEventListener("click", () => {
             const enteredCode = codeInput.value;
-            if (enteredCode === "Sse201107") {
+            if (enteredCode === "Sse201107!") {
                 popup.style.display = "none";
                 document.body.style.overflow = "auto";
             } else {
@@ -928,7 +928,7 @@ footer p {
     </section>
  
 <!-- Popup Quiz -->
-<div class="quiz-overlay" id="quiz-overlay">
+<div class="quiz-overlay" id="quiz-overlay" style="display: none;">
     <div class="quiz-container">
         <button class="close-button" onclick="closeQuiz()">X</button>
         <h2>Kund Quiz</h2>
@@ -961,8 +961,12 @@ footer p {
     let currentQuestionIndex = 0;
 
     function startQuiz() {
-        document.getElementById("quiz-overlay").style.display = "flex";
-        showQuestion();
+        // Kontrollera om huvud-popupen är borta
+        const mainPopup = document.getElementById("popup");
+        if (!mainPopup || mainPopup.style.display === "none") {
+            document.getElementById("quiz-overlay").style.display = "flex";
+            showQuestion();
+        }
     }
 
     function showQuestion() {
@@ -1006,8 +1010,15 @@ footer p {
         showQuestion();
     }
 
-    // Start quiz automatically on page load
-    window.onload = startQuiz;
+    // Visa quiz efter att huvud-popup är borta
+    document.getElementById("submitButton").addEventListener("click", () => {
+        const enteredCode = document.getElementById("codeInput").value;
+        if (enteredCode === "Sse201107") {
+            document.getElementById("popup").style.display = "none";
+            document.body.style.overflow = "auto";
+            startQuiz(); // Starta quiz när popup är dold
+        }
+    });
 </script>
     
 <!-- New Footer Section -->
