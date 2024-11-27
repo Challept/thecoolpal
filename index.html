@@ -637,54 +637,36 @@ footer p {
             box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
         }
 
-        .background-shapes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            background: #4a90e2;
-            opacity: 0.1;
-            animation: float 8s infinite ease-in-out;
-            border-radius: 50%;
-        }
-
-        .shape:nth-child(1) {
-            width: 150px;
-            height: 150px;
-            top: 10%;
-            left: 20%;
-            animation-delay: 0s;
-        }
-
-        .shape:nth-child(2) {
-            width: 200px;
-            height: 200px;
+        .custom-alert {
+            position: fixed;
             top: 50%;
-            left: 70%;
-            animation-delay: 2s;
-        }
-
-        .shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            top: 80%;
-            left: 30%;
-            animation-delay: 4s;
-        }
-
-        .shape:nth-child(4) {
-            width: 250px;
-            height: 250px;
-            top: 15%;
             left: 50%;
-            animation-delay: 6s;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: none;
+            z-index: 10000;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .custom-alert button {
+            margin-top: 15px;
+            padding: 8px 15px;
+            border: none;
+            background: #721c24;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .custom-alert button:hover {
+            background: #a71d2a;
         }
 
         @keyframes fadeInUp {
@@ -698,15 +680,12 @@ footer p {
             }
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0);
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
             }
-            50% {
-                transform: translateY(-20px);
-            }
-            100% {
-                transform: translateY(0);
+            to {
+                opacity: 1;
             }
         }
 </style>
@@ -724,11 +703,11 @@ footer p {
         <input type="text" id="codeInput" placeholder="Ange koden här">
         <button id="submitButton">Enter</button>
     </div>
-    <div class="background-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
+
+    <!-- Custom Alert -->
+    <div class="custom-alert" id="customAlert">
+        <p>Fel kod! Försök igen.</p>
+        <button onclick="closeAlert()">OK</button>
     </div>
 
     <script>
@@ -754,6 +733,7 @@ footer p {
         const submitButton = document.getElementById("submitButton");
         const codeInput = document.getElementById("codeInput");
         const popup = document.getElementById("popup");
+        const customAlert = document.getElementById("customAlert");
 
         submitButton.addEventListener("click", () => {
             const enteredCode = codeInput.value;
@@ -761,9 +741,18 @@ footer p {
                 popup.style.display = "none";
                 document.body.style.overflow = "auto";
             } else {
-                alert("Fel kod! Försök igen.");
+                showAlert();
             }
         });
+
+        // Egen alert
+        function showAlert() {
+            customAlert.style.display = "block";
+        }
+
+        function closeAlert() {
+            customAlert.style.display = "none";
+        }
 
         // Hindra rullning
         document.body.style.overflow = "hidden";
