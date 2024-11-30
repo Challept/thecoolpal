@@ -3,127 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tack för ditt köp</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Bygg din butik - WebStay</title>
     <style>
-        /* Bas-styling */
         body {
-            background-color: #f7fafc;
-            color: #333;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
             overflow: hidden;
         }
-        .confirmation {
+        #container {
             text-align: center;
-            background: linear-gradient(135deg, #ffffff, #e6f2ff);
-            border-radius: 15px;
-            padding: 40px;
-            width: 400px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1.5s;
         }
-        h2 {
-            font-size: 32px;
+        h1 {
             margin-bottom: 20px;
-            color: #0073e6;
-            background: linear-gradient(90deg, #66a3ff, #00bfff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glowText 2s infinite alternate;
+            font-size: 2rem;
         }
-        @keyframes glowText {
-            0% { text-shadow: 0 0 10px rgba(102, 163, 255, 0.4); }
-            100% { text-shadow: 0 0 20px rgba(0, 191, 255, 0.6); }
+        .button {
+            padding: 15px 30px;
+            font-size: 1rem;
+            background-color: #ff6a00;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
         }
-        .status-text {
-            font-size: 20px;
-            margin-top: 10px;
-            color: #333;
-            font-weight: bold;
+        .button:hover {
+            background-color: #ff8c42;
         }
-        .status-text.success {
-            color: #28a745;
+        #loading {
+            display: none;
+            text-align: center;
         }
-        .status-text.fail {
-            color: #d9534f;
-        }
-        .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #3498db;
-            border-radius: 50%;
+        #loading-icon {
             width: 50px;
             height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-top: 5px solid #fff;
+            border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin: 0 auto 20px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        .button {
-            border: 2px solid #66a3ff;
-            border-radius: 25px;
-            color: #ffffff;
-            padding: 15px 40px;
-            font-size: 18px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            opacity: 0.6; /* Initial state for unconfirmed payment */
-            background-color: #99ccff;
-            pointer-events: none; /* Disable button initially */
-        }
-        .button.confirmed {
-            opacity: 1;
-            background-color: #66a3ff; /* Color for confirmed state */
-            border-color: #0073e6;
-            pointer-events: auto;
-            box-shadow: 0 8px 15px rgba(102, 163, 255, 0.4);
-        }
-        .button.confirmed:hover {
-            background-color: #4d94ff;
-            transform: translateY(-5px);
+        .progress-text {
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
-    <div class="confirmation">
-        <h2>Söker efter betalning...</h2>
-        <div class="loader" id="loader"></div>
-        <p class="status-text" id="status-text">Vänligen vänta...</p>
-        <!-- Button with dynamic class based on payment confirmation -->
-        <a id="confirmButton" href="https://webstay.se/order" class="button">Gå till Dashboard</a>
+    <div id="container">
+        <h1>Bygg din butik</h1>
+        <button class="button" id="createButton">Skapa Butik</button>
+        <div id="loading">
+            <div id="loading-icon"></div>
+            <p class="progress-text">Bygger hemsida...</p>
+        </div>
     </div>
-
     <script>
-        // Simulate payment confirmation check with a timeout for demo purposes
-        setTimeout(() => {
-            const paymentConfirmed = Math.random() > 0.5; // Simulate random payment status
-            const confirmButton = document.getElementById("confirmButton");
-            const statusText = document.getElementById("status-text");
+        document.getElementById("createButton").addEventListener("click", function () {
+            // Visa laddning och göm knappen
+            document.getElementById("createButton").style.display = "none";
+            document.getElementById("loading").style.display = "block";
 
-            if (paymentConfirmed) {
-                confirmButton.classList.add("confirmed");
-                confirmButton.href = "https://webstay.se/dashboard"; // Redirect to dashboard if payment is confirmed
-                statusText.textContent = "Betalning lyckades!";
-                statusText.classList.add("success");
-            } else {
-                confirmButton.classList.remove("confirmed");
-                confirmButton.href = "https://webstay.se/order";
-                statusText.textContent = "Betalning misslyckades!";
-                statusText.classList.add("fail");
-            }
-
-            // Hide loader and show status text
-            document.getElementById("loader").style.display = "none";
-            document.querySelector("h2").textContent = "Status för betalning";
-        }, 3000); // 3-second delay to simulate checking process
+            // Simulera 10 sekunders laddning
+            setTimeout(function () {
+                // Omdirigera till dashboard-sidan
+                window.location.href = "dashboard.html"; // Byt till din riktiga dashboard-sida
+            }, 10000);
+        });
     </script>
 </body>
 </html>
