@@ -61,6 +61,9 @@
 <body>
     <div id="container">
         <h1>Bygg din butik</h1>
+        <input type="text" id="storeName" placeholder="Ange butikens namn" style="margin-bottom: 10px; padding: 10px; font-size: 1rem; border-radius: 5px; border: none;">
+        <input type="text" id="userId" placeholder="Ange ditt användar-ID" style="margin-bottom: 20px; padding: 10px; font-size: 1rem; border-radius: 5px; border: none;">
+        <br>
         <button class="button" id="createButton">Skapa Butik</button>
         <div id="loading">
             <div id="loading-icon"></div>
@@ -69,15 +72,45 @@
     </div>
     <script>
         document.getElementById("createButton").addEventListener("click", function () {
+            const storeName = document.getElementById("storeName").value;
+            const userId = document.getElementById("userId").value;
+
+            if (!storeName || !userId) {
+                alert("Vänligen fyll i både butikens namn och användar-ID.");
+                return;
+            }
+
             // Visa laddning och göm knappen
             document.getElementById("createButton").style.display = "none";
             document.getElementById("loading").style.display = "block";
 
-            // Simulera 10 sekunders laddning
-            setTimeout(function () {
-                // Omdirigera till dashboard-sidan
-                window.location.href = "dashboard.html"; // Byt till din riktiga dashboard-sida
-            }, 10000);
+            // Skicka POST-förfrågan till backend
+            fetch("/create-store", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    store_name: storeName,
+                    user_id: userId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.subdomain) {
+                    // Omdirigera till den skapade butikens dashboard
+                    window.location.href = data.subdomain;
+                } else {
+                    alert("Något gick fel: " + JSON.stringify(data.error || data));
+                    document.getElementById("createButton").style.display = "block";
+                    document.getElementById("loading").style.display = "none";
+                }
+            })
+            .catch(error => {
+                alert("Ett fel inträffade: " + error.message);
+                document.getElementById("createButton").style.display = "block";
+                document.getElementById("loading").style.display = "none";
+            });
         });
     </script>
 </body>
