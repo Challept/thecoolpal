@@ -6,39 +6,60 @@
     <title>Bygg din butik - WebStay</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
             background: linear-gradient(135deg, #6a11cb, #2575fc);
             color: #fff;
             overflow: hidden;
         }
-        #container {
+        .container {
             text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
         }
         h1 {
-            margin-bottom: 20px;
             font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .button {
-            padding: 15px 30px;
+            width: 100%;
+            padding: 15px;
             font-size: 1rem;
             background-color: #ff6a00;
-            color: #fff;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: background-color 0.3s ease;
         }
         .button:hover {
             background-color: #ff8c42;
         }
         #loading {
             display: none;
-            text-align: center;
+            margin-top: 20px;
         }
         #loading-icon {
             width: 50px;
@@ -47,29 +68,30 @@
             border-top: 5px solid #fff;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         .progress-text {
+            margin-top: 10px;
             font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
-    <div id="container">
+    <div class="container">
         <h1>Bygg din butik</h1>
-        <input type="text" id="storeName" placeholder="Ange butikens namn" style="margin-bottom: 10px; padding: 10px; font-size: 1rem; border-radius: 5px; border: none;">
-        <input type="text" id="userId" placeholder="Ange ditt användar-ID" style="margin-bottom: 20px; padding: 10px; font-size: 1rem; border-radius: 5px; border: none;">
-        <br>
+        <p>Fyll i butikens namn och ditt användar-ID för att skapa en butik.</p>
+        <input type="text" id="storeName" placeholder="Ange butikens namn">
+        <input type="text" id="userId" placeholder="Ange ditt användar-ID">
         <button class="button" id="createButton">Skapa Butik</button>
         <div id="loading">
             <div id="loading-icon"></div>
             <p class="progress-text">Bygger hemsida...</p>
         </div>
     </div>
+
     <script>
         document.getElementById("createButton").addEventListener("click", function () {
             const storeName = document.getElementById("storeName").value;
@@ -85,7 +107,7 @@
             document.getElementById("loading").style.display = "block";
 
             // Skicka POST-förfrågan till backend
-            fetch("/create-store", {
+            fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -97,11 +119,11 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.subdomain) {
-                    // Omdirigera till den skapade butikens dashboard
-                    window.location.href = data.subdomain;
+                if (data.success && data.url) {
+                    // Omdirigera till den skapade butikens URL
+                    window.location.href = data.url;
                 } else {
-                    alert("Något gick fel: " + JSON.stringify(data.error || data));
+                    alert("Något gick fel: " + JSON.stringify(data.message || "Okänt fel."));
                     document.getElementById("createButton").style.display = "block";
                     document.getElementById("loading").style.display = "none";
                 }
