@@ -6,6 +6,7 @@
     <title>Bygg din butik - WebStay</title>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -54,6 +55,16 @@
         button:hover {
             background-color: #1b5ecb;
         }
+        .status {
+            margin-top: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status span {
+            margin-left: 5px;
+        }
         .error-message {
             color: red;
             font-size: 14px;
@@ -75,17 +86,18 @@
         // Initiera Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+        const db = firebase.firestore();
 
         document.addEventListener("DOMContentLoaded", () => {
             const authContainer = document.getElementById("auth-container");
             const storeContainer = document.getElementById("store-container");
             const authButton = document.getElementById("auth-button");
-            const googleLoginButton = document.getElementById("google-login-button");
-            const toggleAuthModeButton = document.getElementById("toggle-to-signup");
-            const createButton = document.getElementById("createButton");
             const authError = document.getElementById("auth-error");
+            const storeNameInput = document.getElementById("storeName");
+            const storeStatus = document.getElementById("storeStatus");
+            const createButton = document.getElementById("createButton");
 
-            let isLoginMode = true;
+            let isStoreNameAvailable = false;
 
             // Kontrollera om användaren är inloggad
             const userUID = sessionStorage.getItem("userUID");
@@ -97,18 +109,7 @@
                 storeContainer.style.display = "none";
             }
 
-            // Växla mellan inloggning och registrering
-            toggleAuthModeButton.addEventListener("click", () => {
-                isLoginMode = !isLoginMode;
-                document.getElementById("form-title").innerText = isLoginMode ? "Logga in" : "Registrera dig";
-                authButton.innerText = isLoginMode ? "Logga in" : "Registrera";
-                toggleAuthModeButton.innerText = isLoginMode
-                    ? "Har du inget konto? Registrera dig här"
-                    : "Har du redan ett konto? Logga in här";
-                authError.style.display = "none";
-            });
-
-            // Inloggning eller registrering
+            // Logga in användaren
             authButton.addEventListener("click", () => {
                 const email = document.getElementById("auth-email").value.trim();
                 const password = document.getElementById("auth-password").value.trim();
@@ -119,54 +120,64 @@
                     return;
                 }
 
-                const authMethod = isLoginMode
-                    ? auth.signInWithEmailAndPassword(email, password)
-                    : auth.createUserWithEmailAndPassword(email, password);
-
-                authMethod
+                auth.signInWithEmailAndPassword(email, password)
                     .then((userCredential) => {
-                        console.log("Autentisering lyckades:", userCredential.user.email);
+                        console.log("Inloggad:", userCredential.user.email);
                         sessionStorage.setItem("userUID", userCredential.user.uid);
                         authContainer.style.display = "none";
                         storeContainer.style.display = "block";
                     })
                     .catch((error) => {
-                        console.error("Autentisering misslyckades:", error.message);
-                        authError.textContent = error.message;
+                        console.error("Inloggningsfel:", error.message);
+                        authError.textContent = "Fel vid inloggning: " + error.message;
                         authError.style.display = "block";
+                    });
+            });
+
+            // Kontrollera butikens namn i realtid
+            storeNameInput.addEventListener("input", () => {
+                const storeName = storeNameInput.value.trim();
+                if (!storeName) {
+                    storeStatus.innerHTML = `<span>⚠️ Ange ett butiknamn</span>`;
+                    isStoreNameAvailable = false;
+                    return;
+                }
+
+                db.collection("stores").doc(storeName).get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            storeStatus.innerHTML = `<span>⚠️ Namnet är redan taget</span>`;
+                            isStoreNameAvailable = false;
+                        } else {
+                            storeStatus.innerHTML = `<span>✅ Namnet är tillgängligt</span>`;
+                            isStoreNameAvailable = true;
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Fel vid kontroll av namn:", error);
                     });
             });
 
             // Skapa butik
             createButton.addEventListener("click", () => {
-                const storeName = document.getElementById("storeName").value;
-                const userId = sessionStorage.getItem("userUID");
-
-                if (!storeName) {
-                    alert("Vänligen fyll i butikens namn.");
+                if (!isStoreNameAvailable) {
+                    alert("Namnet är inte tillgängligt. Vänligen välj ett annat namn.");
                     return;
                 }
 
-                fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        store_name: storeName,
-                        user_id: userId
-                    })
+                const storeName = storeNameInput.value.trim();
+                const userId = sessionStorage.getItem("userUID");
+
+                db.collection("stores").doc(storeName).set({
+                    name: storeName,
+                    userId: userId,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success && data.url) {
-                        alert("Butik skapad! Besök: " + data.url);
-                    } else {
-                        alert("Något gick fel: " + JSON.stringify(data.message || "Okänt fel."));
-                    }
+                .then(() => {
+                    alert("Butik skapad! Din domän är: " + storeName + ".webstay.se");
                 })
-                .catch(error => {
-                    alert("Ett fel inträffade: " + error.message);
+                .catch((error) => {
+                    console.error("Fel vid skapande av butik:", error);
                 });
             });
         });
@@ -174,18 +185,17 @@
 </head>
 <body>
     <div id="auth-container">
-        <h3 id="form-title">Logga in</h3>
+        <h3>Logga in</h3>
         <input type="email" id="auth-email" placeholder="Email">
         <input type="password" id="auth-password" placeholder="Lösenord">
         <button id="auth-button">Logga in</button>
-        <button id="google-login-button">Logga in med Google</button>
         <p id="auth-error" class="error-message" style="display: none;"></p>
-        <p id="toggle-auth-mode">Har du inget konto? <span class="toggle-link" id="toggle-to-signup">Registrera dig här</span></p>
     </div>
     <div id="store-container" style="display: none;">
         <h1>Bygg din butik</h1>
         <p>Fyll i butikens namn för att skapa din butik.</p>
         <input type="text" id="storeName" placeholder="Ange butikens namn">
+        <div class="status" id="storeStatus">⚠️ Ange ett namn</div>
         <button class="button" id="createButton">Skapa Butik</button>
     </div>
 </body>
