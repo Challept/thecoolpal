@@ -54,26 +54,6 @@
         button:hover {
             background-color: #1b5ecb;
         }
-        #loading {
-            display: none;
-            margin-top: 20px;
-        }
-        #loading-icon {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            border-top: 5px solid #fff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .progress-text {
-            margin-top: 10px;
-            font-size: 1.2rem;
-        }
         .error-message {
             color: red;
             font-size: 14px;
@@ -96,7 +76,7 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        window.onload = () => {
+        document.addEventListener("DOMContentLoaded", () => {
             const authContainer = document.getElementById("auth-container");
             const storeContainer = document.getElementById("store-container");
             const authButton = document.getElementById("auth-button");
@@ -189,7 +169,7 @@
                     alert("Ett fel inträffade: " + error.message);
                 });
             });
-        };
+        });
     </script>
 </head>
 <body>
@@ -207,10 +187,6 @@
         <p>Fyll i butikens namn för att skapa din butik.</p>
         <input type="text" id="storeName" placeholder="Ange butikens namn">
         <button class="button" id="createButton">Skapa Butik</button>
-        <div id="loading">
-            <div id="loading-icon"></div>
-            <p class="progress-text">Bygger hemsida...</p>
-        </div>
     </div>
 </body>
 </html>
