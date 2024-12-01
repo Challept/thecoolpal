@@ -184,31 +184,54 @@
                     return;
                 }
 
-                const storeName = storeNameInput.value.trim();
-                const userId = sessionStorage.getItem("userUID");
+const storeName = storeNameInput.value.trim();
+const userId = sessionStorage.getItem("userUID");
 
-                fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ store_name: storeName, user_id: userId })
-                })
-                .then((response) => {
-                    if (!response.ok) throw new Error("HTTP-fel: " + response.status);
-                    return response.json();
-                })
-                .then((data) => {
-                    if (data.success && data.url) {
-                        alert(`Butik skapad! Din domän är: ${data.url}`);
-                        if (confirm("Vill du gå vidare till dashboarden?")) {
-                            window.location.href = "dashboard.html";
-                        }
-                    } else {
-                        alert("Fel: " + (data.message || "Okänt fel."));
-                    }
-                })
-                .catch((error) => alert("Ett fel inträffade: " + error.message));
-            });
-        });
+// Kontrollera om butiksnamn och användar-ID är korrekt
+if (!storeName) {
+    alert("Vänligen ange ett butiksnamn.");
+    return;
+}
+if (!userId) {
+    alert("Du måste vara inloggad för att skapa en butik.");
+    return;
+}
+
+// Skicka förfrågan till backend
+fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ store_name: storeName, user_id: userId }),
+})
+    .then((response) => {
+        // Kontrollera om svaret är OK
+        if (!response.ok) {
+            if (response.status === 400) {
+                throw new Error("Felaktig förfrågan - kontrollera din input.");
+            } else if (response.status === 500) {
+                throw new Error("Serverfel - försök igen senare.");
+            } else {
+                throw new Error(`HTTP-fel: ${response.status}`);
+            }
+        }
+        return response.json();
+    })
+    .then((data) => {
+        if (data.success && data.url) {
+            alert(`Butik skapad! Din domän är: ${data.url}`);
+            if (confirm("Vill du gå vidare till dashboarden?")) {
+                window.location.href = "dashboard.html";
+            }
+        } else {
+            const message = data.message || "Okänt fel.";
+            alert(`Fel: ${message}`);
+        }
+    })
+    .catch((error) => {
+        // Visa detaljerad felinformation
+        console.error("Ett fel inträffade:", error);
+        alert(`Ett fel inträffade: ${error.message}`);
+    });
     </script>
 </head>
 <body>
