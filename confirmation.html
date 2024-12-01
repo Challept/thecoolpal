@@ -198,20 +198,27 @@
             }
 
             try {
+                console.log("Försöker skapa butik...");
+                console.log("Användar-ID:", userId);
+                console.log("Butiksnamn:", storeName);
+
                 const response = await fetch("https://d537-83-250-213-73.ngrok-free.app/api/create-store", {
                     method: "POST",
-                    headers: { 
+                    headers: {
                         "Content-Type": "application/json",
                         "Access-Control-Allow-Origin": "*"
                     },
                     body: JSON.stringify({ store_name: storeName, user_id: userId }),
                 });
 
+                console.log("Serverns svar:", response);
+
                 if (!response.ok) {
                     throw new Error(`HTTP-fel: ${response.status}`);
                 }
 
                 const data = await response.json();
+                console.log("Data från servern:", data);
 
                 if (data.success && data.url) {
                     alert(`Butik skapad! Din domän är: ${data.url}`);
