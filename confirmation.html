@@ -202,11 +202,10 @@
                 console.log("Användar-ID:", userId);
                 console.log("Butiksnamn:", storeName);
 
-                const response = await fetch("https://ce8e-83-250-213-73.ngrok-free.app/api/create-store", {
+                const response = await fetch("https://a8ec-83-250-213-73.ngrok-free.app/api/create-store", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*"
                     },
                     body: JSON.stringify({ store_name: storeName, user_id: userId }),
                 });
@@ -214,7 +213,9 @@
                 console.log("Serverns svar:", response);
 
                 if (!response.ok) {
-                    throw new Error(`HTTP-fel: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error("Svar från server:", errorText);
+                    throw new Error(`HTTP-fel: ${response.status}, ${errorText}`);
                 }
 
                 const data = await response.json();
