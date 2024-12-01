@@ -85,9 +85,8 @@
         }
     </style>
     <script>
-        // Firebase-konfiguration
         const firebaseConfig = {
-            apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+            apiKey: "DIN_FIREBASE_API_KEY",
             authDomain: "webbforma1.firebaseapp.com",
             projectId: "webbforma1",
             storageBucket: "webbforma1.firebasestorage.app",
@@ -179,47 +178,48 @@
                     });
             });
 
-createButton.addEventListener("click", async () => {
-    const storeName = storeNameInput.value.trim();
-    const userId = sessionStorage.getItem("userUID");
+            createButton.addEventListener("click", async () => {
+                const storeName = storeNameInput.value.trim();
+                const userId = sessionStorage.getItem("userUID");
 
-    if (!storeName) {
-        alert("Vänligen ange ett butiksnamn.");
-        return;
-    }
+                if (!isStoreNameAvailable) {
+                    alert("Namnet är inte tillgängligt. Vänligen välj ett annat namn.");
+                    return;
+                }
 
-    if (!userId) {
-        alert("Du måste vara inloggad för att skapa en butik.");
-        return;
-    }
+                if (!userId) {
+                    alert("Du måste vara inloggad för att skapa en butik.");
+                    return;
+                }
 
-    try {
-        const response = await fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ store_name: storeName, user_id: userId }),
+                try {
+                    const response = await fetch("https://d537-83-250-213-73.ngrok-free.app/api/create-store", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ store_name: storeName, user_id: userId }),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP-fel: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    if (data.success && data.url) {
+                        alert(`Butik skapad! Din domän är: ${data.url}`);
+                        if (confirm("Vill du gå vidare till dashboarden?")) {
+                            window.location.href = "dashboard.html";
+                        }
+                    } else {
+                        const message = data.message || "Okänt fel.";
+                        alert(`Fel: ${message}`);
+                    }
+                } catch (error) {
+                    alert(`Ett fel inträffade: ${error.message}`);
+                    console.error("Detaljerat fel:", error);
+                }
+            });
         });
-
-        if (!response.ok) {
-            throw new Error(`HTTP-fel: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.success && data.url) {
-            alert(`Butik skapad! Din domän är: ${data.url}`);
-            if (confirm("Vill du gå vidare till dashboarden?")) {
-                window.location.href = "dashboard.html";
-            }
-        } else {
-            const message = data.message || "Okänt fel.";
-            alert(`Fel: ${message}`);
-        }
-    } catch (error) {
-        alert(`Ett fel inträffade: ${error.message}`);
-        console.error("Detaljerat fel:", error);
-    }
-});
     </script>
 </head>
 <body>
