@@ -687,7 +687,192 @@ footer p {
             to {
                 opacity: 1;
             }
-        }
+        /* Media Queries för mobilanpassning */
+@media only screen and (max-width: 768px) {
+    /* Popup Styling */
+    .popup {
+        width: 100vw;
+        height: 100vh;
+        padding: 20px;
+        overflow: auto;
+    }
+
+    .popup h1 {
+        font-size: 2rem;
+    }
+
+    .popup p {
+        font-size: 1.2rem;
+    }
+
+    .popup .countdown {
+        font-size: 1.8rem;
+    }
+
+    .popup input {
+        font-size: 1rem;
+        width: 80%;
+    }
+
+    .popup button {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+
+    /* Top Video */
+    .top-video {
+        height: 220px; /* Anpassa höjden för mobilskärmar */
+    }
+
+    .top-video video {
+        object-fit: contain; /* Visa hela videon inom ramen */
+        height: 100%;
+    }
+
+    /* Header Anpassning */
+    .header {
+        padding: 50px 10px;
+    }
+
+    .header h1 {
+        font-size: 2.5rem;
+    }
+
+    .header p {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+
+    /* Pricing Section Anpassning */
+    .pricing-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .plan {
+        max-width: 100%;
+    }
+
+    /* Parallax Text */
+    .parallax-text h2 {
+        font-size: 2rem;
+    }
+
+    .parallax-text p {
+        font-size: 1rem;
+    }
+
+    /* Quiz Overlay Anpassning */
+    .quiz-overlay {
+        padding: 20px;
+        align-items: flex-start; /* Placera innehållet högst upp */
+    }
+
+    .quiz-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    /* Alert Anpassning */
+    .custom-alert {
+        width: 90%;
+        font-size: 0.9rem;
+    }
+/* Media Queries för surfplattor */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Popup Styling */
+    .popup {
+        width: 90vw;
+        height: 90vh;
+        padding: 30px;
+    }
+
+    .popup h1 {
+        font-size: 2.5rem;
+    }
+
+    .popup p {
+        font-size: 1.2rem;
+    }
+
+    .popup .countdown {
+        font-size: 2rem;
+    }
+
+    .popup input {
+        font-size: 1.2rem;
+        width: 70%;
+    }
+
+    .popup button {
+        font-size: 1.2rem;
+        padding: 12px 24px;
+    }
+
+    /* Top Video */
+    .top-video {
+        height: 300px; /* Passar bättre för surfplattor */
+    }
+
+    .top-video video {
+        object-fit: contain; /* Anpassa för att visa hela videon */
+        height: 100%;
+    }
+
+    /* Header */
+    .header {
+        padding: 60px 20px;
+    }
+
+    .header h1 {
+        font-size: 3.5rem;
+    }
+
+    .header p {
+        font-size: 1.2rem;
+    }
+
+    /* Pricing Container */
+    .pricing-container {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .plan {
+        max-width: 48%; /* Två kort per rad */
+    }
+
+    /* Parallax Text */
+    .parallax-text h2 {
+        font-size: 2.8rem;
+    }
+
+    .parallax-text p {
+        font-size: 1.2rem;
+    }
+
+    /* Quiz Overlay */
+    .quiz-container {
+        width: 80%;
+        padding: 30px;
+    }
+
+    /* Custom Alert */
+    .custom-alert {
+        width: 80%;
+        font-size: 1rem;
+    }
+
+    /* Funktioner och Funktion Cards */
+    .features {
+        gap: 30px;
+    }
+
+    .feature-card {
+        width: 45%; /* Två funktioner per rad */
+    }
+}
 </style>
 </head>
 <body>
