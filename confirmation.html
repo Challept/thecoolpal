@@ -85,7 +85,6 @@
         }
     </style>
     <script>
-        // Firebase-konfiguration
         const firebaseConfig = {
             apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
             authDomain: "webbforma1.firebaseapp.com",
@@ -96,7 +95,6 @@
             measurementId: "G-QRXDZ5R2ZH"
         };
 
-        // Initiera Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
@@ -113,7 +111,6 @@
 
             let isStoreNameAvailable = false;
 
-            // Kontrollera om användaren är inloggad
             const userUID = sessionStorage.getItem("userUID");
             if (userUID) {
                 authContainer.style.display = "none";
@@ -123,7 +120,6 @@
                 storeContainer.style.display = "none";
             }
 
-            // Logga in användaren
             authButton.addEventListener("click", () => {
                 const email = document.getElementById("auth-email").value.trim();
                 const password = document.getElementById("auth-password").value.trim();
@@ -135,34 +131,24 @@
 
                 auth.signInWithEmailAndPassword(email, password)
                     .then((userCredential) => {
-                        console.log("Inloggad:", userCredential.user.email);
                         sessionStorage.setItem("userUID", userCredential.user.uid);
                         authContainer.style.display = "none";
                         storeContainer.style.display = "block";
                     })
-                    .catch((error) => {
-                        console.error("Inloggningsfel:", error.message);
-                        alert("Fel vid inloggning: " + error.message);
-                    });
+                    .catch((error) => alert("Fel vid inloggning: " + error.message));
             });
 
-            // Google-login
             googleLoginButton.addEventListener("click", () => {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 auth.signInWithPopup(provider)
                     .then((result) => {
-                        console.log("Inloggad med Google:", result.user.email);
                         sessionStorage.setItem("userUID", result.user.uid);
                         authContainer.style.display = "none";
                         storeContainer.style.display = "block";
                     })
-                    .catch((error) => {
-                        console.error("Google-inloggningsfel:", error.message);
-                        alert("Fel vid Google-inloggning: " + error.message);
-                    });
+                    .catch((error) => alert("Google-login misslyckades: " + error.message));
             });
 
-            // Realtidskontroll av butikens namn
             storeNameInput.addEventListener("input", () => {
                 const storeName = storeNameInput.value.trim();
                 const domain = `${storeName.toLowerCase()}.webstay.se`;
@@ -186,14 +172,12 @@
                             isStoreNameAvailable = true;
                         }
                     })
-                    .catch((error) => {
-                        console.error("Fel vid kontroll av namn:", error);
-                        statusText.textContent = "⚠️ Ett fel inträffade.";
+                    .catch(() => {
+                        statusText.textContent = "⚠️ Fel vid kontroll.";
                         isStoreNameAvailable = false;
                     });
             });
 
-            // Skapa butik och skicka till backend
             createButton.addEventListener("click", () => {
                 if (!isStoreNameAvailable) {
                     alert("Namnet är inte tillgängligt. Vänligen välj ett annat namn.");
@@ -205,28 +189,24 @@
 
                 fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        store_name: storeName,
-                        user_id: userId
-                    })
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ store_name: storeName, user_id: userId })
                 })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => {
+                    if (!response.ok) throw new Error("HTTP-fel: " + response.status);
+                    return response.json();
+                })
+                .then((data) => {
                     if (data.success && data.url) {
                         alert(`Butik skapad! Din domän är: ${data.url}`);
                         if (confirm("Vill du gå vidare till dashboarden?")) {
                             window.location.href = "dashboard.html";
                         }
                     } else {
-                        alert("Något gick fel: " + JSON.stringify(data.message || "Okänt fel."));
+                        alert("Fel: " + (data.message || "Okänt fel."));
                     }
                 })
-                .catch(error => {
-                    alert("Ett fel inträffade: " + error.message);
-                });
+                .catch((error) => alert("Ett fel inträffade: " + error.message));
             });
         });
     </script>
