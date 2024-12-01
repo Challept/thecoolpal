@@ -164,7 +164,7 @@
                     });
             });
 
-            // Skapa butik
+            // Skapa butik och skicka till backend
             createButton.addEventListener("click", () => {
                 if (!isStoreNameAvailable) {
                     alert("Namnet är inte tillgängligt. Vänligen välj ett annat namn.");
@@ -174,16 +174,29 @@
                 const storeName = storeNameInput.value.trim();
                 const userId = sessionStorage.getItem("userUID");
 
-                db.collection("stores").doc(storeName).set({
-                    name: storeName,
-                    userId: userId,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        store_name: storeName,
+                        user_id: userId
+                    })
                 })
-                .then(() => {
-                    alert(`Butik skapad! Din domän är: ${storeName.toLowerCase()}.webstay.se`);
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.url) {
+                        alert(`Butik skapad! Din domän är: ${data.url}`);
+                        if (confirm("Vill du gå vidare till dashboarden?")) {
+                            window.location.href = "dashboard.html";
+                        }
+                    } else {
+                        alert("Något gick fel: " + JSON.stringify(data.message || "Okänt fel."));
+                    }
                 })
-                .catch((error) => {
-                    console.error("Fel vid skapande av butik:", error);
+                .catch(error => {
+                    alert("Ett fel inträffade: " + error.message);
                 });
             });
         });
