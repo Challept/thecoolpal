@@ -58,12 +58,13 @@
         .status {
             margin-top: 10px;
             font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            color: #333; /* Svart färg för status */
         }
-        .status span {
-            margin-left: 5px;
+        .domain {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #333; /* Svart färg för domän */
         }
         .error-message {
             color: red;
@@ -74,7 +75,7 @@
     <script>
         // Firebase-konfiguration
         const firebaseConfig = {
-            apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+            apiKey: "API_KEY",
             authDomain: "webbforma1.firebaseapp.com",
             projectId: "webbforma1",
             storageBucket: "webbforma1.firebasestorage.app",
@@ -92,10 +93,10 @@
             const authContainer = document.getElementById("auth-container");
             const storeContainer = document.getElementById("store-container");
             const authButton = document.getElementById("auth-button");
-            const authError = document.getElementById("auth-error");
             const storeNameInput = document.getElementById("storeName");
-            const storeStatus = document.getElementById("storeStatus");
             const createButton = document.getElementById("createButton");
+            const statusText = document.getElementById("statusText");
+            const domainText = document.getElementById("domainText");
 
             let isStoreNameAvailable = false;
 
@@ -115,8 +116,7 @@
                 const password = document.getElementById("auth-password").value.trim();
 
                 if (!email || !password) {
-                    authError.textContent = "Fyll i både email och lösenord.";
-                    authError.style.display = "block";
+                    alert("Fyll i både email och lösenord.");
                     return;
                 }
 
@@ -129,32 +129,38 @@
                     })
                     .catch((error) => {
                         console.error("Inloggningsfel:", error.message);
-                        authError.textContent = "Fel vid inloggning: " + error.message;
-                        authError.style.display = "block";
+                        alert("Fel vid inloggning: " + error.message);
                     });
             });
 
-            // Kontrollera butikens namn i realtid
+            // Realtidskontroll av butikens namn
             storeNameInput.addEventListener("input", () => {
                 const storeName = storeNameInput.value.trim();
+                const domain = `${storeName.toLowerCase()}.webstay.se`;
+
                 if (!storeName) {
-                    storeStatus.innerHTML = `<span>⚠️ Ange ett butiknamn</span>`;
+                    statusText.textContent = "⚠️ Ange ett butiknamn.";
+                    domainText.textContent = "";
                     isStoreNameAvailable = false;
                     return;
                 }
 
+                domainText.textContent = `Din domän: ${domain}`;
+
                 db.collection("stores").doc(storeName).get()
                     .then((doc) => {
                         if (doc.exists) {
-                            storeStatus.innerHTML = `<span>⚠️ Namnet är redan taget</span>`;
+                            statusText.textContent = "⚠️ Namnet är redan taget.";
                             isStoreNameAvailable = false;
                         } else {
-                            storeStatus.innerHTML = `<span>✅ Namnet är tillgängligt</span>`;
+                            statusText.textContent = "✅ Namnet är tillgängligt!";
                             isStoreNameAvailable = true;
                         }
                     })
                     .catch((error) => {
                         console.error("Fel vid kontroll av namn:", error);
+                        statusText.textContent = "⚠️ Ett fel inträffade.";
+                        isStoreNameAvailable = false;
                     });
             });
 
@@ -174,7 +180,7 @@
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 })
                 .then(() => {
-                    alert("Butik skapad! Din domän är: " + storeName + ".webstay.se");
+                    alert(`Butik skapad! Din domän är: ${storeName.toLowerCase()}.webstay.se`);
                 })
                 .catch((error) => {
                     console.error("Fel vid skapande av butik:", error);
@@ -189,13 +195,13 @@
         <input type="email" id="auth-email" placeholder="Email">
         <input type="password" id="auth-password" placeholder="Lösenord">
         <button id="auth-button">Logga in</button>
-        <p id="auth-error" class="error-message" style="display: none;"></p>
     </div>
     <div id="store-container" style="display: none;">
         <h1>Bygg din butik</h1>
         <p>Fyll i butikens namn för att skapa din butik.</p>
         <input type="text" id="storeName" placeholder="Ange butikens namn">
-        <div class="status" id="storeStatus">⚠️ Ange ett namn</div>
+        <div class="domain" id="domainText"></div>
+        <div class="status" id="statusText">⚠️ Ange ett namn</div>
         <button class="button" id="createButton">Skapa Butik</button>
     </div>
 </body>
