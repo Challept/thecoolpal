@@ -55,16 +55,28 @@
         button:hover {
             background-color: #1b5ecb;
         }
+        .google-button {
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .google-button img {
+            width: 20px;
+            margin-right: 10px;
+        }
         .status {
             margin-top: 10px;
             font-size: 14px;
-            color: #333; /* Svart färg för status */
+            color: #333;
         }
         .domain {
             font-size: 16px;
             font-weight: bold;
             margin-top: 5px;
-            color: #333; /* Svart färg för domän */
+            color: #333;
         }
         .error-message {
             color: red;
@@ -93,6 +105,7 @@
             const authContainer = document.getElementById("auth-container");
             const storeContainer = document.getElementById("store-container");
             const authButton = document.getElementById("auth-button");
+            const googleLoginButton = document.getElementById("google-login-button");
             const storeNameInput = document.getElementById("storeName");
             const createButton = document.getElementById("createButton");
             const statusText = document.getElementById("statusText");
@@ -130,6 +143,22 @@
                     .catch((error) => {
                         console.error("Inloggningsfel:", error.message);
                         alert("Fel vid inloggning: " + error.message);
+                    });
+            });
+
+            // Google-login
+            googleLoginButton.addEventListener("click", () => {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                auth.signInWithPopup(provider)
+                    .then((result) => {
+                        console.log("Inloggad med Google:", result.user.email);
+                        sessionStorage.setItem("userUID", result.user.uid);
+                        authContainer.style.display = "none";
+                        storeContainer.style.display = "block";
+                    })
+                    .catch((error) => {
+                        console.error("Google-inloggningsfel:", error.message);
+                        alert("Fel vid Google-inloggning: " + error.message);
                     });
             });
 
@@ -208,6 +237,9 @@
         <input type="email" id="auth-email" placeholder="Email">
         <input type="password" id="auth-password" placeholder="Lösenord">
         <button id="auth-button">Logga in</button>
+        <button id="google-login-button" class="google-button">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google-logo"> Logga in med Google
+        </button>
     </div>
     <div id="store-container" style="display: none;">
         <h1>Bygg din butik</h1>
