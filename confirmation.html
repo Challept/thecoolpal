@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bygg din butik - WebStay</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -17,45 +20,42 @@
             color: #fff;
             overflow: hidden;
         }
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
+        #auth-container, #store-container {
+            background-color: #ffffff;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            width: 90%;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
             max-width: 400px;
+            width: 100%;
         }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        p {
-            font-size: 1rem;
+        h1, h3 {
+            font-size: 24px;
             margin-bottom: 20px;
+            color: #333;
         }
         input {
             width: 100%;
             padding: 10px;
-            font-size: 1rem;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
             margin: 10px 0;
             border: none;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .button {
-            width: 100%;
-            padding: 15px;
-            font-size: 1rem;
-            background-color: #ff6a00;
-            color: white;
-            border: none;
-            border-radius: 5px;
+            background-color: #2575fc;
+            color: #fff;
+            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
         }
-        .button:hover {
-            background-color: #ff8c42;
+        button:hover {
+            background-color: #1b5ecb;
         }
         #loading {
             display: none;
@@ -78,62 +78,142 @@
             font-size: 1.2rem;
         }
     </style>
+    <script>
+        // Firebase-konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+            authDomain: "webbforma1.firebaseapp.com",
+            projectId: "webbforma1",
+            storageBucket: "webbforma1.firebasestorage.app",
+            messagingSenderId: "875335609008",
+            appId: "1:875335609008:web:1d3cca6d257937a8526975",
+            measurementId: "G-QRXDZ5R2ZH"
+        };
+
+        // Initiera Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        window.onload = () => {
+            const authContainer = document.getElementById("auth-container");
+            const storeContainer = document.getElementById("store-container");
+            const authButton = document.getElementById("auth-button");
+            const googleLoginButton = document.getElementById("google-login-button");
+            const toggleAuthModeButton = document.getElementById("toggle-to-signup");
+            const authError = document.getElementById("auth-error");
+            const createButton = document.getElementById("createButton");
+
+            let isLoginMode = true;
+
+            // Växla mellan inloggning och registrering
+            toggleAuthModeButton.addEventListener("click", () => {
+                isLoginMode = !isLoginMode;
+                document.getElementById("form-title").innerText = isLoginMode ? "Logga in" : "Registrera dig";
+                authButton.innerText = isLoginMode ? "Logga in" : "Registrera";
+                toggleAuthModeButton.innerText = isLoginMode
+                    ? "Har du inget konto? Registrera dig här"
+                    : "Har du redan ett konto? Logga in här";
+                authError.style.display = "none";
+            });
+
+            // Inloggning eller registrering
+            authButton.addEventListener("click", () => {
+                const email = document.getElementById("auth-email").value.trim();
+                const password = document.getElementById("auth-password").value.trim();
+
+                if (!email || !password) {
+                    authError.textContent = "Fyll i både email och lösenord.";
+                    authError.style.display = "block";
+                    return;
+                }
+
+                const authMethod = isLoginMode
+                    ? auth.signInWithEmailAndPassword(email, password)
+                    : auth.createUserWithEmailAndPassword(email, password);
+
+                authMethod
+                    .then((userCredential) => {
+                        console.log("Autentisering lyckades:", userCredential.user.email);
+                        sessionStorage.setItem("userUID", userCredential.user.uid);
+                        authContainer.style.display = "none";
+                        storeContainer.style.display = "block";
+                    })
+                    .catch((error) => {
+                        console.error("Autentisering misslyckades:", error.message);
+                        authError.textContent = error.message;
+                        authError.style.display = "block";
+                    });
+            });
+
+            // Butiksskapande
+            createButton.addEventListener("click", () => {
+                const storeName = document.getElementById("storeName").value;
+                const userId = sessionStorage.getItem("userUID");
+
+                if (!storeName) {
+                    alert("Vänligen fyll i butikens namn.");
+                    return;
+                }
+
+                fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        store_name: storeName,
+                        user_id: userId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.url) {
+                        // Spara butiksdata i Firestore
+                        db.collection("users").doc(userId).collection("stores").add({
+                            storeName: storeName,
+                            storeURL: data.url,
+                            createdAt: new Date()
+                        })
+                        .then(() => {
+                            alert("Butik skapad: " + data.url);
+                        })
+                        .catch((error) => {
+                            console.error("Fel vid lagring av butiksdata:", error);
+                        });
+                    } else {
+                        alert("Något gick fel: " + JSON.stringify(data.message || "Okänt fel."));
+                    }
+                })
+                .catch(error => {
+                    alert("Ett fel inträffade: " + error.message);
+                });
+            });
+        };
+    </script>
 </head>
 <body>
-    <div class="container">
+    <div id="auth-container">
+        <h3 id="form-title">Logga in</h3>
+        <input type="email" id="auth-email" placeholder="Email">
+        <input type="password" id="auth-password" placeholder="Lösenord">
+        <button id="auth-button">Logga in</button>
+        <button id="google-login-button">
+            <img src="https://image.similarpng.com/very-thumbnail/2020/06/Logo-google-icon-PNG.png" alt="Google logo">
+            Logga in med Google
+        </button>
+        <p id="auth-error" class="error-message" style="display: none;"></p>
+        <p id="toggle-auth-mode">Har du inget konto? <span class="toggle-link" id="toggle-to-signup">Registrera dig här</span></p>
+    </div>
+    <div id="store-container" style="display: none;">
         <h1>Bygg din butik</h1>
-        <p>Fyll i butikens namn och ditt användar-ID för att skapa en butik.</p>
+        <p>Fyll i butikens namn för att skapa din butik.</p>
         <input type="text" id="storeName" placeholder="Ange butikens namn">
-        <input type="text" id="userId" placeholder="Ange ditt användar-ID">
         <button class="button" id="createButton">Skapa Butik</button>
         <div id="loading">
             <div id="loading-icon"></div>
             <p class="progress-text">Bygger hemsida...</p>
         </div>
     </div>
-
-    <script>
-        document.getElementById("createButton").addEventListener("click", function () {
-            const storeName = document.getElementById("storeName").value;
-            const userId = document.getElementById("userId").value;
-
-            if (!storeName || !userId) {
-                alert("Vänligen fyll i både butikens namn och användar-ID.");
-                return;
-            }
-
-            // Visa laddning och göm knappen
-            document.getElementById("createButton").style.display = "none";
-            document.getElementById("loading").style.display = "block";
-
-            // Skicka POST-förfrågan till backend
-            fetch("https://282f-83-250-213-73.ngrok-free.app/api/create-store", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    store_name: storeName,
-                    user_id: userId
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success && data.url) {
-                    // Omdirigera till den skapade butikens URL
-                    window.location.href = data.url;
-                } else {
-                    alert("Något gick fel: " + JSON.stringify(data.message || "Okänt fel."));
-                    document.getElementById("createButton").style.display = "block";
-                    document.getElementById("loading").style.display = "none";
-                }
-            })
-            .catch(error => {
-                alert("Ett fel inträffade: " + error.message);
-                document.getElementById("createButton").style.display = "block";
-                document.getElementById("loading").style.display = "none";
-            });
-        });
-    </script>
 </body>
 </html>
