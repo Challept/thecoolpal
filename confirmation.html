@@ -162,12 +162,20 @@
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-#timer {
-    font-size: 16px;
-    color: #ffffff;
-    margin-top: 10px;
-    font-weight: 500;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #ffffff;
+    width: 0%;
+    transition: width 0.3s ease;
 }
     </style>
 <script>
@@ -329,31 +337,34 @@ const statusMessages = [
     "Butik skapad!",
 ];
 
-// Total varaktighet i sekunder
-let totalDuration = 10; // Visuellt snabbare
-let timeLeft = 15; // Visas som 15 sekunder i timern
+// Total varaktighet och inställningar
+let totalDuration = 15; // Total tid för processen i sekunder
 let currentStatusIndex = 0;
+
+// Laddningsbar
+const progressBar = document.getElementById("progressBar");
+let progressStep = 100 / statusMessages.length; // Procent för varje steg
 
 // Starta intervallet
 const interval = setInterval(() => {
-    // Uppdatera timern
-    if (timeLeft > 0) {
-        timeLeft -= 1.5; // Snabbare nedräkning
-        timer.textContent = `Tid kvar: ${Math.ceil(timeLeft)} sek`;
-    }
-
-    // Uppdatera statusmeddelandet
+    // Uppdatera statusmeddelanden
     if (currentStatusIndex < statusMessages.length) {
         statusMessage.textContent = statusMessages[currentStatusIndex];
+        progressBar.style.width = `${(currentStatusIndex + 1) * progressStep}%`;
         currentStatusIndex++;
     } else {
-        // När alla statusmeddelanden har visats, avsluta processen
+        // När alla meddelanden är klara
         clearInterval(interval);
-        timer.textContent = "";
         statusMessage.textContent = "Färdig!";
-        createStore(storeName, userId); // Skapa butiken
+        progressBar.style.width = "100%";
+
+        // Vänta 1 sekund och stäng popup
+        setTimeout(() => {
+            popup.style.display = "none";
+            createStore(storeName, userId); // Skapa butiken
+        }, 1000);
     }
-}, 3000); // Varje statusmeddelande visas i 3 sekunder
+}, 3000); // Varje steg varar i 3 sekunder
 });
 
     async function createStore(storeName, userId) {
@@ -418,12 +429,14 @@ const interval = setInterval(() => {
         <button class="button" id="createButton" disabled>Skapa Butik</button>
     </div>
 
-    <div id="popup" class="popup">
-        <div class="popup-content">
-            <div class="loading-icon"></div>
-            <div id="statusMessage">Förbereder...</div>
-            <div id="timer">Tid kvar: 30 sek</div>
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <div class="loading-icon"></div>
+        <div id="statusMessage">Förbereder...</div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
         </div>
     </div>
+</div>
 </body>
 </html>
