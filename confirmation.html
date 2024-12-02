@@ -184,19 +184,23 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #add8e6, #87cefa);
-        animation: moveBackground 10s linear infinite;
+        background: linear-gradient(135deg, #0008ff, #acb6e5);
+        background-size: 200% 200%;
+        animation: moveGradient 10s ease infinite;
         z-index: 1000;
         opacity: 0.9;
     }
 
-    /* Rörlig bakgrundsanimation */
-    @keyframes moveBackground {
+    /* Gradient-animering */
+    @keyframes moveGradient {
         0% {
-            background-position: 0% 0%;
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
         }
         100% {
-            background-position: 100% 100%;
+            background-position: 0% 50%;
         }
     }
 
@@ -206,7 +210,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: linear-gradient(135deg, #f12711, #f5af19);
+        background: linear-gradient(135deg, #ff0000, #feb47b);
         padding: 20px 30px;
         border-radius: 15px;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
