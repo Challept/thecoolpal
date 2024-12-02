@@ -564,169 +564,98 @@ footer p {
     opacity: 0.9;
 }
 
-        .popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #ffffff;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-            z-index: 9999;
-            overflow: hidden;
-        }
-
-        .popup h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            color: #4a90e2;
-            animation: fadeInUp 1.5s ease-out;
-        }
-
-        .popup p {
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-            color: #555;
-            animation: fadeInUp 2s ease-out;
-        }
-
-        .popup .countdown {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #d35400;
-            margin: 20px 0;
-            animation: fadeInUp 2.5s ease-out;
-        }
-
-        .popup input {
-            padding: 12px;
-            font-size: 1.2rem;
-            border: 2px solid #4a90e2;
-            border-radius: 25px;
-            text-align: center;
-            margin-bottom: 20px;
-            width: 60%;
-            outline: none;
-            transition: box-shadow 0.3s ease;
-            animation: fadeInUp 3s ease-out;
-        }
-
-        .popup input:focus {
-            box-shadow: 0 0 10px rgba(74, 144, 226, 0.6);
-        }
-
-        .popup button {
-            padding: 12px 24px;
-            font-size: 1.2rem;
-            background: #4a90e2;
-            color: #fff;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 3.5s ease-out;
-        }
-
-        .popup button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
-        }
-
-        .custom-alert {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 300px;
-            padding: 20px;
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            display: none;
-            z-index: 10000;
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .custom-alert button {
-            margin-top: 15px;
-            padding: 8px 15px;
-            border: none;
-            background: #721c24;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .custom-alert button:hover {
-            background: #a71d2a;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-#authenticator-setup {
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    color: white;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.qr-container {
-    margin: 20px 0;
+.container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100vh;
 }
 
-#qrCode {
+.column {
+    flex: 1;
+    min-width: 300px;
+    max-width: 45%;
+    background: linear-gradient(135deg, #ffffff, #e8e8e8);
+    color: #333;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.column h1, .column h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #4a90e2;
+}
+
+.column p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.popup {
+    background: linear-gradient(135deg, #4a90e2, #6a11cb);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    animation: fadeInUp 1.5s ease-out;
+}
+
+.popup .countdown {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffcc00;
+    margin: 20px 0;
+    animation: fadeInUp 2.5s ease-out;
+}
+
+.authenticator {
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1.5s ease-out;
+}
+
+.qr-container img {
     max-width: 200px;
+    margin: 20px 0;
     border: 2px solid white;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 #tokenInput {
-    width: 100%;
+    width: 80%;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 2px solid #fff;
+    border-radius: 25px;
+    text-align: center;
+    margin-bottom: 20px;
     font-size: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    outline: none;
+}
+
+#tokenInput:focus {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 button {
-    width: 100%;
+    width: 80%;
     padding: 12px;
     margin: 10px 0;
     border: none;
-    border-radius: 5px;
-    background-color: #2575fc;
+    border-radius: 25px;
+    background-color: #ff8a00;
     color: white;
     font-size: 16px;
     cursor: pointer;
@@ -734,13 +663,37 @@ button {
 }
 
 button:hover {
-    background-color: #1b5ecb;
+    background-color: #e52e71;
     transform: scale(1.05);
 }
 
 .auth-status {
-    font-size: 14px;
     margin-top: 10px;
+    font-size: 14px;
+    color: #fff;
+}
+
+/* Responsiv design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .column {
+        max-width: 100%;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
         /* Media Queries för mobilanpassning */
 @media only screen and (max-width: 768px) {
@@ -936,21 +889,25 @@ button:hover {
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
 
-<div class="popup" id="popup">
-    <h1>🎉 Webbstay öppnar snart! 🎉</h1>
-    <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
-    <div class="countdown" id="countdown">Räknar ner...</div>
-<div id="authenticator-setup">
-    <h2>Skanna QR-koden med din authenticator-app</h2>
-    <div class="qr-container">
-        <img id="qrCode" src="" alt="QR-kod" />
+<div class="container">
+    <div class="column" id="popup">
+        <h1>🎉 Webbstay öppnar snart! 🎉</h1>
+        <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
+        <div class="countdown" id="countdown">Räknar ner...</div>
     </div>
-    <p>Ange koden som genereras i din app:</p>
-    <input type="text" id="tokenInput" placeholder="Engångskod" />
-    <button id="verifyButton">Verifiera</button>
-    <div id="auth-status" class="auth-status"></div>
-</div>
 
+    <div class="column" id="authenticator-setup">
+        <h2>Skanna QR-koden med din authenticator-app</h2>
+        <div class="qr-container">
+            <img id="qrCode" src="" alt="QR-kod" />
+        </div>
+        <p>Ange koden som genereras i din app:</p>
+        <input type="text" id="tokenInput" placeholder="Engångskod" />
+        <button id="verifyButton">Verifiera</button>
+        <div id="auth-status" class="auth-status"></div>
+    </div>
+</div>
+    
     <!-- Custom Alert -->
     <div class="custom-alert" id="customAlert">
         <p>Fel kod! Försök igen.</p>
