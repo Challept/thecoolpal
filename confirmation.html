@@ -1,4 +1,4 @@
-c<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@ c<!DOCTYPE html>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <style>
+        /* Styling för hela sidan */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -51,9 +52,11 @@ c<!DOCTYPE html>
             color: #fff;
             font-size: 16px;
             cursor: pointer;
+            transition: transform 0.3s ease;
         }
         button:hover {
             background-color: #1b5ecb;
+            transform: scale(1.05);
         }
         .google-button {
             background-color: #fff;
@@ -78,61 +81,54 @@ c<!DOCTYPE html>
             margin-top: 5px;
             color: #333;
         }
-        .error-message {
-            color: red;
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup-content {
+            background: linear-gradient(135deg, #ff8a00, #e52e71);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            width: 350px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .loading-icon {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        #statusMessage {
+            font-size: 16px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        #timer {
             font-size: 14px;
+            color: #fff;
             margin-top: 10px;
         }
-        #popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.popup-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    color: #333;
-    width: 300px;
-}
-
-.loader {
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #3498db;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 15px;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-#statusMessage {
-    font-size: 16px;
-    margin: 10px 0;
-}
-
-#timer {
-    font-size: 14px;
-    color: #555;
-}
     </style>
 <script>
     // Firebase-konfiguration
@@ -159,6 +155,9 @@ c<!DOCTYPE html>
         const createButton = document.getElementById("createButton");
         const statusText = document.getElementById("statusText");
         const domainText = document.getElementById("domainText");
+        const popup = document.getElementById("popup");
+        const statusMessage = document.getElementById("statusMessage");
+        const timer = document.getElementById("timer");
 
         let isStoreNameAvailable = false;
         const reservedNames = ["admin", "superuser", "test", "challept", "owner"];
@@ -229,6 +228,48 @@ c<!DOCTYPE html>
                 return;
             }
 
+            // Visa popup och påbörja processen
+            popup.style.display = "flex";
+
+            const statusMessages = [
+                "Startar kontroll av system...",
+                "Validerar data...",
+                "Skapar användar-ID...",
+                "Kontrollerar domänstatus...",
+                "Förbereder systemmiljö...",
+                "Initierar konfiguration...",
+                "Lägger till domäninställningar...",
+                "Skapar butikssida...",
+                "Verifierar säkerhetsprotokoll...",
+                "Aktiverar publiceringssystem...",
+                "Kontrollerar serveranslutning...",
+                "Genererar länk till butik...",
+                "Laddar resurser...",
+                "Slutför skapandeprocess...",
+                "Butik skapad!"
+            ];
+
+            let timeLeft = 30;
+            let currentStatusIndex = 0;
+
+            const interval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    timer.textContent = `Tid kvar: ${timeLeft} sek`;
+                    if (currentStatusIndex < statusMessages.length) {
+                        statusMessage.textContent = statusMessages[currentStatusIndex];
+                        currentStatusIndex++;
+                    }
+                } else {
+                    clearInterval(interval);
+                    timer.textContent = "";
+                    statusMessage.textContent = "Färdig!";
+                    createStore(storeName, userId);
+                }
+            }, 1000);
+        });
+
+        async function createStore(storeName, userId) {
             try {
                 const response = await fetch("https://e00f-83-250-213-73.ngrok-free.app/api/create-store", {
                     method: "POST",
@@ -239,14 +280,18 @@ c<!DOCTYPE html>
                 if (response.ok) {
                     const data = await response.json();
                     alert(`Butik skapad! Din domän är: ${data.url}`);
-                    window.location.href = "dashboard.html";
+                    popup.style.display = "none";
+                    window.location.href = "https://admin.webstay.se";
                 } else {
-                    alert("Fel vid skapande av butik.");
+                    const errorText = await response.text();
+                    alert(`Fel vid skapande av butik: ${errorText}`);
+                    popup.style.display = "none";
                 }
             } catch (error) {
                 alert(`Ett fel inträffade: ${error.message}`);
+                popup.style.display = "none";
             }
-        });
+        }
 
         function updateStatus(message, domain) {
             statusText.textContent = message;
@@ -263,59 +308,6 @@ c<!DOCTYPE html>
             isStoreNameAvailable = true;
         }
     });
-
-document.addEventListener("DOMContentLoaded", () => {
-    const createButton = document.getElementById("createButton");
-    const popup = document.getElementById("popup");
-    const statusMessage = document.getElementById("statusMessage");
-    const timer = document.getElementById("timer");
-
-    const statusMessages = [
-        "Startar kontroll av system...",
-        "Validerar data...",
-        "Skapar användar-ID...",
-        "Kontrollerar domänstatus...",
-        "Förbereder systemmiljö...",
-        "Initierar konfiguration...",
-        "Lägger till domäninställningar...",
-        "Skapar butikssida...",
-        "Verifierar säkerhetsprotokoll...",
-        "Aktiverar publiceringssystem...",
-        "Kontrollerar serveranslutning...",
-        "Genererar länk till butik...",
-        "Laddar resurser...",
-        "Slutför skapandeprocess...",
-        "Butik skapad!"
-    ];
-
-    createButton.addEventListener("click", () => {
-        let timeLeft = 30;
-        let currentStatusIndex = 0;
-
-        // Visa popup
-        popup.style.display = "flex";
-
-        // Uppdatera timer och statusmeddelanden
-        const interval = setInterval(() => {
-            if (timeLeft > 0) {
-                timeLeft--;
-                timer.textContent = `Tid kvar: ${timeLeft} sek`;
-                if (currentStatusIndex < statusMessages.length) {
-                    statusMessage.textContent = statusMessages[currentStatusIndex];
-                    currentStatusIndex++;
-                }
-            } else {
-                clearInterval(interval);
-                statusMessage.textContent = "Färdig!";
-                timer.textContent = "";
-                setTimeout(() => {
-                    popup.style.display = "none";
-                    window.location.href = "https://admin.webstay.se";
-                }, 1000);
-            }
-        }, 1000);
-    });
-});
 </script>
 </head>
 <body>
@@ -337,13 +329,12 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="button" id="createButton" disabled>Skapa Butik</button>
     </div>
 
-<!-- Popup för skapandeprocessen -->
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <div class="loading-icon"></div>
-        <div id="statusMessage">Förbereder...</div>
-        <div id="timer">Tid kvar: 30 sek</div>
-       </div>
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <div class="loading-icon"></div>
+            <div id="statusMessage">Förbereder...</div>
+            <div id="timer">Tid kvar: 30 sek</div>
+        </div>
     </div>
 </body>
 </html>
