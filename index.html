@@ -687,7 +687,7 @@ footer p {
             to {
                 opacity: 1;
             }
-        #authenticator-setup {
+#authenticator-setup {
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     padding: 30px;
     border-radius: 10px;
@@ -936,7 +936,13 @@ button:hover {
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
 
-    <div id="authenticator-setup">
+<div class="popup" id="popup">
+    <h1>🎉 Webbstay öppnar snart! 🎉</h1>
+    <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
+    <div class="countdown" id="countdown">Räknar ner...</div>
+</div>
+
+<div id="authenticator-setup">
     <h2>Skanna QR-koden med din authenticator-app</h2>
     <div class="qr-container">
         <img id="qrCode" src="" alt="QR-kod" />
@@ -946,7 +952,7 @@ button:hover {
     <button id="verifyButton">Verifiera</button>
     <div id="auth-status" class="auth-status"></div>
 </div>
-    
+
     <!-- Custom Alert -->
     <div class="custom-alert" id="customAlert">
         <p>Fel kod! Försök igen.</p>
@@ -1016,38 +1022,76 @@ button:hover {
     });
 
     document.addEventListener("DOMContentLoaded", () => {
-    const userId = "user-123"; // Användarens ID (ska genereras dynamiskt)
+    const userId = "user-123"; // Användarens ID (kan genereras dynamiskt)
     const qrCodeImg = document.getElementById("qrCode");
     const tokenInput = document.getElementById("tokenInput");
     const verifyButton = document.getElementById("verifyButton");
+    const authStatus = document.getElementById("auth-status");
 
-document.addEventListener("DOMContentLoaded", () => {
-    const generateQRButton = document.getElementById("generateQRButton");
-    const qrCodeContainer = document.getElementById("qrCodeContainer");
-
-    generateQRButton.addEventListener("click", async () => {
-        const secretKey = "din-hemliga-nyckel"; // Generera eller hämta en unik hemlig nyckel
-
+    // Hämta QR-kod från servern
+    async function fetchQRCode() {
         try {
-            const response = await fetch("https://6c75-83-250-213-73.ngrok-free.app/api/generate-qr-code", {
+            const response = await fetch("https://0a64-83-250-213-73.ngrok-free.app/api/generate-qr-code", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ secret_key: secretKey }),
+                body: JSON.stringify({ user_id: userId }), // Skicka användar-ID
             });
 
             const data = await response.json();
 
             if (data.success) {
-                // Visa QR-koden i en img-tagg
-                qrCodeContainer.innerHTML = `<img src="${data.qr_url}" alt="QR-kod" />`;
+                qrCodeImg.src = data.qr_url; // Visa QR-koden i img-tagg
             } else {
-                alert("Fel vid generering av QR-kod: " + data.message);
+                authStatus.textContent = "Fel vid generering av QR-kod: " + data.message;
+                authStatus.style.color = "red";
             }
         } catch (error) {
-            alert("Något gick fel: " + error.message);
+            authStatus.textContent = "Något gick fel vid hämtning av QR-kod: " + error.message;
+            authStatus.style.color = "red";
         }
-    });
-});
+    }
+
+    // Verifiera användarens kod
+    async function verifyToken() {
+        const token = tokenInput.value.trim();
+
+        if (!token) {
+            authStatus.textContent = "Ange en giltig kod.";
+            authStatus.style.color = "red";
+            return;
+        }
+
+        try {
+            const response = await fetch("https://0a64-83-250-213-73.ngrok-free.app/api/verify-token", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ token: token }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                authStatus.textContent = "Verifiering lyckades! Du är inloggad.";
+                authStatus.style.color = "limegreen";
+
+                // Valfritt: Fortsätt med omdirigering eller tillåt åtkomst
+                // window.location.href = "https://webstay.se/dashboard";
+            } else {
+                authStatus.textContent = "Verifiering misslyckades. Försök igen.";
+                authStatus.style.color = "red";
+            }
+        } catch (error) {
+            authStatus.textContent = "Något gick fel vid verifiering: " + error.message;
+            authStatus.style.color = "red";
+        }
+    }
+
+    // Anslut knappen till verifieringsfunktionen
+    verifyButton.addEventListener("click", verifyToken);
+
+    // Generera och visa QR-kod vid sidladdning
+    fetchQRCode();
+}); 
 </script>
     <div class="top-video">
         <video autoplay muted loop playsinline>
