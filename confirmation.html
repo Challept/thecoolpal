@@ -81,54 +81,94 @@
             margin-top: 5px;
             color: #333;
         }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .popup-content {
-            background: linear-gradient(135deg, #ff8a00, #e52e71);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            color: white;
-            width: 350px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        .loading-icon {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #ffffff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        #statusMessage {
-            font-size: 16px;
-            margin: 10px 0;
-            font-weight: bold;
-        }
-        #timer {
-            font-size: 14px;
-            color: #fff;
-            margin-top: 10px;
-        }
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.popup-content {
+    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    width: 400px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(100px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.loading-icon {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(255, 255, 255, 0.3);
+    border-top: 6px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite, pulse 1.5s infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+#statusMessage {
+    font-size: 18px;
+    margin: 15px 0;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#timer {
+    font-size: 16px;
+    color: #ffffff;
+    margin-top: 10px;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
     </style>
 <script>
     // Firebase-konfiguration
@@ -169,20 +209,25 @@
         const createButton = document.getElementById("createButton");
         const statusText = document.getElementById("statusText");
         const domainText = document.getElementById("domainText");
+        const popup = document.getElementById("popup");
+        const statusMessage = document.getElementById("statusMessage");
+        const timer = document.getElementById("timer");
 
         let isStoreNameAvailable = false;
 
         const reservedNames = ["admin", "superuser", "test", "challept", "owner"];
 
         // Kontrollera om användaren redan är inloggad
-        const userUID = sessionStorage.getItem("userUID");
-        if (userUID) {
-            authContainer.style.display = "none";
-            storeContainer.style.display = "block";
-        } else {
-            authContainer.style.display = "block";
-            storeContainer.style.display = "none";
-        }
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                sessionStorage.setItem("userUID", user.uid);
+                authContainer.style.display = "none";
+                storeContainer.style.display = "block";
+            } else {
+                authContainer.style.display = "block";
+                storeContainer.style.display = "none";
+            }
+        });
 
         // E-postinloggning
         authButton.addEventListener("click", async () => {
@@ -195,11 +240,7 @@
             }
 
             try {
-                const userCredential = await auth.signInWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-                sessionStorage.setItem("userUID", user.uid);
-                authContainer.style.display = "none";
-                storeContainer.style.display = "block";
+                await auth.signInWithEmailAndPassword(email, password);
             } catch (error) {
                 alert(`Inloggning misslyckades: ${error.message}`);
             }
@@ -210,16 +251,13 @@
             const provider = new firebase.auth.GoogleAuthProvider();
 
             try {
-                const result = await auth.signInWithPopup(provider);
-                const user = result.user;
-                sessionStorage.setItem("userUID", user.uid);
-                authContainer.style.display = "none";
-                storeContainer.style.display = "block";
+                await auth.signInWithPopup(provider);
             } catch (error) {
                 alert(`Google-inloggning misslyckades: ${error.message}`);
             }
         });
 
+        // Realtidskontroll av butiksnamn
         storeNameInput.addEventListener("input", async () => {
             const storeName = storeNameInput.value.trim().toLowerCase();
             const domain = `${storeName}.webstay.se`;
@@ -263,6 +301,7 @@
             }
         });
 
+        // Skapa butik
         createButton.addEventListener("click", async () => {
             const storeName = storeNameInput.value.trim();
             const userId = sessionStorage.getItem("userUID");
@@ -277,46 +316,56 @@
                 return;
             }
 
-            // Visa popup och påbörja processen
-            popup.style.display = "flex";
+// Visa popup och påbörja processen
+popup.style.display = "flex";
 
-            const statusMessages = [
-                "Startar kontroll av system...",
-                "Validerar data...",
-                "Skapar användar-ID...",
-                "Kontrollerar domänstatus...",
-                "Förbereder systemmiljö...",
-                "Initierar konfiguration...",
-                "Lägger till domäninställningar...",
-                "Skapar butikssida...",
-                "Verifierar säkerhetsprotokoll...",
-                "Aktiverar publiceringssystem...",
-                "Kontrollerar serveranslutning...",
-                "Genererar länk till butik...",
-                "Laddar resurser...",
-                "Slutför skapandeprocess...",
-                "Butik skapad!"
-            ];
+const statusMessages = [
+    "Startar kontroll av system...",
+    "Validerar data...",
+    "Skapar användar-ID...",
+    "Kontrollerar domänstatus...",
+    "Förbereder systemmiljö...",
+    "Initierar konfiguration...",
+    "Lägger till domäninställningar...",
+    "Skapar butikssida...",
+    "Verifierar säkerhetsprotokoll...",
+    "Aktiverar publiceringssystem...",
+    "Kontrollerar serveranslutning...",
+    "Genererar länk till butik...",
+    "Laddar resurser...",
+    "Slutför skapandeprocess...",
+    "Butik skapad!"
+];
 
-            let timeLeft = 30;
-            let currentStatusIndex = 0;
+let timeLeft = 30;
+let currentStatusIndex = 0;
 
-            const interval = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    timer.textContent = `Tid kvar: ${timeLeft} sek`;
-                    if (currentStatusIndex < statusMessages.length) {
-                        statusMessage.textContent = statusMessages[currentStatusIndex];
-                        currentStatusIndex++;
-                    }
-                } else {
-                    clearInterval(interval);
-                    timer.textContent = "";
-                    statusMessage.textContent = "Färdig!";
-                    createStore(storeName, userId);
-                }
-            }, 1000);
-        });
+// Timer för popup
+timer.textContent = `Tid kvar: ${timeLeft} sek`;
+
+// Lägg till en laddningsikon
+const loaderIcon = document.createElement("div");
+loaderIcon.className = "loader";
+popup.querySelector(".popup-content").prepend(loaderIcon);
+
+// Uppdatera statusmeddelanden och timer varje 2 sekunder
+const interval = setInterval(() => {
+    if (timeLeft > 0) {
+        timeLeft -= 2; // Minska tid med 2 sekunder
+        timer.textContent = `Tid kvar: ${timeLeft} sek`;
+
+        if (currentStatusIndex < statusMessages.length) {
+            statusMessage.textContent = statusMessages[currentStatusIndex];
+            currentStatusIndex++;
+        }
+    } else {
+        clearInterval(interval);
+        timer.textContent = "";
+        statusMessage.textContent = "Färdig!";
+        loaderIcon.style.display = "none"; // Dölj laddningsikonen när klart
+        createStore(storeName, userId); // Kör funktionen för att skapa butiken
+    }
+}, 2000); // Uppdatera varje 2 sekunder
 
         async function createStore(storeName, userId) {
             try {
