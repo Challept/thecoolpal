@@ -12,8 +12,16 @@
             min-height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #4a90e2, #6a11cb);
+            background: linear-gradient(135deg, #001f3f, #0074d9);
+            background-size: 300% 300%;
+            animation: gradientMove 10s ease infinite;
             color: white;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .auth-container {
@@ -21,19 +29,21 @@
             background: rgba(255, 255, 255, 0.1);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 20px;
         }
 
         input {
             display: block;
-            width: 80%;
+            width: 90%;
             margin: 10px auto;
-            padding: 10px;
+            padding: 12px;
             border: 2px solid white;
             border-radius: 5px;
             font-size: 16px;
@@ -48,9 +58,9 @@
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             margin-top: 20px;
-            background: #ff8a00;
+            background: #ff851b;
             color: white;
             border: none;
             border-radius: 5px;
@@ -61,12 +71,12 @@
         }
 
         button:hover {
-            background-color: #e52e71;
+            background-color: #ff4136;
             transform: scale(1.05);
         }
 
         #errorMessage {
-            color: #ff4d4d;
+            color: #ff4136;
             font-size: 14px;
             margin-top: 10px;
         }
@@ -75,6 +85,12 @@
             color: limegreen;
             font-size: 14px;
             margin-top: 10px;
+        }
+
+        .info {
+            margin-top: 30px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
         }
     </style>
 </head>
@@ -87,6 +103,9 @@
         <div id="errorMessage"></div>
         <button id="continueButton">Fortsätt</button>
         <div id="successMessage"></div>
+        <p class="info">
+            Denna autentisering säkerställer att endast behöriga användare får åtkomst. Ange rätt användarnamn och kod för att låsa upp Webstay.
+        </p>
     </div>
 
     <script>
