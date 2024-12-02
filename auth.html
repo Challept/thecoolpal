@@ -5,93 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autentisering</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #001f3f, #0074d9);
-            background-size: 300% 300%;
-            animation: gradientMove 10s ease infinite;
-            color: white;
-        }
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #e0f7ff, #c2e9fb);
+    background-size: 300% 300%;
+    animation: gradientMove 8s ease infinite;
+    color: #333; /* Mörk text för kontrast */
+}
 
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
-        .auth-container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 400px;
-        }
+.auth-container {
+    text-align: center;
+    background: #ffffff; /* Vit container */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Mjuk skugga */
+    width: 90%;
+    max-width: 350px; /* Smalare för en modern känsla */
+}
 
-        h1 {
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
+h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #0074d9; /* Modern blå textfärg */
+    font-weight: 600; /* Semi-bold för tydlighet */
+}
 
-        input {
-            display: block;
-            width: 90%;
-            margin: 10px auto;
-            padding: 12px;
-            border: 2px solid white;
-            border-radius: 5px;
-            font-size: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            text-align: center;
-            outline: none;
-        }
+p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #555; /* Ljusare grå för extra texter */
+    line-height: 1.6; /* Förbättrad läsbarhet */
+}
 
-        input:focus {
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-        }
+input {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    border: 2px solid #0074d9;
+    border-radius: 5px;
+    font-size: 14px;
+    background: #f9f9f9; /* Ljus bakgrund */
+    color: #333; /* Mörk text */
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-        button {
-            padding: 12px 20px;
-            margin-top: 20px;
-            background: #ff851b;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            display: none;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
+input:focus {
+    border-color: #0056a3;
+    box-shadow: 0 0 8px rgba(0, 116, 217, 0.3); /* Ljus blå skugga */
+}
 
-        button:hover {
-            background-color: #ff4136;
-            transform: scale(1.05);
-        }
+button {
+    padding: 10px 20px;
+    margin-top: 20px;
+    background: #0074d9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
 
-        #errorMessage {
-            color: #ff4136;
-            font-size: 14px;
-            margin-top: 10px;
-        }
+button:hover {
+    background-color: #0056a3;
+    transform: scale(1.05);
+}
 
-        #successMessage {
-            color: limegreen;
-            font-size: 14px;
-            margin-top: 10px;
-        }
+#errorMessage {
+    color: #e63946; /* Röd för felmeddelande */
+    font-size: 14px;
+    margin-top: 10px;
+}
 
-        .info {
-            margin-top: 30px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.8);
-        }
+#successMessage {
+    color: #2a9d8f; /* Grön för framgång */
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.info {
+    margin-top: 30px;
+    font-size: 13px;
+    color: #777; /* Mjuk grå text för information */
+    text-align: center;
+    line-height: 1.5;
+}
     </style>
 </head>
 <body>
