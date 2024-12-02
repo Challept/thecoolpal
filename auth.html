@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autentisering</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4a90e2, #6a11cb);
+            color: white;
+        }
+
+        .auth-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 10px;
+            border: 2px solid white;
+            border-radius: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            outline: none;
+        }
+
+        input:focus {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 20px;
+            background: #ff8a00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e52e71;
+            transform: scale(1.05);
+        }
+
+        #errorMessage {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        #successMessage {
+            color: limegreen;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Autentisering</h1>
+        <p>Ange ditt användarnamn och kod för att fortsätta:</p>
+        <input type="text" id="usernameInput" placeholder="Användarnamn" />
+        <input type="text" id="codeInput" placeholder="Kod (endast siffror)" />
+        <div id="errorMessage"></div>
+        <button id="continueButton">Fortsätt</button>
+        <div id="successMessage"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const usernameInput = document.getElementById("usernameInput");
+            const codeInput = document.getElementById("codeInput");
+            const continueButton = document.getElementById("continueButton");
+            const errorMessage = document.getElementById("errorMessage");
+            const successMessage = document.getElementById("successMessage");
+
+            const correctUsername = "admin.15";
+            const correctCode = "2945128";
+
+            codeInput.addEventListener("input", () => {
+                // Tillåt endast siffror
+                codeInput.value = codeInput.value.replace(/[^0-9]/g, "");
+            });
+
+            codeInput.addEventListener("input", () => {
+                errorMessage.textContent = ""; // Töm ev. felmeddelande när användaren skriver
+            });
+
+            usernameInput.addEventListener("input", () => {
+                errorMessage.textContent = ""; // Töm ev. felmeddelande när användaren skriver
+            });
+
+            codeInput.addEventListener("keyup", checkInputs);
+            usernameInput.addEventListener("keyup", checkInputs);
+
+            function checkInputs() {
+                if (
+                    usernameInput.value.trim() === correctUsername &&
+                    codeInput.value.trim() === correctCode
+                ) {
+                    successMessage.textContent = "Verifiering lyckades! Du kan fortsätta.";
+                    continueButton.style.display = "block"; // Visa knappen
+                    errorMessage.textContent = ""; // Dölj felmeddelande
+                } else {
+                    successMessage.textContent = "";
+                    continueButton.style.display = "none"; // Dölj knappen
+                }
+            }
+
+            continueButton.addEventListener("click", () => {
+                // Omdirigera till URL med popups inaktiverade
+                window.location.href = "https://webstay.se/#29451288461645816561pass";
+            });
+        });
+    </script>
+</body>
+</html>
