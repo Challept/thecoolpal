@@ -171,77 +171,97 @@
 }
     </style>
 <script>
-    // Firebase-konfiguration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
-        authDomain: "webbforma1.firebaseapp.com",
-        projectId: "webbforma1",
-        storageBucket: "webbforma1.firebasestorage.app",
-        messagingSenderId: "875335609008",
-        appId: "1:875335609008:web:1d3cca6d257937a8526975",
-        measurementId: "G-QRXDZ5R2ZH"
-    };
+// Firebase-konfiguration
+const firebaseConfig = {
+    apiKey: "AIzaSyCFUjoTYuPxg-7wARDHPWLHvD9sjpVB8sk",
+    authDomain: "webbforma1.firebaseapp.com",
+    projectId: "webbforma1",
+    storageBucket: "webbforma1.firebasestorage.app",
+    messagingSenderId: "875335609008",
+    appId: "1:875335609008:web:1d3cca6d257937a8526975",
+    measurementId: "G-QRXDZ5R2ZH",
+};
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    document.addEventListener("DOMContentLoaded", () => {
-        const authContainer = document.getElementById("auth-container");
-        const storeContainer = document.getElementById("store-container");
-        const authButton = document.getElementById("auth-button");
-        const googleLoginButton = document.getElementById("google-login-button");
-        const storeNameInput = document.getElementById("storeName");
-        const createButton = document.getElementById("createButton");
-        const statusText = document.getElementById("statusText");
-        const domainText = document.getElementById("domainText");
-        const popup = document.getElementById("popup");
-        const statusMessage = document.getElementById("statusMessage");
-        const timer = document.getElementById("timer");
+document.addEventListener("DOMContentLoaded", () => {
+    const authContainer = document.getElementById("auth-container");
+    const storeContainer = document.getElementById("store-container");
+    const authButton = document.getElementById("auth-button");
+    const googleLoginButton = document.getElementById("google-login-button");
+    const storeNameInput = document.getElementById("storeName");
+    const createButton = document.getElementById("createButton");
+    const statusText = document.getElementById("statusText");
+    const domainText = document.getElementById("domainText");
+    const popup = document.getElementById("popup");
+    const statusMessage = document.getElementById("statusMessage");
+    const timer = document.getElementById("timer");
 
-        let isStoreNameAvailable = false;
+    let isStoreNameAvailable = false;
 
-        const reservedNames = ["admin", "superuser", "test", "challept", "owner"];
+    const reservedNames = ["admin", "superuser", "test", "challept", "owner"];
 
-        // Kontrollera om användaren redan är inloggad
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                sessionStorage.setItem("userUID", user.uid);
-                authContainer.style.display = "none";
-                storeContainer.style.display = "block";
-            } else {
-                authContainer.style.display = "block";
-                storeContainer.style.display = "none";
-            }
-        });
+    // Kontrollera om användaren redan är inloggad
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            sessionStorage.setItem("userUID", user.uid);
+            authContainer.style.display = "none";
+            storeContainer.style.display = "block";
+        } else {
+            authContainer.style.display = "block";
+            storeContainer.style.display = "none";
+        }
+    });
 
-        // E-postinloggning
-        authButton.addEventListener("click", async () => {
-            const email = document.getElementById("auth-email").value.trim();
-            const password = document.getElementById("auth-password").value.trim();
+    // E-postinloggning
+    authButton.addEventListener("click", async () => {
+        const email = document.getElementById("auth-email").value.trim();
+        const password = document.getElementById("auth-password").value.trim();
 
-            if (!email || !password) {
-                alert("Vänligen fyll i både e-postadress och lösenord.");
-                return;
-            }
+        if (!email || !password) {
+            alert("Vänligen fyll i både e-postadress och lösenord.");
+            return;
+        }
 
-            try {
-                await auth.signInWithEmailAndPassword(email, password);
-            } catch (error) {
-                alert(`Inloggning misslyckades: ${error.message}`);
-            }
-        });
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            alert("Inloggning lyckades!");
+        } catch (error) {
+            alert(`Inloggning misslyckades: ${error.message}`);
+        }
+    });
 
-        // Google-inloggning
-        googleLoginButton.addEventListener("click", async () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
+    // Google-inloggning
+    googleLoginButton.addEventListener("click", async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
 
-            try {
-                await auth.signInWithPopup(provider);
-            } catch (error) {
-                alert(`Google-inloggning misslyckades: ${error.message}`);
-            }
-        });
+        try {
+            const result = await auth.signInWithPopup(provider);
+            const user = result.user;
+            sessionStorage.setItem("userUID", user.uid);
+            alert(`Inloggning lyckades! Välkommen, ${user.displayName}`);
+        } catch (error) {
+            alert(`Google-inloggning misslyckades: ${error.message}`);
+        }
+    });
+
+    function updateStatus(message, domain) {
+        statusText.textContent = message;
+        domainText.textContent = domain;
+    }
+
+    function disableCreateButton() {
+        createButton.disabled = true;
+        isStoreNameAvailable = false;
+    }
+
+    function enableCreateButton() {
+        createButton.disabled = false;
+        isStoreNameAvailable = true;
+    }
+});
 
         // Realtidskontroll av butiksnamn
         storeNameInput.addEventListener("input", async () => {
