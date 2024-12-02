@@ -571,81 +571,50 @@ footer p {
     width: 100vw;
     height: 100vh;
     background: linear-gradient(135deg, #4a90e2, #6a11cb);
-    color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    z-index: 10000;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.popup h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
     animation: fadeInUp 1.5s ease-out;
-    overflow: hidden; /* Förhindrar sidrullning */
+}
+
+.popup p {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    animation: fadeInUp 2s ease-out;
 }
 
 .popup .countdown {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: bold;
-    color: #ffcc00;
-    margin: 20px 0;
+    margin-bottom: 20px;
     animation: fadeInUp 2.5s ease-out;
 }
 
-.authenticator {
-    width: 400px;
-    background: linear-gradient(135deg, #2575fc, #6a11cb);
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    animation: fadeInUp 1.5s ease-out;
-}
-
-.qr-container img {
-    max-width: 200px;
-    margin: 20px 0;
-    border: 2px solid white;
-    border-radius: 15px;
-}
-
-#tokenInput {
-    width: 80%;
-    padding: 10px;
-    border: 2px solid #fff;
-    border-radius: 25px;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    outline: none;
-}
-
-#tokenInput:focus {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-}
-
-button {
-    width: 80%;
-    padding: 12px;
-    margin: 10px 0;
+.popup button {
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    background: #ff8a00;
+    color: #fff;
     border: none;
     border-radius: 25px;
-    background-color: #ff8a00;
-    color: white;
-    font-size: 16px;
     cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease;
+    animation: fadeInUp 3s ease-out;
 }
 
-button:hover {
+.popup button:hover {
     background-color: #e52e71;
     transform: scale(1.05);
-}
-
-.auth-status {
-    margin-top: 10px;
-    font-size: 14px;
-    color: #fff;
 }
 
 @keyframes fadeInUp {
@@ -656,22 +625,6 @@ button:hover {
     to {
         transform: translateY(0);
         opacity: 1;
-    }
-}
-
-@media (max-width: 768px) {
-    .popup {
-        justify-content: flex-start;
-        padding: 20px;
-    }
-
-    .authenticator {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .qr-container img {
-        max-width: 150px;
     }
 }
         /* Media Queries för mobilanpassning */
@@ -872,16 +825,7 @@ button:hover {
     <h1>🎉 Webbstay öppnar snart! 🎉</h1>
     <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
     <div class="countdown" id="countdown">Räknar ner...</div>
-    <div class="authenticator" id="authenticator-setup">
-        <h2>Skanna QR-koden med din authenticator-app</h2>
-        <div class="qr-container">
-            <img id="qrCode" src="" alt="QR-kod" />
-        </div>
-        <p>Ange koden som genereras i din app:</p>
-        <input type="text" id="tokenInput" placeholder="Engångskod" />
-        <button id="verifyButton">Verifiera</button>
-        <div id="auth-status" class="auth-status"></div>
-    </div>
+    <button id="authButton">Vill du se Webstay tidigt?</button>
 </div>
     
     <!-- Custom Alert -->
@@ -892,22 +836,53 @@ button:hover {
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // Nedräkning
+        const popup = document.getElementById("popup");
         const countdownElement = document.getElementById("countdown");
-        const popup = document.querySelector(".popup");
+        const authButton = document.getElementById("authButton");
         const launchDate = new Date("2024-12-27T00:00:00").getTime();
 
+        // Kontrollera om användaren redan har verifierats
+        if (sessionStorage.getItem("popupsDisabled") === "true") {
+            // Dölj popupsen permanent
+            if (popup) {
+                popup.style.display = "none";
+            }
+            document.body.style.overflow = "auto"; // Tillåt rullning
+            return;
+        }
+
+        // Kontrollera om användaren navigerar till rätt URL med hash
+        const hash = window.location.hash;
+        const allowedHash = "#29451288461645816561pass";
+
+        if (hash === allowedHash) {
+            // Dölj popupsen och spara status i sessionStorage
+            sessionStorage.setItem("popupsDisabled", "true");
+            if (popup) {
+                popup.style.display = "none";
+            }
+            document.body.style.overflow = "auto"; // Tillåt rullning
+            return;
+        }
+
+        // Visa popupsen om användaren inte verifierats
+        if (popup) {
+            popup.style.display = "flex";
+        }
+        document.body.style.overflow = "hidden"; // Förhindra rullning
+
+        // Nedräkning
         function updateCountdown() {
             const now = new Date().getTime();
             const timeLeft = launchDate - now;
 
             if (timeLeft <= 0) {
-                // Tid är slut - dölj popupen permanent
-                if (popup) {
-                    popup.style.display = "none";
+                countdownElement.textContent = "Lanserad!";
+                if (authButton) {
+                    authButton.disabled = true; // Inaktivera knappen efter lansering
+                    authButton.textContent = "Lanserad!";
                 }
-                document.body.style.overflow = "auto"; // Återställ rullning
-                return; // Stoppa nedräkningen
+                return;
             }
 
             const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
@@ -915,114 +890,20 @@ button:hover {
             const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            if (countdownElement) {
-                countdownElement.innerText = `${days} dagar, ${hours} timmar, ${minutes} minuter, ${seconds} sekunder`;
-            }
+            countdownElement.textContent = `${days} dagar, ${hours} timmar, ${minutes} minuter, ${seconds} sekunder`;
         }
 
-        // Starta nedräkningen
+        // Starta nedräkningen och uppdatera varje sekund
         updateCountdown();
-        const countdownInterval = setInterval(() => {
-            updateCountdown();
-        }, 1000);
+        const countdownInterval = setInterval(updateCountdown, 1000);
 
-        // Hantera knappen för att manuellt stänga popups
-        const submitButton = document.getElementById("submitButton");
-        if (submitButton) {
-            submitButton.addEventListener("click", () => {
-                if (popup) {
-                    popup.style.display = "none";
-                }
-                document.body.style.overflow = "auto"; // Tillåt rullning
+        // Hantera knapptryckning för autentisering
+        if (authButton) {
+            authButton.addEventListener("click", () => {
+                window.location.href = "/auth.html"; // Navigera till autentiseringssidan
             });
-        }
-
-        // Egen alert-funktion (valfritt)
-        const customAlert = document.getElementById("customAlert");
-        if (customAlert) {
-            window.showAlert = function () {
-                customAlert.style.display = "block";
-                document.body.style.overflow = "hidden"; // Hindra rullning vid alert
-            };
-
-            window.closeAlert = function () {
-                customAlert.style.display = "none";
-                document.body.style.overflow = "auto"; // Tillåt rullning igen
-            };
         }
     });
-
-document.addEventListener("DOMContentLoaded", () => {
-    const userId = "user-123"; // Användarens ID (kan genereras dynamiskt)
-    const qrCodeImg = document.getElementById("qrCode");
-    const tokenInput = document.getElementById("tokenInput");
-    const verifyButton = document.getElementById("verifyButton");
-    const authStatus = document.getElementById("auth-status");
-
-    // Hämta QR-kod från servern
-    async function fetchQRCode() {
-        try {
-            const response = await fetch("https://0a64-83-250-213-73.ngrok-free.app/api/generate-qr-code", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ user_id: userId }), // Skicka användar-ID
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                qrCodeImg.src = data.qr_url; // Visa QR-koden i img-tagg
-            } else {
-                authStatus.textContent = "Fel vid generering av QR-kod: " + data.message;
-                authStatus.style.color = "red";
-            }
-        } catch (error) {
-            authStatus.textContent = "Något gick fel vid hämtning av QR-kod: " + error.message;
-            authStatus.style.color = "red";
-        }
-    }
-
-    // Verifiera användarens kod
-    async function verifyToken() {
-        const token = tokenInput.value.trim();
-
-        if (!token) {
-            authStatus.textContent = "Ange en giltig kod.";
-            authStatus.style.color = "red";
-            return;
-        }
-
-        try {
-            const response = await fetch("https://0a64-83-250-213-73.ngrok-free.app/api/verify-token", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: token }),
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                authStatus.textContent = "Verifiering lyckades! Du är inloggad.";
-                authStatus.style.color = "limegreen";
-
-                // Valfritt: Fortsätt med omdirigering eller tillåt åtkomst
-                // window.location.href = "https://webstay.se/dashboard";
-            } else {
-                authStatus.textContent = "Verifiering misslyckades. Försök igen.";
-                authStatus.style.color = "red";
-            }
-        } catch (error) {
-            authStatus.textContent = "Något gick fel vid verifiering: " + error.message;
-            authStatus.style.color = "red";
-        }
-    }
-
-    // Anslut knappen till verifieringsfunktionen
-    verifyButton.addEventListener("click", verifyToken);
-
-    // Generera och visa QR-kod vid sidladdning
-    fetchQRCode();
-});
 </script>
     <div class="top-video">
         <video autoplay muted loop playsinline>
