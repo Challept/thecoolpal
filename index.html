@@ -884,8 +884,15 @@ footer p {
     <div class="popup" id="popup">
         <h1>🎉 Webbstay öppnar snart! 🎉</h1>
         <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
-        <div class="countdown" id="countdown">Räknar ner...</div>
-        <div id="qrCode"></div>
+        <div class="countdown" id="countdown">Räknar ner...</div>.
+        <div id="authenticator-setup">
+    <h2>Skanna QR-koden med din authenticator-app</h2>
+    <img id="qrCode" src="" alt="QR-kod" />
+    <p>Ange koden som genereras i din app:</p>
+    <input type="text" id="tokenInput" placeholder="Engångskod" />
+    <button id="verifyButton">Verifiera</button>
+</div>
+
     </div>
 
     <!-- Custom Alert -->
@@ -955,6 +962,42 @@ footer p {
             };
         }
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const userId = "user-123"; // Användarens ID (ska genereras dynamiskt)
+    const qrCodeImg = document.getElementById("qrCode");
+    const tokenInput = document.getElementById("tokenInput");
+    const verifyButton = document.getElementById("verifyButton");
+
+    // Hämta QR-kod
+    fetch(`https://1196-83-250-213-73.ngrok-free.app/api/generate-qr?user_id=${userId}`)
+        .then((response) => response.blob())
+        .then((blob) => {
+            const url = URL.createObjectURL(blob);
+            qrCodeImg.src = url;
+        });
+
+    // Verifiera TOTP
+    verifyButton.addEventListener("click", () => {
+        const token = tokenInput.value.trim();
+        fetch("https://1196-83-250-213-73.ngrok-free.app/api/verify-totp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: userId, token }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    alert("Verifiering lyckades!");
+                    // Tillåt åtkomst eller utför annan handling
+                } else {
+                    alert(data.message || "Verifiering misslyckades!");
+                }
+            });
+    });
+});
 </script>
     <div class="top-video">
         <video autoplay muted loop playsinline>
