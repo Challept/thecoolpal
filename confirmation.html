@@ -317,36 +317,44 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Starta popup
-        popup.style.display = "flex";
+// Starta popup
+popup.style.display = "flex";
 
-        const statusMessages = [
-            "Startar kontroll av system...",
-            "Lägger till domäninställningar...",
-            "Skapar butikssida...",
-            "Genererar länk till butik...",
-            "Butik skapad!",
-        ];
+// Statusmeddelanden
+const statusMessages = [
+    "Startar kontroll av system...",
+    "Validerar data...",
+    "Skapar användar-ID...",
+    "Kontrollerar domänstatus...",
+    "Butik skapad!",
+];
 
-        let timeLeft = 10;
-        let currentStatusIndex = 0;
+// Total varaktighet i sekunder
+let totalDuration = 10; // Visuellt snabbare
+let timeLeft = 15; // Visas som 15 sekunder i timern
+let currentStatusIndex = 0;
 
-        const interval = setInterval(() => {
-            if (timeLeft > 0) {
-                timeLeft--;
-                timer.textContent = `Tid kvar: ${timeLeft} sek`;
-                if (currentStatusIndex < statusMessages.length) {
-                    statusMessage.textContent = statusMessages[currentStatusIndex];
-                    currentStatusIndex++;
-                }
-            } else {
-                clearInterval(interval);
-                timer.textContent = "";
-                statusMessage.textContent = "Färdig!";
-                createStore(storeName, userId);
-            }
-        }, 2000);
-    });
+// Starta intervallet
+const interval = setInterval(() => {
+    // Uppdatera timern
+    if (timeLeft > 0) {
+        timeLeft -= 1.5; // Snabbare nedräkning
+        timer.textContent = `Tid kvar: ${Math.ceil(timeLeft)} sek`;
+    }
+
+    // Uppdatera statusmeddelandet
+    if (currentStatusIndex < statusMessages.length) {
+        statusMessage.textContent = statusMessages[currentStatusIndex];
+        currentStatusIndex++;
+    } else {
+        // När alla statusmeddelanden har visats, avsluta processen
+        clearInterval(interval);
+        timer.textContent = "";
+        statusMessage.textContent = "Färdig!";
+        createStore(storeName, userId); // Skapa butiken
+    }
+}, 3000); // Varje statusmeddelande visas i 3 sekunder
+});
 
     async function createStore(storeName, userId) {
         try {
