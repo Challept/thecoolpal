@@ -88,11 +88,25 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
+    background: linear-gradient(135deg, rgba(0, 123, 255, 0.9), rgba(0, 192, 255, 0.8));
+    background-size: 200% 200%;
+    animation: waterFlow 12s infinite;
     justify-content: center;
     align-items: center;
     z-index: 1000;
-    animation: fadeIn 0.5s ease-out;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes waterFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 @keyframes fadeIn {
@@ -105,32 +119,34 @@
 }
 
 .popup-content {
-    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    background: linear-gradient(135deg, #6fd3f9, #3d9cb3);
     padding: 40px 30px;
-    border-radius: 20px;
+    border-radius: 25px;
     text-align: center;
     color: white;
-    width: 400px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-    animation: slideUp 0.5s ease-out;
+    width: 450px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.6s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 @keyframes slideUp {
     0% {
-        transform: translateY(100px);
+        transform: translateY(100px) scale(0.9);
+        opacity: 0;
     }
     100% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        opacity: 1;
     }
 }
 
 .loading-icon {
-    width: 60px;
-    height: 60px;
-    border: 6px solid rgba(255, 255, 255, 0.3);
-    border-top: 6px solid #ffffff;
+    width: 70px;
+    height: 70px;
+    border: 8px solid rgba(255, 255, 255, 0.2);
+    border-top: 8px solid #ffffff;
     border-radius: 50%;
-    animation: spin 1s linear infinite, pulse 1.5s infinite;
+    animation: spin 1.2s linear infinite, pulse 1.8s infinite;
     margin: 0 auto 20px;
 }
 
@@ -155,27 +171,38 @@
 }
 
 #statusMessage {
-    font-size: 18px;
-    margin: 15px 0;
+    font-size: 20px;
+    margin: 20px 0;
     font-weight: bold;
-    letter-spacing: 0.5px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.8px;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
 }
 
 .progress-bar-container {
     width: 100%;
-    height: 10px;
+    height: 12px;
     background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    margin-top: 20px;
+    border-radius: 6px;
+    margin-top: 25px;
     overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .progress-bar {
     height: 100%;
-    background: #ffffff;
+    background: linear-gradient(90deg, #ffffff, #00d4ff);
     width: 0%;
-    transition: width 0.3s ease;
+    transition: width 0.5s ease;
+    animation: waterPulse 2s infinite ease-in-out;
+}
+
+@keyframes waterPulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
 }
     /* Overlay som blockerar interaktion */
     .overlay {
