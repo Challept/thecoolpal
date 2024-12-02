@@ -177,6 +177,43 @@
     width: 0%;
     transition: width 0.3s ease;
 }
+.alert-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #f12711, #f5af19);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #fff;
+    max-width: 300px;
+    z-index: 2000;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.alert-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.alert-text {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
     </style>
 <script>
 // Firebase-konfiguration
@@ -408,6 +445,26 @@ const interval = setInterval(() => {
         isStoreNameAvailable = true;
     }
 });
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // Skapa en snygg varningsruta
+            const alertContainer = document.createElement("div");
+            alertContainer.className = "alert-container";
+            alertContainer.innerHTML = `
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-text">Vänligen fortsätt på en dator för att använda denna sida.</div>
+            `;
+            document.body.appendChild(alertContainer);
+
+            // Valfritt: Om du vill omdirigera användaren efter några sekunder
+            setTimeout(() => {
+                // window.location.href = "https://webstay.se"; // Aktivera vid behov
+            }, 5000);
+        }
+    });
 </script>
 </head>
 <body>
