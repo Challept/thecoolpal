@@ -177,43 +177,67 @@
     width: 0%;
     transition: width 0.3s ease;
 }
-.alert-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #f12711, #f5af19);
-    padding: 20px 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    color: #fff;
-    max-width: 300px;
-    z-index: 2000;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.alert-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.alert-text {
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1.5;
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
+    /* Overlay som blockerar interaktion */
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #add8e6, #87cefa);
+        animation: moveBackground 10s linear infinite;
+        z-index: 1000;
+        opacity: 0.9;
     }
-    100% {
-        opacity: 1;
-        transform: scale(1);
+
+    /* Rörlig bakgrundsanimation */
+    @keyframes moveBackground {
+        0% {
+            background-position: 0% 0%;
+        }
+        100% {
+            background-position: 100% 100%;
+        }
     }
-}
+
+    /* Varningsruta */
+    .alert-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #f12711, #f5af19);
+        padding: 20px 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        color: #fff;
+        max-width: 300px;
+        z-index: 2000;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .alert-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    .alert-text {
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 1.5;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
     </style>
 <script>
 // Firebase-konfiguration
@@ -450,6 +474,10 @@ const interval = setInterval(() => {
         const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
         if (isMobile) {
+            // Skapa en overlay som blockerar all interaktion
+            const overlay = document.createElement("div");
+            overlay.className = "overlay";
+
             // Skapa en snygg varningsruta
             const alertContainer = document.createElement("div");
             alertContainer.className = "alert-container";
@@ -457,6 +485,9 @@ const interval = setInterval(() => {
                 <div class="alert-icon">⚠️</div>
                 <div class="alert-text">Vänligen fortsätt på en dator för att använda denna sida.</div>
             `;
+
+            // Lägg till overlay och varningsruta i DOM
+            document.body.appendChild(overlay);
             document.body.appendChild(alertContainer);
 
             // Valfritt: Om du vill omdirigera användaren efter några sekunder
