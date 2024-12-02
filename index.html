@@ -885,12 +885,15 @@ footer p {
         <h1>🎉 Webbstay öppnar snart! 🎉</h1>
         <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
         <div class="countdown" id="countdown">Räknar ner...</div>.
-        <div id="authenticator-setup">
+<div id="authenticator-setup">
     <h2>Skanna QR-koden med din authenticator-app</h2>
-    <img id="qrCode" src="" alt="QR-kod" />
+    <div class="qr-container">
+        <img id="qrCode" src="" alt="QR-kod" />
+    </div>
     <p>Ange koden som genereras i din app:</p>
     <input type="text" id="tokenInput" placeholder="Engångskod" />
     <button id="verifyButton">Verifiera</button>
+    <div id="auth-status" class="auth-status"></div>
 </div>
 
     </div>
@@ -969,33 +972,31 @@ footer p {
     const tokenInput = document.getElementById("tokenInput");
     const verifyButton = document.getElementById("verifyButton");
 
-    // Hämta QR-kod
-    fetch(`https://1196-83-250-213-73.ngrok-free.app/api/generate-qr?user_id=${userId}`)
-        .then((response) => response.blob())
-        .then((blob) => {
-            const url = URL.createObjectURL(blob);
-            qrCodeImg.src = url;
-        });
+document.addEventListener("DOMContentLoaded", () => {
+    const generateQRButton = document.getElementById("generateQRButton");
+    const qrCodeContainer = document.getElementById("qrCodeContainer");
 
-    // Verifiera TOTP
-    verifyButton.addEventListener("click", () => {
-        const token = tokenInput.value.trim();
-        fetch("https://1196-83-250-213-73.ngrok-free.app/api/verify-totp", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ user_id: userId, token }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    alert("Verifiering lyckades!");
-                    // Tillåt åtkomst eller utför annan handling
-                } else {
-                    alert(data.message || "Verifiering misslyckades!");
-                }
+    generateQRButton.addEventListener("click", async () => {
+        const secretKey = "din-hemliga-nyckel"; // Generera eller hämta en unik hemlig nyckel
+
+        try {
+            const response = await fetch("https://6c75-83-250-213-73.ngrok-free.app/api/generate-qr-code", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ secret_key: secretKey }),
             });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Visa QR-koden i en img-tagg
+                qrCodeContainer.innerHTML = `<img src="${data.qr_url}" alt="QR-kod" />`;
+            } else {
+                alert("Fel vid generering av QR-kod: " + data.message);
+            }
+        } catch (error) {
+            alert("Något gick fel: " + error.message);
+        }
     });
 });
 </script>
