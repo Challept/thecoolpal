@@ -8,18 +8,13 @@
 <style>
         /* Bas-styling */
         body {
-            background: linear-gradient(to bottom, #a8d8ff, #f0faff); /* Ljusblå gradient */
-            color: #333;
-            font-family: 'Poppins', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(to bottom, #a8d8ff, #f0faff); /* Ljusblå gradient */
             overflow: hidden; /* Ingen scroll */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            position: relative;
+            height: 100vh; /* Fyll hela fönstret */
         }
 
         /* Flygande bollar */
@@ -31,24 +26,7 @@
             animation: flyUp linear infinite;
         }
 
-        /* Textstyling */
-        .parallax-text {
-            text-align: center;
-            position: relative;
-            z-index: 10;
-        }
-
-        .parallax-text h2 {
-            font-size: 2.5rem;
-            color: #0074d9;
-        }
-
-        .parallax-text p {
-            font-size: 1.2rem;
-            color: #555;
-        }
-
-        /* Bollar animation */
+            /* Bollar animation */
         @keyframes flyUp {
             0% {
                 transform: translateY(100vh) scale(0.5);
@@ -61,8 +39,7 @@
                 transform: translateY(-10%) scale(1);
                 opacity: 0;
             }
-        }
-    
+
 /* Header */
 .header {
     text-align: center;
@@ -980,40 +957,27 @@ footer p {
         </div>
     </section>
 
-    <!-- Text Content -->
-    <div class="parallax-text">
-        <h2>Utforska Nya Möjligheter</h2>
-        <p>Med framtidens teknik tar vi dig till nästa nivå.</p>
-    </div>
-
-    <!-- Flygande bollar -->
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-
     <script>
-        // Generera flygande bollar dynamiskt
-        const circles = document.querySelectorAll('.neon-circle');
+        // Generera flygande bollar
+        const numberOfCircles = 30; // Antal bollar
+        const body = document.body;
 
-        circles.forEach((circle) => {
-            const animateCircle = () => {
-                const size = Math.random() * 100 + 50; // Storlek mellan 50px och 150px
-                const positionX = Math.random() * window.innerWidth; // Horisontell position
-                const duration = Math.random() * 10 + 5; // Varaktighet mellan 5s och 15s
-                const delay = Math.random() * 5; // Fördröjning mellan 0s och 5s
+        for (let i = 0; i < numberOfCircles; i++) {
+            const circle = document.createElement("div");
+            circle.classList.add("neon-circle");
+            body.appendChild(circle);
 
-                circle.style.width = `${size}px`;
-                circle.style.height = `${size}px`;
-                circle.style.left = `${positionX}px`;
-                circle.style.animationDuration = `${duration}s`;
-                circle.style.animationDelay = `${delay}s`;
-            };
+            const size = Math.random() * 100 + 30; // Storlek mellan 30px och 130px
+            const positionX = Math.random() * window.innerWidth; // Slumpmässig horisontell position
+            const duration = Math.random() * 10 + 5; // Varaktighet mellan 5s och 15s
+            const delay = Math.random() * 5; // Fördröjning mellan 0s och 5s
 
-            animateCircle();
-            circle.addEventListener('animationiteration', animateCircle); // Reset animation on iteration
-        });
+            circle.style.width = `${size}px`;
+            circle.style.height = `${size}px`;
+            circle.style.left = `${positionX}px`;
+            circle.style.animationDuration = `${duration}s`;
+            circle.style.animationDelay = `${delay}s`;
+        }
     </script>
 
 <section class="feature-showcase">
