@@ -4,14 +4,203 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="file.png" type="image/png">
-    <link rel="stylesheet" href="style.css"> <!-- Kontrollera att style.css ligger i samma katalog -->
     <title>Köp nu!</title>
+    <style>
+        /* Bas-styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(to bottom, #a8d8ff, #f0faff); /* Ljusblå gradient */
+            overflow: hidden;
+            position: relative;
+            height: 100vh; /* Full höjd */
+        }
+
+        /* Flygande bollar */
+        .neon-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff, transparent);
+            box-shadow: 0 0 10px #fff, 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: flyUp infinite linear;
+        }
+
+        @keyframes flyUp {
+            from {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0.5;
+            }
+            to {
+                transform: translateY(-10%) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 9999;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 6px rgba(0, 0, 123, 0.4);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        /* Video-sektion */
+        .top-video {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Knappsektion */
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .custom-button {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            color: white;
+            background: linear-gradient(135deg, #4facfe, #007aff);
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(90, 200, 250, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .custom-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(90, 200, 250, 0.5);
+        }
+
+        /* Prisplaner */
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .plan {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .plan:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Om oss */
+        .about-section {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            margin: 30px auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0044cc, #007aff);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        /* Responsiv design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .top-video {
+                max-height: 300px;
+            }
+
+            .plan {
+                margin: 10px 0;
+                width: 90%;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+
+            .header p {
+                font-size: 1.4rem;
+            }
+
+            .top-video {
+                max-height: 500px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Flygande bollar -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const numberOfCircles = 30; // Antal bollar
+            const numberOfCircles = 30;
             const body = document.body;
 
             for (let i = 0; i < numberOfCircles; i++) {
@@ -19,10 +208,10 @@
                 circle.classList.add("neon-circle");
                 body.appendChild(circle);
 
-                const size = Math.random() * 100 + 30; // Storlek mellan 30px och 130px
-                const positionX = Math.random() * window.innerWidth; // Slumpmässig horisontell position
-                const duration = Math.random() * 10 + 5; // Varaktighet mellan 5s och 15s
-                const delay = Math.random() * 5; // Fördröjning mellan 0s och 5s
+                const size = Math.random() * 100 + 30;
+                const positionX = Math.random() * window.innerWidth;
+                const duration = Math.random() * 10 + 5;
+                const delay = Math.random() * 5;
 
                 circle.style.width = `${size}px`;
                 circle.style.height = `${size}px`;
@@ -38,16 +227,9 @@
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
 
-    <div class="popup" id="popup">
-        <h1>🎉 Webbstay öppnar snart! 🎉</h1>
-        <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
-        <div class="countdown" id="countdown">Räknar ner...</div>
-        <button id="authButton">Vill du se Webstay tidigt?</button>
-    </div>
-
     <div class="top-video">
         <video autoplay muted loop playsinline>
-            <source src="Starta_nu_1.mp4" type="video/mp4"> <!-- Kontrollera videofilen -->
+            <source src="Starta_nu_1.mp4" type="video/mp4">
             Din webbläsare stödjer inte videouppspelning.
         </video>
     </div>
@@ -57,45 +239,24 @@
         <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
     </div>
 
-    <div class="plans-title-container">
-        <h2 class="plans-title">Våra Prisplaner</h2>
-        <p class="plans-subtitle">Välj den perfekta planen som passar dina behov</p>
-        <section class="pricing-container">
-            <div class="plan">
-                <h3>Start</h3>
-                <p>Enkel och pålitlig</p>
-                <p class="price">300 kr engångsavgift + 10 kr/månad</p>
-                <p>Innehåller grundläggande funktioner för din hemsida</p>
-            </div>
-            <div class="plan popular">
-                <h3>Premium</h3>
-                <p>Mest valda paketet</p>
-                <p class="price">400 kr engångsavgift + 50 kr/månad</p>
-                <p>Innehåller de grundläggande funktionerna plus några extra</p>
-            </div>
-            <div class="plan">
-                <h3>Ultimate</h3>
-                <p>Full kontroll och alla funktioner</p>
-                <p class="price">1000 kr engångsavgift + 100 kr/månad</p>
-                <p>Innehåller alla funktioner för bästa upplevelsen</p>
-            </div>
-        </section>
-    </div>
-
-    <section class="about-section">
-        <h2>Om Oss</h2>
-        <p>På WebStay brinner vi för att skapa professionella och användarvänliga webbplatser och butiker. Vi hjälper företag att nå sina mål och skapa en stark online-närvaro.</p>
+    <section class="pricing-container">
+        <div class="plan">
+            <h3>Start</h3>
+            <p>300 kr engångsavgift + 10 kr/månad</p>
+        </div>
+        <div class="plan">
+            <h3>Premium</h3>
+            <p>400 kr engångsavgift + 50 kr/månad</p>
+        </div>
+        <div class="plan">
+            <h3>Ultimate</h3>
+            <p>1000 kr engångsavgift + 100 kr/månad</p>
+        </div>
     </section>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Hem</a>
-            <a href="#">Om oss</a>
-            <a href="#">Kontakt</a>
-            <a href="#">Tjänster</a>
-        </div>
-        <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
-        <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
+        <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a></p>
+        <p>&copy; 2024 WebStay</p>
     </footer>
 </body>
 </html>
