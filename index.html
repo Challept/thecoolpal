@@ -7,16 +7,17 @@
     <title>Köp nu!</title>
     <style>
         /* Bas-styling */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', Arial, sans-serif;
-    background: linear-gradient(to bottom, #a8d8ff, #f0faff); /* Ljusblå gradient */
-    overflow-x: hidden; /* Tillåt scroll, men döljer horisontell scroll om inte nödvändigt */
-    position: relative;
-    min-height: 100vh; /* Minsta höjd är hela fönstret */
-}
-        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: linear-gradient(to bottom, #a8d8ff, #f0faff); /* Ljusblå gradient */
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
         /* Flygande bollar */
         .neon-circle {
             position: absolute;
@@ -45,13 +46,29 @@ body {
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             text-align: center;
             z-index: 9999;
+            flex-direction: column;
+        }
+
+        .popup h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .popup p {
+            font-size: 1.2rem;
+        }
+
+        .popup .countdown {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 20px;
         }
 
         /* Header */
@@ -65,20 +82,7 @@ body {
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 6px rgba(0, 0, 123, 0.4);
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            line-height: 1.5;
-            margin: 0 auto;
-            max-width: 600px;
-        }
-
-        /* Video-sektion */
+        /* Video */
         .top-video {
             width: 100%;
             max-width: 1200px;
@@ -118,87 +122,20 @@ body {
             box-shadow: 0 8px 20px rgba(90, 200, 250, 0.5);
         }
 
-        /* Prisplaner */
-        .pricing-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .plan {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .plan:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Om oss */
-        .about-section {
-            text-align: center;
-            padding: 40px;
-            background: white;
-            border-radius: 15px;
-            margin: 30px auto;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-        }
-
         /* Footer */
         footer {
             background: linear-gradient(135deg, #0044cc, #007aff);
             color: white;
             padding: 30px;
             text-align: center;
-            border-radius: 15px;
-            margin-top: 20px;
-        }
-
-        /* Responsiv design */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .header p {
-                font-size: 1rem;
-            }
-
-            .top-video {
-                max-height: 300px;
-            }
-
-            .plan {
-                margin: 10px 0;
-                width: 90%;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .header h1 {
-                font-size: 3rem;
-            }
-
-            .header p {
-                font-size: 1.4rem;
-            }
-
-            .top-video {
-                max-height: 500px;
-            }
+            margin-top: auto;
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <script>
+        // Skapa flygande bollar
         document.addEventListener("DOMContentLoaded", () => {
             const numberOfCircles = 30;
             const body = document.body;
@@ -220,12 +157,50 @@ body {
                 circle.style.animationDelay = `${delay}s`;
             }
         });
+
+        // Popup med timer
+        document.addEventListener("DOMContentLoaded", () => {
+            const popup = document.querySelector(".popup");
+            const countdownElement = document.querySelector(".countdown");
+            const launchDate = new Date("2024-12-27T00:00:00").getTime();
+
+            if (window.location.hash !== "#29451288461645816561pass") {
+                popup.style.display = "flex";
+                document.body.style.overflow = "hidden";
+
+                const updateCountdown = () => {
+                    const now = new Date().getTime();
+                    const timeLeft = launchDate - now;
+
+                    if (timeLeft <= 0) {
+                        countdownElement.textContent = "Lanserad!";
+                        return;
+                    }
+
+                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                    countdownElement.textContent = `${days} dagar, ${hours} timmar, ${minutes} minuter, ${seconds} sekunder`;
+                };
+
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            }
+        });
     </script>
 
     <header class="header">
         <h1>Välkommen till WebStay</h1>
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
+
+    <div class="popup">
+        <h1>🎉 Webbstay öppnar snart! 🎉</h1>
+        <p>Butiken lanseras den <strong>27 december 2024</strong>!</p>
+        <div class="countdown">Räknar ner...</div>
+    </div>
 
     <div class="top-video">
         <video autoplay muted loop playsinline>
@@ -238,21 +213,6 @@ body {
         <a href="https://webstay.se/order" class="custom-button">Köp en Hemsida</a>
         <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
     </div>
-
-    <section class="pricing-container">
-        <div class="plan">
-            <h3>Start</h3>
-            <p>300 kr engångsavgift + 10 kr/månad</p>
-        </div>
-        <div class="plan">
-            <h3>Premium</h3>
-            <p>400 kr engångsavgift + 50 kr/månad</p>
-        </div>
-        <div class="plan">
-            <h3>Ultimate</h3>
-            <p>1000 kr engångsavgift + 100 kr/månad</p>
-        </div>
-    </section>
 
     <footer>
         <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a></p>
