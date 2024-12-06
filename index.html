@@ -6,19 +6,63 @@
     <link rel="icon" href="file.png" type="image/png">
     <title>Köp nu!</title>
 <style>
-/* Bas-styling */
-body {
-    background: linear-gradient(to bottom, #f9f9fc, #eef2ff);
-    color: #333;
-    font-family: 'Poppins', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        /* Bas-styling */
+        body {
+            background: linear-gradient(to bottom, #a8d8ff, #f0faff); /* Ljusblå gradient */
+            color: #333;
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow: hidden; /* Ingen scroll */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
 
+        /* Flygande bollar */
+        .neon-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: flyUp linear infinite;
+        }
+
+        /* Textstyling */
+        .parallax-text {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .parallax-text h2 {
+            font-size: 2.5rem;
+            color: #0074d9;
+        }
+
+        .parallax-text p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* Bollar animation */
+        @keyframes flyUp {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10%) scale(1);
+                opacity: 0;
+            }
+        }
+    
 /* Header */
 .header {
     text-align: center;
@@ -936,57 +980,41 @@ footer p {
         </div>
     </section>
 
-<section class="parallax-container">
-    <!-- Parallax Layers -->
-    <div class="parallax-layer layer1"></div>
-    <div class="parallax-layer layer2"></div>
-    <div class="parallax-layer layer3"></div>
-
-    <!-- Animated Neon Circles -->
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-    <div class="neon-circle"></div>
-
     <!-- Text Content -->
     <div class="parallax-text">
         <h2>Utforska Nya Möjligheter</h2>
         <p>Med framtidens teknik tar vi dig till nästa nivå.</p>
     </div>
-</section>
 
-<script>
-    // Parallax Scrolling Effect
-    document.addEventListener('scroll', () => {
-        const layers = document.querySelectorAll('.parallax-layer');
-        const scrollPosition = window.scrollY;
+    <!-- Flygande bollar -->
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
+    <div class="neon-circle"></div>
 
-        layers.forEach((layer, index) => {
-            const speed = (index + 1) * 0.3; // Different speeds for each layer
-            layer.style.transform = `translateY(${scrollPosition * speed}px)`;
+    <script>
+        // Generera flygande bollar dynamiskt
+        const circles = document.querySelectorAll('.neon-circle');
+
+        circles.forEach((circle) => {
+            const animateCircle = () => {
+                const size = Math.random() * 100 + 50; // Storlek mellan 50px och 150px
+                const positionX = Math.random() * window.innerWidth; // Horisontell position
+                const duration = Math.random() * 10 + 5; // Varaktighet mellan 5s och 15s
+                const delay = Math.random() * 5; // Fördröjning mellan 0s och 5s
+
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.left = `${positionX}px`;
+                circle.style.animationDuration = `${duration}s`;
+                circle.style.animationDelay = `${delay}s`;
+            };
+
+            animateCircle();
+            circle.addEventListener('animationiteration', animateCircle); // Reset animation on iteration
         });
-    });
-
-    // Neon Circle Animation Reset
-    const circles = document.querySelectorAll('.neon-circle');
-
-    circles.forEach((circle) => {
-        const animateCircle = () => {
-            const size = Math.random() * 100 + 50; // Size between 50px and 150px
-            const positionX = Math.random() * window.innerWidth;
-            const duration = Math.random() * 10 + 5; // Duration between 5s and 15s
-
-            circle.style.width = `${size}px`;
-            circle.style.height = `${size}px`;
-            circle.style.left = `${positionX}px`;
-            circle.style.animationDuration = `${duration}s`;
-        };
-
-        animateCircle();
-        circle.addEventListener('animationiteration', animateCircle); // Reset animation on iteration
-    });
-</script>
+    </script>
 
 <section class="feature-showcase">
     <h2>Effektiva Lösningar</h2>
