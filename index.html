@@ -8,89 +8,43 @@
     <title>Köp nu!</title>
 </head>
 <body>
+    <!-- Flygande bollar -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const numberOfCircles = 30; // Antal bollar
+            const body = document.body;
+
+            for (let i = 0; i < numberOfCircles; i++) {
+                const circle = document.createElement("div");
+                circle.classList.add("neon-circle");
+                body.appendChild(circle);
+
+                const size = Math.random() * 100 + 30; // Storlek mellan 30px och 130px
+                const positionX = Math.random() * window.innerWidth; // Slumpmässig horisontell position
+                const duration = Math.random() * 10 + 5; // Varaktighet mellan 5s och 15s
+                const delay = Math.random() * 5; // Fördröjning mellan 0s och 5s
+
+                circle.style.width = `${size}px`;
+                circle.style.height = `${size}px`;
+                circle.style.left = `${positionX}px`;
+                circle.style.animationDuration = `${duration}s`;
+                circle.style.animationDelay = `${delay}s`;
+            }
+        });
+    </script>
+
     <header class="header">
         <h1>Välkommen till WebStay</h1>
         <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
     </header>
 
-<div class="popup" id="popup">
-    <h1>🎉 Webbstay öppnar snart! 🎉</h1>
-    <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
-    <div class="countdown" id="countdown">Räknar ner...</div>
-    <button id="authButton">Vill du se Webstay tidigt?</button>
-</div>
+    <div class="popup" id="popup">
+        <h1>🎉 Webbstay öppnar snart! 🎉</h1>
+        <p>Vårt webbhotell lanseras den <strong>27 december 2024</strong>!</p>
+        <div class="countdown" id="countdown">Räknar ner...</div>
+        <button id="authButton">Vill du se Webstay tidigt?</button>
+    </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const popup = document.getElementById("popup");
-        const countdownElement = document.getElementById("countdown");
-        const authButton = document.getElementById("authButton");
-        const launchDate = new Date("2024-12-27T00:00:00").getTime();
-
-        // Kontrollera om användaren redan har verifierats
-        if (sessionStorage.getItem("popupsDisabled") === "true") {
-            // Dölj popupsen permanent
-            if (popup) {
-                popup.style.display = "none";
-            }
-            document.body.style.overflow = "auto"; // Tillåt rullning
-            return;
-        }
-
-        // Kontrollera om användaren navigerar till rätt URL med hash
-        const hash = window.location.hash;
-        const allowedHash = "#29451288461645816561pass";
-
-        if (hash === allowedHash) {
-            // Dölj popupsen och spara status i sessionStorage
-            sessionStorage.setItem("popupsDisabled", "true");
-            if (popup) {
-                popup.style.display = "none";
-            }
-            document.body.style.overflow = "auto"; // Tillåt rullning
-            return;
-        }
-
-        // Visa popupsen om användaren inte verifierats
-        if (popup) {
-            popup.style.display = "flex";
-        }
-        document.body.style.overflow = "hidden"; // Förhindra rullning
-
-        // Nedräkning
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const timeLeft = launchDate - now;
-
-            if (timeLeft <= 0) {
-                countdownElement.textContent = "Lanserad!";
-                if (authButton) {
-                    authButton.disabled = true; // Inaktivera knappen efter lansering
-                    authButton.textContent = "Lanserad!";
-                }
-                return;
-            }
-
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-            countdownElement.textContent = `${days} dagar, ${hours} timmar, ${minutes} minuter, ${seconds} sekunder`;
-        }
-
-        // Starta nedräkningen och uppdatera varje sekund
-        updateCountdown();
-        const countdownInterval = setInterval(updateCountdown, 1000);
-
-        // Hantera knapptryckning för autentisering
-        if (authButton) {
-            authButton.addEventListener("click", () => {
-                window.location.href = "/auth.html"; // Navigera till autentiseringssidan
-            });
-        }
-    });
-</script>
     <div class="top-video">
         <video autoplay muted loop playsinline>
             <source src="Starta nu (1).mp4" type="video/mp4">
@@ -103,71 +57,45 @@
         <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
     </div>
 
-<!-- Title for Pricing Plans Section -->
-<div class="plans-title-container">
-    <h2 class="plans-title">Våra Prisplaner</h2>
-    <p class="plans-subtitle">Välj den perfekta planen som passar dina behov</p>
-    <section class="pricing-container">
-        <div class="plan">
-            <h3>Start</h3>
-            <p>Enkel och pålitlig</p>
-            <p class="price">300 kr engångsavgift + 10 kr/månad</p>
-            <p>Innehåller grundläggande funktioner för din hemsida</p>
-        </div>
-        <div class="plan popular">
-            <h3>Premium</h3>
-            <p>Mest valda paketet</p>
-            <p class="price">400 kr engångsavgift + 50 kr/månad</p>
-            <p>Innehåller de grundläggande funktionerna plus några extra</p>
-        </div>
-        <div class="plan">
-            <h3>Ultimate</h3>
-            <p>Full kontroll och alla funktioner</p>
-            <p class="price">1000 kr engångsavgift + 100 kr/månad</p>
-            <p>Innehåller alla funktioner för bästa upplevelsen</p>
-        </div>
-    </section>
+    <div class="plans-title-container">
+        <h2 class="plans-title">Våra Prisplaner</h2>
+        <p class="plans-subtitle">Välj den perfekta planen som passar dina behov</p>
+        <section class="pricing-container">
+            <div class="plan">
+                <h3>Start</h3>
+                <p>Enkel och pålitlig</p>
+                <p class="price">300 kr engångsavgift + 10 kr/månad</p>
+                <p>Innehåller grundläggande funktioner för din hemsida</p>
+            </div>
+            <div class="plan popular">
+                <h3>Premium</h3>
+                <p>Mest valda paketet</p>
+                <p class="price">400 kr engångsavgift + 50 kr/månad</p>
+                <p>Innehåller de grundläggande funktionerna plus några extra</p>
+            </div>
+            <div class="plan">
+                <h3>Ultimate</h3>
+                <p>Full kontroll och alla funktioner</p>
+                <p class="price">1000 kr engångsavgift + 100 kr/månad</p>
+                <p>Innehåller alla funktioner för bästa upplevelsen</p>
+            </div>
+        </section>
+    </div>
 
-    <script>
-        // Generera flygande bollar
-        const numberOfCircles = 30; // Antal bollar
-        const body = document.body;
-
-        for (let i = 0; i < numberOfCircles; i++) {
-            const circle = document.createElement("div");
-            circle.classList.add("neon-circle");
-            body.appendChild(circle);
-
-            const size = Math.random() * 100 + 30; // Storlek mellan 30px och 130px
-            const positionX = Math.random() * window.innerWidth; // Slumpmässig horisontell position
-            const duration = Math.random() * 10 + 5; // Varaktighet mellan 5s och 15s
-            const delay = Math.random() * 5; // Fördröjning mellan 0s och 5s
-
-            circle.style.width = `${size}px`;
-            circle.style.height = `${size}px`;
-            circle.style.left = `${positionX}px`;
-            circle.style.animationDuration = `${duration}s`;
-            circle.style.animationDelay = `${delay}s`;
-        }
-    </script>
-
-    <!-- About Us Section -->
     <section class="about-section">
         <h2>Om Oss</h2>
         <p>På WebStay brinner vi för att skapa professionella och användarvänliga webbplatser och butiker. Vi hjälper företag att nå sina mål och skapa en stark online-närvaro.</p>
     </section>
-    
-<!-- New Footer Section -->
-<footer>
-    <div class="footer-links">
-        <a href="#">Hem</a>
-        <a href="#">Om oss</a>
-        <a href="#">Kontakt</a>
-        <a href="#">Tjänster</a>
-    </div>
-    <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
-    <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
-</footer>
-    
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Hem</a>
+            <a href="#">Om oss</a>
+            <a href="#">Kontakt</a>
+            <a href="#">Tjänster</a>
+        </div>
+        <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a> om du har några frågor.</p>
+        <p>&copy; 2024 WebStay. Alla rättigheter förbehållna.</p>
+    </footer>
 </body>
 </html>
