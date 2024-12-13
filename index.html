@@ -30,11 +30,13 @@
             font-weight: bold;
             z-index: 10;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .typing-animation {
             display: inline-block;
-            font-weight: bold;
         }
 
         .typing-animation span {
@@ -43,12 +45,25 @@
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid #333;
-            animation: typing 2s steps(10) 1s forwards, blink 0.7s step-end infinite;
+            animation: typing 2s steps(10) 1s forwards, blink 0.7s step-end infinite, reverseTyping 2s steps(10) 3s forwards;
+        }
+
+        .typing-animation .highlight {
+            color: #f4a300; /* Färg för .se */
         }
 
         @keyframes typing {
             to {
                 width: 100%;
+            }
+        }
+
+        @keyframes reverseTyping {
+            0% {
+                width: 100%;
+            }
+            100% {
+                width: 0;
             }
         }
 
@@ -146,7 +161,7 @@
 
 <header>
     <div class="typing-animation">
-        <span>Webstay</span><span>.se</span>
+        <span>Webstay</span><span class="highlight">.se</span>
     </div>
 </header>
 
