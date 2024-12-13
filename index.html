@@ -15,7 +15,11 @@
             height: 100%;
             font-family: 'Arial', sans-serif;
             background-color: #f4f4f9;
-            overflow-x: hidden; /* Förhindra horisontell scroll */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         header {
@@ -30,11 +34,9 @@
             font-weight: bold;
             z-index: 10;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
+        /* Typing animation */
         .typing-animation {
             display: inline-block;
         }
@@ -45,7 +47,7 @@
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid #333;
-            animation: typing 2s steps(10) 1s forwards, blink 0.7s step-end infinite, reverseTyping 2s steps(10) 3s forwards;
+            animation: typing 3s steps(10) 1s forwards, blink 0.7s step-end infinite, reverseTyping 3s steps(10) 4s forwards;
         }
 
         .typing-animation .highlight {
@@ -73,52 +75,77 @@
             }
         }
 
-        .content {
-            position: relative;
-            margin-top: 80px;
-            padding: 20px;
-            text-align: center;
-        }
-
-        /* Bild under headern */
+        /* För bild med kodscrollning */
         .image-container {
             position: relative;
             width: 100%;
             height: 400px;
-            background: url('https://via.placeholder.com/1920x400') no-repeat center center;
-            background-size: cover;
-            margin-bottom: 40px;
-            overflow: hidden;
-        }
-
-        /* Rutorna som ska röra sig inom bilden */
-        .grid-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
+            background-color: #222;
+            color: white;
+            font-family: monospace;
             overflow: hidden;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
-        .grid-cell {
+        .code {
             position: absolute;
-            width: 50px;
-            height: 50px;
-            background-color: #f4a300;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
+            bottom: 0;
+            font-size: 14px;
+            line-height: 1.5;
+            white-space: nowrap;
+            animation: scrollCode 15s linear infinite;
         }
 
-        /* Transparent box under rutorna */
-        .transparent-box {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
+        @keyframes scrollCode {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(-100%);
+            }
+        }
+
+        /* Butikslayout */
+        .shop-container {
+            width: 100%;
+            padding: 40px 20px;
+            background-color: #fff;
             text-align: center;
+        }
+
+        .shop-container h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .product {
+            display: inline-block;
+            width: 200px;
+            height: 250px;
+            background-color: #f4a300;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            margin-top: 30px;
+            margin: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .product h3 {
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        .product p {
+            font-size: 16px;
+            margin: 10px 0;
         }
 
         .button {
@@ -130,29 +157,29 @@
             font-size: 16px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .button:hover {
             background-color: #0056b3;
         }
 
-        /* Nummererade steg */
-        .numbered-steps {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 30px;
+        .about-us {
+            padding: 40px 20px;
+            background-color: #f4f4f9;
+            text-align: center;
+            width: 100%;
         }
 
-        .step {
-            text-align: center;
-            font-size: 48px;
-            font-weight: bold;
-            color: #333;
-            background-color: #f4a300;
-            padding: 30px;
-            border-radius: 10px;
-            width: 100px;
+        .about-us h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .about-us p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
     </style>
@@ -165,94 +192,87 @@
     </div>
 </header>
 
-<div class="content">
-    <!-- Bild under headern -->
-    <div class="image-container">
-        <div class="grid-container" id="grid-container"></div>
-    </div>
-
-    <div class="transparent-box">
-        <p>Denna sida har små rutor som rör sig och svävar omkring!</p>
-        <button class="button">Läs mer</button>
-    </div>
-
-    <div class="numbered-steps">
-        <div class="step">1</div>
-        <div class="step">2</div>
-        <div class="step">3</div>
+<!-- Bild med kodscrollning -->
+<div class="image-container">
+    <div class="code">
+        <p>&lt;html&gt;</p>
+        <p>&lt;head&gt;</p>
+        <p>&lt;title&gt;Webstay Butik&lt;/title&gt;</p>
+        <p>&lt;/head&gt;</p>
+        <p>&lt;body&gt;</p>
+        <p>&lt;h1&gt;Välkommen till Webstay&lt;/h1&gt;</p>
+        <p>&lt;div class="shop"&gt;... </p>
+        <p>&lt;/body&gt;</p>
+        <p>&lt;/html&gt;</p>
     </div>
 </div>
 
+<!-- Butik -->
+<div class="shop-container">
+    <h2>Vår Butik</h2>
+    <div class="product">
+        <img src="https://via.placeholder.com/200x150" alt="Produkt 1">
+        <h3>Produkt 1</h3>
+        <p>Pris: 199 kr</p>
+        <button class="button">Köp</button>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/200x150" alt="Produkt 2">
+        <h3>Produkt 2</h3>
+        <p>Pris: 299 kr</p>
+        <button class="button">Köp</button>
+    </div>
+    <div class="product">
+        <img src="https://via.placeholder.com/200x150" alt="Produkt 3">
+        <h3>Produkt 3</h3>
+        <p>Pris: 399 kr</p>
+        <button class="button">Köp</button>
+    </div>
+</div>
+
+<!-- Om Oss -->
+<div class="about-us">
+    <h2>Om Webstay</h2>
+    <p>Webstay är en modern plattform för att skapa och anpassa din egen webbutik. Vi erbjuder lättanvända verktyg för att bygga och driva din onlinebutik med stil. Oavsett om du är nybörjare eller erfaren, gör vi det enkelt att skapa något fantastiskt.</p>
+</div>
+
+<!-- JavaScript för att skriva kod i bilden -->
 <script>
-    // Skapa rutorna
-    const gridContainer = document.getElementById('grid-container');
-    const numCells = 100; // Antalet rutor som ska visas
-    let cells = [];
-    let gravity = 0.05; // Gravitationen för rymdeffekten
-    let friction = 0.98; // Minskar hastigheten när rutorna rör sig
-    let bounds = { width: window.innerWidth, height: 400 }; // Håll koll på bildens storlek
+    let codeText = [
+        '&lt;html&gt;',
+        '&lt;head&gt;',
+        '&lt;title&gt;Webstay Butik&lt;/title&gt;',
+        '&lt;/head&gt;',
+        '&lt;body&gt;',
+        '&lt;h1&gt;Välkommen till Webstay&lt;/h1&gt;',
+        '&lt;div class="shop"&gt;',
+        '&lt;/body&gt;',
+        '&lt;/html&gt;'
+    ];
 
-    // Skapa rutorna och lägg till dem i grid
-    for (let i = 0; i < numCells; i++) {
-        const cell = document.createElement('div');
-        cell.classList.add('grid-cell');
-        gridContainer.appendChild(cell);
-        cells.push({
-            element: cell,
-            x: Math.random() * bounds.width, // Startposition
-            y: Math.random() * bounds.height,
-            vx: Math.random() * 2 - 1, // Slumpmässig hastighet
-            vy: Math.random() * 2 - 1,
-        });
+    let codeElement = document.querySelector('.code');
+    let codeIndex = 0;
+    let codeLine = 0;
+
+    // Funktion som skriver koden med en animationseffekt
+    function typeCode() {
+        if (codeLine < codeText.length) {
+            let line = codeText[codeLine];
+            let i = 0;
+            let typingInterval = setInterval(function() {
+                codeElement.innerHTML += line.charAt(i);
+                i++;
+                if (i > line.length) {
+                    clearInterval(typingInterval);
+                    codeLine++;
+                    setTimeout(typeCode, 1000); // Vänta en sekund innan nästa rad
+                }
+            }, 50);
+        }
     }
 
-    // Funktion för att uppdatera rutornas positioner
-    function updateCells() {
-        cells.forEach(cellData => {
-            const { element, x, y, vx, vy } = cellData;
-
-            // Gravitation och rörelse
-            let newVx = vx;
-            let newVy = vy + gravity;
-
-            let newX = x + newVx;
-            let newY = y + newVy;
-
-            // Studsar rutorna mot kanterna av bilden
-            if (newX <= 0 || newX >= bounds.width - 50) {
-                newVx = -newVx * friction;
-            }
-
-            if (newY <= 0 || newY >= bounds.height - 50) {
-                newVy = -newVy * friction;
-            }
-
-            // Uppdatera positioner
-            cellData.x = newX;
-            cellData.y = newY;
-            cellData.vx = newVx;
-            cellData.vy = newVy;
-
-            // Använd CSS för att flytta rutorna
-            element.style.transform = `translate(${newX}px, ${newY}px)`;
-        });
-    }
-
-    // Funktion för att uppdatera skärmstorleken
-    function updateBounds() {
-        bounds.width = window.innerWidth;
-        bounds.height = 400; // Förbli konstant höjd
-    }
-
-    // Uppdatera rutorna och skärmstorleken varje frame
-    function animate() {
-        updateCells();
-        updateBounds();
-        requestAnimationFrame(animate);
-    }
-
-    // Starta animationen
-    animate();
+    // Starta kodanimationen
+    typeCode();
 </script>
 
 </body>
