@@ -83,6 +83,23 @@
     width: 5px; /* Ändra storleken på snöflingorna */
     height: 5px; /* Ändra storleken på snöflingorna */
     border-radius: 50%; /* Gör snöflingorna runda */
+    box-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* Skapa en glödande effekt för flingorna */
+    transform: rotate(45deg); /* Snöflingorna roteras för variation */
+}
+
+/* För att skapa en mer realistisk form på snöflingorna */
+.snowflake:nth-child(odd) {
+    width: 8px;
+    height: 8px;
+    border-radius: 0%;
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
+}
+
+.snowflake:nth-child(even) {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
 }
 
 /* Snöflingor faller från toppen till botten */
@@ -196,22 +213,22 @@
 
     setInterval(updateProcessMessage, 1500);
 
-    // Skapa snöflingor
-    function createSnowflakes() {
-        const snowContainer = document.getElementById("snow");
-        const snowflakeCount = 100; // Antalet snöflingor
+// Skapa snöflingor
+function createSnowflakes() {
+    const snowContainer = document.getElementById("snow");
+    const snowflakeCount = 100; // Antalet snöflingor
 
-        for (let i = 0; i < snowflakeCount; i++) {
-            const snowflake = document.createElement("div");
-            snowflake.classList.add("snowflake");
-            snowflake.style.left = `${Math.random() * 100}vw`;
-            snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`; // Varierande hastighet
-            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Fördröjd start
-            snowContainer.appendChild(snowflake);
-        }
+    for (let i = 0; i < snowflakeCount; i++) {
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        snowflake.style.left = `${Math.random() * 100}vw`; // Flingorna sprids horisontellt
+        snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`; // Varierande hastighet
+        snowflake.style.animationDelay = `${Math.random() * 5}s`; // Fördröjd start
+        snowContainer.appendChild(snowflake);
     }
+}
 
-    createSnowflakes();
+createSnowflakes();
 </script>
 
 </body>
