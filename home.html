@@ -17,38 +17,21 @@
             height: 100%;
             font-family: Arial, sans-serif;
             overflow-x: hidden;
-            background: #2c3e50; /* Mörk bakgrund */
+            background: #2c2c2c; /* Mörk bakgrundsfärg */
+            color: white;
         }
 
-        /* Snöflingor effekt */
-        .snow {
+        /* Bakgrund med små svarta rutor */
+        .background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 1; /* Snön ska vara längst bak */
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            background-color: white;
-            opacity: 0.8;
-            pointer-events: none;
-            animation: fall 10s linear infinite;
-            z-index: 10;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
+            background-color: rgba(0, 0, 0, 0.3); /* Transparent svart för bakgrunden */
+            background-image: linear-gradient(45deg, #000 25%, transparent 25%), linear-gradient(-45deg, #000 25%, transparent 25%);
+            background-size: 50px 50px;
+            z-index: 0;
         }
 
         /* Header */
@@ -67,22 +50,27 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* Bakgrundssektion med bild under headern */
+        /* Bakgrundssektion och video */
         .content {
-            margin-top: 80px;
-            height: 100vh;
+            margin-top: 80px; /* Gör plats för headern */
             position: relative;
-            background-image: url('Startanu.jpg'); /* Bakgrundsbild under headern */
+            height: 100vh;
+        }
+
+        .video-background {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            background: url('filmpw.mp4') no-repeat center center;
             background-size: cover;
-            background-position: center;
-            z-index: 0; /* Bakom texten */
+            z-index: 0;
         }
 
         /* Sektioner */
         section {
             padding: 50px;
             margin-top: 20px;
-            background-color: rgba(0, 0, 0, 0.5); /* Transparent bakgrund */
+            background-color: rgba(0, 0, 0, 0.6); /* Transparent bakgrund */
             border-radius: 10px;
             color: white;
             text-align: center;
@@ -99,7 +87,7 @@
         }
 
         .button {
-            background-color: #3498db;
+            background-color: #4CAF50;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -111,7 +99,7 @@
         }
 
         .button:hover {
-            background-color: #2980b9;
+            background-color: #45a049;
         }
 
         /* För varje kort i sektionerna */
@@ -141,24 +129,10 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* Stora siffror för Steg för Steg */
-        .step-number {
-            font-size: 80px;
-            font-weight: bold;
-            color: #f39c12;
-            margin-right: 20px;
-        }
-
-        .step-content {
+        /* För process meddelanden */
+        .process-message {
+            margin-top: 20px;
             font-size: 18px;
-            color: white;
-        }
-
-        .steps-section {
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 50px;
         }
     </style>
 </head>
@@ -166,41 +140,24 @@
 <body>
     <div class="snow" id="snow"></div>
 
-    <header>Webstay.se</header>
+    <header>Webstay - Hem</header>
 
     <div class="content">
-        <!-- Bakgrundsbild -->
-        <img src=" filmpw.mp4" alt="Bakgrundsbild" class="section-image">
+        <!-- Bakgrundsbild från Startanu.mp4 -->
+        <div class="video-background"></div>
 
         <div class="container">
-            <!-- Om oss sektion -->
             <section class="about">
                 <h2>Om oss</h2>
                 <div class="card">
-                    <p>Webstay är den bästa lösningen för din onlinebutik. Vi erbjuder användarvänliga verktyg för att skapa, anpassa och driva din egen webbutik. Oavsett om du är en liten butik eller ett växande e-handelsföretag, har vi lösningarna som hjälper dig att lyckas online. Vi är dedikerade att ge dig en smidig och snabb lösning för din affär!</p>
+                    <p>Webstay är den bästa lösningen för din onlinebutik.</p>
                 </div>
             </section>
 
-            <!-- Steg för Steg sektion -->
             <section class="steps">
                 <h2>Steg för Steg</h2>
-                <div class="steps-section">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">Registrera ditt konto på Webstay.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">Välj din butiksmall och anpassa den.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">Lägg till produkter och konfigurera betalningsmetoder.</div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">Starta din butik och börja sälja!</div>
-                    </div>
+                <div class="card">
+                    <p>Följ våra enkla steg för att komma igång med Webstay.</p>
                 </div>
             </section>
         </div>
