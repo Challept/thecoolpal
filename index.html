@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay öppnar</title>
+    <title>Webstay</title>
     <style>
         * {
             margin: 0;
@@ -13,35 +13,45 @@
 
         body, html {
             height: 100%;
-            width: 100%;
+            font-family: Arial, sans-serif;
             overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            color: #fff;
+            background: linear-gradient(135deg, #f8f9fa, #e0e7ff); /* Skön gradientbakgrund */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #6a82fb, #fc5c7d); /* Lugn gradient bakgrund */
-            animation: fadeIn 2s ease-out;
+            color: #333;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Webstay text */
-        .webstay-title {
-            font-size: 48px;
-            font-weight: bold;
+        .main-container {
             text-align: center;
-            margin-bottom: 20px;
-            overflow: hidden;
-            border-right: 4px solid #fff;
-            width: 0;
-            animation: typing 4s steps(30) 1s forwards, blink 0.75s step-end infinite;
-            white-space: nowrap;
+            padding: 20px;
         }
 
+        /* Webstay öppnar texten */
+        .headline {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: typing 3s steps(25) infinite; /* Typing animation */
+        }
+
+        /* Timer */
+        .countdown-timer {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        /* Process meddelande */
+        .process-message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 10s steps(50) infinite; /* Typing animation */
+        }
+
+        /* Timer och meddelanden animation */
         @keyframes typing {
             0% {
                 width: 0;
@@ -51,112 +61,60 @@
             }
         }
 
-        @keyframes blink {
-            50% {
-                border-color: transparent;
-            }
-        }
-
-        /* Process meddelande */
-        .process-message {
-            font-size: 20px;
-            font-weight: 500;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
+        .process-message-container {
+            font-size: 1.2em;
             margin-top: 20px;
-            padding: 10px;
-            animation: fadeInMessage 2s ease-out;
+            color: #444;
+            animation: typing 10s steps(50) infinite; /* Typing animation for messages */
         }
-
-        @keyframes fadeInMessage {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Still timer */
-        .countdown {
-            font-size: 40px;
-            font-weight: 600;
-            margin-top: 30px;
-            text-align: center;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            width: 60%;
-            max-width: 300px;
-            animation: fadeIn 3s ease-out;
-            border: 2px solid #fff;
-        }
-
-        /* Timer animation */
-        .countdown span {
-            font-size: 50px;
-            font-weight: 700;
-            color: #ff5e5b;
-        }
-
-        .countdown p {
-            font-size: 18px;
-            color: #fff;
-        }
-
-        /* Button */
-        .button {
-            background-color: #ff5e5b;
-            padding: 15px 30px;
-            margin-top: 50px;
-            border-radius: 10px;
-            border: none;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: #d94f4c;
-        }
-
-        /* Cirkulär animation för knapp */
-        .circle {
-            border: 10px solid #fff;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            margin: 0 auto;
-            animation: rotateCircle 5s linear infinite;
-        }
-
-        @keyframes rotateCircle {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
     </style>
 </head>
 <body>
 
-<!-- Bakgrund och text -->
-<div class="webstay-title">
-    Webstay öppnar 30 feb 2025
+<div class="main-container">
+    <!-- Huvudtexten -->
+    <div class="headline">
+        Webstay öppnar 30 feb 2025
+    </div>
+
+    <!-- Countdown Timer -->
+    <div class="countdown-timer" id="timer">
+        Tiden kvar: <span id="time"></span>
+    </div>
+
+    <!-- Process meddelande -->
+    <div class="process-message-container">
+        <div id="process-message" class="process-message">
+            Processen är i gång... Vänta medan sidan laddar...
+        </div>
+    </div>
 </div>
 
-<!-- Process meddelande -->
-<div class="process-message" id="process-message">
-    Processen är i gång...<br>
-    Vänta medan sidan laddar...
-</div>
-
-<!-- JavaScript för att uppdatera meddelandena sekventiellt -->
 <script>
+    // Countdown Timer
+    const countdownDate = new Date("Feb 30, 2025 00:00:00").getTime();
+    const timerElement = document.getElementById("time");
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = countdownDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            timerElement.innerHTML = "Webstay är nu öppen!";
+        }
+    }
+
+    const countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Process meddelande loop
 const processMessages = [
     "Laddar systemet...",
     "Initialiserar butikskomponenter...",
@@ -191,61 +149,14 @@ const processMessages = [
     "Förbereder butikens lansering...",
     "Butiken är nästan klar! Vänta på lansering..."
 ];
-    
-    let currentMessageIndex = 0;
-    const processMessageElement = document.getElementById('process-message');
 
+    let processIndex = 0;
     function updateProcessMessage() {
-        if (currentMessageIndex < processMessages.length) {
-            processMessageElement.innerHTML = processMessages[currentMessageIndex];
-            currentMessageIndex++;
-            setTimeout(updateProcessMessage, 2000); // Vänta 2 sekunder innan nästa meddelande
-        } else {
-            processMessageElement.innerHTML = "Processen är avslutad!";
-        }
+        document.getElementById("process-message").textContent = processMessages[processIndex];
+        processIndex = (processIndex + 1) % processMessages.length;
     }
 
-    // Starta meddelandeuppdatering när sidan är klar
-    window.onload = function() {
-        updateProcessMessage();
-    }
-</script>
-
-<!-- Still timer -->
-<div class="countdown">
-    <p>Webstay öppnar om:</p>
-    <div id="countdown"></div>
-</div>
-
-<!-- Button -->
-<button class="button" onclick="alert('Webstay öppnar snart!')">Håll utkik!</button>
-
-<script>
-    // Countdown timer
-    const countdownElement = document.getElementById('countdown');
-    const targetDate = new Date('Feb 30, 2025 00:00:00').getTime();
-
-    function updateCountdown() {
-        const currentDate = new Date().getTime();
-        const timeRemaining = targetDate - currentDate;
-
-        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-        countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-        if (timeRemaining < 0) {
-            countdownElement.innerHTML = "Webstay har öppnat!";
-        }
-    }
-
-    // Uppdatera nedräkningen varje sekund
-    setInterval(updateCountdown, 1000);
-
-    // Starta nedräkningen omedelbart
-    updateCountdown();
+    setInterval(updateProcessMessage, 4000);
 </script>
 
 </body>
