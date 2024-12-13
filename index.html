@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Små Rutor med Hover Effekt</title>
+    <title>Små Rutor på Mörk Bakgrund</title>
     <style>
         * {
             margin: 0;
@@ -15,75 +15,72 @@
             height: 100%;
             width: 100%;
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             overflow: hidden;
         }
 
-        /* Bakgrund med små rutor */
+        /* Bakgrund med små ljusa rutor */
         .background {
-            height: 100%;
-            width: 100%;
             background-color: #1a1a1a; /* Mörk bakgrund */
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-gap: 0px;
+            z-index: 0;
+        }
+
+        .grid-cell {
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.1); /* Ljusa rutor */
+        }
+
+        /* Innehåll för att visa något ovanpå rutorna */
+        .content {
+            z-index: 1;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-        }
-
-        /* Små rutor som grid */
-        .grid {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.1); /* Ljusare grid */
-            width: 100%;
-            height: 100%;
-            background-size: 20px 20px; /* Små rutor */
-            z-index: 0;
-        }
-
-        /* Hover-effekten */
-        .hover-area {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            z-index: 1;
-            pointer-events: none;
-            transition: background 0.3s ease;
-        }
-
-        /* En liten ljus cirkel runt musen */
-        .hover-area.active {
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 10%, transparent 20%);
+            height: 100vh; /* Full höjd på sidan */
+            color: white;
+            font-size: 24px;
+            text-align: center;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="background">
-        <div class="grid"></div>
-        <div class="hover-area"></div>
-    </div>
+    <div class="background" id="background"></div>
 
     <script>
-        // JavaScript för att skapa hover-effekt med ljus runt muspekaren
-        const hoverArea = document.querySelector('.hover-area');
+        // Funktion för att skapa rutorna dynamiskt
+        function createGridCells() {
+            const background = document.getElementById('background');
+            const cellSize = 20; // Storleken på varje ruta
+            const columns = Math.ceil(window.innerWidth / cellSize); // Antal kolumner som behövs för att fylla bredden
+            const rows = Math.ceil(window.innerHeight / cellSize); // Antal rader som behövs för att fylla höjden
 
-        hoverArea.addEventListener('mousemove', (e) => {
-            let mouseX = e.pageX;
-            let mouseY = e.pageY;
+            for (let i = 0; i < rows * columns; i++) {
+                const gridCell = document.createElement('div');
+                gridCell.classList.add('grid-cell');
+                background.appendChild(gridCell);
+            }
 
-            // Skapa en liten ljus cirkel kring musen
-            hoverArea.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.4) 10%, transparent 20%)`;
-        });
+            // Lägg till rutorna på en CSS Grid-layout
+            background.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
+            background.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
+        }
 
-        hoverArea.addEventListener('mouseleave', () => {
-            hoverArea.style.background = 'transparent'; // Återställ till transparent bakgrund när musen lämnar
+        // Kör funktionen för att skapa rutorna när sidan laddas
+        createGridCells();
+
+        // När fönstret storlek ändras, uppdatera rutorna
+        window.addEventListener('resize', () => {
+            // Ta bort alla existerande celler innan vi skapar nya
+            document.getElementById('background').innerHTML = '';
+            createGridCells();
         });
     </script>
 
