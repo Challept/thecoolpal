@@ -14,8 +14,8 @@
         body, html {
             height: 100%;
             font-family: Arial, sans-serif;
-            overflow: hidden;
-            background-color: #f0f4f8; /* Snygg ljus bakgrundsfärg */
+            overflow-x: hidden; /* Förhindrar horisontell scrollning */
+            background-color: #222; /* Mörk bakgrund */
         }
 
         header {
@@ -24,10 +24,11 @@
             left: 0;
             width: 100%;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.9); /* Transparent bakgrund för header */
+            background-color: rgba(0, 0, 0, 0.7); /* Transparent bakgrund för header */
             text-align: center;
             font-size: 28px;
             font-weight: bold;
+            color: white;
             z-index: 10;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Lätt skugga för header */
         }
@@ -40,9 +41,8 @@
             width: 100%;
             height: calc(100vh - 80px);
             overflow: hidden;
-            background: url('https://www.transparenttextures.com/patterns/white-linen.png'); /* Bakgrundstextur */
-            background-size: cover;
             position: relative;
+            background: #333; /* Bakgrund för content */
         }
 
         .grid-container {
@@ -56,7 +56,7 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background-color: rgba(0, 0, 0, 0.2); /* Mörkgrå bakgrund för rutorna */
+            background-color: rgba(255, 255, 255, 0.2); /* Ljusare bakgrund för rutorna */
             border-radius: 10px;
             opacity: 0.8;
             transition: transform 0.3s ease, background-color 0.3s ease;
@@ -85,10 +85,33 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
 
         .button:hover {
             background-color: #45a049;
+        }
+
+        .footer {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer .section {
+            margin-bottom: 20px;
+        }
+
+        .footer .section h3 {
+            font-size: 22px;
+        }
+
+        .footer .section p {
+            font-size: 16px;
         }
 
         .hover-effect {
@@ -105,6 +128,7 @@
         .hover-effect.active {
             background: rgba(0, 0, 0, 0.3);
         }
+
     </style>
 </head>
 <body>
@@ -113,11 +137,28 @@
 
 <div class="content">
     <div class="grid-container" id="grid-container"></div>
-    <div class="transparent-box">
-        <p>Denna sida har små rutor som rör sig och svävar omkring!</p>
-        <button class="button">Läs mer</button>
+    <div class="transparent-box">        
+        <button class="button" onclick="window.location.href='http://admin.webstay.se';">Admin Panel</button>
+        <button class="button" onclick="window.location.href='order.html';">Gör en Order</button>
     </div>
     <div class="hover-effect" id="hover-effect"></div>
+</div>
+
+<div class="footer">
+    <div class="section">
+        <h3>Om Oss</h3>
+        <p>Vi är ett företag som tillhandahåller premium tjänster för webbsidor och affärsbehov.</p>
+    </div>
+    <div class="section">
+        <h3>Steg</h3>
+        <p>1. Välj plan.</p>
+        <p>2. Köp din plan.</p>
+        <p>3. Anpassa din sida genom vårt adminpanel.</p>
+    </div>
+    <div class="section">
+        <h3>Varför Oss?</h3>
+        <p>För att vi erbjuder anpassade lösningar med hög kvalitet och snabb support.</p>
+    </div>
 </div>
 
 <script>
