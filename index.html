@@ -21,7 +21,6 @@
             justify-content: center;
             align-items: center;
             color: #333;
-            transition: background 0.3s ease;
         }
 
         /* Bakgrundens hover effekt */
@@ -70,7 +69,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 100; /* Snön ska vara längst fram */
+            z-index: 1; /* Snön ska vara längst fram */
         }
 
         .snowflake {
@@ -103,8 +102,10 @@
 </head>
 <body>
 
-<div class="snow" id="snow"></div> <!-- Snöeffekt -->
+<!-- Snöeffekt -->
+<div class="snow" id="snow"></div>
 
+<!-- Huvudinnehåll -->
 <div class="main-container">
     <div class="headline">
         Webstay öppnar 30 feb 2025
