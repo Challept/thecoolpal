@@ -17,9 +17,10 @@
             height: 100%;
             font-family: Arial, sans-serif;
             overflow-x: hidden;
+            background: #2c3e50; /* Mörk bakgrund */
         }
 
-        /* Bakgrund och snöflingor */
+        /* Snöflingor effekt */
         .snow {
             position: absolute;
             top: 0;
@@ -27,7 +28,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 1; /* Snön ska vara längst bak */
         }
 
         .snowflake {
@@ -66,27 +67,15 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* Mörk gradient bakgrund */
-        body {
-            background: linear-gradient(to bottom, #2c3e50, #34495e); /* Ljusa och mörka blå/grå gradient */
-        }
-
-        /* Bakgrundssektion med video */
+        /* Bakgrundssektion med bild under headern */
         .content {
             margin-top: 80px;
             height: 100vh;
             position: relative;
-            background: rgba(0, 0, 0, 0); /* Transparent bakgrund */
-        }
-
-        .background-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1; /* För att placera videon bakom innehållet */
+            background-image: url('Startanu.jpg'); /* Bakgrundsbild under headern */
+            background-size: cover;
+            background-position: center;
+            z-index: 0; /* Bakom texten */
         }
 
         /* Sektioner */
@@ -152,10 +141,24 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* För process meddelanden */
-        .process-message {
-            margin-top: 20px;
+        /* Stora siffror för Steg för Steg */
+        .step-number {
+            font-size: 80px;
+            font-weight: bold;
+            color: #f39c12;
+            margin-right: 20px;
+        }
+
+        .step-content {
             font-size: 18px;
+            color: white;
+        }
+
+        .steps-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 50px;
         }
     </style>
 </head>
@@ -166,24 +169,38 @@
     <header>Webstay - Hem</header>
 
     <div class="content">
-        <!-- Bakgrundsbild från filmpw.mp4 -->
-        <video autoplay muted loop class="background-video">
-            <source src="filmpw.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+        <!-- Bakgrundsbild -->
+        <img src="Startanu.jpg" alt="Bakgrundsbild" class="section-image">
 
         <div class="container">
+            <!-- Om oss sektion -->
             <section class="about">
                 <h2>Om oss</h2>
                 <div class="card">
-                    <p>Webstay är den bästa lösningen för din onlinebutik.</p>
+                    <p>Webstay är den bästa lösningen för din onlinebutik. Vi erbjuder användarvänliga verktyg för att skapa, anpassa och driva din egen webbutik. Oavsett om du är en liten butik eller ett växande e-handelsföretag, har vi lösningarna som hjälper dig att lyckas online. Vi är dedikerade att ge dig en smidig och snabb lösning för din affär!</p>
                 </div>
             </section>
 
+            <!-- Steg för Steg sektion -->
             <section class="steps">
                 <h2>Steg för Steg</h2>
-                <div class="card">
-                    <p>Följ våra enkla steg för att komma igång med Webstay.</p>
+                <div class="steps-section">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">Registrera ditt konto på Webstay.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">Välj din butiksmall och anpassa den.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">Lägg till produkter och konfigurera betalningsmetoder.</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">Starta din butik och börja sälja!</div>
+                    </div>
                 </div>
             </section>
         </div>
