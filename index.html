@@ -15,7 +15,7 @@
             height: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
-            background-color: #f4f7fc; /* Ljus bakgrund */
+            background-color: #f0f4f8; /* Snygg ljus bakgrundsfärg */
         }
 
         header {
@@ -23,59 +23,43 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.8); /* Transparent bakgrund för header */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Transparent bakgrund för header */
             text-align: center;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
             z-index: 10;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Lätt skugga för header */
         }
 
         .content {
             position: absolute;
-            top: 60px; /* Justera så att innehållet inte går bakom headern */
-            left: 0;
+            top: 80px; /* Justera så att innehållet inte går bakom headern */
+            left: 50%;
+            transform: translateX(-50%);
             width: 100%;
-            height: calc(100vh - 60px);
+            height: calc(100vh - 80px);
             overflow: hidden;
+            background: url('https://www.transparenttextures.com/patterns/white-linen.png'); /* Bakgrundstextur */
+            background-size: cover;
+            position: relative;
         }
 
         .grid-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
             position: relative;
-            z-index: 1;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
         }
 
         .grid-cell {
-            width: 60px;
-            height: 60px;
-            margin: 10px;
-            background-color: rgba(0, 0, 0, 0.1); /* Ljusgrå bakgrund för rutorna */
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 0, 0, 0.2); /* Mörkgrå bakgrund för rutorna */
             border-radius: 10px;
             opacity: 0.8;
             transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .grid-cell:hover {
-            background-color: rgba(0, 0, 0, 0.3);
-        }
-
-        .hover-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            pointer-events: none;
-        }
-
-        .hover-effect.active {
-            background: rgba(0, 0, 0, 0.3);
         }
 
         .transparent-box {
@@ -83,15 +67,15 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.7);
             padding: 15px;
             border-radius: 8px;
             text-align: center;
             width: 80%;
             max-width: 500px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Lätt skugga för boxen */
         }
 
-        /* Knapp stil */
         .button {
             background-color: #4CAF50;
             color: white;
@@ -107,6 +91,20 @@
             background-color: #45a049;
         }
 
+        .hover-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            pointer-events: none;
+            transition: background 0.3s ease;
+        }
+
+        .hover-effect.active {
+            background: rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -116,42 +114,84 @@
 <div class="content">
     <div class="grid-container" id="grid-container"></div>
     <div class="transparent-box">
-        <p>Denna sida har små rutor på en ljus bakgrund som svävar runt!</p>
+        <p>Denna sida har små rutor som rör sig och svävar omkring!</p>
         <button class="button">Läs mer</button>
     </div>
     <div class="hover-effect" id="hover-effect"></div>
 </div>
 
 <script>
-    // Funktion för att skapa rutorna
+    // Skapa rutorna
     const gridContainer = document.getElementById('grid-container');
-    const numCells = 100; // Antalet rutor som ska visas
+    const numCells = 150; // Antalet rutor som ska visas
     let cells = [];
+    let gravity = 0.05; // Gravitationen för rymdeffekten
+    let friction = 0.98; // Minskar hastigheten när rutorna rör sig
+    let bounds = { width: window.innerWidth, height: window.innerHeight }; // Håll koll på skärmstorleken
 
     // Skapa rutorna och lägg till dem i grid
     for (let i = 0; i < numCells; i++) {
         const cell = document.createElement('div');
         cell.classList.add('grid-cell');
         gridContainer.appendChild(cell);
-        cells.push(cell);
-    }
-
-    // Funktion för att animera rutorna
-    function animateCells() {
-        cells.forEach(cell => {
-            const randomX = Math.random() * 100 - 50; // Skapar slumpmässiga rörelser på X
-            const randomY = Math.random() * 100 - 50; // Skapar slumpmässiga rörelser på Y
-            const randomRotation = Math.random() * 360; // Slumpmässig rotation
-            const randomScale = Math.random() * (1.5 - 0.5) + 0.5; // Slumpmässig storlek
-
-            cell.style.transform = `translate(${randomX}px, ${randomY}px) rotate(${randomRotation}deg) scale(${randomScale})`;
+        cells.push({
+            element: cell,
+            x: Math.random() * bounds.width, // Startposition
+            y: Math.random() * bounds.height,
+            vx: Math.random() * 2 - 1, // Slumpmässig hastighet
+            vy: Math.random() * 2 - 1,
         });
     }
 
-    // Anropa funktionen varje 3 sekunder för att hålla rutorna i rörelse
-    setInterval(animateCells, 3000);
+    // Funktion för att uppdatera rutornas positioner
+    function updateCells() {
+        cells.forEach(cellData => {
+            const { element, x, y, vx, vy } = cellData;
 
-    // Hover-effekt för att aktivera gravitation
+            // Gravitation och rörelse
+            let newVx = vx;
+            let newVy = vy + gravity;
+
+            let newX = x + newVx;
+            let newY = y + newVy;
+
+            // Studsar rutorna mot kanterna
+            if (newX <= 0 || newX >= bounds.width - 50) {
+                newVx = -newVx * friction;
+            }
+
+            if (newY <= 0 || newY >= bounds.height - 50) {
+                newVy = -newVy * friction;
+            }
+
+            // Uppdatera positioner
+            cellData.x = newX;
+            cellData.y = newY;
+            cellData.vx = newVx;
+            cellData.vy = newVy;
+
+            // Använd CSS för att flytta rutorna
+            element.style.transform = `translate(${newX}px, ${newY}px)`;
+        });
+    }
+
+    // Funktion för att uppdatera skärmstorleken
+    function updateBounds() {
+        bounds.width = window.innerWidth;
+        bounds.height = window.innerHeight;
+    }
+
+    // Uppdatera rutorna och skärmstorleken varje frame
+    function animate() {
+        updateCells();
+        updateBounds();
+        requestAnimationFrame(animate);
+    }
+
+    // Starta animationen
+    animate();
+
+    // Hover-effekt för bakgrunden
     const hoverEffect = document.getElementById('hover-effect');
     let isHovering = false;
 
@@ -170,7 +210,6 @@
     document.body.addEventListener('mouseleave', () => {
         isHovering = false;
     });
-
 </script>
 
 </body>
