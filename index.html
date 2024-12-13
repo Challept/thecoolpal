@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay</title>
+    <title>Webstay öppnar</title>
     <style>
         * {
             margin: 0;
@@ -13,60 +13,66 @@
 
         body, html {
             height: 100%;
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            overflow-x: hidden;
+            width: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #222;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            justify-content: flex-start;
+            color: #fff;
         }
 
-        header {
-            position: fixed;
+        /* Animation för hela sidan */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Titelanimation */
+        @keyframes typing {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Bakgrund */
+        .background {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px;
-            background-color: #ffffff;
-            text-align: center;
-            font-size: 28px;
+            height: 100%;
+            background: linear-gradient(135deg, #4a90e2, #9013fe);
+            animation: fadeIn 2s ease-out;
+            z-index: -1;
+        }
+
+        /* Webstay text */
+        .webstay-title {
+            font-size: 50px;
             font-weight: bold;
-            z-index: 10;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Typing animation */
-        .typing-animation {
-            display: inline-block;
-        }
-
-        .typing-animation span {
-            display: inline-block;
-            width: 0;
+            text-align: center;
             overflow: hidden;
-            white-space: nowrap;
-            border-right: 2px solid #333;
-            animation: typing 3s steps(10) 1s forwards, blink 0.7s step-end infinite, reverseTyping 3s steps(10) 4s forwards;
-        }
-
-        .typing-animation .highlight {
-            color: #f4a300; /* Färg för .se */
-        }
-
-        @keyframes typing {
-            to {
-                width: 100%;
-            }
-        }
-
-        @keyframes reverseTyping {
-            0% {
-                width: 100%;
-            }
-            100% {
-                width: 0;
-            }
+            border-right: 4px solid #fff;
+            width: 0;
+            animation: typing 4s steps(30) 1s forwards, blink 0.75s step-end infinite;
         }
 
         @keyframes blink {
@@ -75,204 +81,99 @@
             }
         }
 
-        /* För bild med kodscrollning */
-        .image-container {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            background-color: #222;
-            color: white;
-            font-family: monospace;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .code {
-            position: absolute;
-            bottom: 0;
-            font-size: 14px;
-            line-height: 1.5;
-            white-space: nowrap;
-            animation: scrollCode 15s linear infinite;
-        }
-
-        @keyframes scrollCode {
-            0% {
-                transform: translateY(100%);
-            }
-            100% {
-                transform: translateY(-100%);
-            }
-        }
-
-        /* Butikslayout */
-        .shop-container {
-            width: 100%;
-            padding: 40px 20px;
-            background-color: #fff;
+        /* Countdown timer */
+        .countdown {
+            font-size: 50px;
+            font-weight: bold;
+            margin-top: 30px;
             text-align: center;
+            animation: bounce 2s infinite;
         }
 
-        .shop-container h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        .product {
-            display: inline-block;
-            width: 200px;
-            height: 250px;
-            background-color: #f4a300;
-            border-radius: 8px;
-            margin: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .product img {
-            width: 100%;
-            height: 150px;
-            border-radius: 5px;
-            object-fit: cover;
-        }
-
-        .product h3 {
-            margin: 10px 0;
-            font-size: 20px;
-        }
-
-        .product p {
-            font-size: 16px;
-            margin: 10px 0;
-        }
-
+        /* Animation för knappen */
         .button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
+            background-color: #ff5e5b;
+            padding: 15px 30px;
+            margin-top: 50px;
+            border-radius: 10px;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            color: #fff;
+            font-size: 20px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 10px;
+            animation: bounce 1.5s infinite;
         }
 
         .button:hover {
-            background-color: #0056b3;
+            background-color: #d94f4c;
         }
 
-        .about-us {
-            padding: 40px 20px;
-            background-color: #f4f4f9;
-            text-align: center;
-            width: 100%;
-        }
-
-        .about-us h2 {
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        .about-us p {
-            font-size: 18px;
-            max-width: 800px;
+        /* Animation för cirkel (symboliserar nedräkning) */
+        .circle {
+            border: 10px solid #fff;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
             margin: 0 auto;
+            animation: rotateCircle 5s linear infinite;
+        }
+
+        @keyframes rotateCircle {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
     </style>
 </head>
 <body>
 
-<header>
-    <div class="typing-animation">
-        <span>Webstay</span><span class="highlight">.se</span>
-    </div>
-</header>
+<div class="background"></div>
 
-<!-- Bild med kodscrollning -->
-<div class="image-container">
-    <div class="code">
-        <p>&lt;html&gt;</p>
-        <p>&lt;head&gt;</p>
-        <p>&lt;title&gt;Webstay Butik&lt;/title&gt;</p>
-        <p>&lt;/head&gt;</p>
-        <p>&lt;body&gt;</p>
-        <p>&lt;h1&gt;Välkommen till Webstay&lt;/h1&gt;</p>
-        <p>&lt;div class="shop"&gt;... </p>
-        <p>&lt;/body&gt;</p>
-        <p>&lt;/html&gt;</p>
+<div class="webstay-title">
+    Webstay öppnar 30 feb 2025
+</div>
+
+<div class="countdown">
+    <div class="circle">
+        <span id="countdown"></span>
     </div>
 </div>
 
-<!-- Butik -->
-<div class="shop-container">
-    <h2>Vår Butik</h2>
-    <div class="product">
-        <img src="https://via.placeholder.com/200x150" alt="Produkt 1">
-        <h3>Produkt 1</h3>
-        <p>Pris: 199 kr</p>
-        <button class="button">Köp</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/200x150" alt="Produkt 2">
-        <h3>Produkt 2</h3>
-        <p>Pris: 299 kr</p>
-        <button class="button">Köp</button>
-    </div>
-    <div class="product">
-        <img src="https://via.placeholder.com/200x150" alt="Produkt 3">
-        <h3>Produkt 3</h3>
-        <p>Pris: 399 kr</p>
-        <button class="button">Köp</button>
-    </div>
-</div>
+<button class="button" onclick="alert('Webstay öppnar snart!')">Håll utkik!</button>
 
-<!-- Om Oss -->
-<div class="about-us">
-    <h2>Om Webstay</h2>
-    <p>Webstay är en modern plattform för att skapa och anpassa din egen webbutik. Vi erbjuder lättanvända verktyg för att bygga och driva din onlinebutik med stil. Oavsett om du är nybörjare eller erfaren, gör vi det enkelt att skapa något fantastiskt.</p>
-</div>
-
-<!-- JavaScript för att skriva kod i bilden -->
 <script>
-    let codeText = [
-        '&lt;html&gt;',
-        '&lt;head&gt;',
-        '&lt;title&gt;Webstay Butik&lt;/title&gt;',
-        '&lt;/head&gt;',
-        '&lt;body&gt;',
-        '&lt;h1&gt;Välkommen till Webstay&lt;/h1&gt;',
-        '&lt;div class="shop"&gt;',
-        '&lt;/body&gt;',
-        '&lt;/html&gt;'
-    ];
+    // Nedräkning till 30 feb 2025
+    const countdownElement = document.getElementById('countdown');
+    const targetDate = new Date('Feb 30, 2025 00:00:00').getTime();
 
-    let codeElement = document.querySelector('.code');
-    let codeIndex = 0;
-    let codeLine = 0;
+    function updateCountdown() {
+        const currentDate = new Date().getTime();
+        const timeRemaining = targetDate - currentDate;
 
-    // Funktion som skriver koden med en animationseffekt
-    function typeCode() {
-        if (codeLine < codeText.length) {
-            let line = codeText[codeLine];
-            let i = 0;
-            let typingInterval = setInterval(function() {
-                codeElement.innerHTML += line.charAt(i);
-                i++;
-                if (i > line.length) {
-                    clearInterval(typingInterval);
-                    codeLine++;
-                    setTimeout(typeCode, 1000); // Vänta en sekund innan nästa rad
-                }
-            }, 50);
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+        countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        if (timeRemaining < 0) {
+            countdownElement.innerHTML = "Webstay har öppnat!";
         }
     }
 
-    // Starta kodanimationen
-    typeCode();
+    // Uppdatera nedräkningen varje sekund
+    setInterval(updateCountdown, 999);
+
+    // Starta nedräkningen omedelbart
+    updateCountdown();
 </script>
 
 </body>
