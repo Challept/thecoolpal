@@ -3,220 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="file.png" type="image/png">
-    <title>Köp nu!</title>
+    <title>Grid Effekt med Hover</title>
     <style>
-        /* Bas-styling */
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', Arial, sans-serif;
-            background: linear-gradient(to bottom, #a8d8ff, #f0faff); /* Ljusblå gradient */
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            box-sizing: border-box;
         }
 
-        /* Flygande bollar */
-        .neon-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, #fff, transparent);
-            box-shadow: 0 0 10px #fff, 0 0 20px rgba(255, 255, 255, 0.8);
-            animation: flyUp infinite linear;
-        }
-
-        @keyframes flyUp {
-            from {
-                transform: translateY(100vh) scale(0.5);
-                opacity: 0.5;
-            }
-            to {
-                transform: translateY(-10%) scale(1);
-                opacity: 0;
-            }
-        }
-
-        /* Popup */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.8);
-            color: #fff;
+        body, html {
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            z-index: 9999;
-            flex-direction: column;
-        }
-
-        .popup h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .popup p {
-            font-size: 1.2rem;
-        }
-
-        .popup .countdown {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 50px 20px;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            color: white;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Video */
-        .top-video {
-            width: 100%;
-            max-width: 1200px;
-            height: auto;
-            margin: 20px auto;
-            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .top-video video {
+        /* Bakgrund med små rutor */
+        .background {
+            height: 100%;
+            width: 100%;
+            background-color: #1a1a1a; /* Mörk bakgrund */
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.1); /* Ljusare grid */
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background-size: 20px 20px; /* Storleken på rutorna */
+            z-index: 0;
         }
 
-        /* Knappsektion */
-        .button-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .custom-button {
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            color: white;
-            background: linear-gradient(135deg, #4facfe, #007aff);
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            box-shadow: 0 5px 15px rgba(90, 200, 250, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .custom-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(90, 200, 250, 0.5);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #0044cc, #007aff);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            margin-top: auto;
+        .hover-area {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 1;
+            pointer-events: none;
+            transition: background 0.3s ease;
         }
+
+        .background:hover .hover-area {
+            background: rgba(255, 255, 255, 0.3); /* Ljusare effekt på hover */
+        }
+
     </style>
 </head>
 <body>
+
+    <div class="background">
+        <div class="grid"></div> <!-- Grid rutor -->
+        <div class="hover-area"></div> <!-- Hover effekt -->
+    </div>
+
     <script>
-        // Skapa flygande bollar
-        document.addEventListener("DOMContentLoaded", () => {
-            const numberOfCircles = 30;
-            const body = document.body;
+        // JavaScript för att skapa ojämna ljusa områden vid hover
+        const hoverArea = document.querySelector('.hover-area');
 
-            for (let i = 0; i < numberOfCircles; i++) {
-                const circle = document.createElement("div");
-                circle.classList.add("neon-circle");
-                body.appendChild(circle);
+        hoverArea.addEventListener('mousemove', (e) => {
+            let mouseX = e.pageX;
+            let mouseY = e.pageY;
 
-                const size = Math.random() * 100 + 30;
-                const positionX = Math.random() * window.innerWidth;
-                const duration = Math.random() * 10 + 5;
-                const delay = Math.random() * 5;
+            const size = 200; // Storlek på den ljusa effekten
 
-                circle.style.width = `${size}px`;
-                circle.style.height = `${size}px`;
-                circle.style.left = `${positionX}px`;
-                circle.style.animationDuration = `${duration}s`;
-                circle.style.animationDelay = `${delay}s`;
-            }
+            hoverArea.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.5) 10%, transparent 20%)`;
         });
 
-        // Popup med timer
-        document.addEventListener("DOMContentLoaded", () => {
-            const popup = document.querySelector(".popup");
-            const countdownElement = document.querySelector(".countdown");
-            const launchDate = new Date("2024-12-27T00:00:00").getTime();
-
-            if (window.location.hash !== "#29451288461645816561pass") {
-                popup.style.display = "flex";
-                document.body.style.overflow = "hidden";
-
-                const updateCountdown = () => {
-                    const now = new Date().getTime();
-                    const timeLeft = launchDate - now;
-
-                    if (timeLeft <= 0) {
-                        countdownElement.textContent = "Lanserad!";
-                        return;
-                    }
-
-                    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-                    countdownElement.textContent = `${days} dagar, ${hours} timmar, ${minutes} minuter, ${seconds} sekunder`;
-                };
-
-                updateCountdown();
-                setInterval(updateCountdown, 1000);
-            }
+        hoverArea.addEventListener('mouseleave', () => {
+            hoverArea.style.background = 'transparent'; // Återställ effekten när musen lämnar
         });
     </script>
 
-    <header class="header">
-        <h1>Välkommen till WebStay</h1>
-        <p>WebStay erbjuder skräddarsydda hemsidor och butiker för att lyfta ditt varumärke och förbättra din online-närvaro.</p>
-    </header>
-
-    <div class="popup">
-        <h1>🎉 Webbstay öppnar snart! 🎉</h1>
-        <p>Butiken lanseras den <strong>27 december 2024</strong>!</p>
-        <div class="countdown">Räknar ner...</div>
-    </div>
-
-    <div class="top-video">
-        <video autoplay muted loop playsinline>
-            <source src="Starta_nu_1.mp4" type="video/mp4">
-            Din webbläsare stödjer inte videouppspelning.
-        </video>
-    </div>
-
-    <div class="button-container">
-        <a href="https://webstay.se/order" class="custom-button">Köp en Hemsida</a>
-        <a href="https://webstay.se/admin" class="custom-button">Gå till Admin</a>
-    </div>
-
-    <footer>
-        <p>Kontakta oss på <a href="mailto:vildewretling@gmail.com">vildewretling@gmail.com</a></p>
-        <p>&copy; 2024 WebStay</p>
-    </footer>
 </body>
 </html>
