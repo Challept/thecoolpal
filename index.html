@@ -33,6 +33,7 @@
             overflow: hidden;
         }
 
+        /* Små rutor som grid */
         .grid {
             position: absolute;
             background-color: rgba(255, 255, 255, 0.1); /* Ljusare grid */
@@ -42,6 +43,7 @@
             z-index: 0;
         }
 
+        /* Hover-effekten */
         .hover-area {
             position: absolute;
             top: 0;
@@ -54,14 +56,9 @@
             transition: background 0.3s ease;
         }
 
-        /* Hover effekt för att lysa upp den lilla delen av bakgrunden */
-        .hover-area {
-            background: transparent; /* Ingen effekt initialt */
-        }
-
-        /* Enligt musens position ska vi skapa en ljus cirkel */
+        /* En liten ljus cirkel runt musen */
         .hover-area.active {
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 20%, transparent 20%); /* Ljusare effekt runt musen */
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 10%, transparent 20%);
         }
 
     </style>
@@ -74,15 +71,15 @@
     </div>
 
     <script>
-        // JavaScript för att skapa ljus effekt vid hover
+        // JavaScript för att skapa hover-effekt med ljus runt muspekaren
         const hoverArea = document.querySelector('.hover-area');
 
         hoverArea.addEventListener('mousemove', (e) => {
             let mouseX = e.pageX;
             let mouseY = e.pageY;
 
-            // Flytta den lilla ljusa effekten med musen
-            hoverArea.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.5) 10%, transparent 20%)`;
+            // Skapa en liten ljus cirkel kring musen
+            hoverArea.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.4) 10%, transparent 20%)`;
             hoverArea.classList.add('active');
         });
 
