@@ -15,25 +15,43 @@
             height: 100%;
             width: 100%;
             overflow: hidden;
-            font-family: Arial, sans-serif;
-            background-color: #222;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #fff;
         }
 
-        /* Animation för hela sidan */
+        /* Bakgrund med en lugn och stilren gradient */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6a82fb, #fc5c7d); /* Lugn och modern gradient */
+            animation: fadeIn 2s ease-out;
+            z-index: -1;
+        }
+
+        /* Fade-in animation för bakgrunden */
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        /* Titelanimation */
+        /* Webstay text */
+        .webstay-title {
+            font-size: 48px;
+            font-weight: bold;
+            text-align: center;
+            overflow: hidden;
+            border-right: 4px solid #fff;
+            width: 0;
+            animation: typing 4s steps(30) 1s forwards, blink 0.75s step-end infinite;
+            white-space: nowrap;
+        }
+
         @keyframes typing {
             0% {
                 width: 0;
@@ -43,51 +61,37 @@
             }
         }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        /* Bakgrund */
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #4a90e2, #9013fe);
-            animation: fadeIn 2s ease-out;
-            z-index: -1;
-        }
-
-        /* Webstay text */
-        .webstay-title {
-            font-size: 50px;
-            font-weight: bold;
-            text-align: center;
-            overflow: hidden;
-            border-right: 4px solid #fff;
-            width: 0;
-            animation: typing 4s steps(30) 1s forwards, blink 0.75s step-end infinite;
-        }
-
         @keyframes blink {
             50% {
                 border-color: transparent;
             }
         }
 
-        /* Countdown timer */
+        /* Nedräkningstimer */
         .countdown {
-            font-size: 50px;
-            font-weight: bold;
+            font-size: 40px;
+            font-weight: 600;
             margin-top: 30px;
             text-align: center;
-            animation: bounce 2s infinite;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            width: 60%;
+            max-width: 300px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        /* Styling för varje tidsenhet i nedräkningen */
+        .countdown span {
+            font-size: 50px;
+            font-weight: 700;
+            color: #ff5e5b;
+        }
+
+        .countdown p {
+            font-size: 18px;
+            color: #fff;
         }
 
         /* Animation för knappen */
@@ -100,6 +104,7 @@
             color: #fff;
             font-size: 20px;
             cursor: pointer;
+            transition: background-color 0.3s;
             animation: bounce 1.5s infinite;
         }
 
@@ -107,7 +112,17 @@
             background-color: #d94f4c;
         }
 
-        /* Animation för cirkel (symboliserar nedräkning) */
+        /* Animation för bounce effekt */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Cirkulär animation */
         .circle {
             border: 10px solid #fff;
             border-radius: 50%;
@@ -140,12 +155,15 @@
     Webstay öppnar 30 feb 2025
 </div>
 
+<!-- Countdown Timer -->
 <div class="countdown">
+    <p>Webstay öppnar om:</p>
     <div class="circle">
         <span id="countdown"></span>
     </div>
 </div>
 
+<!-- Button -->
 <button class="button" onclick="alert('Webstay öppnar snart!')">Håll utkik!</button>
 
 <script>
@@ -170,7 +188,7 @@
     }
 
     // Uppdatera nedräkningen varje sekund
-    setInterval(updateCountdown, 999);
+    setInterval(updateCountdown, 1000);
 
     // Starta nedräkningen omedelbart
     updateCountdown();
