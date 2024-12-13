@@ -80,12 +80,10 @@
 
             // Skapa en liten ljus cirkel kring musen
             hoverArea.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.4) 10%, transparent 20%)`;
-            hoverArea.classList.add('active');
         });
 
         hoverArea.addEventListener('mouseleave', () => {
-            hoverArea.classList.remove('active'); // Ta bort effekten när musen lämnar
-            hoverArea.style.background = 'transparent'; // Återställ till transparent bakgrund
+            hoverArea.style.background = 'transparent'; // Återställ till transparent bakgrund när musen lämnar
         });
     </script>
 
