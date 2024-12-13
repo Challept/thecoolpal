@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grid Effekt med Hover</title>
+    <title>Små Rutor med Hover Effekt</title>
     <style>
         * {
             margin: 0;
@@ -30,6 +30,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         .grid {
@@ -37,7 +38,7 @@
             background-color: rgba(255, 255, 255, 0.1); /* Ljusare grid */
             width: 100%;
             height: 100%;
-            background-size: 20px 20px; /* Storleken på rutorna */
+            background-size: 20px 20px; /* Små rutor */
             z-index: 0;
         }
 
@@ -53,8 +54,14 @@
             transition: background 0.3s ease;
         }
 
-        .background:hover .hover-area {
-            background: rgba(255, 255, 255, 0.3); /* Ljusare effekt på hover */
+        /* Hover effekt för att lysa upp den lilla delen av bakgrunden */
+        .hover-area {
+            background: transparent; /* Ingen effekt initialt */
+        }
+
+        /* Enligt musens position ska vi skapa en ljus cirkel */
+        .hover-area.active {
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 20%, transparent 20%); /* Ljusare effekt runt musen */
         }
 
     </style>
@@ -62,25 +69,26 @@
 <body>
 
     <div class="background">
-        <div class="grid"></div> <!-- Grid rutor -->
-        <div class="hover-area"></div> <!-- Hover effekt -->
+        <div class="grid"></div>
+        <div class="hover-area"></div>
     </div>
 
     <script>
-        // JavaScript för att skapa ojämna ljusa områden vid hover
+        // JavaScript för att skapa ljus effekt vid hover
         const hoverArea = document.querySelector('.hover-area');
 
         hoverArea.addEventListener('mousemove', (e) => {
             let mouseX = e.pageX;
             let mouseY = e.pageY;
 
-            const size = 200; // Storlek på den ljusa effekten
-
+            // Flytta den lilla ljusa effekten med musen
             hoverArea.style.background = `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.5) 10%, transparent 20%)`;
+            hoverArea.classList.add('active');
         });
 
         hoverArea.addEventListener('mouseleave', () => {
-            hoverArea.style.background = 'transparent'; // Återställ effekten när musen lämnar
+            hoverArea.classList.remove('active'); // Ta bort effekten när musen lämnar
+            hoverArea.style.background = 'transparent'; // Återställ till transparent bakgrund
         });
     </script>
 
