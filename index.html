@@ -32,6 +32,8 @@
         .main-container {
             text-align: center;
             padding: 20px;
+            position: relative;
+            z-index: 2; /* Sätt ett högre z-index så att texten ligger över snön */
         }
 
         /* Webstay öppnar texten */
@@ -68,7 +70,7 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1; /* Snön ska vara bakom texterna */
+            z-index: 1; /* Snön ska vara bakom texten */
         }
 
         .snowflake {
