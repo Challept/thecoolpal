@@ -15,12 +15,18 @@
             height: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
-            background: linear-gradient(135deg, #f8f9fa, #e0e7ff); /* Skön gradientbakgrund */
+            background: linear-gradient(135deg, #f0f4f8, #e0e7ff); /* Skön gradientbakgrund */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: #333;
+            transition: background 0.3s ease;
+        }
+
+        /* Bakgrundens hover effekt */
+        body:hover {
+            background: linear-gradient(135deg, #e0e7ff, #f0f4f8); /* Ljusare bakgrund när man hovrar */
         }
 
         .main-container {
@@ -28,17 +34,17 @@
             padding: 20px;
         }
 
-        /* Webstay öppnar texten */
+        /* Webstay öppnar texten med typing animation */
         .headline {
             font-size: 2.5em;
             font-weight: bold;
             margin-bottom: 20px;
-            animation: typing 3s steps(25) infinite; /* Typing animation */
+            animation: typing 3s steps(25) 1, blink 0.75s step-end infinite;
         }
 
-        /* Timer */
+        /* Countdown Timer */
         .countdown-timer {
-            font-size: 2em;
+            font-size: 1.8em;
             margin: 20px 0;
         }
 
@@ -46,38 +52,47 @@
         .process-message {
             font-size: 1.2em;
             margin-top: 20px;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: typing 10s steps(50) infinite; /* Typing animation */
+            animation: fadeInOut 10s ease-in-out infinite;
         }
 
-        /* Timer och meddelanden animation */
+        /* Typing animation för headline */
         @keyframes typing {
-            0% {
-                width: 0;
-            }
-            100% {
-                width: 100%;
-            }
+            0% { width: 0; }
+            100% { width: 100%; }
         }
 
-        .process-message-container {
-            font-size: 1.2em;
-            margin-top: 20px;
-            color: #444;
-            animation: typing 10s steps(50) infinite; /* Typing animation for messages */
+        /* Blinkande understreck för Webstay */
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        /* Animation för processmeddelanden */
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Justering av elementens ordning */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .message-container {
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
 <div class="main-container">
-    <!-- Huvudtexten -->
     <div class="headline">
         Webstay öppnar 30 feb 2025
     </div>
 
-    <!-- Countdown Timer -->
     <div class="countdown-timer" id="timer">
         Tiden kvar: <span id="time"></span>
     </div>
@@ -85,7 +100,7 @@
     <!-- Process meddelande -->
     <div class="process-message-container">
         <div id="process-message" class="process-message">
-            Processen är i gång... Vänta medan sidan laddar...
+            Laddar systemet...
         </div>
     </div>
 </div>
