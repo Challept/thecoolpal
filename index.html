@@ -30,9 +30,9 @@
         }
 
         .grid-cell {
-            width: 20px;
-            height: 20px;
-            background-color: rgba(255, 255, 255, 0.1); /* Ljusa rutor */
+            width: 30px; /* Gör rutorna större för att de ska synas bättre */
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.3); /* Ljusa rutor som syns bättre */
         }
 
         /* Innehåll för textsektionen */
@@ -50,7 +50,7 @@
 
         /* Transparent bakgrund för textsektionen */
         .content-overlay {
-            background: rgba(0, 0, 0, 0.5); /* Svart genomskinlig bakgrund */
+            background: rgba(0, 0, 0, 0.6); /* Svart genomskinlig bakgrund */
             padding: 20px;
             border-radius: 8px;
         }
@@ -71,7 +71,7 @@
         // Funktion för att skapa rutorna dynamiskt
         function createGridCells() {
             const background = document.getElementById('background');
-            const cellSize = 20; // Storleken på varje ruta
+            const cellSize = 30; // Storleken på varje ruta (ökad för bättre synlighet)
             const columns = Math.ceil(window.innerWidth / cellSize); // Antal kolumner som behövs för att fylla bredden
             const rows = Math.ceil(window.innerHeight / cellSize); // Antal rader som behövs för att fylla höjden
 
