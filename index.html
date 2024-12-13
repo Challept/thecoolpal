@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Små Rutor på Mörk Bakgrund</title>
+    <title>Webstay.se - Svävande Rutor</title>
     <style>
         * {
             margin: 0;
@@ -16,68 +16,100 @@
             width: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
-            background-color: #1a1a1a; /* Mörk bakgrund */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background: #1b1b1b;
         }
 
-        /* Sektion för texten */
-        .content {
-            z-index: 1;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: white;
-            font-size: 24px;
-        }
-
-        /* Transparent bakgrund för textsektionen */
-        .content-overlay {
-            background: rgba(0, 0, 0, 0.6); /* Svart genomskinlig bakgrund */
+        header {
+            background-color: #333;
+            width: 100%;
             padding: 20px;
-            border-radius: 8px;
+            text-align: center;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            overflow: hidden;
         }
 
         .grid-cell {
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            margin: 5px;
+            border-radius: 4px;
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.3); /* Ljusa rutor */
-            animation: moveCell 10s linear infinite; /* Animering för att röra rutorna */
+            animation: move 10s linear infinite;
+            pointer-events: none;
         }
 
-        /* Animation för att röra små rutor över skärmen */
-        @keyframes moveCell {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(calc(100vw - 10px), calc(100vh - 10px)); /* Rörelse genom hela skärmen */
-            }
+        @keyframes move {
+            0% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(100px) translateY(100px); }
+            50% { transform: translateX(-100px) translateY(50px); }
+            75% { transform: translateX(50px) translateY(-50px); }
+            100% { transform: translateX(0) translateY(0); }
+        }
+
+        .background.hover-gravity .grid-cell {
+            animation: move-gravity 2s ease-out infinite;
+        }
+
+        @keyframes move-gravity {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(300px); }
         }
 
     </style>
 </head>
 <body>
+    <header>
+        Webstay.se
+    </header>
+
+    <div class="background" id="background">
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+        <div class="grid-cell"></div>
+    </div>
 
     <script>
-        // Funktion för att skapa små rutor dynamiskt
-        function createGridCells() {
-            const numCells = 100; // Antal rutor som ska skapas
-            for (let i = 0; i < numCells; i++) {
-                const gridCell = document.createElement('div');
-                gridCell.classList.add('grid-cell');
-                // Slumpmässig position för varje ruta
-                gridCell.style.left = `${Math.random() * 100}vw`;
-                gridCell.style.top = `${Math.random() * 100}vh`;
-                document.body.appendChild(gridCell);
-            }
-        }
+        const background = document.getElementById('background');
+        const gridCells = document.querySelectorAll('.grid-cell');
 
-        // Kör funktionen för att skapa rutorna när sidan laddas
-        createGridCells();
+        // Byt gravitation vid hover
+        background.addEventListener('mouseover', () => {
+            background.classList.add('hover-gravity');
+        });
 
+        background.addEventListener('mouseleave', () => {
+            background.classList.remove('hover-gravity');
+        });
+
+        // Randomisera startpositioner för rutorna
+        gridCells.forEach(cell => {
+            const randomX = Math.random() * window.innerWidth;
+            const randomY = Math.random() * window.innerHeight;
+            cell.style.left = `${randomX}px`;
+            cell.style.top = `${randomY}px`;
+        });
     </script>
-
 </body>
 </html>
