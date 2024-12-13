@@ -16,36 +16,19 @@
             width: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
-        }
-
-        /* Bakgrund med mörk färg */
-        .background {
             background-color: #1a1a1a; /* Mörk bakgrund */
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-gap: 0px;
-            z-index: 0; /* Bakom textsektionen */
         }
 
-        .grid-cell {
-            width: 30px; /* Gör rutorna större för att de ska synas bättre */
-            height: 30px;
-            background-color: rgba(255, 255, 255, 0.3); /* Ljusa rutor som syns bättre */
-        }
-
-        /* Innehåll för textsektionen */
+        /* Sektion för texten */
         .content {
             z-index: 1;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh; /* Full höjd på sidan */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
             color: white;
             font-size: 24px;
-            text-align: center;
         }
 
         /* Transparent bakgrund för textsektionen */
@@ -55,46 +38,45 @@
             border-radius: 8px;
         }
 
+        .grid-cell {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.3); /* Ljusa rutor */
+            animation: moveCell 10s linear infinite; /* Animering för att röra rutorna */
+        }
+
+        /* Animation för att röra små rutor över skärmen */
+        @keyframes moveCell {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(calc(100vw - 10px), calc(100vh - 10px)); /* Rörelse genom hela skärmen */
+            }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="background" id="background"></div>
-
-    <div class="content">
-        <div class="content-overlay">
-            <p>Denna sida har små ljusa rutor på en mörk bakgrund, och de rullar med sidan.</p>
-        </div>
-    </div>
-
     <script>
-        // Funktion för att skapa rutorna dynamiskt
+        // Funktion för att skapa små rutor dynamiskt
         function createGridCells() {
-            const background = document.getElementById('background');
-            const cellSize = 30; // Storleken på varje ruta (ökad för bättre synlighet)
-            const columns = Math.ceil(window.innerWidth / cellSize); // Antal kolumner som behövs för att fylla bredden
-            const rows = Math.ceil(window.innerHeight / cellSize); // Antal rader som behövs för att fylla höjden
-
-            for (let i = 0; i < rows * columns; i++) {
+            const numCells = 100; // Antal rutor som ska skapas
+            for (let i = 0; i < numCells; i++) {
                 const gridCell = document.createElement('div');
                 gridCell.classList.add('grid-cell');
-                background.appendChild(gridCell);
+                // Slumpmässig position för varje ruta
+                gridCell.style.left = `${Math.random() * 100}vw`;
+                gridCell.style.top = `${Math.random() * 100}vh`;
+                document.body.appendChild(gridCell);
             }
-
-            // Lägg till rutorna på en CSS Grid-layout
-            background.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
-            background.style.gridTemplateRows = `repeat(${rows}, ${cellSize}px)`;
         }
 
         // Kör funktionen för att skapa rutorna när sidan laddas
         createGridCells();
 
-        // När fönstret storlek ändras, uppdatera rutorna
-        window.addEventListener('resize', () => {
-            // Ta bort alla existerande celler innan vi skapar nya
-            document.getElementById('background').innerHTML = '';
-            createGridCells();
-        });
     </script>
 
 </body>
