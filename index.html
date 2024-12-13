@@ -15,7 +15,7 @@
             height: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
-            background: linear-gradient(135deg, #f0f4f8, #e0e7ff); /* Skön gradientbakgrund */
+            background: linear-gradient(135deg, #a8c0ff, #3f9de2); /* Fin gradient bakgrund */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -26,7 +26,7 @@
 
         /* Bakgrundens hover effekt */
         body:hover {
-            background: linear-gradient(135deg, #e0e7ff, #f0f4f8); /* Ljusare bakgrund när man hovrar */
+            background: linear-gradient(135deg, #3f9de2, #a8c0ff); /* Ljusare bakgrund vid hovring */
         }
 
         .main-container {
@@ -34,12 +34,11 @@
             padding: 20px;
         }
 
-        /* Webstay öppnar texten med typing animation */
+        /* Webstay öppnar texten */
         .headline {
             font-size: 2.5em;
             font-weight: bold;
             margin-bottom: 20px;
-            animation: typing 3s steps(25) 1, blink 0.75s step-end infinite;
         }
 
         /* Countdown Timer */
@@ -55,24 +54,38 @@
             animation: fadeInOut 10s ease-in-out infinite;
         }
 
-        /* Typing animation för headline */
-        @keyframes typing {
-            0% { width: 0; }
-            100% { width: 100%; }
-        }
-
-        /* Blinkande understreck för Webstay */
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-
         /* Animation för processmeddelanden */
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
         }
 
-        /* Justering av elementens ordning */
+        /* Snöflingor effekt */
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1; /* Snön ska vara bakom texterna */
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            opacity: 0.7;
+            pointer-events: none;
+            animation: fall 10s linear infinite;
+        }
+
+        /* Snöflingornas fallande animation */
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+
         .content {
             display: flex;
             flex-direction: column;
@@ -87,6 +100,8 @@
     </style>
 </head>
 <body>
+
+<div class="snow" id="snow"></div> <!-- Snöeffekt -->
 
 <div class="main-container">
     <div class="headline">
@@ -172,6 +187,23 @@ const processMessages = [
     }
 
     setInterval(updateProcessMessage, 4000);
+
+    // Skapa snöflingor
+    function createSnowflakes() {
+        const snowContainer = document.getElementById("snow");
+        const snowflakeCount = 100; // Antalet snöflingor
+
+        for (let i = 0; i < snowflakeCount; i++) {
+            const snowflake = document.createElement("div");
+            snowflake.classList.add("snowflake");
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`; // Varierande hastighet
+            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Fördröjd start
+            snowContainer.appendChild(snowflake);
+        }
+    }
+
+    createSnowflakes();
 </script>
 
 </body>
