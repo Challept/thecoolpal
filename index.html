@@ -15,7 +15,7 @@
             height: 100%;
             font-family: Arial, sans-serif;
             overflow: hidden;
-            background: linear-gradient(135deg, #a8c0ff, #3f9de2); /* Fin gradient bakgrund */
+            background: linear-gradient(135deg, #a8c0ff, #3f9de2);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -23,136 +23,113 @@
             color: #333;
         }
 
-        /* Bakgrundens hover effekt */
         body:hover {
-            background: linear-gradient(135deg, #3f9de2, #a8c0ff); /* Ljusare bakgrund vid hovring */
+            background: linear-gradient(135deg, #3f9de2, #a8c0ff);
         }
 
         .main-container {
             text-align: center;
             padding: 20px;
             position: relative;
-            z-index: 2; /* Sätt ett högre z-index så att texten ligger över snön */
+            z-index: 2;
         }
 
-        /* Webstay öppnar texten */
         .headline {
             font-size: 2.5em;
             font-weight: bold;
             margin-bottom: 20px;
         }
 
-        /* Countdown Timer */
         .countdown-timer {
             font-size: 1.8em;
             margin: 20px 0;
         }
 
-        /* Process meddelande */
         .process-message {
             font-size: 1.2em;
             margin-top: 20px;
             animation: fadeInOut 10s ease-in-out infinite;
         }
 
-        /* Animation för processmeddelanden */
         @keyframes fadeInOut {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
         }
 
-/* Snöflingor effekt */
-.snow {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 3; /* Snön ska vara längst fram */
-}
-
-.snowflake {
-    position: absolute;
-    top: -10px;
-    background-color: white; /* Vit färg för snöflingorna */
-    opacity: 1; /* Gör flingorna synliga men inte för starka */
-    pointer-events: none;
-    animation: fall 10s linear infinite;
-    z-index: 10; /* Snön ska vara över andra element */
-    width: 5px; /* Ändra storleken på snöflingorna */
-    height: 5px; /* Ändra storleken på snöflingorna */
-    border-radius: 50%; /* Gör snöflingorna runda */
-    box-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* Skapa en glödande effekt för flingorna */
-    transform: rotate(45deg); /* Snöflingorna roteras för variation */
-}
-
-/* För att skapa en mer realistisk form på snöflingorna */
-.snowflake:nth-child(odd) {
-    width: 8px;
-    height: 8px;
-    border-radius: 0%;
-    box-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
-}
-
-.snowflake:nth-child(even) {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    box-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
-}
-
-/* Snöflingor faller från toppen till botten */
-@keyframes fall {
-    to {
-        transform: translateY(100vh);
-    }
-}
-
-        .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .snow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
         }
 
-        .message-container {
-            text-align: center;
-            margin-top: 10px;
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background-color: white;
+            opacity: 1;
+            pointer-events: none;
+            animation: fall 10s linear infinite;
+            z-index: 10;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .snowflake:nth-child(odd) {
+            width: 8px;
+            height: 8px;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
+        }
+
+        .snowflake:nth-child(even) {
+            width: 6px;
+            height: 6px;
+            box-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- Snöeffekt -->
 <div class="snow" id="snow"></div>
 
-<!-- Huvudinnehåll -->
 <div class="main-container">
     <div class="headline">
-        Webstay öppnar 30 feb 2025
+        Webstay &ouml;ppnar 25 februari 2025
     </div>
 
     <div class="countdown-timer" id="timer">
         Tiden kvar: <span id="time"></span>
     </div>
 
-    <!-- Process meddelande -->
-    <div class="process-message-container">
-        <div id="process-message" class="process-message">
-            Laddar systemet...
-        </div>
+    <div class="process-message" id="process-message">
+        Laddar systemet...
     </div>
 </div>
 
 <script>
-    // Countdown Timer
-    const countdownDate = new Date("Feb 30, 2025 00:00:00").getTime();
+    const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
     const timerElement = document.getElementById("time");
 
     function updateCountdown() {
         const now = new Date().getTime();
         const distance = countdownDate - now;
+
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            timerElement.innerHTML = "Webstay är nu öppen!";
+            return;
+        }
 
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -160,49 +137,19 @@
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-        if (distance < 0) {
-            clearInterval(countdownInterval);
-            timerElement.innerHTML = "Webstay är nu öppen!";
-        }
     }
 
     const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-    // Process meddelande loop
     const processMessages = [
         "Laddar systemet...",
         "Initialiserar butikskomponenter...",
         "Skapar produktkategorier...",
-        "Förbereder produktinformation...",
-        "Lägger till produktbilder...",
-        "Genererar produktbeskrivningar...",
-        "Ansluter till lagerhantering...",
-        "Verifierar prisuppgifter...",
-        "Kontrollerar betalningssystem...",
-        "Uppdaterar fraktalternativ...",
-        "Hämtar kundinformation...",
-        "Optimera produktrekommendationer...",
         "Bygger kassan...",
-        "Konfigurerar rabattkuponger...",
-        "Ställer in moms och skatter...",
-        "Skriver orderhistorik...",
         "Anpassar kundvagnen...",
-        "Förbereder kundtjänstfunktioner...",
-        "Aktiverar användarkonton...",
-        "Testar betalningstransaktioner...",
-        "Simulerar beställningar...",
-        "Förbereder leveransinformation...",
         "Startar frontend-gränssnitt...",
-        "Kontrollerar användargränssnitt...",
-        "Optimerar mobilversion...",
-        "Synkroniserar butikens data...",
-        "Uppdaterar butikens inställningar...",
-        "Startar marknadsföringskampanjer...",
-        "Anpassar användarupplevelsen...",
-        "Testar säkerhetsfunktioner...",
-        "Förbereder butikens lansering...",
-        "Butiken är nästan klar! Vänta på lansering..."
+        "Butiken är snart redo..."
     ];
 
     let processIndex = 0;
@@ -210,25 +157,23 @@
         document.getElementById("process-message").textContent = processMessages[processIndex];
         processIndex = (processIndex + 1) % processMessages.length;
     }
-
     setInterval(updateProcessMessage, 1500);
 
-// Skapa snöflingor
-function createSnowflakes() {
-    const snowContainer = document.getElementById("snow");
-    const snowflakeCount = 100; // Antalet snöflingor
+    function createSnowflakes() {
+        const snowContainer = document.getElementById("snow");
+        const snowflakeCount = 100;
 
-    for (let i = 0; i < snowflakeCount; i++) {
-        const snowflake = document.createElement("div");
-        snowflake.classList.add("snowflake");
-        snowflake.style.left = `${Math.random() * 100}vw`; // Flingorna sprids horisontellt
-        snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`; // Varierande hastighet
-        snowflake.style.animationDelay = `${Math.random() * 5}s`; // Fördröjd start
-        snowContainer.appendChild(snowflake);
+        for (let i = 0; i < snowflakeCount; i++) {
+            const snowflake = document.createElement("div");
+            snowflake.classList.add("snowflake");
+            snowflake.style.left = `${Math.random() * 100}vw`;
+            snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
+            snowflake.style.animationDelay = `${Math.random() * 5}s`;
+            snowContainer.appendChild(snowflake);
+        }
     }
-}
 
-createSnowflakes();
+    createSnowflakes();
 </script>
 
 </body>
