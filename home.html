@@ -17,8 +17,9 @@
             height: 100%;
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
-            background: #f7f7f7; /* Ljus bakgrundsfärg */
+            background-color: #f7f7f7; /* Ljus bakgrundsfärg */
             color: #333; /* Mörk textfärg */
+            scroll-behavior: smooth;
         }
 
         /* Bakgrund med video */
@@ -39,9 +40,9 @@
             left: 0;
             width: 100%;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.9);
             text-align: center;
-            font-size: 30px;
+            font-size: 35px;
             color: #333;
             font-weight: bold;
             z-index: 100;
@@ -50,7 +51,7 @@
 
         /* Sektioner */
         section {
-            padding: 50px;
+            padding: 60px;
             margin-top: 80px; /* Gör plats för headern */
             background-color: rgba(255, 255, 255, 0.9); /* Ljus bakgrund */
             border-radius: 10px;
@@ -62,11 +63,12 @@
             position: relative;
         }
 
-        /* Animationer */
+        /* Fade-in animation */
         .fade-in {
-            animation: fadeIn 1s ease-in-out;
+            animation: fadeIn 1.5s ease-out forwards;
         }
 
+        /* Scroll animation */
         .smooth-scroll {
             animation: smoothScroll 1.5s ease-out;
         }
@@ -93,10 +95,10 @@
             }
         }
 
-        /* Sektioner med kort */
+        /* För sektioner med bilder */
         .section-image {
             width: 100%;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 20px 0;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
@@ -125,20 +127,6 @@
             transform: scale(1.05);
         }
 
-        /* Längre "Om oss" & Steg för Steg sektion */
-        .about, .steps {
-            background: #fff;
-            color: #333;
-        }
-
-        .about h2, .steps h2 {
-            margin-bottom: 20px;
-        }
-
-        .steps {
-            background: #f0f0f0;
-        }
-
         /* Anpassad för responsiv design */
         @media (max-width: 768px) {
             section {
@@ -153,6 +141,21 @@
                 font-size: 24px;
             }
         }
+
+        /* Längre "Om oss" & Steg för Steg sektion */
+        .about, .steps {
+            background: #fff;
+            color: #333;
+        }
+
+        .about h2, .steps h2 {
+            margin-bottom: 20px;
+        }
+
+        .steps {
+            background: #f0f0f0;
+        }
+
     </style>
 </head>
 
@@ -164,17 +167,25 @@
     <!-- Om oss sektion -->
     <section class="about fade-in">
         <h2>Om oss</h2>
-        <p>Webstay erbjuder en innovativ plattform för din onlinebutik. Vi gör det enkelt för företagare att skapa och hantera sin butik på nätet med modern design, pålitlig prestanda och användarvänliga verktyg. Vi strävar efter att ge dig alla verktyg du behöver för att lyckas online, oavsett om du är nybörjare eller erfaren e-handlare.</p>
+        <p>Webstay erbjuder den bästa lösningen för din onlinebutik. Vi hjälper företag att skapa moderna, funktionella och stiliga webbutiker som är lättanvända och gör det enkelt att sälja online. Vårt mål är att ge alla, från nybörjare till erfarna e-handlare, de verktyg de behöver för att lyckas. Vår plattform erbjuder flexibla funktioner som gör att du kan anpassa din butik efter dina behov.</p>
+        <p>Våra tjänster inkluderar:</p>
+        <ul>
+            <li>Responsiv och modern design.</li>
+            <li>Enkel hantering av produkter och ordrar.</li>
+            <li>Betalningslösningar integrerade med populära system.</li>
+            <li>Förtroende och säkerhet för dina kunder.</li>
+        </ul>
+        <p>Med Webstay kan du fokusera på din verksamhet medan vi ser till att tekniken fungerar. Låt oss ta hand om din webbshop, så kan du fokusera på att växa och utveckla din verksamhet.</p>
     </section>
 
     <!-- Steg för Steg sektion -->
     <section class="steps fade-in">
         <h2>Steg för Steg</h2>
         <div>
-            <p><strong>1. Klicka på "Beställ"-knappen:</strong> Gå till beställningssidan för att börja skapa din butik.</p>
-            <p><strong>2. Fyll i dina uppgifter:</strong> Ange din information och önskemål om din butik.</p>
-            <p><strong>3. Välj din design:</strong> Välj en design som passar din butik bäst.</p>
-            <p><strong>4. Uppdatera och publicera:</strong> När din butik är klar kan du enkelt uppdatera och publicera din webbplats.</p>
+            <p><strong>1. Klicka på "Beställ"-knappen:</strong> Gå till vår beställningssida för att skapa din butik.</p>
+            <p><strong>2. Fyll i dina uppgifter:</strong> Ange information om din butik och de funktioner du behöver.</p>
+            <p><strong>3. Välj din design:</strong> Välj en design som passar din stil och varumärke.</p>
+            <p><strong>4. Uppdatera och publicera:</strong> När din butik är klar, kan du uppdatera och publicera den när som helst.</p>
         </div>
     </section>
 
