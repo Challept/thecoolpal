@@ -14,7 +14,7 @@
 
         body, html {
             height: 100%;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
             background: linear-gradient(135deg, #a8c0ff, #3f9de2);
             display: flex;
@@ -30,42 +30,43 @@
 
         .main-container {
             text-align: center;
-            padding: 20px;
+            padding: 40px;
             position: relative;
             z-index: 2;
         }
 
         .headline {
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             color: #fff;
-        }
-
-        .countdown-timer {
-            font-size: 1.8em;
-            margin: 20px 0;
-            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeIn 2s ease-in-out;
         }
 
         /* Laddningsikon */
         .loader {
-            border: 12px solid #f3f3f3; /* Grå bakgrund */
-            border-top: 12px solid #4CAF50; /* Grön färg för toppranden */
+            border: 12px solid #f3f3f3;
+            border-top: 12px solid #4CAF50;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 2s linear infinite;
+            width: 70px;
+            height: 70px;
+            animation: spin 1.5s linear infinite;
             margin: 20px auto;
         }
 
-        /* Laddningsanimation */
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
-        /* Snowfall effect */
+        /* Snöflingor animation */
         .snow {
             position: absolute;
             top: 0;
@@ -80,26 +81,19 @@
             position: absolute;
             top: -10px;
             background-color: white;
-            opacity: 1;
+            opacity: 0.9;
             pointer-events: none;
             animation: fall 10s linear infinite;
             z-index: 10;
-            width: 5px;
-            height: 5px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
         }
 
         .snowflake:nth-child(odd) {
-            width: 8px;
-            height: 8px;
-            box-shadow: 0 0 3px rgba(255, 255, 255, 0.9);
-        }
-
-        .snowflake:nth-child(even) {
-            width: 6px;
-            height: 6px;
-            box-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
+            width: 10px;
+            height: 10px;
         }
 
         @keyframes fall {
@@ -108,14 +102,33 @@
             }
         }
 
-        /* För responsiv design */
+        /* Countdown timer */
+        .countdown-timer {
+            font-size: 1.8em;
+            margin: 30px 0;
+            color: #fff;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        /* Responsiv design */
         @media (max-width: 768px) {
             .headline {
-                font-size: 2em;
+                font-size: 2.5em;
             }
 
             .countdown-timer {
                 font-size: 1.5em;
+            }
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
             }
         }
     </style>
@@ -137,7 +150,7 @@
         <!-- Laddningsikon -->
         <div class="loader"></div>
 
-        <!-- Processmeddelande ersatt med laddningsikon -->
+        <!-- Processmeddelande (ändrad till laddningsikon) -->
         <div class="process-message" id="process-message">
             <p>Laddar systemet...</p>
         </div>
