@@ -4,258 +4,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Hem</title>
+    <title>Webstay.se - Hem</title>
     <style>
-        /* Grundinställningar */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
-        body, html {
-            height: 100%;
+        body {
             font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            line-height: 1.6;
             color: #fff;
-            background: linear-gradient(135deg, #2a2a2a, #333); /* Mörk gradient */
+            background: linear-gradient(to right, #0b0c10, #1f2833); /* Mörkare gradient */
+            height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Bakgrund med former och animationer */
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: #1c1c1c;
-            overflow: hidden;
-        }
-
-        .shape {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            animation: moveShape 15s infinite ease-in-out, pulse 3s infinite ease-in-out;
-        }
-
-        @keyframes moveShape {
-            0% {
-                transform: translate(50vw, 50vh);
-            }
-            50% {
-                transform: translate(20vw, 20vh);
-            }
-            100% {
-                transform: translate(50vw, 50vh);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 0.6;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0.3;
-            }
-        }
-
-        .shape-small {
-            width: 150px;
-            height: 150px;
-            animation-duration: 20s;
-        }
-
-        .shape-large {
-            width: 300px;
-            height: 300px;
-            animation-duration: 25s;
-        }
-
-        /* Header */
         header {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            text-align: center;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 0.1); /* Transparent header */
-            color: white;
-            text-align: center;
-            font-size: 30px;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 2s ease-in-out;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            z-index: 10;
         }
 
-        .logo {
-            font-size: 30px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            font-weight: bold;
+        nav ul {
+            list-style: none;
+            padding: 0;
         }
 
-        /* Knappar i headern */
-        .nav-buttons {
-            display: flex;
-            gap: 20px;
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
         }
 
-        .nav-buttons a {
-            color: white;
+        nav ul li a {
+            color: #fff;
             text-decoration: none;
-            font-size: 1.2em;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            border-radius: 8px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
         }
 
-        .nav-buttons a:hover {
-            background-color: #45a049;
+        nav ul li a:hover {
+            color: #4CAF50;
+        }
+
+        h1 {
+            margin-top: 70px;
+            font-size: 2.5em;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        main {
+            padding: 120px 20px 20px 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        section:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .cta-button:hover {
+            background: #0056b3;
             transform: scale(1.05);
         }
 
-        /* Dropdown meny (mobil) */
-        .dropdown {
-            display: none;
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
             position: absolute;
-            top: 60px;
-            right: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            width: 200px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            bottom: 0;
+            left: 0;
+            width: 100%;
         }
 
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
+        footer a {
+            color: #fff;
             text-decoration: none;
-            display: block;
-            text-align: left;
+            font-weight: bold;
         }
 
-        .dropdown-content a:hover {
-            background-color: #ddd;
+        footer a:hover {
+            text-decoration: underline;
         }
 
-        .dropdown-btn {
-            font-size: 30px;
-            background-color: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            display: none;
-        }
-
-        /* Meny vid mobil */
+        /* Responsiv design */
         @media (max-width: 768px) {
-            .nav-buttons {
-                display: none;
+            h1 {
+                font-size: 2em;
             }
 
-            .dropdown-btn {
-                display: block;
+            .cta-button {
+                font-size: 1em;
             }
 
-            .dropdown {
-                display: block;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                width: 200px;
-                border-radius: 8px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            }
-
-            .dropdown-content {
-                display: none;
-            }
-
-            .dropdown-btn.active + .dropdown-content {
-                display: block;
+            .cta-button {
+                width: 100%;
+                text-align: center;
             }
         }
 
-        /* Fade-in animation */
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
     </style>
 </head>
 
 <body>
 
-    <!-- Bakgrund med rörliga och pulserande former -->
-    <div class="background">
-        <div class="shape shape-small"></div>
-        <div class="shape shape-large"></div>
-    </div>
-
-    <!-- Header -->
     <header>
-        <!-- Logo som knapp -->
-        <div class="logo" onclick="window.location.href='home.html'">Webstay</div>
-
-        <!-- Knappar för desktop -->
-        <div class="nav-buttons">
-            <a href="order.html">Beställ</a>
-            <a href="https://admin.webstay.se" target="_blank">Admin</a>
-        </div>
-
-        <!-- Hamburger menu för mobil -->
-        <button class="dropdown-btn" onclick="toggleDropdown()">☰</button>
-        <div class="dropdown">
-            <div class="dropdown-content">
-                <a href="order.html">Beställ</a>
-                <a href="https://admin.webstay.se" target="_blank">Admin</a>
-            </div>
-        </div>
+        <nav>
+            <ul>
+                <li><a href="#about">Om Oss</a></li>
+                <li><a href="#services">Tjänster</a></li>
+                <li><a href="#projects">Projekt</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+        <h1>Välkommen till Webstay.se</h1>
     </header>
 
-    <!-- Main content -->
-    <div class="main-content">
-        <div class="title">Välkommen till Webstay</div>
-        <div class="description">
-            Din lösning för en enkel och effektiv onlinebutik. Här kan du skapa, anpassa och publicera din egen webbutik på några minuter.
-        </div>
-        <a href="order.html">
-            <button class="cta-button">Skapa din butik</button>
-        </a>
-    </div>
+    <main>
+        <section id="about">
+            <h2>Om Oss</h2>
+            <p>Vi är ett svenskt företag med expertis inom webbdesign och utveckling. Vårt mål är att skapa webbplatser som inte bara ser bra ut utan också fungerar perfekt för våra kunder. Vi erbjuder allt från skräddarsydd design till fullständiga webblösningar.</p>
+        </section>
 
-    <!-- Footer -->
+        <section id="services">
+            <h2>Tjänster</h2>
+            <ul>
+                <li>Webbdesign och utveckling</li>
+                <li>SEO-tjänster</li>
+                <li>Domänregistrering</li>
+                <li>Underhåll och support</li>
+            </ul>
+        </section>
+
+        <section id="projects">
+            <h2>Våra Projekt</h2>
+            <p>Vi har arbetat med många nöjda kunder och byggt en mängd olika webbplatser. Här är några exempel på vårt arbete:</p>
+            <ul id="project-list"></ul>
+            <button onclick="addProject()" class="cta-button">Lägg till projekt</button>
+        </section>
+
+        <section id="contact">
+            <h2>Kontakt</h2>
+            <p>Tveka inte att kontakta oss för mer information! Du kan nå oss på <a href="mailto:support@webstay.se">support@webstay.se</a></p>
+            <a href="mailto:support@webstay.se" class="cta-button">Kontakta Oss</a>
+        </section>
+    </main>
+
     <footer>
-        <p>Har du frågor? Kontakta oss på <a href="mailto:support@webstay.se">support@webstay.se</a></p>
+        <p>&copy; 2023 Webstay.se. Alla rättigheter förbehållna.</p>
     </footer>
 
     <script>
-        // Funktions för att toggla dropdown på mobil
-        function toggleDropdown() {
-            const dropdown = document.querySelector('.dropdown-btn');
-            const dropdownContent = document.querySelector('.dropdown-content');
-            dropdown.classList.toggle('active');
-            dropdownContent.classList.toggle('show');
+        function addProject() {
+            const projectList = document.getElementById('project-list');
+            const newProject = document.createElement('li');
+            newProject.textContent = "Nytt spännande projekt " + (projectList.children.length + 1);
+            projectList.appendChild(newProject);
         }
     </script>
-
 </body>
 
 </html>
