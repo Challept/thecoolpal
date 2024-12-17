@@ -21,20 +21,27 @@
             justify-content: center;
             align-items: center;
             color: #333;
-            background: linear-gradient(135deg, #a8c0ff, #3f9de2); /* Ljus gradient över hela sidan */
+            background: linear-gradient(135deg, #a8c0ff, #ff8a80); /* Ljus gradient från pastell-lila till rosa */
         }
 
-        /* Textanimering */
+        /* Färganimering för alla texter */
         @keyframes textAnimation {
             0% {
-                color: #4CAF50;
+                color: #ff8a80;
             }
+
             50% {
-                color: #ff6f61;
-            }
-            100% {
                 color: #4CAF50;
             }
+
+            100% {
+                color: #ff8a80;
+            }
+        }
+
+        /* Animation på alla texter */
+        .animate-text {
+            animation: textAnimation 4s ease-in-out infinite;
         }
 
         .main-container {
@@ -42,7 +49,6 @@
             padding: 40px;
             position: relative;
             z-index: 2;
-            animation: textAnimation 4s ease-in-out infinite;
         }
 
         .headline {
@@ -148,19 +154,19 @@
     <div class="snow" id="snow"></div>
 
     <div class="main-container">
-        <div class="headline">
+        <div class="headline animate-text">
             Webstay öppnar 25 februari 2025
         </div>
 
-        <div class="countdown-timer" id="timer">
+        <div class="countdown-timer animate-text" id="timer">
             Tiden kvar: <span id="time"></span>
         </div>
 
         <!-- Laddningsikon -->
         <div class="loader"></div>
 
-        <!-- Processmeddelande (ersatt med laddningsikon) -->
-        <div class="process-message" id="process-message">
+        <!-- Processmeddelande -->
+        <div class="process-message animate-text" id="process-message">
             <p>Laddar systemet...</p>
         </div>
     </div>
