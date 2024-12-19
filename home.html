@@ -5,12 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay.se - Hem</title>
+    <style>
+        /* Gör iframe responsiv */
+        .responsive-iframe {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+        }
+
+        .responsive-iframe iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Body styling för att centrera innehållet */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 
 <body>
-
-<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/proto/lozCm6A56inIs5I3rWYQfO/Figma-basics?node-id=4368-321106&p=f&t=ncE12SKXndqVRfUR-0&scaling=scale-down-width&content-scaling=fixed&page-id=1669%3A162202&embed-host=share" allowfullscreen></iframe>
-
+    <!-- Responsiv iframe -->
+    <div class="responsive-iframe">
+        <iframe 
+            src="https://embed.figma.com/proto/lozCm6A56inIs5I3rWYQfO/Figma-basics?node-id=4368-321106&p=f&t=ncE12SKXndqVRfUR-0&scaling=scale-down-width&content-scaling=fixed&page-id=1669%3A162202&embed-host=share"
+            allowfullscreen>
+        </iframe>
+    </div>
 </body>
 
 </html>
