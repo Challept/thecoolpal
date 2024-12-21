@@ -15,10 +15,9 @@
         body,
         html {
             height: 100%;
-            overflow: hidden; /* Tar bort scrolling */
+            overflow: hidden; /* Ingen scroll alls */
             font-family: 'Arial', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #1e3c72, #2a5298, #00c6ff); /* Ny gradient */
@@ -41,33 +40,31 @@
             }
         }
 
-        .main-container {
+        .container {
             text-align: center;
-            padding: 20px;
             max-width: 90%;
         }
 
         .headline {
-            font-size: 2.5em;
+            font-size: 1.8em;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .countdown-timer {
-            font-size: 1.5em;
-            margin: 20px 0;
+            font-size: 1.2em;
+            margin: 10px 0 20px;
         }
 
         .loader {
-            border: 8px solid rgba(255, 255, 255, 0.2);
-            border-top: 8px solid #00c6ff;
+            border: 6px solid rgba(255, 255, 255, 0.2);
+            border-top: 6px solid #00c6ff;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             animation: spin 1.2s linear infinite;
-            margin: 20px auto;
+            margin: 0 auto 20px;
         }
 
         @keyframes spin {
@@ -81,85 +78,39 @@
         }
 
         .team-section {
-    background: linear-gradient(135deg, #203a43, #2c5364);
-    color: #fff;
-    text-align: center;
-    padding: 60px 20px;
-}
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
-.team-container h2 {
-    font-size: 2.5em;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-}
+        .team-container h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
 
-.team-members {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
+        .team-member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 10px;
+        }
 
-.team-member {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-    width: 250px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
+        .team-member h3 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
 
-.team-member img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    border: 2px solid #fff;
-}
+        .team-member p {
+            font-size: 0.9em;
+            color: #ccc;
+        }
 
-.team-member h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-.team-member p {
-    font-size: 1em;
-    color: #ccc;
-}
-
-        .footer-section {
-    background: linear-gradient(135deg, #1e3c72, #2a5298);
-    color: #fff;
-    text-align: center;
-    padding: 20px 10px;
-}
-
-.footer-container {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.footer-container p {
-    font-size: 1em;
-    margin-bottom: 15px;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.social-links a img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
-}
-
-.social-links a img:hover {
-    transform: scale(1.2);
-}
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            text-align: center;
+        }
 
         /* Snöflingor animation */
         .snow {
@@ -169,26 +120,20 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: 1;
         }
 
         .snowflake {
             position: absolute;
             top: -10px;
             background-color: white;
-            opacity: 0.9;
+            opacity: 0.8;
             pointer-events: none;
             animation: fall 10s linear infinite;
-            z-index: -1;
             width: 6px;
             height: 6px;
             border-radius: 50%;
             box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
-        }
-
-        .snowflake:nth-child(odd) {
-            width: 10px;
-            height: 10px;
         }
 
         @keyframes fall {
@@ -202,34 +147,29 @@
 <body>
     <div class="snow" id="snow"></div>
 
-    <div class="main-container">
+    <div class="container">
         <div class="headline">
             Webstay öppnar 25 februari 2025
         </div>
-
         <div class="countdown-timer" id="timer">
             Tiden kvar: <span id="time"></span>
         </div>
-
         <div class="loader"></div>
 
-<section class="team-section">
-    <div class="team-container">
-        <h2>Möt Vårt Team</h2>
-        <div class="team-members">
-            <div class="team-member">
-                <h3>Charlie Wretling</h3>
-                <p>Grundare och Utvecklare</p>
+        <section class="team-section">
+            <div class="team-container">
+                <h2>Möt Vårt Team</h2>
+                <div class="team-member">
+                    <h3>Charlie Wretling</h3>
+                    <p>Grundare och Utvecklare</p>
+                </div>
             </div>
+        </section>
+
+        <div class="footer">
+            &copy; 2025 Webstay. Alla rättigheter förbehållna.
         </div>
     </div>
-</section>
-
-        <footer class="footer-section">
-    <div class="footer-container">
-        <p>&copy; 2025 Webstay. Alla rättigheter förbehållna.</p>
-    </div>
-</footer>
 
     <script>
         const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
@@ -242,7 +182,6 @@
             if (distance < 0) {
                 clearInterval(countdownInterval);
                 timerElement.innerHTML = "Webstay är nu öppen!";
-                window.location.href = "https://webstay.se/home";
                 return;
             }
 
