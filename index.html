@@ -12,70 +12,47 @@
             box-sizing: border-box;
         }
 
-        body, html {
+        body,
+        html {
             height: 100%;
             font-family: 'Arial', sans-serif;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: #333;
-            background: linear-gradient(135deg, #a8c0ff, #ff8a80); /* Ljus gradient från pastell-lila till rosa */
-        }
-
-        /* Färganimering för alla texter */
-        @keyframes textAnimation {
-            0% {
-                color: #ff8a80;
-            }
-
-            50% {
-                color: #4CAF50;
-            }
-
-            100% {
-                color: #ff8a80;
-            }
-        }
-
-        /* Animation på alla texter */
-        .animate-text {
-            animation: textAnimation 4s ease-in-out infinite;
+            background: linear-gradient(120deg, #4facfe, #00f2fe); /* Modern gradient */
         }
 
         .main-container {
             text-align: center;
-            padding: 40px;
+            padding: 20px;
+            max-width: 90%;
             position: relative;
-            z-index: 2;
         }
 
         .headline {
-            font-size: 3em;
+            font-size: 2.5em;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: #fff;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: fadeIn 2s ease-in-out;
+            letter-spacing: 1px;
         }
 
         .countdown-timer {
-            font-size: 1.8em;
-            margin: 30px 0;
+            font-size: 1.5em;
+            margin: 20px 0;
             color: #fff;
-            animation: fadeIn 3s ease-in-out;
         }
 
-        /* Laddningsikon */
         .loader {
-            border: 12px solid #f3f3f3;
-            border-top: 12px solid #4CAF50;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #00f2fe;
             border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            animation: spin 1.5s linear infinite;
+            width: 50px;
+            height: 50px;
+            animation: spin 1.2s linear infinite;
             margin: 20px auto;
         }
 
@@ -88,26 +65,63 @@
                 transform: rotate(360deg);
             }
         }
-                .about-section {
-            margin-top: 40px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
+
+        .about-section {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
+            max-width: 400px;
             text-align: center;
         }
 
         .about-section h2 {
-            font-size: 2em;
+            font-size: 1.8em;
             margin-bottom: 10px;
-            color: #4CAF50;
+            color: #4facfe;
         }
 
         .about-section p {
-            font-size: 1.2em;
-            color: #555;
+            font-size: 1em;
+            color: #333;
+            line-height: 1.5;
         }
+
+        @media (max-width: 768px) {
+            .headline {
+                font-size: 2em;
+            }
+
+            .countdown-timer {
+                font-size: 1.2em;
+            }
+
+            .about-section h2 {
+                font-size: 1.5em;
+            }
+
+            .about-section p {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .headline {
+                font-size: 1.8em;
+            }
+
+            .countdown-timer {
+                font-size: 1em;
+            }
+
+            .about-section h2 {
+                font-size: 1.2em;
+            }
+
+            .about-section p {
+                font-size: 0.8em;
+            }
 
         /* Snöflingor animation */
         .snow {
@@ -174,15 +188,14 @@
     <div class="snow" id="snow"></div>
 
     <div class="main-container">
-        <div class="headline animate-text">
+        <div class="headline">
             Webstay öppnar 25 februari 2025
         </div>
 
-        <div class="countdown-timer animate-text" id="timer">
+        <div class="countdown-timer" id="timer">
             Tiden kvar: <span id="time"></span>
         </div>
 
-        <!-- Laddningsikon -->
         <div class="loader"></div>
 
         <div class="about-section">
