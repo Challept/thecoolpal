@@ -80,62 +80,86 @@
             }
         }
 
-        .about-section {
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            max-width: 400px;
-        }
+        .team-section {
+    background: linear-gradient(135deg, #203a43, #2c5364);
+    color: #fff;
+    text-align: center;
+    padding: 60px 20px;
+}
 
-        .about-section h2 {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-            color: #00c6ff;
-        }
+.team-container h2 {
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
 
-        .about-section p {
-            font-size: 1em;
-            line-height: 1.5;
-        }
+.team-members {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 
-        /* Responsiv design */
-        @media (max-width: 768px) {
-            .headline {
-                font-size: 2em;
-            }
+.team-member {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-            .countdown-timer {
-                font-size: 1.2em;
-            }
+.team-member img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    border: 2px solid #fff;
+}
 
-            .about-section h2 {
-                font-size: 1.5em;
-            }
+.team-member h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
 
-            .about-section p {
-                font-size: 0.9em;
-            }
-        }
+.team-member p {
+    font-size: 1em;
+    color: #ccc;
+}
 
-        @media (max-width: 480px) {
-            .headline {
-                font-size: 1.8em;
-            }
+        .footer-section {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: #fff;
+    text-align: center;
+    padding: 20px 10px;
+}
 
-            .countdown-timer {
-                font-size: 1em;
-            }
+.footer-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-            .about-section h2 {
-                font-size: 1.2em;
-            }
+.footer-container p {
+    font-size: 1em;
+    margin-bottom: 15px;
+}
 
-            .about-section p {
-                font-size: 0.8em;
-            }
-        }
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-links a img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.social-links a img:hover {
+    transform: scale(1.2);
+}
 
         /* Snöflingor animation */
         .snow {
@@ -189,11 +213,23 @@
 
         <div class="loader"></div>
 
-        <div class="about-section">
-            <h2>Om oss</h2>
-            <p>Vi är ett företag som säljer, bygger och låter folk hosta hemsidor på ett enkelt och smidigt sätt. Vårt mål är att erbjuda professionella lösningar som är tillgängliga för alla.</p>
+<section class="team-section">
+    <div class="team-container">
+        <h2>Möt Vårt Team</h2>
+        <div class="team-members">
+            <div class="team-member">
+                <h3>Charlie Wretling</h3>
+                <p>Grundare och Utvecklare</p>
+            </div>
         </div>
     </div>
+</section>
+
+        <footer class="footer-section">
+    <div class="footer-container">
+        <p>&copy; 2025 Webstay. Alla rättigheter förbehållna.</p>
+    </div>
+</footer>
 
     <script>
         const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
