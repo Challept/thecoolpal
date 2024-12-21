@@ -15,27 +15,42 @@
         body,
         html {
             height: 100%;
+            overflow: hidden; /* Tar bort scrolling */
             font-family: 'Arial', sans-serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: #333;
-            background: linear-gradient(120deg, #4facfe, #00f2fe); /* Modern gradient */
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #00c6ff); /* Ny gradient */
+            background-size: 300% 300%; /* För animation */
+            animation: gradientAnimation 8s ease infinite;
+            color: #fff;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         .main-container {
             text-align: center;
             padding: 20px;
             max-width: 90%;
-            position: relative;
         }
 
         .headline {
             font-size: 2.5em;
             font-weight: bold;
             margin-bottom: 20px;
-            color: #fff;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -43,12 +58,11 @@
         .countdown-timer {
             font-size: 1.5em;
             margin: 20px 0;
-            color: #fff;
         }
 
         .loader {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #00f2fe;
+            border: 8px solid rgba(255, 255, 255, 0.2);
+            border-top: 8px solid #00c6ff;
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -68,26 +82,25 @@
 
         .about-section {
             margin-top: 30px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             max-width: 400px;
-            text-align: center;
         }
 
         .about-section h2 {
             font-size: 1.8em;
             margin-bottom: 10px;
-            color: #4facfe;
+            color: #00c6ff;
         }
 
         .about-section p {
             font-size: 1em;
-            color: #333;
             line-height: 1.5;
         }
 
+        /* Responsiv design */
         @media (max-width: 768px) {
             .headline {
                 font-size: 2em;
@@ -122,6 +135,7 @@
             .about-section p {
                 font-size: 0.8em;
             }
+        }
 
         /* Snöflingor animation */
         .snow {
@@ -158,33 +172,10 @@
                 transform: translateY(100vh);
             }
         }
-
-        /* Responsiv design */
-        @media (max-width: 768px) {
-            .headline {
-                font-size: 2.5em;
-            }
-
-            .countdown-timer {
-                font-size: 1.5em;
-            }
-        }
-
-        /* Fade-in animation */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 
 <body>
-
     <div class="snow" id="snow"></div>
 
     <div class="main-container">
@@ -205,31 +196,30 @@
     </div>
 
     <script>
-const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
-const timerElement = document.getElementById("time");
+        const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
+        const timerElement = document.getElementById("time");
 
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = countdownDate - now;
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
 
-    if (distance < 0) {
-        clearInterval(countdownInterval);
-        timerElement.innerHTML = "Webstay är nu öppen!";
-        // Om timern är slut, omdirigera användaren till webstay.se/home
-        window.location.href = "https://webstay.se/home";
-        return;
-    }
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                timerElement.innerHTML = "Webstay är nu öppen!";
+                window.location.href = "https://webstay.se/home";
+                return;
+            }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-}
+            timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
 
-const countdownInterval = setInterval(updateCountdown, 1000);
-updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
 
         // Skapa snöflingor
         function createSnowflakes() {
@@ -248,7 +238,6 @@ updateCountdown();
 
         createSnowflakes();
     </script>
-
 </body>
 
 </html>
