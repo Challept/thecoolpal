@@ -76,6 +76,60 @@
                 transform: rotate(360deg);
             }
         }
+        
+        /* Button container */
+.button-container {
+    text-align: center;
+    margin-top: 20px; /* Anpassa efter behov */
+}
+
+/* Button styles */
+.animated-button {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    background: linear-gradient(45deg, #ff512f, #dd2476);
+    border-radius: 50px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover effect */
+.animated-button:hover {
+    background: linear-gradient(45deg, #dd2476, #ff512f);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    transform: translateY(-3px);
+}
+
+/* Background animation */
+.animated-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: skewX(-45deg);
+    transition: left 0.6s ease;
+    z-index: 1;
+}
+
+/* Hover animation for shine effect */
+.animated-button:hover::before {
+    left: 100%;
+}
+
+/* Button text layer */
+.animated-button span {
+    position: relative;
+    z-index: 2;
+}
 
         .team-section {
             background: rgba(255, 255, 255, 0.1);
@@ -155,6 +209,10 @@
             Tiden kvar: <span id="time"></span>
         </div>
         <div class="loader"></div>
+        
+        <div class="button-container">
+        <a href="ex.html" class="animated-button">Förväntningsplan</a>
+        </div>
 
         <section class="team-section">
             <div class="team-container">
