@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Förväntningsplan för Webstay</title>
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            background: linear-gradient(120deg, #001f3f, #0074d9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .content {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0;
+            text-align: left;
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        p {
+            margin: 10px 0;
+        }
+
+        ul {
+            margin: 10px 0 20px 20px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Förväntningsplan för Webstay</h1>
+    <div class="content" id="content">
+        <h2>Slutet av 2025</h2>
+        <p>
+            Webstay siktar på att avsluta 2025 starkt. 
+        </p>
+        <p>
+            Målet är att ha över 150 kunder och en total 
+            årsintäkt på 200,000 SEK.
+        </p>
+        <p>
+            Prenumerationsintäkterna förväntas nå 15,000 SEK 
+            per månad vid årets slut.
+        </p>
+        <p>
+            Expansion till hela Skandinavien och fler samarbeten 
+            står i fokus.
+        </p>
+
+        <h2>2026</h2>
+        <p>
+            Under 2026 ska Webstay fördubbla kundbasen 
+            till 300 kunder.
+        </p>
+        <p>
+            Årsintäkten förväntas stiga till 500,000 SEK 
+            med månatliga prenumerationer på 30,000 SEK.
+        </p>
+        <p>
+            Nya avancerade funktioner som AI-drivna 
+            webbplatsanpassningar ska lanseras.
+        </p>
+
+        <h2>2027</h2>
+        <p>
+            År 2027 är målet att bli den ledande plattformen 
+            för webbplatstjänster i Skandinavien.
+        </p>
+        <p>
+            Webstay ska nå 500 kunder och en total årsintäkt 
+            på 1,000,000 SEK.
+        </p>
+        <p>
+            Expansion till fler europeiska marknader, som 
+            Tyskland och Nederländerna, planeras.
+        </p>
+        <p>
+            Prenumerationsintäkterna förväntas nå 
+            50,000 SEK per månad.
+        </p>
+
+        <h2>Strategi</h2>
+        <ul>
+            <li>Fokusera på TikTok och Instagram-annonser.</li>
+            <li>Samarbeta med influencers för att nå småföretag.</li>
+            <li>Lansera nya AI-drivna funktioner.</li>
+            <li>Erbjud lojalitetsprogram för återkommande kunder.</li>
+            <li>Expandera till fler länder i Europa.</li>
+        </ul>
+
+        <h2>Slutmål för 2027</h2>
+        <ul>
+            <li>500+ kunder totalt.</li>
+            <li>Årsintäkter: 1,000,000 SEK.</li>
+            <li>Prenumerationer: 50,000 SEK per månad.</li>
+            <li>Webstay som ledande plattform i Europa.</li>
+        </ul>
+    </div>
+    <footer>
+        Skapad av Webstay | © 2027
+    </footer>
+    <script>
+        // Text write animation
+        const content = document.getElementById('content');
+        const text = content.innerHTML; // Get the original text
+        content.innerHTML = ''; // Clear the content to prepare for the animation
+        content.style.opacity = 1;
+
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                content.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 20); // Adjust speed of the typing effect
+            }
+        }
+
+        // Start the animation
+        window.onload = typeWriter;
+    </script>
+</body>
+</html>
