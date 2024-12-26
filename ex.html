@@ -14,128 +14,161 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
+            padding: 20px 10px;
         }
 
-        .content {
-            width: 90%;
-            max-width: 800px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-            font-size: 1.2rem;
-            line-height: 1.6;
-            opacity: 0;
-            text-align: left;
-        }
-
-        footer {
-            margin-top: 20px;
+        h1 {
+            font-size: 1.8rem;
             text-align: center;
-            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            text-align: left;
+            overflow: hidden;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            margin: 15px 0 10px;
+            color: #f9dc5c;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         p {
-            margin: 10px 0;
+            margin: 8px 0;
         }
 
         ul {
-            margin: 10px 0 20px 20px;
+            margin: 10px 0 15px 20px;
+            padding-left: 0;
         }
 
         ul li {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
+        }
+
+        .content {
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1em;
+            background: white;
+            animation: blink 0.7s step-start infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                background: transparent;
+            }
+        }
+
+        footer {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                font-size: 0.85rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                font-size: 0.8rem;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            h2 {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Förväntningsplan för Webstay</h1>
-    <div class="content" id="content">
-        <h2>Slutet av 2025</h2>
-        <p>
-            Webstay siktar på att avsluta 2025 starkt. 
-        </p>
-        <p>
-            Målet är att ha över 150 kunder och en total 
-            årsintäkt på 200,000 SEK.
-        </p>
-        <p>
-            Prenumerationsintäkterna förväntas nå 15,000 SEK 
-            per månad vid årets slut.
-        </p>
-        <p>
-            Expansion till hela Skandinavien och fler samarbeten 
-            står i fokus.
-        </p>
-
-        <h2>2026</h2>
-        <p>
-            Under 2026 ska Webstay fördubbla kundbasen 
-            till 300 kunder.
-        </p>
-        <p>
-            Årsintäkten förväntas stiga till 500,000 SEK 
-            med månatliga prenumerationer på 30,000 SEK.
-        </p>
-        <p>
-            Nya avancerade funktioner som AI-drivna 
-            webbplatsanpassningar ska lanseras.
-        </p>
-
-        <h2>2027</h2>
-        <p>
-            År 2027 är målet att bli den ledande plattformen 
-            för webbplatstjänster i Skandinavien.
-        </p>
-        <p>
-            Webstay ska nå 500 kunder och en total årsintäkt 
-            på 1,000,000 SEK.
-        </p>
-        <p>
-            Expansion till fler europeiska marknader, som 
-            Tyskland och Nederländerna, planeras.
-        </p>
-        <p>
-            Prenumerationsintäkterna förväntas nå 
-            50,000 SEK per månad.
-        </p>
-
-        <h2>Strategi</h2>
-        <ul>
-            <li>Fokusera på TikTok och Instagram-annonser.</li>
-            <li>Samarbeta med influencers för att nå småföretag.</li>
-            <li>Lansera nya AI-drivna funktioner.</li>
-            <li>Erbjud lojalitetsprogram för återkommande kunder.</li>
-            <li>Expandera till fler länder i Europa.</li>
-        </ul>
-
-        <h2>Slutmål för 2027</h2>
-        <ul>
-            <li>500+ kunder totalt.</li>
-            <li>Årsintäkter: 1,000,000 SEK.</li>
-            <li>Prenumerationer: 50,000 SEK per månad.</li>
-            <li>Webstay som ledande plattform i Europa.</li>
-        </ul>
+    <div class="container">
+        <div class="content" id="content"></div>
+        <span class="cursor" id="cursor"></span>
     </div>
     <footer>
         Skapad av Webstay | © 2027
     </footer>
     <script>
-        // Text write animation
-        const content = document.getElementById('content');
-        const text = content.innerHTML; // Get the original text
-        content.innerHTML = ''; // Clear the content to prepare for the animation
-        content.style.opacity = 1;
+        // Original text
+        const text = `
+Slutet av 2025:
+Webstay siktar på att avsluta 2025 starkt.
+Målet är att ha över 150 kunder och en total årsintäkt på 200,000 SEK.
+Prenumerationsintäkterna förväntas nå 15,000 SEK per månad vid årets slut.
+Expansion till hela Skandinavien och fler samarbeten står i fokus.
 
+2026:
+Under 2026 ska Webstay fördubbla kundbasen till 300 kunder.
+Årsintäkten förväntas stiga till 500,000 SEK med månatliga prenumerationer på 30,000 SEK.
+Nya avancerade funktioner som AI-drivna webbplatsanpassningar ska lanseras.
+
+2027:
+År 2027 är målet att bli den ledande plattformen för webbplatstjänster i Skandinavien.
+Webstay ska nå 500 kunder och en total årsintäkt på 1,000,000 SEK.
+Expansion till fler europeiska marknader, som Tyskland och Nederländerna, planeras.
+Prenumerationsintäkterna förväntas nå 50,000 SEK per månad.
+
+Strategi:
+- Fokusera på TikTok och Instagram-annonser.
+- Samarbeta med influencers för att nå småföretag.
+- Lansera nya AI-drivna funktioner.
+- Erbjud lojalitetsprogram för återkommande kunder.
+- Expandera till fler länder i Europa.
+
+Slutmål för 2027:
+- 500+ kunder totalt.
+- Årsintäkter: 1,000,000 SEK.
+- Prenumerationer: 50,000 SEK per månad.
+- Webstay som ledande plattform i Europa.
+`;
+
+        const contentElement = document.getElementById("content");
+        const cursorElement = document.getElementById("cursor");
         let index = 0;
 
         function typeWriter() {
             if (index < text.length) {
-                content.innerHTML += text.charAt(index);
+                contentElement.textContent += text.charAt(index);
                 index++;
-                setTimeout(typeWriter, 20); // Adjust speed of the typing effect
+                setTimeout(typeWriter, 20); // Adjust speed of typing effect
+            } else {
+                cursorElement.style.display = "none"; // Hide cursor when done
             }
         }
 
