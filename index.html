@@ -17,8 +17,9 @@
             overflow: hidden; /* Förhindra scroll */
             font-family: 'Arial', sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: space-evenly;
             background: linear-gradient(120deg, #001f3f, #0074d9, #00c6ff);
             background-size: 300% 300%;
             animation: gradientBackground 10s ease infinite;
@@ -31,73 +32,37 @@
             100% { background-position: 0% 50%; }
         }
 
-        .container {
-            text-align: center;
-            max-width: 90%;
-        }
-
-        /* Titel med färgväxling */
+        /* Glitch-titel */
         .headline {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             text-transform: uppercase;
             text-align: center;
-            margin-bottom: 20px;
-            animation: colorShift 3s linear infinite;
-        }
-
-        @keyframes colorShift {
-            0% { color: #f9dc5c; }
-            33% { color: #ff512f; }
-            66% { color: #00c6ff; }
-            100% { color: #f9dc5c; }
-        }
-
-        /* Knappstil */
-        .button-container {
-            text-align: center;
-        }
-
-        .animated-button {
-            display: inline-block;
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-            background: linear-gradient(45deg, #004e92, #000428);
-            border-radius: 50px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
             position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
         }
 
-        .animated-button:hover {
-            background: linear-gradient(45deg, #000428, #004e92);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            transform: translateY(-3px);
-        }
-
-        .animated-button::before {
-            content: '';
+        .headline::before,
+        .headline::after {
+            content: attr(data-text);
             position: absolute;
             top: 0;
             left: 0;
-            height: 100%;
-            width: 0;
-            background: rgba(255, 255, 255, 0.2);
-            transition: width 3s linear;
-            z-index: 1;
-        }
-
-        .animated-button:hover::before {
             width: 100%;
+            color: #ff512f;
+            z-index: -1;
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+            animation: glitch 1.5s infinite linear alternate-reverse;
         }
 
-        .animated-button span {
-            position: relative;
-            z-index: 2;
+        .headline::after {
+            color: #f9dc5c;
+            clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(2px, 2px); }
+            50% { transform: translate(-2px, -2px); }
+            100% { transform: translate(1px, -1px); }
         }
 
         /* Countdown Timer */
@@ -106,45 +71,90 @@
             margin: 20px 0;
         }
 
-        /* Snöflingor */
-        .snow {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* Scen för kub */
+        .scene {
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .cube {
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 8s infinite linear;
         }
 
-        .snowflake {
+        .cube-face {
             position: absolute;
-            top: -10px;
-            background-color: white;
-            opacity: 0.8;
-            animation: fall 10s linear infinite;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
-        @keyframes fall {
-            to { transform: translateY(100vh); }
+        .cube-face:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .cube-face:nth-child(1) { transform: rotateY(0deg) translateZ(100px); }
+        .cube-face:nth-child(2) { transform: rotateY(90deg) translateZ(100px); }
+        .cube-face:nth-child(3) { transform: rotateY(180deg) translateZ(100px); }
+        .cube-face:nth-child(4) { transform: rotateY(-90deg) translateZ(100px); }
+        .cube-face:nth-child(5) { transform: rotateX(90deg) translateZ(100px); }
+        .cube-face:nth-child(6) { transform: rotateX(-90deg) translateZ(100px); }
+
+        @keyframes rotateCube {
+            0% { transform: rotateX(0deg) rotateY(0deg); }
+            25% { transform: rotateX(90deg) rotateY(45deg); }
+            50% { transform: rotateX(180deg) rotateY(90deg); }
+            75% { transform: rotateX(270deg) rotateY(135deg); }
+            100% { transform: rotateX(360deg) rotateY(180deg); }
+        }
+
+        /* Informationstext */
+        .info {
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 20px;
+            color: #f9dc5c;
         }
     </style>
 </head>
 <body>
-    <!-- Snöflingor -->
-    <div class="snow" id="snow"></div>
+    <!-- Titel med glitch-effekt -->
+    <div class="headline" id="animatedHeadline" data-text="Webstay öppnar 25 februari 2025">Webstay öppnar 25 februari 2025</div>
 
-    <!-- Innehåll -->
-    <div class="container">
-        <div class="headline" id="animatedHeadline">Webstay öppnar 25 februari 2025</div>
-        <div class="countdown-timer" id="timer">Tiden kvar: <span id="time"></span></div>
-        <div class="button-container">
-            <a href="#" class="animated-button" id="animatedButton">Förväntningsplan</a>
+    <!-- Countdown Timer -->
+    <div class="countdown-timer" id="timer">Tiden kvar: <span id="time"></span></div>
+
+    <!-- Knapp -->
+    <div class="button-container">
+        <a href="#" class="animated-button" id="animatedButton">Förväntningsplan</a>
+    </div>
+
+    <!-- Kubsektionen -->
+    <div class="scene">
+        <div class="cube" id="cube">
+            <div class="cube-face">Sida 1</div>
+            <div class="cube-face">Sida 2</div>
+            <div class="cube-face">Sida 3</div>
+            <div class="cube-face">Sida 4</div>
+            <div class="cube-face">Sida 5</div>
+            <div class="cube-face">Sida 6</div>
         </div>
     </div>
+
+    <!-- Information om Webstay -->
+    <div class="info" id="infoText">Klicka på kuben för mer om Webstay!</div>
 
     <script>
         // Countdown-timer
@@ -163,8 +173,8 @@
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000)) / 1000);
 
             timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
@@ -172,28 +182,24 @@
         const countdownInterval = setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Snöflingor
-        function createSnowflakes() {
-            const snowContainer = document.getElementById("snow");
-            const snowflakeCount = 100;
+        // Kub-interaktivitet
+        const infoText = document.getElementById('infoText');
+        const cubeFaces = document.querySelectorAll('.cube-face');
 
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement("div");
-                snowflake.classList.add("snowflake");
-                snowflake.style.left = `${Math.random() * 100}vw`;
-                snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-                snowflake.style.animationDelay = `${Math.random() * 5}s`;
-                snowContainer.appendChild(snowflake);
-            }
-        }
+        const webstayInfo = [
+            "Webstay: Din portal till framtiden.",
+            "Bygg din webbplats enkelt med Webstay.",
+            "Webstay öppnar 25 februari 2025.",
+            "Fokusera på tillväxt med Webstay.",
+            "Webstay: Din digitala partner.",
+            "Snabbt och enkelt - bara med Webstay."
+        ];
 
-        createSnowflakes();
-
-        // Knappnavigering
-        const button = document.getElementById("animatedButton");
-        button.addEventListener("click", (e) => {
-            e.preventDefault();
-            window.location.href = "ex.html";
+        cubeFaces.forEach(face => {
+            face.addEventListener('click', () => {
+                const randomText = webstayInfo[Math.floor(Math.random() * webstayInfo.length)];
+                infoText.textContent = randomText;
+            });
         });
     </script>
 </body>
