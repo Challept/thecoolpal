@@ -23,81 +23,12 @@
             align-items: center;
         }
 
-        /* Första skärmen */
-        .water-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            overflow: hidden;
-        }
-
-        /* 2D-kub */
-        .cube-container {
-            position: relative;
-            width: 250px;
-            height: 250px;
+        canvas {
+            display: block;
             border: 4px solid #00ffff;
-            background: rgba(0, 0, 0, 0.8);
-            overflow: hidden;
-            animation: rotateCube 30s linear infinite;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
-            transform-origin: center;
         }
 
-        @keyframes rotateCube {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Vatten */
-        .water {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 50%; /* Halvfyllt */
-            background: linear-gradient(to top, #007BFF, #0056b3);
-            transform-origin: center bottom;
-            animation: tiltWater 30s linear infinite;
-        }
-
-        @keyframes tiltWater {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-10deg); }
-            50% { transform: rotate(0deg); }
-            75% { transform: rotate(10deg); }
-            100% { transform: rotate(0deg); }
-        }
-
-        /* Vågeffekter */
-        .water::before, .water::after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            width: 200%;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.3);
-            opacity: 0.5;
-            border-radius: 50%;
-            animation: wave 2s infinite ease-in-out;
-        }
-
-        .water::after {
-            top: -25px;
-            animation-delay: 1s;
-        }
-
-        @keyframes wave {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-50px); }
-        }
-
-        /* Titelsektion */
         .title-container {
             display: none;
             flex-direction: column;
@@ -165,11 +96,7 @@
 </head>
 <body>
     <!-- Första skärmen -->
-    <div class="water-screen">
-        <div class="cube-container">
-            <div class="water"></div>
-        </div>
-    </div>
+    <canvas id="cubeCanvas" width="300" height="300"></canvas>
 
     <!-- Titelsektion -->
     <div class="title-container">
@@ -186,9 +113,107 @@
     </div>
 
     <script>
+        // Inställningar för Canvas och fysik
+        const canvas = document.getElementById("cubeCanvas");
+        const ctx = canvas.getContext("2d");
+
+        const cubeSize = 300;
+        const waterParticles = [];
+        const particleCount = 500;
+        const gravity = 0.3;
+        const rotationSpeed = 0.01;
+
+        let angle = 0;
+
+        // Skapa vattenpartiklar
+        for (let i = 0; i < particleCount; i++) {
+            waterParticles.push({
+                x: Math.random() * cubeSize,
+                y: Math.random() * (cubeSize / 2) + cubeSize / 2,
+                vx: 0,
+                vy: 0,
+            });
+        }
+
+        // Uppdatera vattenpartiklar
+        function updateParticles() {
+            for (let particle of waterParticles) {
+                // Gravitation
+                particle.vy += gravity;
+
+                // Rörelse
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+
+                // Håll partiklar inom kubens gränser
+                if (particle.x < 0) {
+                    particle.x = 0;
+                    particle.vx *= -0.5;
+                }
+                if (particle.x > cubeSize) {
+                    particle.x = cubeSize;
+                    particle.vx *= -0.5;
+                }
+                if (particle.y > cubeSize) {
+                    particle.y = cubeSize;
+                    particle.vy *= -0.5;
+                }
+            }
+        }
+
+        // Rotera kuben
+        function rotateCube() {
+            angle += rotationSpeed;
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+
+            for (let particle of waterParticles) {
+                const x = particle.x - cubeSize / 2;
+                const y = particle.y - cubeSize / 2;
+
+                particle.x = cos * x - sin * y + cubeSize / 2;
+                particle.y = sin * x + cos * y + cubeSize / 2;
+            }
+        }
+
+        // Rendera kub och vatten
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Rita kubens ram
+            ctx.save();
+            ctx.translate(cubeSize / 2, cubeSize / 2);
+            ctx.rotate(angle);
+            ctx.translate(-cubeSize / 2, -cubeSize / 2);
+
+            ctx.strokeStyle = "#00ffff";
+            ctx.lineWidth = 4;
+            ctx.strokeRect(0, 0, cubeSize, cubeSize);
+
+            // Rita vattenpartiklar
+            ctx.fillStyle = "#007BFF";
+            for (let particle of waterParticles) {
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.restore();
+        }
+
+        // Animationsslinga
+        function animate() {
+            updateParticles();
+            rotateCube();
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
         // Visa titelsektionen efter 30 sekunder
         setTimeout(() => {
-            document.querySelector('.water-screen').style.display = 'none';
+            canvas.style.display = "none";
             document.querySelector('.title-container').style.display = 'flex';
         }, 30000);
 
