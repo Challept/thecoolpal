@@ -1,43 +1,34 @@
 <!DOCTYPE html>
 <html lang="sv">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay</title>
     <style>
+        /* Allmänna stilar */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body,
-        html {
+        html, body {
             height: 100%;
-            overflow: hidden; /* Ingen scroll alls */
+            overflow: hidden; /* Förhindra scroll */
             font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #1e3c72, #2a5298, #00c6ff); /* Ny gradient */
-            background-size: 300% 300%; /* För animation */
-            animation: gradientAnimation 8s ease infinite;
-            color: #fff;
+            background: linear-gradient(120deg, #001f3f, #0074d9, #00c6ff);
+            background-size: 300% 300%;
+            animation: gradientBackground 10s ease infinite;
+            color: white;
         }
 
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+        @keyframes gradientBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
@@ -45,150 +36,77 @@
             max-width: 90%;
         }
 
-/* Container styling */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(120deg, #001f3f, #0074d9);
-    font-family: 'Arial', sans-serif;
-    color: white;
-}
-
-/* Headline text styling */
-.headline {
-    font-size: 1.8em;
-    font-weight: bold;
-    text-transform: uppercase;
-    text-align: center;
-    opacity: 0; /* Start hidden */
-    animation: fadeInOut 3s infinite;
-}
-
-/* Animation for fading in and out */
-@keyframes fadeInOut {
-    0%, 100% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-}
-
-        .countdown-timer {
-            font-size: 1.2em;
-            margin: 10px 0 20px;
+        /* Titel med färgväxling */
+        .headline {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: colorShift 3s linear infinite;
         }
 
-        .loader {
-            border: 6px solid rgba(255, 255, 255, 0.2);
-            border-top: 6px solid #00c6ff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1.2s linear infinite;
-            margin: 0 auto 20px;
+        @keyframes colorShift {
+            0% { color: #f9dc5c; }
+            33% { color: #ff512f; }
+            66% { color: #00c6ff; }
+            100% { color: #f9dc5c; }
         }
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        
-/* Button container */
-.button-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-/* Button styles */
-.animated-button {
-    display: inline-block;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-    background: linear-gradient(45deg, #004e92, #000428);
-    border-radius: 50px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Hover effect */
-.animated-button:hover {
-    background: linear-gradient(45deg, #000428, #004e92);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    transform: translateY(-3px);
-}
-
-/* Loading animation on hover */
-.animated-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: width 2s linear; /* Adjust duration for animation */
-    z-index: 1;
-}
-
-.animated-button:hover::before {
-    width: 100%;
-}
-
-/* Button text layer */
-.animated-button span {
-    position: relative;
-    z-index: 2;
-}
-
-        .team-section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .team-container h2 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-
-        .team-member {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .team-member h3 {
-            font-size: 1.2em;
-            margin-bottom: 5px;
-        }
-
-        .team-member p {
-            font-size: 0.9em;
-            color: #ccc;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 0.9em;
+        /* Knappstil */
+        .button-container {
             text-align: center;
         }
 
-        /* Snöflingor animation */
+        .animated-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #004e92, #000428);
+            border-radius: 50px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .animated-button:hover {
+            background: linear-gradient(45deg, #000428, #004e92);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .animated-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 0;
+            background: rgba(255, 255, 255, 0.2);
+            transition: width 3s linear;
+            z-index: 1;
+        }
+
+        .animated-button:hover::before {
+            width: 100%;
+        }
+
+        .animated-button span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Countdown Timer */
+        .countdown-timer {
+            font-size: 1rem;
+            margin: 20px 0;
+        }
+
+        /* Snöflingor */
         .snow {
             position: absolute;
             top: 0;
@@ -196,7 +114,6 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 1;
         }
 
         .snowflake {
@@ -204,7 +121,6 @@
             top: -10px;
             background-color: white;
             opacity: 0.8;
-            pointer-events: none;
             animation: fall 10s linear infinite;
             width: 6px;
             height: 6px;
@@ -213,58 +129,25 @@
         }
 
         @keyframes fall {
-            to {
-                transform: translateY(100vh);
-            }
+            to { transform: translateY(100vh); }
         }
     </style>
 </head>
-
 <body>
+    <!-- Snöflingor -->
     <div class="snow" id="snow"></div>
 
-<div class="container">
-    <div class="headline" id="animatedHeadline">Webstay öppnar 25 februari 2025</div>
-</div>
-        <div class="countdown-timer" id="timer">
-            Tiden kvar: <span id="time"></span>
-        </div>
-        
-<div class="button-container">
-    <a href="#" class="animated-button" id="animatedButton">Förväntningsplan</a>
-</div>
-
-<script>
-    // Hämta knappen
-    const button = document.getElementById('animatedButton');
-
-    // När musen hovrar över knappen
-    button.addEventListener('mouseover', () => {
-        // Lägg till laddningsklass för att trigga CSS-animation
-        button.classList.add('loading');
-
-    // När musen lämnar knappen, återställ klass
-    button.addEventListener('mouseleave', () => {
-        button.classList.remove('loading');
-    });
-</script>
-
-        <section class="team-section">
-            <div class="team-container">
-                <h2>Möt Vårt Team</h2>
-                <div class="team-member">
-                    <h3>Charlie Wretling</h3>
-                    <p>Grundare och Utvecklare</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="footer">
-            &copy; 2025 Webstay. Alla rättigheter förbehållna.
+    <!-- Innehåll -->
+    <div class="container">
+        <div class="headline" id="animatedHeadline">Webstay öppnar 25 februari 2025</div>
+        <div class="countdown-timer" id="timer">Tiden kvar: <span id="time"></span></div>
+        <div class="button-container">
+            <a href="#" class="animated-button" id="animatedButton">Förväntningsplan</a>
         </div>
     </div>
 
     <script>
+        // Countdown-timer
         const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
         const timerElement = document.getElementById("time");
 
@@ -289,7 +172,7 @@
         const countdownInterval = setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Skapa snöflingor
+        // Snöflingor
         function createSnowflakes() {
             const snowContainer = document.getElementById("snow");
             const snowflakeCount = 100;
@@ -305,7 +188,13 @@
         }
 
         createSnowflakes();
+
+        // Knappnavigering
+        const button = document.getElementById("animatedButton");
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.location.href = "ex.html";
+        });
     </script>
 </body>
-
 </html>
