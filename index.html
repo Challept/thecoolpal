@@ -59,7 +59,6 @@
             position: relative;
             letter-spacing: 2px;
             color: rgba(255, 255, 255, 0.9);
-            overflow: visible;
         }
 
         /* Laser-effekt */
@@ -77,13 +76,6 @@
         @keyframes laserScan {
             0% { left: -150%; }
             100% { left: 150%; }
-        }
-
-        /* Countdown Timer */
-        .countdown-timer {
-            font-size: clamp(1rem, 2vw, 1.5rem);
-            margin: 20px 0;
-            text-align: center;
         }
 
         /* Knappstil */
@@ -111,25 +103,61 @@
             transform: translateY(-3px);
         }
 
-        .animated-button::before {
+        /* Kvadrat med vatten */
+        .square-container {
+            position: absolute;
+            bottom: 50px;
+            width: 150px;
+            height: 150px;
+            background: transparent;
+            border: 2px solid #007BFF;
+            overflow: hidden;
+            animation: rotateSquare 10s linear infinite;
+        }
+
+        .liquid {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 50%;
+            background: #007BFF;
+            opacity: 0.8;
+            animation: wave 4s infinite ease-in-out;
+            transform: rotate(0deg);
+        }
+
+        .liquid::before, .liquid::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 0;
-            background: rgba(255, 255, 255, 0.2);
-            transition: width 3s linear;
-            z-index: 1;
-        }
-
-        .animated-button:hover::before {
+            top: -25%;
             width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 45%;
+            animation: inherit;
         }
 
-        .animated-button span {
-            position: relative;
-            z-index: 2;
+        .liquid::after {
+            left: 50%;
+            animation-delay: -2s;
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateX(-25%) translateY(-5%) rotate(0deg);
+            }
+        }
+
+        @keyframes rotateSquare {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
@@ -143,6 +171,11 @@
     <!-- Knapp -->
     <div class="button-container">
         <a href="https://webstay.se/ex" class="animated-button">Förväntningsplan</a>
+    </div>
+
+    <!-- Kvadrat med animerat vatten -->
+    <div class="square-container">
+        <div class="liquid"></div>
     </div>
 
     <script>
