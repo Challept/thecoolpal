@@ -44,35 +44,76 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Snurrande kvadrat */
-        .square-container {
+        /* Rotating Cube */
+        .cube-container {
             position: relative;
             width: 150px;
             height: 150px;
-            border: 2px solid #007BFF;
-            overflow: hidden;
-            animation: rotateSquare 6s linear infinite;
             transform-style: preserve-3d;
+            animation: rotateCube 10s linear infinite;
         }
 
-        .liquid {
+        .cube-face {
             position: absolute;
-            bottom: 0;
+            width: 150px;
+            height: 150px;
+            border: 2px solid rgba(0, 123, 255, 0.4);
+            background: rgba(0, 123, 255, 0.1);
+        }
+
+        .cube-face.front { transform: translateZ(75px); }
+        .cube-face.back { transform: rotateY(180deg) translateZ(75px); }
+        .cube-face.right { transform: rotateY(90deg) translateZ(75px); }
+        .cube-face.left { transform: rotateY(-90deg) translateZ(75px); }
+        .cube-face.top { transform: rotateX(90deg) translateZ(75px); }
+        .cube-face.bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+        /* Mini Galaxy Inside */
+        .galaxy {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .planet {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(circle, #ffcc00, #ff9900);
+            border-radius: 50%;
+            animation: orbitPlanet 4s linear infinite;
+        }
+
+        .stars {
+            position: absolute;
             width: 100%;
-            height: 50%;
-            background: #007BFF;
-            border-radius: 50% 50% 0 0;
-            transform-origin: bottom;
+            height: 100%;
+            background: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 10px 10px;
+            animation: twinkleStars 2s infinite alternate;
         }
 
         /* Animationer */
-        @keyframes rotateSquare {
+        @keyframes rotateCube {
             0% {
                 transform: rotateX(0deg) rotateY(0deg);
             }
             100% {
                 transform: rotateX(360deg) rotateY(360deg);
             }
+        }
+
+        @keyframes orbitPlanet {
+            0% { transform: rotate(0deg) translateX(40px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+        }
+
+        @keyframes twinkleStars {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -88,36 +129,45 @@
         <a href="https://webstay.se/ex" class="animated-button">Förväntningsplan</a>
     </div>
 
-    <!-- Kvadrat med animerat vatten -->
-    <div class="square-container" id="square">
-        <div class="liquid" id="liquid"></div>
+    <!-- Rotating Cube with Mini Galaxy -->
+    <div class="cube-container">
+        <div class="cube-face front"></div>
+        <div class="cube-face back"></div>
+        <div class="cube-face right"></div>
+        <div class="cube-face left"></div>
+        <div class="cube-face top"></div>
+        <div class="cube-face bottom"></div>
+        <div class="galaxy">
+            <div class="stars"></div>
+            <div class="planet"></div>
+        </div>
     </div>
 
     <script>
-        // Dynamisk justering av vattenets position
-        const square = document.getElementById("square");
-        const liquid = document.getElementById("liquid");
+        // Countdown-timer
+        const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
+        const timerElement = document.getElementById("time");
 
-        function updateWaterPosition() {
-            const rotation = getComputedStyle(square).transform;
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
 
-            if (rotation && rotation !== "none") {
-                const matrix = rotation.match(/matrix3d\((.+)\)/);
-                if (matrix) {
-                    const values = matrix[1].split(", ");
-                    const yRotation = parseFloat(values[5]); // Vatten påverkas av Y-rotation
-
-                    // Justera vattennivån baserat på rotation
-                    const liquidHeight = Math.max(25, 50 + yRotation * 50);
-                    liquid.style.height = `${liquidHeight}%`;
-                }
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                timerElement.innerHTML = "Webstay är nu öppen!";
+                return;
             }
 
-            requestAnimationFrame(updateWaterPosition);
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % 1000) / 1000);
+
+            timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
 
-        // Starta animationen
-        updateWaterPosition();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
     </script>
 </body>
 </html>
