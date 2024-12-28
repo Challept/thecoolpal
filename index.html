@@ -16,12 +16,12 @@
             height: 100%;
             width: 100%;
             font-family: 'Poppins', sans-serif;
-            background: #000;
+            background: linear-gradient(135deg, #001f3f, #000428, #001d3f);
             overflow: hidden;
         }
 
         /* Första skärmen */
-        .water-screen {
+        .glitch-screen {
             position: fixed;
             top: 0;
             left: 0;
@@ -30,92 +30,63 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #001f3f, #000428, #001d3f);
             z-index: 10;
-            overflow: hidden;
         }
 
-        /* Glitch-bakgrund */
-        .glitch-bg {
+        /* Glitchande rektangel */
+        .glitch-rectangle {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            border: 3px solid rgba(255, 255, 255, 0.7);
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.3);
+            animation: glitch 2s infinite;
+        }
+
+        /* Glitch-effekter */
+        .glitch-rectangle::before,
+        .glitch-rectangle::after {
+            content: '';
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0d0d0d, #001f3f);
-            background-size: 200% 200%;
-            animation: glitchBackground 5s infinite alternate;
+            background: inherit;
+            z-index: -1;
         }
 
-        @keyframes glitchBackground {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
+        .glitch-rectangle::before {
+            transform: translate(-2px, -2px);
+            opacity: 0.8;
+            animation: glitchBefore 1s infinite linear;
         }
 
-        /* Sprickor i vattnet */
-        .water-crack {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(0, 123, 255, 0.2);
-            border-radius: 50%;
-            animation: crackEffect 5s forwards ease-out;
+        .glitch-rectangle::after {
+            transform: translate(2px, 2px);
+            opacity: 0.6;
+            animation: glitchAfter 1s infinite linear;
         }
 
-        @keyframes crackEffect {
-            0% { transform: scale(0); opacity: 1; }
-            100% { transform: scale(3); opacity: 0; }
+        @keyframes glitch {
+            0% { transform: translate(0, 0); }
+            33% { transform: translate(2px, -2px); }
+            66% { transform: translate(-2px, 2px); }
+            100% { transform: translate(0, 0); }
         }
 
-        /* Droppande vatten */
-        .water-drop {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            width: 10px;
-            height: 20px;
-            background: rgba(0, 123, 255, 0.8);
-            border-radius: 50%;
-            animation: dropFall 2s infinite ease-in;
+        @keyframes glitchBefore {
+            0% { transform: translate(2px, -2px); }
+            50% { transform: translate(-3px, 3px); }
+            100% { transform: translate(2px, -2px); }
         }
 
-        .water-drop:nth-child(2) { left: 60%; animation-delay: 0.5s; }
-        .water-drop:nth-child(3) { left: 40%; animation-delay: 1s; }
-
-        @keyframes dropFall {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(100vh); opacity: 0; }
-        }
-
-        /* Moln */
-        .cloud {
-            position: absolute;
-            top: 20%;
-            width: 200px;
-            height: 100px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: cloudMove 8s linear infinite;
-        }
-
-        .cloud:nth-child(1) {
-            left: -200px;
-            animation-delay: 0s;
-        }
-
-        .cloud:nth-child(2) {
-            top: 40%;
-            left: -300px;
-            animation-delay: 2s;
-        }
-
-        .cloud:nth-child(3) {
-            top: 60%;
-            left: -400px;
-            animation-delay: 4s;
-        }
-
-        @keyframes cloudMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(110vw); }
+        @keyframes glitchAfter {
+            0% { transform: translate(-2px, 2px); }
+            50% { transform: translate(3px, -3px); }
+            100% { transform: translate(-2px, 2px); }
         }
 
         /* Titelsektion */
@@ -143,10 +114,10 @@
             color: #fff;
             position: relative;
             overflow: hidden;
-            animation: glitch 2s infinite;
+            animation: glitchTitle 2s infinite;
         }
 
-        @keyframes glitch {
+        @keyframes glitchTitle {
             0% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff0099; }
             50% { text-shadow: -3px -3px #ff0099, 3px 3px #00ffcc; }
             100% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff0099; }
@@ -186,15 +157,8 @@
 </head>
 <body>
     <!-- Första skärmen -->
-    <div class="water-screen">
-        <div class="glitch-bg"></div>
-        <div class="water-crack"></div>
-        <div class="water-drop"></div>
-        <div class="water-drop"></div>
-        <div class="water-drop"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
+    <div class="glitch-screen">
+        <div class="glitch-rectangle"></div>
     </div>
 
     <!-- Titelsektion -->
@@ -214,7 +178,7 @@
     <script>
         // Visa titelsektionen efter 5 sekunder
         setTimeout(() => {
-            document.querySelector('.water-screen').style.display = 'none';
+            document.querySelector('.glitch-screen').style.display = 'none';
             document.querySelector('.title-container').style.display = 'flex';
         }, 5000);
 
