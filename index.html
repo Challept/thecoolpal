@@ -16,88 +16,122 @@
             height: 100%;
             width: 100%;
             font-family: 'Courier New', monospace;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             background: #000;
             overflow: hidden;
-            color: white;
         }
 
-        /* Bakgrundsgradient */
-        body::before {
-            content: '';
-            position: absolute;
+        /* Fullskärmskvadrat med vatten */
+        .water-screen {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: linear-gradient(to bottom, #007BFF, #0056b3);
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            animation: fillWater 1.5s ease-in forwards;
+            z-index: 10;
+        }
+
+        @keyframes fillWater {
+            0% { transform: scaleY(1); }
+            100% { transform: scaleY(0); }
+        }
+
+        /* Titelsektion */
+        .title-container {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
             background: linear-gradient(135deg, #001f3f, #000428, #001d3f);
-            background-size: 300% 300%;
-            animation: gradientBackground 15s ease infinite;
-            z-index: -1;
+            color: white;
+            animation: fadeIn 1s ease-in forwards;
         }
 
-        @keyframes gradientBackground {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        /* Text med Water Ripple Effekt */
-        .cool-text {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            color: rgba(0, 255, 255, 0.9);
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-            animation: rippleEffect 2s infinite ease-in-out;
+        /* Glitch-animation för titeln */
+        .headline {
+            font-size: clamp(3rem, 7vw, 5rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+            animation: glitch 2s infinite;
         }
 
-        @keyframes rippleEffect {
-            0%, 100% { transform: scale(1); text-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
-            50% { transform: scale(1.1); text-shadow: 0 0 30px rgba(0, 255, 255, 1); }
+        @keyframes glitch {
+            0% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff0099; }
+            50% { text-shadow: -3px -3px #ff0099, 3px 3px #00ffcc; }
+            100% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff0099; }
         }
 
         /* Nedräkning */
         .countdown {
-            margin-top: 20px;
             font-size: clamp(2rem, 4vw, 3rem);
+            margin: 20px 0;
             color: rgba(0, 255, 255, 0.8);
             text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
         }
 
-        /* Vatteneffekt */
-        .water {
-            position: absolute;
-            top: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 200px;
-            background: rgba(0, 123, 255, 0.8);
-            border-radius: 50%;
-            animation: waterDrop 3s infinite ease-in-out;
-            z-index: 1;
+        /* Knapp */
+        .button-container {
+            margin-top: 20px;
         }
 
-        @keyframes waterDrop {
-            0% { transform: translateX(-50%) translateY(-200px) scale(1); opacity: 0.8; }
-            50% { transform: translateX(-50%) translateY(0) scale(1.2); opacity: 1; }
-            100% { transform: translateX(-50%) translateY(200px) scale(0.5); opacity: 0; }
+        .animated-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .animated-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
-    <!-- Text med Water Ripple Effekt -->
-    <div class="cool-text">Webstay öppnar snart</div>
+    <!-- Startanimation: Kvadrat med vatten -->
+    <div class="water-screen"></div>
 
-    <!-- Nedräkning -->
-    <div class="countdown" id="countdown"></div>
+    <!-- Titelsektion -->
+    <div class="title-container">
+        <!-- Titel med glitch -->
+        <div class="headline">Webstay öppnar snart</div>
 
-    <!-- Vatteneffekt -->
-    <div class="water"></div>
+        <!-- Nedräkning -->
+        <div class="countdown" id="countdown"></div>
+
+        <!-- Knapp -->
+        <div class="button-container">
+            <a href="https://webstay.se/ex" class="animated-button">Förväntning till olika år</a>
+        </div>
+    </div>
 
     <script>
+        // Visa titelsektionen efter 1.5 sekunder
+        setTimeout(() => {
+            document.querySelector('.water-screen').style.display = 'none';
+            document.querySelector('.title-container').style.display = 'flex';
+        }, 1500);
+
         // Nedräkning
         const countdownElement = document.getElementById("countdown");
         const targetDate = new Date("February 25, 2025 00:00:00").getTime();
@@ -113,8 +147,8 @@
 
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % 1000) / 1000);
 
             countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
