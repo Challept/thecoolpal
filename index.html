@@ -58,6 +58,7 @@
             font-weight: bold;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
         }
 
         /* Knapp */
@@ -101,15 +102,15 @@
             left: 100%;
         }
 
-        /* 2D Kub med vatten och hål */
+        /* Kub med vatten */
         .cube {
             position: relative;
             width: 150px;
             height: 150px;
-            border: 3px solid #007BFF;
+            border: 4px solid #007BFF;
             overflow: hidden;
             background: rgba(0, 0, 0, 0.2);
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
             margin-top: 40px;
         }
 
@@ -117,35 +118,50 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-            height: 60%;
+            height: 100%;
             background: linear-gradient(135deg, #007BFF, #0056b3);
-            animation: wave 2s infinite ease-in-out;
-            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            animation: waterFlow 3s infinite ease-in-out;
         }
 
-        /* Hål i kuben */
-        .hole {
+        /* Vattenflöde */
+        .water::after {
+            content: '';
             position: absolute;
-            bottom: 10px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 30px;
-            height: 30px;
-            background: black;
+            width: 40px;
+            height: 20px;
+            background: linear-gradient(to bottom, #007BFF, transparent);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            z-index: 1;
+            animation: waterOut 3s infinite ease-in-out;
         }
 
         /* Animationer */
-        @keyframes wave {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-15px); }
+        @keyframes waterFlow {
+            0%, 100% { height: 100%; }
+            50% { height: 95%; }
         }
 
-        @keyframes waterFlow {
-            0%, 100% { height: 60%; }
-            50% { height: 58%; }
+        @keyframes waterOut {
+            0%, 100% { height: 20px; }
+            50% { height: 30px; }
+        }
+
+        /* Vågor */
+        .waves {
+            position: absolute;
+            bottom: 0;
+            width: 200%;
+            height: 30%;
+            background: radial-gradient(circle, #007BFF 20%, transparent 21%);
+            background-size: 20px 20px;
+            animation: waveMove 4s infinite linear;
+        }
+
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
     </style>
 </head>
@@ -160,10 +176,11 @@
         <a href="https://webstay.se/ex" class="animated-button">Se Mer</a>
     </div>
 
-    <!-- Kub med vatten och hål -->
+    <!-- Kub med vatten och vågor -->
     <div class="cube">
-        <div class="water"></div>
-        <div class="hole"></div>
+        <div class="water">
+            <div class="waves"></div>
+        </div>
     </div>
 </body>
 </html>
