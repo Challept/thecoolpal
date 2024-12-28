@@ -113,71 +113,43 @@
     </div>
 
     <script>
-        // Inställningar för Canvas och fysik
+        // Inställningar för Canvas och partiklar
         const canvas = document.getElementById("cubeCanvas");
         const ctx = canvas.getContext("2d");
 
         const cubeSize = 300;
-        const waterParticles = [];
-        const particleCount = 500;
-        const gravity = 0.3;
+        const particleCount = 200; // Antal prickar
+        const particles = [];
         const rotationSpeed = 0.01;
-
         let angle = 0;
 
         // Skapa vattenpartiklar
         for (let i = 0; i < particleCount; i++) {
-            waterParticles.push({
+            particles.push({
                 x: Math.random() * cubeSize,
-                y: Math.random() * (cubeSize / 2) + cubeSize / 2,
-                vx: 0,
-                vy: 0,
+                y: Math.random() * cubeSize,
+                vx: Math.random() * 2 - 1,
+                vy: Math.random() * 2 - 1,
             });
         }
 
-        // Uppdatera vattenpartiklar
+        // Uppdatera partiklar
         function updateParticles() {
-            for (let particle of waterParticles) {
-                // Gravitation
-                particle.vy += gravity;
-
-                // Rörelse
+            for (let particle of particles) {
                 particle.x += particle.vx;
                 particle.y += particle.vy;
 
+                // Gravitationseffekt
+                particle.vy += 0.05;
+
                 // Håll partiklar inom kubens gränser
-                if (particle.x < 0) {
-                    particle.x = 0;
-                    particle.vx *= -0.5;
-                }
-                if (particle.x > cubeSize) {
-                    particle.x = cubeSize;
-                    particle.vx *= -0.5;
-                }
-                if (particle.y > cubeSize) {
-                    particle.y = cubeSize;
-                    particle.vy *= -0.5;
-                }
+                if (particle.x < 0 || particle.x > cubeSize) particle.vx *= -1;
+                if (particle.y < 0 || particle.y > cubeSize) particle.vy *= -1;
             }
         }
 
-        // Rotera kuben
-        function rotateCube() {
-            angle += rotationSpeed;
-            const cos = Math.cos(angle);
-            const sin = Math.sin(angle);
-
-            for (let particle of waterParticles) {
-                const x = particle.x - cubeSize / 2;
-                const y = particle.y - cubeSize / 2;
-
-                particle.x = cos * x - sin * y + cubeSize / 2;
-                particle.y = sin * x + cos * y + cubeSize / 2;
-            }
-        }
-
-        // Rendera kub och vatten
-        function draw() {
+        // Rendera kub och vattenpartiklar
+        function drawCube() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Rita kubens ram
@@ -192,20 +164,22 @@
 
             // Rita vattenpartiklar
             ctx.fillStyle = "#007BFF";
-            for (let particle of waterParticles) {
+            for (let particle of particles) {
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
                 ctx.fill();
             }
 
             ctx.restore();
+
+            // Uppdatera rotation
+            angle += rotationSpeed;
         }
 
         // Animationsslinga
         function animate() {
             updateParticles();
-            rotateCube();
-            draw();
+            drawCube();
             requestAnimationFrame(animate);
         }
 
