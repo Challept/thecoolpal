@@ -14,7 +14,8 @@
 
         html, body {
             height: 100%;
-            font-family: 'Arial', sans-serif;
+            width: 100%;
+            font-family: 'Courier New', monospace;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -60,134 +61,63 @@
             color: rgba(255, 255, 255, 0.9);
             text-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
             position: relative;
-            overflow: hidden;
         }
 
-        /* Avancerad laserlinje */
+        /* Horisontell laser */
         .laser-scan {
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 200%;
-            height: 100%;
-            background: rgba(0, 255, 255, 0.15);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
-            transform: skewX(-30deg);
-            animation: laserEffect 4s infinite linear;
-            z-index: 2;
-        }
-
-        @keyframes laserEffect {
-            0% { left: -150%; }
-            100% { left: 150%; }
-        }
-
-        /* Laserspår på text */
-        .headline::before {
-            content: '';
             position: absolute;
             top: 50%;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: rgba(0, 255, 255, 0.8);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
-            animation: laserTrail 4s infinite linear;
-            z-index: 3;
+            height: 5px;
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
+            transform: translateY(-50%);
+            animation: horizontalLaser 4s infinite linear;
+            z-index: 2;
         }
 
-        @keyframes laserTrail {
-            0% { top: 120%; }
-            50% { top: 50%; }
-            100% { top: -20%; }
+        @keyframes horizontalLaser {
+            0% { transform: translateY(-150%); }
+            50% { transform: translateY(0); }
+            100% { transform: translateY(150%); }
         }
 
-        /* Knapp */
-        .button-container {
-            margin-top: 20px;
-        }
-
-        .animated-button {
-            display: inline-block;
-            padding: 20px 40px;
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-            background: linear-gradient(45deg, #007BFF, #0056b3);
+        /* Kodutskrift */
+        .code-container {
+            width: 90%;
+            max-width: 800px;
+            height: 50vh;
+            background: #101010;
+            padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .animated-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .animated-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: skewX(-45deg);
-            transition: all 0.3s ease;
-        }
-
-        .animated-button:hover::before {
-            left: 100%;
-        }
-
-        /* Kub med vatten */
-        .cube {
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
             position: relative;
-            width: 150px;
-            height: 150px;
-            border: 4px solid #007BFF;
+        }
+
+        .code {
+            color: #00ff00;
+            font-size: 1rem;
+            line-height: 1.5rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.2);
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.8);
-            margin-top: 40px;
         }
 
-        .water {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #007BFF, #0056b3);
-            animation: waterFlow 3s infinite ease-in-out;
+        /* Simulerad kod-markör */
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.5rem;
+            background: #00ff00;
+            animation: blink 0.6s infinite;
         }
 
-        /* Vattenflöde */
-        .water::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 20px;
-            background: linear-gradient(to bottom, #007BFF, transparent);
-            border-radius: 50%;
-            animation: waterOut 3s infinite ease-in-out;
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
-
-        @keyframes waterFlow {
-            0%, 100% { height: 100%; }
-            50% { height: 95%; }
-        }
-
-        @keyframes waterOut {
-            0%, 100% { height: 20px; }
-            50% { height: 30px; }
-        }
-
     </style>
 </head>
 <body>
@@ -199,14 +129,66 @@
         </div>
     </div>
 
-    <!-- Knapp -->
-    <div class="button-container">
-        <a href="https://webstay.se/ex" class="animated-button">Se Mer</a>
+    <!-- Kodsimulering -->
+    <div class="code-container">
+        <div class="code" id="code"></div>
     </div>
 
-    <!-- Kub med vatten -->
-    <div class="cube">
-        <div class="water"></div>
+    <script>
+        // Kodinnehåll
+        const codeContent = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulated Code</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #101010;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hello, Webstay!</h1>
     </div>
+    <script>
+        console.log('Webstay is live!');
+    </script>
+</body>
+</html>`;
+
+        const codeContainer = document.getElementById("code");
+        let index = 0;
+
+        function typeCode() {
+            if (index < codeContent.length) {
+                const char = codeContent[index];
+                codeContainer.innerHTML += char === "\n" ? "<br>" : char;
+                index++;
+                window.scrollTo(0, document.body.scrollHeight); // Följ texten
+                setTimeout(typeCode, 50); // Hastighet på text
+            } else {
+                setTimeout(() => {
+                    index = 0;
+                    codeContainer.innerHTML = ""; // Börja om
+                    typeCode();
+                }, 2000); // Paus innan omstart
+            }
+        }
+
+        typeCode();
+    </script>
 </body>
 </html>
