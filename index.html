@@ -18,10 +18,13 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #001f3f, #000428, #001d3f);
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         /* Första skärmen */
-        .glitch-screen {
+        .water-screen {
             position: fixed;
             top: 0;
             left: 0;
@@ -31,62 +34,67 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
-        }
-
-        /* Glitchande rektangel */
-        .glitch-rectangle {
-            position: relative;
-            width: 300px;
-            height: 150px;
-            background: linear-gradient(135deg, #007BFF, #0056b3);
-            border: 3px solid rgba(255, 255, 255, 0.7);
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.5), 0 0 40px rgba(0, 123, 255, 0.3);
-            animation: glitch 2s infinite;
         }
 
-        /* Glitch-effekter */
-        .glitch-rectangle::before,
-        .glitch-rectangle::after {
+        /* 2D-kub */
+        .cube-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            border: 4px solid #00ffff;
+            background: rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            animation: rotateCube 30s linear infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
+            transform-origin: center;
+        }
+
+        @keyframes rotateCube {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Vatten */
+        .water {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50%; /* Halvfyllt */
+            background: linear-gradient(to top, #007BFF, #0056b3);
+            transform-origin: center bottom;
+            animation: tiltWater 30s linear infinite;
+        }
+
+        @keyframes tiltWater {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            50% { transform: rotate(0deg); }
+            75% { transform: rotate(10deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        /* Vågeffekter */
+        .water::before, .water::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: inherit;
-            z-index: -1;
+            top: -20px;
+            width: 200%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 0.5;
+            border-radius: 50%;
+            animation: wave 2s infinite ease-in-out;
         }
 
-        .glitch-rectangle::before {
-            transform: translate(-2px, -2px);
-            opacity: 0.8;
-            animation: glitchBefore 1s infinite linear;
+        .water::after {
+            top: -25px;
+            animation-delay: 1s;
         }
 
-        .glitch-rectangle::after {
-            transform: translate(2px, 2px);
-            opacity: 0.6;
-            animation: glitchAfter 1s infinite linear;
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0, 0); }
-            33% { transform: translate(2px, -2px); }
-            66% { transform: translate(-2px, 2px); }
-            100% { transform: translate(0, 0); }
-        }
-
-        @keyframes glitchBefore {
-            0% { transform: translate(2px, -2px); }
-            50% { transform: translate(-3px, 3px); }
-            100% { transform: translate(2px, -2px); }
-        }
-
-        @keyframes glitchAfter {
-            0% { transform: translate(-2px, 2px); }
-            50% { transform: translate(3px, -3px); }
-            100% { transform: translate(-2px, 2px); }
+        @keyframes wave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-50px); }
         }
 
         /* Titelsektion */
@@ -157,8 +165,10 @@
 </head>
 <body>
     <!-- Första skärmen -->
-    <div class="glitch-screen">
-        <div class="glitch-rectangle"></div>
+    <div class="water-screen">
+        <div class="cube-container">
+            <div class="water"></div>
+        </div>
     </div>
 
     <!-- Titelsektion -->
@@ -176,11 +186,11 @@
     </div>
 
     <script>
-        // Visa titelsektionen efter 5 sekunder
+        // Visa titelsektionen efter 30 sekunder
         setTimeout(() => {
-            document.querySelector('.glitch-screen').style.display = 'none';
+            document.querySelector('.water-screen').style.display = 'none';
             document.querySelector('.title-container').style.display = 'flex';
-        }, 5000);
+        }, 30000);
 
         // Nedräkning
         const countdownElement = document.getElementById("countdown");
