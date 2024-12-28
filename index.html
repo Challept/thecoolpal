@@ -80,7 +80,7 @@
 /* Button container */
 .button-container {
     text-align: center;
-    margin-top: 20px; /* Anpassa efter behov */
+    margin-top: 20px;
 }
 
 /* Button styles */
@@ -106,29 +106,103 @@
     transform: translateY(-3px);
 }
 
-/* Background animation */
+/* Loading animation on hover */
 .animated-button::before {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
-    width: 300%;
+    left: 0;
     height: 100%;
+    width: 0%;
     background: rgba(255, 255, 255, 0.2);
-    transform: skewX(-45deg);
-    transition: left 0.6s ease;
+    transition: width 2s linear; /* Adjust duration for animation */
     z-index: 1;
 }
 
-/* Hover animation for shine effect */
 .animated-button:hover::before {
-    left: 100%;
+    width: 100%;
 }
 
 /* Button text layer */
 .animated-button span {
     position: relative;
     z-index: 2;
+}
+
+        /* Form container */
+.shape-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 50px auto;
+}
+
+/* Circle */
+.circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #004e92, #000428);
+    transform: translate(-50%, -50%);
+    animation: move-circle 4s infinite ease-in-out;
+}
+
+/* Square */
+.square {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #dd2476, #ff512f);
+    transform: rotate(45deg);
+    animation: move-square 4s infinite alternate;
+}
+
+/* Triangle */
+.triangle {
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 100px solid #f9dc5c;
+    animation: move-triangle 4s infinite alternate-reverse;
+}
+
+/* Circle animation */
+@keyframes move-circle {
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(-60%, -60%);
+    }
+}
+
+/* Square animation */
+@keyframes move-square {
+    0% {
+        transform: rotate(45deg) translate(0, 0);
+    }
+    100% {
+        transform: rotate(45deg) translate(50px, 50px);
+    }
+}
+
+/* Triangle animation */
+@keyframes move-triangle {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-30px, -30px);
+    }
 }
 
         .team-section {
@@ -208,11 +282,61 @@
         <div class="countdown-timer" id="timer">
             Tiden kvar: <span id="time"></span>
         </div>
-        <div class="loader"></div>
+
+        <div class="shape-container">
+    <div class="circle"></div>
+    <div class="square"></div>
+    <div class="triangle"></div>
+</div>
+
+<script>
+    // Dynamisk effekt: Ändra färger över tid
+    const circle = document.querySelector('.circle');
+    const square = document.querySelector('.square');
+    const triangle = document.querySelector('.triangle');
+
+    setInterval(() => {
+        // Ändra färger dynamiskt
+        circle.style.background = `linear-gradient(45deg, ${getRandomColor()}, ${getRandomColor()})`;
+        square.style.background = `linear-gradient(45deg, ${getRandomColor()}, ${getRandomColor()})`;
+        triangle.style.borderBottomColor = getRandomColor();
+    }, 2000);
+
+    // Funktion för slumpmässiga färger
+    function getRandomColor() {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+</script>
         
-        <div class="button-container">
-        <a href="ex.html" class="animated-button">Förväntningsplan</a>
-        </div>
+<div class="button-container">
+    <a href="#" class="animated-button" id="animatedButton">Förväntningsplan</a>
+</div>
+
+<script>
+    // Hämta knappen
+    const button = document.getElementById('animatedButton');
+
+    // När musen hovrar över knappen
+    button.addEventListener('mouseover', () => {
+        // Lägg till laddningsklass för att trigga CSS-animation
+        button.classList.add('loading');
+
+        // Vänta 3 sekunder innan omdirigering
+        setTimeout(() => {
+            window.location.href = 'ex.html'; // Navigera till ex.html
+        }, 3000); // 3 sekunder matchar CSS-animationen
+    });
+
+    // När musen lämnar knappen, återställ klass
+    button.addEventListener('mouseleave', () => {
+        button.classList.remove('loading');
+    });
+</script>
 
         <section class="team-section">
             <div class="team-container">
