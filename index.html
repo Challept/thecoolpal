@@ -20,10 +20,22 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(120deg, #001f3f, #0074d9, #00c6ff);
-            background-size: 300% 300%;
-            animation: gradientBackground 10s ease infinite;
+            background: #000; /* Mörkare bakgrund */
             color: white;
+        }
+
+        /* Bakgrundsgradient med animation */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, #001f3f, #000428, #001d3f);
+            background-size: 300% 300%;
+            animation: gradientBackground 15s ease infinite;
+            z-index: -1;
         }
 
         @keyframes gradientBackground {
@@ -39,25 +51,41 @@
             text-transform: uppercase;
             position: relative;
             text-align: center;
-            color: white;
-            overflow: hidden;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .headline::before, .headline::after {
-            content: attr(data-text);
+        .glitch-letter {
+            display: inline-block;
+            position: relative;
+        }
+
+        .glitch-letter::before, .glitch-letter::after {
+            content: attr(data-char);
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
             color: #ff512f;
-            z-index: -1;
             opacity: 0;
+            z-index: -1;
             transform: translate(0, 0);
+        }
+
+        .glitch-letter::after {
+            color: #00c6ff;
+        }
+
+        @keyframes glitchLetter {
+            0%, 100% { opacity: 0; transform: translate(0, 0); }
+            20% { opacity: 1; transform: translate(-2px, -2px); }
+            40% { opacity: 1; transform: translate(2px, 2px); }
+            60% { opacity: 1; transform: translate(-1px, 1px); }
+            80% { opacity: 1; transform: translate(1px, -1px); }
         }
 
         /* Countdown Timer */
         .countdown-timer {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin: 20px 0;
         }
 
@@ -73,17 +101,16 @@
             font-weight: bold;
             color: white;
             text-decoration: none;
-            background: linear-gradient(45deg, #004e92, #000428);
+            background: linear-gradient(45deg, #222, #111);
             border-radius: 50px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
         .animated-button:hover {
-            background: linear-gradient(45deg, #000428, #004e92);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(45deg, #444, #222);
             transform: translateY(-3px);
         }
 
@@ -107,41 +134,42 @@
             position: relative;
             z-index: 2;
         }
-
-        /* Snöflingor */
-        .snow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            background-color: white;
-            opacity: 0.8;
-            animation: fall 10s linear infinite;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
-        }
-
-        @keyframes fall {
-            to { transform: translateY(100vh); }
-        }
     </style>
 </head>
 <body>
-    <!-- Snöflingor -->
-    <div class="snow" id="snow"></div>
-
     <!-- Glitch-titel -->
-    <div class="headline" id="animatedHeadline" data-text="Webstay öppnar 25 februari 2025">
-        Webstay öppnar 25 februari 2025
+    <div class="headline" id="animatedHeadline">
+        <span class="glitch-letter" data-char="W">W</span>
+        <span class="glitch-letter" data-char="e">e</span>
+        <span class="glitch-letter" data-char="b">b</span>
+        <span class="glitch-letter" data-char="s">s</span>
+        <span class="glitch-letter" data-char="t">t</span>
+        <span class="glitch-letter" data-char="a">a</span>
+        <span class="glitch-letter" data-char="y">y</span>
+        <span class="glitch-letter" data-char=" "> </span>
+        <span class="glitch-letter" data-char="ö">ö</span>
+        <span class="glitch-letter" data-char="p">p</span>
+        <span class="glitch-letter" data-char="p">p</span>
+        <span class="glitch-letter" data-char="n">n</span>
+        <span class="glitch-letter" data-char="a">a</span>
+        <span class="glitch-letter" data-char="r">r</span>
+        <span class="glitch-letter" data-char=" "> </span>
+        <span class="glitch-letter" data-char="2">2</span>
+        <span class="glitch-letter" data-char="5">5</span>
+        <span class="glitch-letter" data-char=" "> </span>
+        <span class="glitch-letter" data-char="f">f</span>
+        <span class="glitch-letter" data-char="e">e</span>
+        <span class="glitch-letter" data-char="b">b</span>
+        <span class="glitch-letter" data-char="r">r</span>
+        <span class="glitch-letter" data-char="u">u</span>
+        <span class="glitch-letter" data-char="a">a</span>
+        <span class="glitch-letter" data-char="r">r</span>
+        <span class="glitch-letter" data-char="i">i</span>
+        <span class="glitch-letter" data-char=" "> </span>
+        <span class="glitch-letter" data-char="2">2</span>
+        <span class="glitch-letter" data-char="0">0</span>
+        <span class="glitch-letter" data-char="2">2</span>
+        <span class="glitch-letter" data-char="5">5</span>
     </div>
 
     <!-- Countdown Timer -->
@@ -180,37 +208,14 @@
         const countdownInterval = setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Skapa snöflingor
-        function createSnowflakes() {
-            const snowContainer = document.getElementById("snow");
-            const snowflakeCount = 100;
-
-            for (let i = 0; i < snowflakeCount; i++) {
-                const snowflake = document.createElement("div");
-                snowflake.classList.add("snowflake");
-                snowflake.style.left = `${Math.random() * 100}vw`;
-                snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`;
-                snowflake.style.animationDelay = `${Math.random() * 5}s`;
-                snowContainer.appendChild(snowflake);
-            }
-        }
-
-        createSnowflakes();
-
         // Glitch-effekt
         function glitchEffect() {
-            const headline = document.getElementById('animatedHeadline');
-            const before = headline.querySelector('::before');
-            const after = headline.querySelector('::after');
-
-            setInterval(() => {
-                const randomOpacity = Math.random() * 0.6 + 0.2;
-                const randomTransformX = Math.random() * 10 - 5;
-                const randomTransformY = Math.random() * 10 - 5;
-
-                headline.style.transform = `translate(${randomTransformX}px, ${randomTransformY}px)`;
-                headline.style.opacity = randomOpacity;
-            }, 200);
+            const letters = document.querySelectorAll('.glitch-letter');
+            letters.forEach(letter => {
+                setInterval(() => {
+                    letter.style.animation = 'glitchLetter 0.5s infinite';
+                }, Math.random() * 2000);
+            });
         }
 
         glitchEffect();
