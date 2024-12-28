@@ -63,116 +63,46 @@
             position: relative;
         }
 
-        /* Horisontell laser */
-        .laser-scan {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: rgba(0, 255, 255, 0.15);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
-            animation: horizontalLaser 4s infinite linear;
-        }
-
-        @keyframes horizontalLaser {
-            0% { top: -50px; }
-            50% { top: 50%; }
-            100% { top: 150%; }
-        }
-
-        /* Knapp */
-        .button-container {
-            margin-top: 20px;
-        }
-
-        .animated-button {
-            display: inline-block;
-            padding: 20px 40px;
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-            background: linear-gradient(45deg, #007BFF, #0056b3);
-            border-radius: 10px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .animated-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        .animated-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: skewX(-45deg);
-            transition: all 0.3s ease;
-        }
-
-        .animated-button:hover::before {
-            left: 100%;
-        }
-
-        /* Cool text nedanför knappen */
+        /* Water Ripple Effekt på Text */
         .cool-text {
+            font-size: clamp(2rem, 5vw, 3rem);
             margin-top: 40px;
-            font-size: 2rem;
-            color: #00FFCC;
-            text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+            color: rgba(0, 255, 255, 0.8);
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
             position: relative;
             overflow: hidden;
+            display: inline-block;
         }
 
         .cool-text span {
             display: inline-block;
-            position: relative;
-            animation: splitEffect 4s infinite;
+            animation: rippleEffect 2s infinite ease-in-out;
         }
 
-        .cool-text span:nth-child(even) {
-            animation: waterRipple 2s infinite ease-in-out;
-        }
+        /* Animera varje ord med fördröjning */
+        .cool-text span:nth-child(1) { animation-delay: 0s; }
+        .cool-text span:nth-child(2) { animation-delay: 0.2s; }
+        .cool-text span:nth-child(3) { animation-delay: 0.4s; }
+        .cool-text span:nth-child(4) { animation-delay: 0.6s; }
 
-        @keyframes splitEffect {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-20px); opacity: 0.5; }
-        }
-
-        @keyframes waterRipple {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+        @keyframes rippleEffect {
+            0%, 100% { transform: scale(1); text-shadow: 0 0 20px rgba(0, 255, 255, 0.6); }
+            50% { transform: scale(1.1); text-shadow: 0 0 25px rgba(0, 255, 255, 1); }
         }
     </style>
 </head>
 <body>
     <!-- Titel -->
     <div class="headline-container">
-        <div class="headline">
-            Webstay öppnar snart
-            <div class="laser-scan"></div>
-        </div>
+        <div class="headline">Webstay öppnar snart</div>
     </div>
 
-    <!-- Knapp -->
-    <div class="button-container">
-        <a href="https://webstay.se/ex" class="animated-button">Se Mer</a>
-    </div>
-
-    <!-- Cool text nedanför knappen -->
+    <!-- Cool text med Water Ripple Effekt -->
     <div class="cool-text">
-        <span>F</span><span>ö</span><span>r</span><span>v</span><span>ä</span><span>n</span><span>t</span> 
-        <span>d</span><span>i</span><span>g</span> 
-        <span>n</span><span>å</span><span>g</span><span>o</span><span>t</span> 
-        <span>u</span><span>n</span><span>i</span><span>k</span><span>t</span>!
+        <span>Förvänta</span>
+        <span>dig</span>
+        <span>något</span>
+        <span>unikt</span>
     </div>
 </body>
 </html>
