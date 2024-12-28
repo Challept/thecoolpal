@@ -45,64 +45,82 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Titel */
-        .headline-container {
-            position: relative;
-            width: 90%;
-            max-width: 800px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .headline {
-            font-size: clamp(3rem, 7vw, 5rem);
-            font-weight: bold;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
-            position: relative;
-        }
-
-        /* Water Ripple Effekt på Text */
+        /* Text med Water Ripple Effekt */
         .cool-text {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-top: 40px;
-            color: rgba(0, 255, 255, 0.8);
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-        }
-
-        .cool-text span {
-            display: inline-block;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: rgba(0, 255, 255, 0.9);
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
             animation: rippleEffect 2s infinite ease-in-out;
         }
 
-        /* Animera varje ord med fördröjning */
-        .cool-text span:nth-child(1) { animation-delay: 0s; }
-        .cool-text span:nth-child(2) { animation-delay: 0.2s; }
-        .cool-text span:nth-child(3) { animation-delay: 0.4s; }
-        .cool-text span:nth-child(4) { animation-delay: 0.6s; }
-
         @keyframes rippleEffect {
-            0%, 100% { transform: scale(1); text-shadow: 0 0 20px rgba(0, 255, 255, 0.6); }
-            50% { transform: scale(1.1); text-shadow: 0 0 25px rgba(0, 255, 255, 1); }
+            0%, 100% { transform: scale(1); text-shadow: 0 0 20px rgba(0, 255, 255, 0.8); }
+            50% { transform: scale(1.1); text-shadow: 0 0 30px rgba(0, 255, 255, 1); }
+        }
+
+        /* Nedräkning */
+        .countdown {
+            margin-top: 20px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: rgba(0, 255, 255, 0.8);
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+
+        /* Vatteneffekt */
+        .water {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: rgba(0, 123, 255, 0.8);
+            border-radius: 50%;
+            animation: waterDrop 3s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes waterDrop {
+            0% { transform: translateX(-50%) translateY(-200px) scale(1); opacity: 0.8; }
+            50% { transform: translateX(-50%) translateY(0) scale(1.2); opacity: 1; }
+            100% { transform: translateX(-50%) translateY(200px) scale(0.5); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <!-- Titel -->
-    <div class="headline-container">
-        <div class="headline">Webstay öppnar snart</div>
-    </div>
+    <!-- Text med Water Ripple Effekt -->
+    <div class="cool-text">Webstay öppnar snart</div>
 
-    <!-- Cool text med Water Ripple Effekt -->
-    <div class="cool-text">
-        <span>Förvänta</span>
-        <span>dig</span>
-        <span>något</span>
-        <span>unikt</span>
-    </div>
+    <!-- Nedräkning -->
+    <div class="countdown" id="countdown"></div>
+
+    <!-- Vatteneffekt -->
+    <div class="water"></div>
+
+    <script>
+        // Nedräkning
+        const countdownElement = document.getElementById("countdown");
+        const targetDate = new Date("February 25, 2025 00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                countdownElement.innerHTML = "Vi är live!";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
 </body>
 </html>
