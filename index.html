@@ -66,57 +66,90 @@
         /* Horisontell laser */
         .laser-scan {
             position: absolute;
-            top: 50%;
+            top: 0;
             left: 0;
             width: 100%;
             height: 5px;
             background: rgba(0, 255, 255, 0.15);
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
-            transform: translateY(-50%);
             animation: horizontalLaser 4s infinite linear;
-            z-index: 2;
         }
 
         @keyframes horizontalLaser {
-            0% { transform: translateY(-150%); }
-            50% { transform: translateY(0); }
-            100% { transform: translateY(150%); }
+            0% { top: -50px; }
+            50% { top: 50%; }
+            100% { top: 150%; }
         }
 
-        /* Kodutskrift */
-        .code-container {
-            width: 90%;
-            max-width: 800px;
-            height: 50vh;
-            background: #101010;
-            padding: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
-            position: relative;
+        /* Knapp */
+        .button-container {
+            margin-top: 20px;
         }
 
-        .code {
-            color: #00ff00;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            overflow: hidden;
-        }
-
-        /* Simulerad kod-markör */
-        .cursor {
+        .animated-button {
             display: inline-block;
-            width: 10px;
-            height: 1.5rem;
-            background: #00ff00;
-            animation: blink 0.6s infinite;
+            padding: 20px 40px;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+        .animated-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .animated-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-45deg);
+            transition: all 0.3s ease;
+        }
+
+        .animated-button:hover::before {
+            left: 100%;
+        }
+
+        /* Cool text nedanför knappen */
+        .cool-text {
+            margin-top: 40px;
+            font-size: 2rem;
+            color: #00FFCC;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cool-text span {
+            display: inline-block;
+            position: relative;
+            animation: splitEffect 4s infinite;
+        }
+
+        .cool-text span:nth-child(even) {
+            animation: waterRipple 2s infinite ease-in-out;
+        }
+
+        @keyframes splitEffect {
+            0%, 100% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-20px); opacity: 0.5; }
+        }
+
+        @keyframes waterRipple {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
         }
     </style>
 </head>
@@ -124,66 +157,22 @@
     <!-- Titel -->
     <div class="headline-container">
         <div class="headline">
-            Webstay öppnar 25 februari 2025
+            Webstay öppnar snart
             <div class="laser-scan"></div>
         </div>
     </div>
 
-    <script>
-        // Kodinnehåll
-        const codeContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulated Code</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #101010;
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Hello, Webstay!</h1>
+    <!-- Knapp -->
+    <div class="button-container">
+        <a href="https://webstay.se/ex" class="animated-button">Se Mer</a>
     </div>
-    <script>
-        console.log('Webstay is live!');
-    </script>
-</body>
-</html>`;
 
-        const codeContainer = document.getElementById("code");
-        let index = 0;
-
-        function typeCode() {
-            if (index < codeContent.length) {
-                const char = codeContent[index];
-                codeContainer.innerHTML += char === "\n" ? "<br>" : char;
-                index++;
-                window.scrollTo(0, document.body.scrollHeight); // Följ texten
-                setTimeout(typeCode, 50); // Hastighet på text
-            } else {
-                setTimeout(() => {
-                    index = 0;
-                    codeContainer.innerHTML = ""; // Börja om
-                    typeCode();
-                }, 2000); // Paus innan omstart
-            }
-        }
-
-        typeCode();
-    </script>
+    <!-- Cool text nedanför knappen -->
+    <div class="cool-text">
+        <span>F</span><span>ö</span><span>r</span><span>v</span><span>ä</span><span>n</span><span>t</span> 
+        <span>d</span><span>i</span><span>g</span> 
+        <span>n</span><span>å</span><span>g</span><span>o</span><span>t</span> 
+        <span>u</span><span>n</span><span>i</span><span>k</span><span>t</span>!
+    </div>
 </body>
 </html>
