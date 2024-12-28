@@ -32,17 +32,18 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Glitch-titel */
+        /* Glitch-stilar */
         .headline {
             font-size: 3rem;
             font-weight: bold;
             text-transform: uppercase;
             position: relative;
             text-align: center;
+            color: white;
+            overflow: hidden;
         }
 
-        .headline::before,
-        .headline::after {
+        .headline::before, .headline::after {
             content: attr(data-text);
             position: absolute;
             top: 0;
@@ -50,19 +51,8 @@
             width: 100%;
             color: #ff512f;
             z-index: -1;
-            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-            animation: glitch 1.5s infinite linear alternate-reverse;
-        }
-
-        .headline::after {
-            color: #f9dc5c;
-            clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(2px, 2px); }
-            50% { transform: translate(-2px, -2px); }
-            100% { transform: translate(1px, -1px); }
+            opacity: 0;
+            transform: translate(0, 0);
         }
 
         /* Countdown Timer */
@@ -206,6 +196,24 @@
         }
 
         createSnowflakes();
+
+        // Glitch-effekt
+        function glitchEffect() {
+            const headline = document.getElementById('animatedHeadline');
+            const before = headline.querySelector('::before');
+            const after = headline.querySelector('::after');
+
+            setInterval(() => {
+                const randomOpacity = Math.random() * 0.6 + 0.2;
+                const randomTransformX = Math.random() * 10 - 5;
+                const randomTransformY = Math.random() * 10 - 5;
+
+                headline.style.transform = `translate(${randomTransformX}px, ${randomTransformY}px)`;
+                headline.style.opacity = randomOpacity;
+            }, 200);
+        }
+
+        glitchEffect();
     </script>
 </body>
 </html>
