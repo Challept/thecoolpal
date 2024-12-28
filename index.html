@@ -19,8 +19,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: #000; /* Mörk bakgrund */
-            overflow: hidden; /* Ingen scroll */
+            background: #000;
+            overflow: hidden;
             color: white;
         }
 
@@ -44,69 +44,57 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Glitch-titel */
+        /* Titel */
+        .headline-container {
+            position: relative;
+            width: 90%; /* För att hålla texten inom skärmen */
+            max-width: 800px;
+            text-align: center;
+        }
+
         .headline {
-            font-size: 2rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: bold;
             text-transform: uppercase;
-            text-align: center;
+            position: relative;
             letter-spacing: 2px;
-            position: relative;
             color: rgba(255, 255, 255, 0.9);
-            overflow: hidden;
+            overflow: visible;
         }
 
-        .glitch-letter {
-            display: inline-block;
-            position: relative;
-        }
-
-        .glitch-letter::before, .glitch-letter::after {
-            content: attr(data-char);
+        /* Laser-effekt */
+        .laser-scan {
             position: absolute;
             top: 0;
-            left: 0;
-            opacity: 0;
-            z-index: -1;
+            left: -150%;
+            width: 150%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-45deg);
+            animation: laserScan 4s infinite linear;
         }
 
-        .glitch-letter::before {
-            color: #ff512f;
-            transform: translate(-2px, -2px);
-        }
-
-        .glitch-letter::after {
-            color: #00c6ff;
-            transform: translate(2px, 2px);
-        }
-
-        /* Glitch-animation */
-        @keyframes glitchBefore {
-            0%, 100% { opacity: 0; transform: translate(0, 0); }
-            50% { opacity: 1; transform: translate(-2px, -2px); }
-        }
-
-        @keyframes glitchAfter {
-            0%, 100% { opacity: 0; transform: translate(0, 0); }
-            50% { opacity: 1; transform: translate(2px, 2px); }
+        @keyframes laserScan {
+            0% { left: -150%; }
+            100% { left: 150%; }
         }
 
         /* Countdown Timer */
         .countdown-timer {
-            font-size: 1rem;
-            margin: 15px 0;
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            margin: 20px 0;
             text-align: center;
         }
 
         /* Knappstil */
         .button-container {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .animated-button {
             display: inline-block;
             padding: 10px 20px;
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
             font-weight: bold;
             color: white;
             text-decoration: none;
@@ -146,39 +134,10 @@
     </style>
 </head>
 <body>
-    <!-- Glitch-titel -->
-    <div class="headline" id="animatedHeadline">
-        <span class="glitch-letter" data-char="W">W</span>
-        <span class="glitch-letter" data-char="e">e</span>
-        <span class="glitch-letter" data-char="b">b</span>
-        <span class="glitch-letter" data-char="s">s</span>
-        <span class="glitch-letter" data-char="t">t</span>
-        <span class="glitch-letter" data-char="a">a</span>
-        <span class="glitch-letter" data-char="y">y</span>
-        <span class="glitch-letter" data-char=" "> </span>
-        <span class="glitch-letter" data-char="ö">ö</span>
-        <span class="glitch-letter" data-char="p">p</span>
-        <span class="glitch-letter" data-char="p">p</span>
-        <span class="glitch-letter" data-char="n">n</span>
-        <span class="glitch-letter" data-char="a">a</span>
-        <span class="glitch-letter" data-char="r">r</span>
-        <span class="glitch-letter" data-char=" "> </span>
-        <span class="glitch-letter" data-char="2">2</span>
-        <span class="glitch-letter" data-char="5">5</span>
-        <span class="glitch-letter" data-char=" "> </span>
-        <span class="glitch-letter" data-char="f">f</span>
-        <span class="glitch-letter" data-char="e">e</span>
-        <span class="glitch-letter" data-char="b">b</span>
-        <span class="glitch-letter" data-char="r">r</span>
-        <span class="glitch-letter" data-char="u">u</span>
-        <span class="glitch-letter" data-char="a">a</span>
-        <span class="glitch-letter" data-char="r">r</span>
-        <span class="glitch-letter" data-char="i">i</span>
-        <span class="glitch-letter" data-char=" "> </span>
-        <span class="glitch-letter" data-char="2">2</span>
-        <span class="glitch-letter" data-char="0">0</span>
-        <span class="glitch-letter" data-char="2">2</span>
-        <span class="glitch-letter" data-char="5">5</span>
+    <!-- Titel med laser-effekt -->
+    <div class="headline-container">
+        <div class="headline">Webstay öppnar 25 februari 2025</div>
+        <div class="laser-scan"></div>
     </div>
 
     <!-- Countdown Timer -->
@@ -216,18 +175,6 @@
 
         const countdownInterval = setInterval(updateCountdown, 1000);
         updateCountdown();
-
-        // Glitch-effekt
-        function glitchEffect() {
-            const letters = document.querySelectorAll('.glitch-letter');
-            letters.forEach(letter => {
-                setInterval(() => {
-                    letter.style.animation = 'glitchBefore 0.2s ease alternate, glitchAfter 0.2s ease alternate';
-                }, Math.random() * 2000);
-            });
-        }
-
-        glitchEffect();
     </script>
 </body>
 </html>
