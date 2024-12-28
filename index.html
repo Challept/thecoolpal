@@ -24,7 +24,7 @@
             color: white;
         }
 
-        /* Responsiv layout */
+        /* Bakgrundsgradient */
         body::before {
             content: '';
             position: absolute;
@@ -46,13 +46,14 @@
 
         /* Glitch-titel */
         .headline {
-            font-size: clamp(2rem, 5vw, 3.5rem); /* Anpassar för alla enheter */
+            font-size: 2rem;
             font-weight: bold;
             text-transform: uppercase;
             text-align: center;
             letter-spacing: 2px;
             position: relative;
             color: rgba(255, 255, 255, 0.9);
+            overflow: hidden;
         }
 
         .glitch-letter {
@@ -79,22 +80,33 @@
             transform: translate(2px, 2px);
         }
 
+        /* Glitch-animation */
+        @keyframes glitchBefore {
+            0%, 100% { opacity: 0; transform: translate(0, 0); }
+            50% { opacity: 1; transform: translate(-2px, -2px); }
+        }
+
+        @keyframes glitchAfter {
+            0%, 100% { opacity: 0; transform: translate(0, 0); }
+            50% { opacity: 1; transform: translate(2px, 2px); }
+        }
+
         /* Countdown Timer */
         .countdown-timer {
-            font-size: clamp(1rem, 2vw, 1.5rem); /* Responsiv storlek */
-            margin: 20px 0;
+            font-size: 1rem;
+            margin: 15px 0;
             text-align: center;
         }
 
         /* Knappstil */
         .button-container {
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .animated-button {
             display: inline-block;
-            padding: 15px 30px;
-            font-size: clamp(1rem, 2vw, 1.2rem); /* Anpassar för olika enheter */
+            padding: 10px 20px;
+            font-size: 0.9rem;
             font-weight: bold;
             color: white;
             text-decoration: none;
@@ -210,7 +222,7 @@
             const letters = document.querySelectorAll('.glitch-letter');
             letters.forEach(letter => {
                 setInterval(() => {
-                    letter.style.animation = 'glitchLetter 0.5s infinite';
+                    letter.style.animation = 'glitchBefore 0.2s ease alternate, glitchAfter 0.2s ease alternate';
                 }, Math.random() * 2000);
             });
         }
