@@ -44,15 +44,74 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 2D Cube with Water */
+        /* Titel */
+        .headline-container {
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .headline {
+            font-size: clamp(3rem, 7vw, 5rem);
+            font-weight: bold;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Knapp */
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .animated-button {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(45deg, #007BFF, #0056b3);
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .animated-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .animated-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-45deg);
+            transition: all 0.3s ease;
+        }
+
+        .animated-button:hover::before {
+            left: 100%;
+        }
+
+        /* 2D Roterande kub */
         .cube {
             position: relative;
-            width: 150px;
-            height: 150px;
-            border: 3px solid #007BFF;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #007BFF;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.1);
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.4);
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+            animation: rotateCube 5s linear infinite;
+            margin-top: 40px;
         }
 
         .water {
@@ -61,21 +120,22 @@
             width: 100%;
             height: 60%;
             background: linear-gradient(135deg, #007BFF, #0056b3);
-            animation: wave 4s infinite ease-in-out;
+            animation: wave 3s infinite ease-in-out;
             border-top: 1px solid rgba(255, 255, 255, 0.5);
         }
 
-        /* Water wave animation */
-        @keyframes wave {
-            0%, 100% {
-                transform: translateX(0) translateY(0);
-            }
-            50% {
-                transform: translateX(-20px) translateY(-5px);
-            }
+        /* Animationer */
+        @keyframes rotateCube {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        /* Water ripple effect */
+        @keyframes wave {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(-20px) translateY(-5px); }
+        }
+
+        /* Vatteneffekt */
         .water::before, .water::after {
             content: '';
             position: absolute;
@@ -92,28 +152,24 @@
         }
 
         @keyframes ripple {
-            0%, 100% {
-                transform: translate(-25%, -25%) scale(1);
-            }
-            50% {
-                transform: translate(-25%, -25%) scale(1.1);
-            }
+            0%, 100% { transform: translate(-25%, -25%) scale(1); }
+            50% { transform: translate(-25%, -25%) scale(1.1); }
         }
 
     </style>
 </head>
 <body>
-    <!-- Titel med laser-effekt -->
+    <!-- Titel -->
     <div class="headline-container">
         <div class="headline">Webstay öppnar 25 februari 2025</div>
     </div>
 
     <!-- Knapp -->
     <div class="button-container">
-        <a href="https://webstay.se/ex" class="animated-button">Förväntningsplan</a>
+        <a href="https://webstay.se/ex" class="animated-button">Se Mer</a>
     </div>
 
-    <!-- 2D Cube with Water -->
+    <!-- Roterande kub -->
     <div class="cube">
         <div class="water"></div>
     </div>
