@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay</title>
     <style>
-        /* Allmänna stilar */
+        /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -16,14 +16,10 @@
             height: 100%;
             width: 100%;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #001f3f, #000428, #001d3f);
             overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
-        /* Första skärmen */
+        /* First Screen with Glowing Grid */
         .intro-screen {
             position: fixed;
             top: 0;
@@ -33,57 +29,77 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 10;
+            background: linear-gradient(135deg, #000, #001f3f);
             overflow: hidden;
         }
 
-        /* Glitchande sfär */
-        .sphere {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(0, 123, 255, 0.8), rgba(0, 0, 0, 0.8));
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6);
-            animation: pulseSphere 2s infinite ease-in-out;
+        .glowing-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            grid-template-rows: repeat(20, 1fr);
         }
 
-        @keyframes pulseSphere {
+        .grid-cell {
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            animation: pulseGrid 4s infinite ease-in-out;
+        }
+
+        .grid-cell:nth-child(odd) {
+            animation-delay: 1s;
+        }
+
+        @keyframes pulseGrid {
             0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6);
+                background: rgba(0, 0, 0, 0.1);
+                border-color: rgba(0, 255, 255, 0.2);
             }
             50% {
-                transform: scale(1.1);
-                box-shadow: 0 0 30px rgba(0, 123, 255, 1), 0 0 60px rgba(0, 255, 255, 0.8);
+                background: rgba(0, 255, 255, 0.3);
+                border-color: rgba(0, 255, 255, 0.5);
             }
         }
 
-        /* Titelsektion */
-        .title-container {
+        /* Animated Logo in the Center */
+        .logo {
+            position: relative;
+            font-size: clamp(4rem, 10vw, 7rem);
+            font-weight: bold;
+            color: #00ffff;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px #00ffff, 0 0 40px rgba(0, 255, 255, 0.7);
+            animation: flicker 3s infinite ease-in-out;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; text-shadow: 0 0 20px #00ffff, 0 0 40px rgba(0, 255, 255, 0.7); }
+            50% { opacity: 0.8; text-shadow: 0 0 10px #00cccc, 0 0 30px rgba(0, 255, 255, 0.5); }
+        }
+
+        /* Countdown Screen */
+        .countdown-screen {
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100%;
             width: 100%;
+            height: 100%;
             background: linear-gradient(135deg, #001f3f, #000428, #001d3f);
-            animation: fadeIn 1s ease-in forwards;
+            color: white;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Glitch-animation för titeln */
         .headline {
             font-size: clamp(3rem, 7vw, 5rem);
             font-weight: bold;
             text-transform: uppercase;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 20px;
             animation: glitchTitle 2s infinite;
         }
 
@@ -93,27 +109,22 @@
             100% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff0099; }
         }
 
-        /* Nedräkning */
         .countdown {
             font-size: clamp(2rem, 4vw, 3rem);
-            margin: 20px 0;
-            color: rgba(0, 255, 255, 0.9);
             text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
         }
 
-        /* Knapp */
         .button-container {
             margin-top: 20px;
         }
 
         .animated-button {
-            display: inline-block;
             padding: 15px 30px;
             font-size: clamp(1.5rem, 2.5vw, 1.8rem);
             font-weight: bold;
-            color: white;
             text-decoration: none;
             background: linear-gradient(45deg, #007BFF, #0056b3);
+            color: white;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -126,58 +137,76 @@
     </style>
 </head>
 <body>
-    <!-- Första skärmen -->
+    <!-- First Screen -->
     <div class="intro-screen">
-        <div class="sphere"></div>
+        <div class="glowing-grid">
+            <!-- Grid Cells -->
+            <div class="grid-cell"></div>
+            <div class="grid-cell"></div>
+            <!-- Repeat this structure dynamically using JS if needed -->
+        </div>
+        <div class="logo">Webstay</div>
     </div>
 
-    <!-- Titelsektion -->
-    <div class="title-container">
-        <!-- Titel med glitch -->
+    <!-- Countdown Screen -->
+    <div class="countdown-screen">
         <div class="headline">Webstay öppnar snart</div>
-
-        <!-- Nedräkning -->
-        <div class="countdown" id="countdown"></div>
-
-        <!-- Knapp -->
+        <div class="countdown" id="countdown">Laddar...</div>
         <div class="button-container">
             <a href="https://webstay.se/ex" class="animated-button">Förväntning till olika år</a>
         </div>
     </div>
 
     <script>
-        // Visa titelsektionen efter 4 sekunder
+        // Switch to Countdown Screen after 4 seconds
         setTimeout(() => {
             document.querySelector('.intro-screen').style.display = 'none';
-            document.querySelector('.title-container').style.display = 'flex';
+            document.querySelector('.countdown-screen').style.display = 'flex';
         }, 4000);
 
-        // Nedräkning
+        // Countdown Timer
         const countdownElement = document.getElementById("countdown");
         const targetDate = new Date("2024-12-29T09:25:00+01:00").getTime();
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-
-            if (distance <= 0) {
-                countdownElement.innerHTML = "Vi är live!";
-                setTimeout(() => {
-                    window.location.href = "https://webstay.se/home";
-                }, 2000);
-                return;
+        async function fetchCurrentTime() {
+            try {
+                const response = await fetch("https://www.timeapi.io/api/time/current/zone?timeZone=Europe%2FAmsterdam");
+                const data = await response.json();
+                return new Date(data.dateTime).getTime();
+            } catch (error) {
+                console.error("Error fetching API time:", error);
+                return new Date().getTime(); // Fallback to local time
             }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % 1000) / 1000);
-
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
         }
 
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        async function startCountdown() {
+            const apiTime = await fetchCurrentTime();
+
+            function updateCountdown() {
+                const now = apiTime + (Date.now() - performance.timing.navigationStart);
+                const distance = targetDate - now;
+
+                if (distance <= 0) {
+                    countdownElement.innerHTML = "Vi är live!";
+                    setTimeout(() => {
+                        window.location.href = "https://webstay.se/home";
+                    }, 2000);
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % 1000) / 1000);
+
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        }
+
+        startCountdown();
     </script>
 </body>
 </html>
