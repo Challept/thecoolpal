@@ -24,7 +24,7 @@
         }
 
         /* Första skärmen */
-        .water-screen {
+        .intro-screen {
             position: fixed;
             top: 0;
             left: 0;
@@ -37,64 +37,44 @@
             overflow: hidden;
         }
 
-        /* Kub-container */
-        .cube-container {
+        /* Glitchande sfär */
+        .sphere {
             position: relative;
-            width: 250px;
-            height: 250px;
-            border: 4px solid rgba(0, 255, 255, 0.8);
-            background: rgba(0, 0, 0, 0.8);
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
-            animation: pulseGlow 3s infinite ease-in-out;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(0, 123, 255, 0.8), rgba(0, 0, 0, 0.8));
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6);
+            animation: pulseSphere 2s infinite ease-in-out;
         }
 
-        @keyframes pulseGlow {
+        @keyframes pulseSphere {
             0%, 100% {
-                box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(0, 123, 255, 0.8), 0 0 40px rgba(0, 255, 255, 0.6);
             }
             50% {
-                box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.6);
+                transform: scale(1.1);
+                box-shadow: 0 0 30px rgba(0, 123, 255, 1), 0 0 60px rgba(0, 255, 255, 0.8);
             }
         }
 
-        /* Vatten */
-        .water {
+        /* Lysande ring */
+        .ring {
             position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 50%; /* Halvfyllt */
-            background: linear-gradient(to top, #007BFF, #0056b3);
-            transform-origin: center bottom;
-            animation: waterWave 6s infinite ease-in-out;
-        }
-
-        @keyframes waterWave {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(5deg); }
-        }
-
-        /* Vågor */
-        .water::before, .water::after {
-            content: '';
-            position: absolute;
-            top: -20px;
-            width: 200%;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.3);
-            opacity: 0.5;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            border: 2px solid rgba(0, 255, 255, 0.4);
             border-radius: 50%;
-            animation: wave 2s infinite ease-in-out;
+            transform: translate(-50%, -50%);
+            animation: rotateRing 3s linear infinite;
         }
 
-        .water::after {
-            top: -25px;
-            animation-delay: 1s;
-        }
-
-        @keyframes wave {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(-50px); }
+        @keyframes rotateRing {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         /* Titelsektion */
@@ -165,9 +145,9 @@
 </head>
 <body>
     <!-- Första skärmen -->
-    <div class="water-screen">
-        <div class="cube-container">
-            <div class="water"></div>
+    <div class="intro-screen">
+        <div class="sphere">
+            <div class="ring"></div>
         </div>
     </div>
 
@@ -175,22 +155,24 @@
     <div class="title-container">
         <!-- Titel med glitch -->
         <div class="headline">Webstay öppnar snart</div>
-
-        <!-- Nedräkning -->
-        <div class="countdown" id="countdown"></div>
+    
+    <!-- Titelsektion -->
+    <div class="title-container">
+        <!-- Titel med glitch -->
+        <div class="headline">Öppnar 25 Feb 2025... </div>
 
         <!-- Knapp -->
         <div class="button-container">
-            <a href="https://webstay.se/ex" class="animated-button">Förväntning till olika år</a>
+            <a href="https://webstay.se/ex" class="animated-button">Förväntning</a>
         </div>
     </div>
 
     <script>
-        // Visa titelsektionen efter 30 sekunder
+        // Visa titelsektionen efter 4 sekunder
         setTimeout(() => {
-            document.querySelector('.water-screen').style.display = 'none';
+            document.querySelector('.intro-screen').style.display = 'none';
             document.querySelector('.title-container').style.display = 'flex';
-        }, 30000);
+        }, 4000);
 
         // Nedräkning
         const countdownElement = document.getElementById("countdown");
