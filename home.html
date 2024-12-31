@@ -16,14 +16,14 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #e0e0e0;
+            background-color: #121212;
         }
 
         /* Header och navigation */
         header {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             position: fixed;
             width: 100%;
             z-index: 1000;
@@ -37,100 +37,80 @@
         }
 
         .logo img {
-            height: 90px;
+            height: 40px;
         }
 
-        nav ul {
+        .nav-links {
             display: flex;
             list-style: none;
         }
 
-        nav ul li {
+        .nav-links li {
             margin-left: 2rem;
         }
 
-        nav ul li a {
+        .nav-links li a {
             text-decoration: none;
-            color: #333;
+            color: #e0e0e0;
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
-        nav ul li a:hover {
-            color: #007bff;
+        .nav-links li a:hover {
+            color: #4CAF50;
         }
 
-/* Hero section */
-#hero {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #fff;
-  padding: 0 1rem;
-  overflow: hidden; /* Ensures nothing spills out */
-}
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
 
-#hero video {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1; /* Keeps the video in the background */
-}
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: #e0e0e0;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
 
-/* Hero Text Styling */
-#hero h1 {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5); /* Glowing effect */
-}
+        /* Hero section */
+        #hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 1rem;
+            overflow: hidden;
+        }
 
-#hero p {
-  font-size: 1.8rem;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glowing effect */
-}
+        #hero video {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
+        }
 
-/* Hero Button Styling */
-#hero button {
-  font-size: 1.2rem;
-  padding: 10px 20px;
-  margin: 10px;
-  background-color: rgba(0, 0, 255, 0.7); /* Blueish button */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
+        #hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
 
-#hero button:hover {
-  background-color: rgba(0, 0, 255, 0.9); /* Darker blue on hover */
-  transform: scale(1.05);
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  #hero h1 {
-    font-size: 3rem;
-  }
-
-  #hero p {
-    font-size: 1.4rem;
-  }
-
-  #hero button {
-    font-size: 1rem;
-    padding: 8px 15px;
-  }
-}
+        #hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
 
         .cta-buttons {
             display: flex;
@@ -142,21 +122,23 @@
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .btn.primary {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: #fff;
         }
 
         .btn.secondary {
-            background-color: #fff;
-            color: #007bff;
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
         }
 
         .btn:hover {
-            opacity: 0.9;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         /* Sections */
@@ -168,6 +150,7 @@
             text-align: center;
             margin-bottom: 3rem;
             font-size: 2.5rem;
+            color: #4CAF50;
         }
 
         /* Features section */
@@ -180,7 +163,7 @@
         .feature-item {
             text-align: center;
             padding: 2rem;
-            background-color: #fff;
+            background-color: #1e1e1e;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
@@ -192,7 +175,7 @@
 
         .feature-item i {
             font-size: 3rem;
-            color: #007bff;
+            color: #4CAF50;
             margin-bottom: 1rem;
         }
 
@@ -204,7 +187,7 @@
         }
 
         .testimonial-item {
-            background-color: #fff;
+            background-color: #1e1e1e;
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -217,6 +200,7 @@
 
         .testimonial-item cite {
             font-weight: bold;
+            color: #4CAF50;
         }
 
         /* Clients section */
@@ -230,12 +214,12 @@
         .client-logos img {
             max-width: 150px;
             margin: 1rem;
-            filter: grayscale(100%);
-            transition: filter 0.3s ease;
+            filter: grayscale(100%) brightness(0.8);
+            transition: all 0.3s ease;
         }
 
         .client-logos img:hover {
-            filter: grayscale(0%);
+            filter: grayscale(0%) brightness(1);
         }
 
         /* Pricing section */
@@ -246,27 +230,33 @@
         }
 
         .pricing-item {
-            background-color: #fff;
+            background-color: #1e1e1e;
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-item:hover {
+            transform: translateY(-5px);
         }
 
         .pricing-item.featured {
-            transform: scale(1.05);
-            border: 2px solid #007bff;
+            border: 2px solid #4CAF50;
         }
 
         .pricing-item h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
+            color: #4CAF50;
         }
 
         .pricing-item .price {
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 1rem;
+            color: #fff;
         }
 
         .pricing-item ul {
@@ -280,7 +270,7 @@
 
         /* Newsletter section */
         #newsletter {
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: #fff;
             text-align: center;
         }
@@ -302,12 +292,14 @@
             border: none;
             border-radius: 0 5px 5px 0;
             cursor: pointer;
+            background-color: #333;
+            color: #fff;
         }
 
         /* Footer */
         footer {
-            background-color: #333;
-            color: #fff;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
             padding: 3rem 10%;
         }
 
@@ -319,12 +311,18 @@
 
         .footer-section h3 {
             margin-bottom: 1rem;
+            color: #4CAF50;
         }
 
         .social-icons a {
-            color: #fff;
+            color: #e0e0e0;
             font-size: 1.5rem;
             margin-right: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #4CAF50;
         }
 
         .footer-section ul {
@@ -336,29 +334,71 @@
         }
 
         .footer-section ul li a {
-            color: #fff;
+            color: #e0e0e0;
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #4CAF50;
         }
 
         .footer-bottom {
             text-align: center;
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid #555;
+            border-top: 1px solid #333;
         }
 
         /* Responsivitet */
-        @media (max-width: 768px) {
-            nav {
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                right: 0px;
+                height: 92vh;
+                top: 8vh;
+                background-color: #1e1e1e;
+                display: flex;
                 flex-direction: column;
+                align-items: center;
+                width: 50%;
+                transform: translateX(100%);
+                transition: transform 0.5s ease-in;
             }
 
-            nav ul {
-                margin-top: 1rem;
+            .nav-links li {
+                opacity: 0;
             }
 
-            nav ul li {
-                margin: 0 1rem;
+            .burger {
+                display: block;
+            }
+
+            .nav-active {
+                transform: translateX(0%);
+            }
+
+            @keyframes navLinkFade {
+                from {
+                    opacity: 0;
+                    transform: translateX(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0px);
+                }
+            }
+
+            .toggle .line1 {
+                transform: rotate(-45deg) translate(-5px,6px);
+            }
+
+            .toggle .line2 {
+                opacity: 0;
+            }
+
+            .toggle .line3 {
+                transform: rotate(45deg) translate(-5px,-6px);
             }
 
             #hero h1 {
@@ -385,35 +425,39 @@
             <div class="logo">
                 <img src="logo.png" alt="Webstay Logo">
             </div>
-            <ul>
+            <ul class="nav-links">
                 <li><a href="#home">Hem</a></li>
                 <li><a href="#services">Tjänster</a></li>
                 <li><a href="#about">Om oss</a></li>
                 <li><a href="#contact">Kontakta oss</a></li>
             </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
         </nav>
     </header>
 
-<main>
-    <section id="hero">
-        <!-- Video background -->
-        <video autoplay loop muted>
-            <source src="sell around the world.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-
-        <h1>Moderna webbplatser för moderna företag</h1>
-        <p>Skapa din drömwebbplats med Webstay</p>
-        <div class="cta-buttons">
-            <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
-            <a href="https://admin.webstay.se" class="btn secondary">Admin-portal</a>
-        </div>
-    </section>
+    <main>
+        <section id="hero">
+            <video autoplay muted loop>
+                <source src="sell around the world.mp4" type="video/mp4">
+            </video>
+            <h1>Moderna webbplatser för moderna företag</h1>
+            <p>Skapa din drömwebbplats med Webstay</p>
+            <div class="cta-buttons">
+                <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
+                <a href="https://admin.webstay.se" class="btn secondary">Admin-portal</a>
+            </div>
+        </section>
 
         <section id="about">
             <h2>Om Webstay</h2>
-            <p>Vi är experter på att skapa moderna, användarvänliga webbplatser som hjälper ditt företag att växa online.</p>
-            <a href="#" class="btn tertiary">Läs mer</a>
+            <p>Vi är experter på att skapa moderna, användarvänliga webbplatser som hjälper ditt företag att växa online. 
+               Med Webstay får du inte bara en professionell hemsida, utan en anpassad lösning som är designad för att attrahera och behålla kunder. 
+               Vårt fokus är på att erbjuda en snabb, säker och effektiv webbplats som fungerar på alla enheter, vilket gör att du kan fokusera på att växa ditt företag utan tekniska bekymmer.
+            </p>
         </section>
 
         <section id="features">
@@ -459,11 +503,10 @@
         <section id="clients">
             <h2>Våra kunder</h2>
             <div class="client-logos">
-                <!-- Lägg till logotyper för dina kunder här -->
-                <img src="Client_one-removebg-preview.png" alt="Client 1">
-                <img src="ALFERS-removebg-preview.png" alt="Client 2">
-                <img src="ALFERS__1_-removebg-preview.png" alt="Client 3">
-                <img src="ALFERS__2_-removebg-preview.png" alt="Client 4">
+                <img src="ALFERS-removebg-preview.png" alt="Client 1">
+                <img src="ALFERS__1_-removebg-preview.png" alt="Client 2">
+                <img src="ALFERS__2_-removebg-preview.png" alt="Client 3">
+                <img src="Client_one-removebg-preview.png" alt="Client 4">
             </div>
         </section>
 
@@ -490,22 +533,12 @@
                     </ul>
                     <a href="#" class="btn primary">Välj plan</a>
                 </div>
-                <div class="pricing-item">
-                    <h3>Ultimate</h3>
-                    <p class="price">1000 kr engångsavgift + 100 kr/mån</p>
-                    <ul>
-                        <li>5 dagar gratis provperiod</li>
-                        <li>Alla funktioner inkluderade</li>
-                        <li>24/7 support</li>
-                    </ul>
-                    <a href="#" class="btn primary">Välj plan</a>
-                </div>
             </div>
         </section>
 
         <section id="newsletter">
-            <h2>Håll dig uppdaterad</h2>
-            <p>Prenumerera på vårt nyhetsbrev för att få de senaste uppdateringarna och erbjudandena.</p>
+            <h2>Prenumerera på vårt nyhetsbrev</h2>
+            <p>Få de senaste nyheterna och erbjudandena direkt i din inkorg</p>
             <form>
                 <input type="email" placeholder="Din e-postadress" required>
                 <button type="submit" class="btn primary">Prenumerera</button>
@@ -516,8 +549,13 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
+                <h3>Om oss</h3>
+                <p>Webstay erbjuder moderna webbdesign- och hostinglösningar för företag som vill växa online.</p>
+            </div>
+            <div class="footer-section">
                 <h3>Kontakta oss</h3>
-                <p>E-post: support@webstay.se</p>
+                <p>Email: info@webstay.se</p>
+                <p>Telefon: 08-123 45 67</p>
             </div>
             <div class="footer-section">
                 <h3>Följ oss</h3>
@@ -528,19 +566,34 @@
                     <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
-            <div class="footer-section">
-                <h3>Snabblänkar</h3>
-                <ul>
-                    <li><a href="#">Hem</a></li>
-                    <li><a href="#">Tjänster</a></li>
-                    <li><a href="#">Om oss</a></li>
-                    <li><a href="#">Kontakta oss</a></li>
-                </ul>
-            </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Webstay. Alla rättigheter förbehållna.</p>
+            <p>&copy; 2023 Webstay. Alla rättigheter förbehållna.</p>
         </div>
     </footer>
+
+    <script>
+        // JavaScript för att hantera mobilmenyn
+        const burger = document.querySelector('.burger');
+        const nav = document.querySelector('.nav-links');
+        const navLinks = document.querySelectorAll('.nav-links li');
+
+        burger.addEventListener('click', () => {
+            // Toggla nav
+            nav.classList.toggle('nav-active');
+
+            // Animera länkar
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
+                } else {
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+                }
+            });
+
+            // Burger animation
+            burger.classList.toggle('toggle');
+        });
+    </script>
 </body>
 </html>
