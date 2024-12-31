@@ -60,28 +60,77 @@
             color: #007bff;
         }
 
-        /* Hero section */
-        #hero {
-            background: url('path/to/your/hero-image.jpg') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: #fff;
-            padding: 0 1rem;
-        }
+/* Hero section */
+#hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 1rem;
+  overflow: hidden; /* Ensures nothing spills out */
+}
 
-        #hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
+#hero video {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; /* Keeps the video in the background */
+}
 
-        #hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-        }
+/* Hero Text Styling */
+#hero h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5); /* Glowing effect */
+}
+
+#hero p {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7); /* Glowing effect */
+}
+
+/* Hero Button Styling */
+#hero button {
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  margin: 10px;
+  background-color: rgba(0, 0, 255, 0.7); /* Blueish button */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#hero button:hover {
+  background-color: rgba(0, 0, 255, 0.9); /* Darker blue on hover */
+  transform: scale(1.05);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  #hero h1 {
+    font-size: 3rem;
+  }
+
+  #hero p {
+    font-size: 1.4rem;
+  }
+
+  #hero button {
+    font-size: 1rem;
+    padding: 8px 15px;
+  }
+}
 
         .cta-buttons {
             display: flex;
@@ -345,15 +394,21 @@
         </nav>
     </header>
 
-    <main>
-        <section id="hero">
-            <h1>Moderna webbplatser för moderna företag</h1>
-            <p>Skapa din drömwebbplats med Webstay</p>
-            <div class="cta-buttons">
-                <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
-                <a href="https://admin.webstay.se" class="btn secondary">Admin-portal</a>
-            </div>
-        </section>
+<main>
+    <section id="hero">
+        <!-- Video background -->
+        <video autoplay loop muted>
+            <source src="sell around the world.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <h1>Moderna webbplatser för moderna företag</h1>
+        <p>Skapa din drömwebbplats med Webstay</p>
+        <div class="cta-buttons">
+            <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
+            <a href="https://admin.webstay.se" class="btn secondary">Admin-portal</a>
+        </div>
+    </section>
 
         <section id="about">
             <h2>Om Webstay</h2>
