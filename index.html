@@ -24,6 +24,7 @@
       scroll-behavior: smooth;
       background-size: 400% 400%;
       animation: gradientAnimation 10s ease infinite; /* Animated gradient */
+      position: relative;
     }
 
     @keyframes gradientAnimation {
@@ -40,6 +41,52 @@
     /* Prevent any horizontal overflow */
     * {
       box-sizing: border-box;
+    }
+
+    /* Abstract Shapes in the Background */
+    .background-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Send behind the content */
+      background: radial-gradient(circle, #1a2a6c 20%, #444 80%);
+    }
+
+    .background-shapes::before, .background-shapes::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .background-shapes::before {
+      width: 500px;
+      height: 500px;
+      top: 20%;
+      left: 10%;
+      animation: moveShape1 8s infinite ease-in-out;
+    }
+
+    .background-shapes::after {
+      width: 600px;
+      height: 600px;
+      top: 60%;
+      right: 10%;
+      animation: moveShape2 10s infinite ease-in-out;
+    }
+
+    @keyframes moveShape1 {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(50px, -50px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @keyframes moveShape2 {
+      0% { transform: translate(0, 0); }
+      50% { transform: translate(-70px, 60px); }
+      100% { transform: translate(0, 0); }
     }
 
     /* Container Style */
@@ -295,6 +342,7 @@
   </style>
 </head>
 <body>
+  <div class="background-shapes"></div> <!-- Abstract shapes behind the content -->
   <div class="container">
     <h1>Webstay - Kommer Snart!</h1>
     <div class="timer" id="timer"></div>
