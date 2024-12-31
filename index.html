@@ -15,22 +15,25 @@
       background: #111;
       color: #f1f1f1;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      height: 100vh;
-      overflow: hidden;
+      min-height: 100vh;
+      overflow-x: hidden;
       text-align: center;
+      scroll-behavior: smooth;
     }
 
     /* Container Style */
     .container {
       max-width: 1000px;
-      padding: 30px;
+      width: 100%;
+      padding: 40px;
       background: rgba(0, 0, 0, 0.7);
       border-radius: 15px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-      animation: fadeIn 1s ease-out;
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+      margin-top: 60px;
+      animation: fadeIn 1.5s ease-out;
     }
 
     /* Fade-in Animation */
@@ -49,6 +52,7 @@
       text-transform: uppercase;
       margin-bottom: 20px;
       line-height: 1.2;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
     }
 
     /* Countdown Timer Styles */
@@ -93,7 +97,7 @@
     }
 
     .progress-bar {
-      width: 50%; /* Change this value to control the progress */
+      width: 0%; /* Default starting width */
       height: 20px;
       background-color: #ff6347;
       transition: width 0.5s ease;
@@ -124,7 +128,7 @@
 
     /* Quotes Section */
     .quotes {
-      margin-top: 50px;
+      margin-top: 60px;
       background: rgba(0, 0, 0, 0.7);
       padding: 30px;
       border-radius: 8px;
@@ -149,7 +153,7 @@
 
     /* Newsletter Sign-Up Section */
     .newsletter {
-      margin-top: 50px;
+      margin-top: 60px;
       background: rgba(0, 0, 0, 0.8);
       padding: 30px;
       border-radius: 8px;
@@ -182,7 +186,7 @@
 
     /* Upcoming Launch Information Section */
     .launch-info {
-      margin-top: 50px;
+      margin-top: 60px;
       padding: 30px;
       background: rgba(0, 0, 0, 0.8);
       border-radius: 8px;
@@ -226,6 +230,22 @@
       color: #fff;
     }
 
+    /* Scroll Animation */
+    .container, .about, .quotes, .newsletter, .launch-info {
+      animation: slideIn 1s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
     /* Mobile Responsiveness */
     @media (max-width: 600px) {
       h1 {
@@ -267,8 +287,8 @@
 
     <div class="quotes">
       <h2>Vad säger folk om oss?</h2>
-      <div class="quote">"Webstay is the future of website building. Can't wait for the launch!" - Enthusiastic User</div>
-      <div class="quote">"Simple, affordable, and powerful. I’m excited to see it in action!" - Tech Expert</div>
+      <div class="quote">"Webstay är framtiden för webbplatsbyggande. Jag ser fram emot lanseringen!" - Entusiastisk Användare</div>
+      <div class="quote">"Enkel, prisvärd och kraftfull. Jag är verkligen nyfiken på att se det i action!" - Teknikexpert</div>
     </div>
 
     <div class="newsletter">
@@ -296,10 +316,15 @@
   <script>
     // Countdown Timer
     const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
+    const startDate = new Date("Dec 31, 2024 00:00:00").getTime();
+    const progressBar = document.getElementById("progressBar");
 
     const timerInterval = setInterval(function() {
       const now = new Date().getTime();
       const distance = countdownDate - now;
+      const totalTime = countdownDate - startDate;
+      const timeElapsed = totalTime - distance;
+      const progressPercentage = (timeElapsed / totalTime) * 100;
 
       if (distance < 0) {
         clearInterval(timerInterval);
@@ -311,6 +336,9 @@
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // Update progress bar width based on time elapsed
+        progressBar.style.width = progressPercentage + "%"; 
       }
     }, 1000);
 
