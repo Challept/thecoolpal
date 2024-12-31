@@ -4,176 +4,283 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webstay - Kommer Snart!</title>
-  <!-- Google Font for body text -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
-
+  <!-- Google Font for the page -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Zilla+Slab&display=swap" rel="stylesheet">
   <style>
-    /* General Body Styles */
+    /* General Page Styles */
     body {
-      font-family: 'Roboto', sans-serif;
-      background: #111;
-      color: #fff;
+      font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
+      background: #111;
+      color: #f1f1f1;
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
       height: 100vh;
       overflow: hidden;
-      position: relative;
-    }
-
-    /* Container and center alignment */
-    .container {
       text-align: center;
-      padding: 20px;
-      animation: slideIn 1.5s ease-out;
     }
 
-    /* Slide in animation */
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Container Style */
+    .container {
+      max-width: 1000px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+      animation: fadeIn 1s ease-out;
     }
 
-    /* Title Style - Different Font */
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(-50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Title Styles */
     h1 {
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Zilla Slab', serif;
       font-size: 80px;
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      letter-spacing: 5px;
-      background: linear-gradient(90deg, #ff6f61, #ff8c00);
-      background-clip: text;
-      color: transparent;
-      animation: glitch 1.5s infinite linear;
-    }
-
-    /* Glitch effect for the title */
-    @keyframes glitch {
-      0% { transform: translate(0, 0); }
-      20% { transform: translate(-3px, 3px); }
-      40% { transform: translate(3px, -3px); }
-      60% { transform: translate(-2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    /* Countdown Timer */
-    .timer {
-      font-size: 50px;
-      margin: 30px 0;
-      letter-spacing: 2px;
-      font-weight: 500;
-      animation: pulse 1s infinite;
-    }
-
-    /* Pulse effect for timer */
-    @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.05);
-        opacity: 0.8;
-      }
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    /* Button for Föreväntning */
-    .btn-future {
-      background-color: #ff6347;
-      padding: 20px 30px;
-      font-size: 20px;
-      margin-top: 30px;
-      border: none;
+      font-weight: 600;
       color: #fff;
-      cursor: pointer;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    /* Countdown Timer Styles */
+    .timer {
+      font-size: 45px;
+      margin: 20px 0;
+      font-weight: 500;
+      letter-spacing: 2px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Button Styles */
+    .btn-future {
+      padding: 15px 30px;
+      background-color: #ff6f61;
+      color: #fff;
+      font-size: 18px;
+      border: none;
       border-radius: 5px;
-      transition: transform 0.3s ease;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
     }
 
     .btn-future:hover {
-      background-color: #ff2a2e;
-      transform: scale(1.1);
+      background-color: #ff4c40;
+      transform: scale(1.05);
+    }
+
+    /* Progress Bar Section */
+    .progress-bar-container {
+      margin-top: 40px;
+      width: 100%;
+      background-color: #444;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 50%; /* Change this value to control the progress */
+      height: 20px;
+      background-color: #ff6347;
+      transition: width 0.5s ease;
     }
 
     /* About Section */
     .about {
-      margin-top: 40px;
-      background-color: rgba(0, 0, 0, 0.6);
+      margin-top: 50px;
       padding: 30px;
+      background: rgba(0, 0, 0, 0.8);
       border-radius: 8px;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     }
 
     .about h2 {
-      margin-bottom: 15px;
+      font-family: 'Zilla Slab', serif;
       font-size: 30px;
+      color: #ff6f61;
+      margin-bottom: 20px;
       text-transform: uppercase;
-      color: #ff6347;
-      font-family: 'Press Start 2P', cursive;
     }
 
     .about p {
       font-size: 18px;
       line-height: 1.6;
-      color: #eaeaea;
+      color: #ddd;
     }
 
-    /* Footer */
-    footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 14px;
-      color: #eaeaea;
+    /* Quotes Section */
+    .quotes {
+      margin-top: 50px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
     }
 
-    .contact {
-      margin-top: 30px;
-    }
-
-    .contact a {
+    .quotes h2 {
+      font-family: 'Zilla Slab', serif;
+      font-size: 30px;
       color: #ff6347;
-      font-size: 20px;
-      text-decoration: none;
-      padding: 10px 20px;
-      background: #222;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .quote {
+      font-size: 18px;
+      line-height: 1.6;
+      font-style: italic;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    /* Newsletter Sign-Up Section */
+    .newsletter {
+      margin-top: 50px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .newsletter input {
+      padding: 15px;
+      width: 300px;
+      font-size: 16px;
+      border: none;
       border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .newsletter button {
+      padding: 15px 30px;
+      background-color: #ff6f61;
+      color: #fff;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
       transition: background 0.3s ease;
     }
 
-    .contact a:hover {
-      background: #ff2a2e;
+    .newsletter button:hover {
+      background-color: #ff4c40;
     }
 
+    /* Upcoming Launch Information Section */
+    .launch-info {
+      margin-top: 50px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .launch-info h2 {
+      font-family: 'Zilla Slab', serif;
+      font-size: 30px;
+      color: #ff6f61;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .launch-info p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #ddd;
+    }
+
+    /* Footer Styles */
+    footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    /* Contact Link Styles */
+    .contact a {
+      font-size: 18px;
+      color: #ff6f61;
+      text-decoration: none;
+      padding: 10px;
+      border: 1px solid #ff6f61;
+      border-radius: 5px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .contact a:hover {
+      background-color: #ff6f61;
+      color: #fff;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 50px;
+      }
+      .timer {
+        font-size: 35px;
+      }
+      .container {
+        padding: 20px;
+      }
+      .about h2 {
+        font-size: 25px;
+      }
+      .about p {
+        font-size: 16px;
+      }
+      .btn-future {
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Webstay Kommer Snart!</h1>
+    <h1>Webstay - Kommer Snart!</h1>
     <div class="timer" id="timer"></div>
 
     <button class="btn-future" id="futureButton">Föreväntning!</button>
 
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
     <div class="about">
       <h2>Om Webstay</h2>
       <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
+    </div>
+
+    <div class="quotes">
+      <h2>Vad säger folk om oss?</h2>
+      <div class="quote">"Webstay is the future of website building. Can't wait for the launch!" - Enthusiastic User</div>
+      <div class="quote">"Simple, affordable, and powerful. I’m excited to see it in action!" - Tech Expert</div>
+    </div>
+
+    <div class="newsletter">
+      <h2>Nyhetsbrev</h2>
+      <p>Få de senaste uppdateringarna och nyheter om lanseringen direkt i din inkorg!</p>
+      <input type="email" placeholder="Din e-postadress" id="email">
+      <button onclick="subscribeNewsletter()">Prenumerera</button>
+    </div>
+
+    <div class="launch-info">
+      <h2>Kommande Lansering</h2>
+      <p>Webstay kommer att vara tillgängligt för allmänheten den 25 februari 2025. Vi ser fram emot att hjälpa dig skapa din drömwebbplats!</p>
     </div>
 
     <div class="contact">
@@ -211,6 +318,16 @@
     document.getElementById("futureButton").addEventListener("click", function() {
       window.location.href = "https://webstay.se/ex";
     });
+
+    // Newsletter Subscription Function
+    function subscribeNewsletter() {
+      const email = document.getElementById('email').value;
+      if (email) {
+        alert("Tack för att du prenumererar!");
+      } else {
+        alert("Vänligen ange en giltig e-postadress.");
+      }
+    }
   </script>
 </body>
 </html>
