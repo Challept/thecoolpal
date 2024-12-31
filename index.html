@@ -42,25 +42,45 @@
       box-sizing: border-box;
     }
 
-    /* Glitch effect for titles */
-    @keyframes glitch {
-      0% { text-shadow: 1px 0 blue, -1px 0 red, 1px 0 green; }
-      20% { text-shadow: -1px 0 blue, 1px 0 red, 1px 0 green; }
-      40% { text-shadow: 1px 0 blue, -1px 0 red, 1px 0 green; }
-      60% { text-shadow: -1px 0 blue, 1px 0 red, 1px 0 green; }
-      80% { text-shadow: 1px 0 blue, -1px 0 red, 1px 0 green; }
-      100% { text-shadow: -1px 0 blue, 1px 0 red, 1px 0 green; }
-    }
+/* Glitch effect for titles */
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 blue, -2px 0 red, 3px 3px green, -3px -3px yellow;
+    transform: skewX(5deg) skewY(5deg);
+  }
+  20% {
+    text-shadow: -2px 0 blue, 2px 0 red, -3px 3px green, 3px -3px yellow;
+    transform: skewX(-5deg) skewY(-5deg);
+  }
+  40% {
+    text-shadow: 3px 0 blue, -3px 0 red, 2px 2px green, -2px -2px yellow;
+    transform: skewX(5deg) skewY(-5deg);
+  }
+  60% {
+    text-shadow: -3px 0 blue, 3px 0 red, -2px 2px green, 2px -2px yellow;
+    transform: skewX(-5deg) skewY(5deg);
+  }
+  80% {
+    text-shadow: 2px 0 blue, -2px 0 red, 3px 3px green, -3px -3px yellow;
+    transform: skewX(5deg) skewY(5deg);
+  }
+  100% {
+    text-shadow: -2px 0 blue, 2px 0 red, -3px 3px green, 3px -3px yellow;
+    transform: skewX(-5deg) skewY(-5deg);
+  }
+}
 
-    .glitch-text {
-      position: relative;
-      font-family: 'Zilla Slab', serif;
-      font-size: 30px;
-      color: #fff;
-      text-transform: uppercase;
-      display: inline-block;
-      animation: glitch 1.5s infinite;
-    }
+.glitch-text {
+  position: relative;
+  font-family: 'Zilla Slab', serif;
+  font-size: 80px; /* Increase the font size for more impact */
+  color: #fff;
+  text-transform: uppercase;
+  display: inline-block;
+  animation: glitch 1s infinite; /* Faster glitching animation */
+  font-weight: bold; /* Making it bolder to enhance the glitch effect */
+  letter-spacing: 5px;
+}
 
     /* Container Style */
     .container {
