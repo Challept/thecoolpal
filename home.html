@@ -6,7 +6,16 @@
     <title>Webstay - Modern webbdesign och hosting</title>
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <style>
-        /* Grundläggande reset och typografi */
+        :root {
+            --primary-blue: #007bff;
+            --secondary-blue: #0056b3;
+            --light-blue: #e6f2ff;
+            --dark-blue: #004085;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,14 +25,14 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #e0e0e0;
-            background-color: #121212;
+            color: var(--dark-gray);
+            background-color: var(--white);
         }
 
-        /* Header och navigation */
+        /* Header and navigation */
         header {
-            background-color: #1e1e1e;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             width: 100%;
             z-index: 1000;
@@ -34,10 +43,12 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .logo img {
-            height: 40px;
+            height: 90px;
         }
 
         .nav-links {
@@ -51,13 +62,13 @@
 
         .nav-links li a {
             text-decoration: none;
-            color: #e0e0e0;
+            color: var(--dark-gray);
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
         .nav-links li a:hover {
-            color: #4CAF50;
+            color: var(--primary-blue);
         }
 
         .burger {
@@ -68,7 +79,7 @@
         .burger div {
             width: 25px;
             height: 3px;
-            background-color: #e0e0e0;
+            background-color: var(--dark-gray);
             margin: 5px;
             transition: all 0.3s ease;
         }
@@ -82,7 +93,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: #fff;
+            color: var(--white);
             padding: 0 1rem;
             overflow: hidden;
         }
@@ -100,6 +111,13 @@
             object-fit: cover;
         }
 
+        .hero-content {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 800px;
+        }
+
         #hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
@@ -115,6 +133,7 @@
         .cta-buttons {
             display: flex;
             gap: 1rem;
+            justify-content: center;
         }
 
         .btn {
@@ -126,14 +145,14 @@
         }
 
         .btn.primary {
-            background-color: #4CAF50;
-            color: #fff;
+            background-color: var(--primary-blue);
+            color: var(--white);
         }
 
         .btn.secondary {
             background-color: transparent;
-            color: #fff;
-            border: 2px solid #fff;
+            color: var(--white);
+            border: 2px solid var(--white);
         }
 
         .btn:hover {
@@ -150,7 +169,7 @@
             text-align: center;
             margin-bottom: 3rem;
             font-size: 2.5rem;
-            color: #4CAF50;
+            color: var(--primary-blue);
         }
 
         /* Features section */
@@ -163,7 +182,7 @@
         .feature-item {
             text-align: center;
             padding: 2rem;
-            background-color: #1e1e1e;
+            background-color: var(--light-blue);
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
@@ -175,7 +194,7 @@
 
         .feature-item i {
             font-size: 3rem;
-            color: #4CAF50;
+            color: var(--primary-blue);
             margin-bottom: 1rem;
         }
 
@@ -187,7 +206,7 @@
         }
 
         .testimonial-item {
-            background-color: #1e1e1e;
+            background-color: var(--white);
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -200,7 +219,7 @@
 
         .testimonial-item cite {
             font-weight: bold;
-            color: #4CAF50;
+            color: var(--primary-blue);
         }
 
         /* Clients section */
@@ -214,12 +233,11 @@
         .client-logos img {
             max-width: 150px;
             margin: 1rem;
-            filter: grayscale(100%) brightness(0.8);
             transition: all 0.3s ease;
         }
 
         .client-logos img:hover {
-            filter: grayscale(0%) brightness(1);
+            transform: scale(1.1);
         }
 
         /* Pricing section */
@@ -230,7 +248,7 @@
         }
 
         .pricing-item {
-            background-color: #1e1e1e;
+            background-color: var(--white);
             padding: 2rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -243,20 +261,20 @@
         }
 
         .pricing-item.featured {
-            border: 2px solid #4CAF50;
+            border: 2px solid var(--primary-blue);
         }
 
         .pricing-item h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #4CAF50;
+            color: var(--primary-blue);
         }
 
         .pricing-item .price {
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 1rem;
-            color: #fff;
+            color: var(--dark-blue);
         }
 
         .pricing-item ul {
@@ -270,8 +288,8 @@
 
         /* Newsletter section */
         #newsletter {
-            background-color: #4CAF50;
-            color: #fff;
+            background-color: var(--light-blue);
+            color: var(--dark-blue);
             text-align: center;
         }
 
@@ -292,14 +310,14 @@
             border: none;
             border-radius: 0 5px 5px 0;
             cursor: pointer;
-            background-color: #333;
-            color: #fff;
+            background-color: var(--primary-blue);
+            color: var(--white);
         }
 
         /* Footer */
         footer {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
+            background-color: var(--dark-blue);
+            color: var(--white);
             padding: 3rem 10%;
         }
 
@@ -311,18 +329,18 @@
 
         .footer-section h3 {
             margin-bottom: 1rem;
-            color: #4CAF50;
+            color: var(--light-blue);
         }
 
         .social-icons a {
-            color: #e0e0e0;
+            color: var(--white);
             font-size: 1.5rem;
             margin-right: 1rem;
             transition: color 0.3s ease;
         }
 
         .social-icons a:hover {
-            color: #4CAF50;
+            color: var(--light-blue);
         }
 
         .footer-section ul {
@@ -334,30 +352,30 @@
         }
 
         .footer-section ul li a {
-            color: #e0e0e0;
+            color: var(--white);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .footer-section ul li a:hover {
-            color: #4CAF50;
+            color: var(--light-blue);
         }
 
         .footer-bottom {
             text-align: center;
             margin-top: 2rem;
             padding-top: 2rem;
-            border-top: 1px solid #333;
+            border-top: 1px solid var(--light-blue);
         }
 
-        /* Responsivitet */
+        /* Responsiveness */
         @media screen and (max-width: 768px) {
             .nav-links {
                 position: absolute;
                 right: 0px;
                 height: 92vh;
                 top: 8vh;
-                background-color: #1e1e1e;
+                background-color: var(--white);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -398,23 +416,13 @@
             }
 
             .toggle .line3 {
-                transform: rotate(45deg) translate(-5px,-6px);
+                transform: rotate(45deg)
+
             }
 
-            #hero h1 {
-                font-size: 2rem;
-            }
-
-            #hero p {
-                font-size: 1rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                margin-bottom: 1rem;
+            #hero video {
+                height: 100%;
+                width: auto;
             }
         }
     </style>
@@ -444,20 +452,14 @@
             <video autoplay muted loop>
                 <source src="sell around the world.mp4" type="video/mp4">
             </video>
-            <h1>Moderna webbplatser för moderna företag</h1>
-            <p>Skapa din drömwebbplats med Webstay</p>
-            <div class="cta-buttons">
-                <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
-                <a href="https://admin.webstay.se" class="btn secondary">Admin-portal</a>
+            <div class="hero-content">
+                <h1>Moderna webbplatser för moderna företag</h1>
+                <p>Skapa din drömwebbplats med Webstay</p>
+                <div class="cta-buttons">
+                    <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
+                    <a href="https://admin.webstay.se" class="btn secondary">Admin-portal</a>
+                </div>
             </div>
-        </section>
-
-        <section id="about">
-            <h2>Om Webstay</h2>
-            <p>Vi är experter på att skapa moderna, användarvänliga webbplatser som hjälper ditt företag att växa online. 
-               Med Webstay får du inte bara en professionell hemsida, utan en anpassad lösning som är designad för att attrahera och behålla kunder. 
-               Vårt fokus är på att erbjuda en snabb, säker och effektiv webbplats som fungerar på alla enheter, vilket gör att du kan fokusera på att växa ditt företag utan tekniska bekymmer.
-            </p>
         </section>
 
         <section id="features">
@@ -503,10 +505,10 @@
         <section id="clients">
             <h2>Våra kunder</h2>
             <div class="client-logos">
-                <img src="ALFERS-removebg-preview.png" alt="Client 1">
-                <img src="ALFERS__1_-removebg-preview.png" alt="Client 2">
-                <img src="ALFERS__2_-removebg-preview.png" alt="Client 3">
-                <img src="Client_one-removebg-preview.png" alt="Client 4">
+                <img src="Client one.png" alt="Client One">
+                <img src="ALFERS__2_-removebg-preview.png" alt="Client Two">
+                <img src="ALFERS__1_-removebg-preview.png" alt="Client Three">
+                <img src="ALFERS-removebg-preview.png" alt="Client Four">
             </div>
         </section>
 
@@ -551,6 +553,15 @@
             <div class="footer-section">
                 <h3>Om oss</h3>
                 <p>Webstay erbjuder moderna webbdesign- och hostinglösningar för företag som vill växa online.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Snabblänkar</h3>
+                <ul>
+                    <li><a href="#home">Hem</a></li>
+                    <li><a href="#services">Tjänster</a></li>
+                    <li><a href="#about">Om oss</a></li>
+                    <li><a href="#contact">Kontakta oss</a></li>
+                </ul>
             </div>
             <div class="footer-section">
                 <h3>Kontakta oss</h3>
