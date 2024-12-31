@@ -1,235 +1,193 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay</title>
-    <style>
-        /* General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webstay - Kommer Snart!</title>
+  <style>
+    /* Basic Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #6e7bff, #b3d8ff);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+    }
+    h1 {
+      font-size: 60px;
+      margin-bottom: 20px;
+      position: relative;
+      display: inline-block;
+    }
+    h1 span {
+      color: #fff;
+      font-weight: bold;
+      position: relative;
+      display: inline-block;
+      animation: glitch 1s infinite;
+    }
 
-        html, body {
-            height: 100%;
-            width: 100%;
-            font-family: 'Poppins', sans-serif;
-            overflow: hidden;
-            background: linear-gradient(135deg, #001f3f, #000428, #001d3f);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    /* Glitch Effect */
+    @keyframes glitch {
+      0% {
+        transform: translate(0px, 0px);
+      }
+      10% {
+        transform: translate(-2px, -2px);
+      }
+      20% {
+        transform: translate(2px, 2px);
+      }
+      30% {
+        transform: translate(-2px, 0px);
+      }
+      40% {
+        transform: translate(2px, 0px);
+      }
+      50% {
+        transform: translate(-2px, -2px);
+      }
+      60% {
+        transform: translate(0px, 2px);
+      }
+      70% {
+        transform: translate(0px, -2px);
+      }
+      80% {
+        transform: translate(2px, 0px);
+      }
+      90% {
+        transform: translate(-2px, 0px);
+      }
+      100% {
+        transform: translate(0px, 0px);
+      }
+    }
 
-        /* First Screen */
-        .intro-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle, #001f3f, #000);
-            z-index: 10;
-            animation: fadeOut 2s ease-out 4s forwards;
-        }
+    /* Countdown Timer */
+    .timer {
+      font-size: 40px;
+      margin: 20px 0;
+      letter-spacing: 2px;
+    }
 
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-                pointer-events: none;
-            }
-        }
+    .about {
+      margin-top: 30px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+    }
 
-        /* Ripple Effect */
-        .ripple-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            overflow: hidden;
-            background: linear-gradient(135deg, #007BFF, #001f3f);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
-            animation: pulse 2s infinite ease-in-out;
-        }
+    .about h2 {
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
 
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 30px rgba(0, 255, 255, 0.5), 0 0 60px rgba(0, 255, 255, 0.3);
-            }
-            50% {
-                transform: scale(1.1);
-                box-shadow: 0 0 40px rgba(0, 255, 255, 0.7), 0 0 80px rgba(0, 255, 255, 0.5);
-            }
-        }
+    .about p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
 
-        .ripple-container::before,
-        .ripple-container::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.3), transparent);
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            animation: rippleEffect 3s infinite ease-out;
-        }
+    .contact {
+      margin-top: 30px;
+    }
 
-        .ripple-container::after {
-            animation-delay: 1.5s;
-        }
+    .contact a {
+      color: #fff;
+      font-size: 18px;
+      text-decoration: none;
+      padding: 10px 20px;
+      background: #ff3b3f;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
 
-        @keyframes rippleEffect {
-            0% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(2);
-            }
-        }
+    .contact a:hover {
+      background: #ff2a2e;
+    }
 
-        /* Logo */
-        .logo {
-            position: absolute;
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: bold;
-            color: #00ffff;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px #00ffff, 0 0 40px rgba(0, 255, 255, 0.7);
-            animation: flicker 3s infinite ease-in-out;
-        }
+    /* Button for Förväntning */
+    .btn-future {
+      background-color: #4CAF50;
+      padding: 15px 25px;
+      font-size: 18px;
+      margin-top: 30px;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+    }
+    .btn-future:hover {
+      background-color: #45a049;
+    }
 
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        /* Countdown Screen */
-        .countdown-screen {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-        }
-
-        .headline {
-            font-size: clamp(3rem, 7vw, 5rem);
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            animation: glitchTitle 2s infinite;
-        }
-
-        @keyframes glitchTitle {
-            0% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff0099; }
-            50% { text-shadow: -3px -3px #ff0099, 3px 3px #00ffcc; }
-            100% { text-shadow: 2px 2px #00ffcc, -2px -2px #ff0099; }
-        }
-
-        .countdown {
-            font-size: clamp(2rem, 4vw, 3rem);
-            margin: 20px 0;
-            color: rgba(0, 255, 255, 0.9);
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
-        }
-
-        .animated-button {
-            padding: 15px 30px;
-            font-size: clamp(1.5rem, 2.5vw, 1.8rem);
-            font-weight: bold;
-            color: white;
-            text-decoration: none;
-            background: linear-gradient(45deg, #007BFF, #0056b3);
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .animated-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.8);
-        }
-    </style>
+    /* Footer */
+    footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 14px;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-    <!-- First Screen -->
-    <div class="intro-screen">
-        <div class="ripple-container">
-            <div class="logo">Webstay</div>
-        </div>
+  <div class="container">
+    <h1><span>Webstay</span> Kommer Snart!</h1>
+    <div class="timer" id="timer"></div>
+
+    <button class="btn-future" id="futureButton">Föreväntning!</button>
+
+    <div class="about">
+      <h2>Om Webstay</h2>
+      <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
     </div>
 
-    <!-- Countdown Screen -->
-    <div class="countdown-screen">
-        <div class="headline">Webstay öppnar snart</div>
-        <div class="countdown" id="countdown">Laddar...</div>
-        <div class="button-container">
-            <a href="https://webstay.se/ex" class="animated-button">Förväntning till olika år</a>
-        </div>
+    <div class="contact">
+      <p>Har du frågor? Kontakta oss på:</p>
+      <a href="mailto:support@webstay.se">support@webstay.se</a>
     </div>
+  </div>
 
-    <script>
-        // Switch to Countdown Screen after 4 seconds
-        setTimeout(() => {
-            document.querySelector('.intro-screen').style.display = 'none';
-            document.querySelector('.countdown-screen').style.display = 'flex';
-        }, 4000);
+  <footer>
+    <p>&copy; 2024 Webstay.se - Alla rättigheter förbehållna</p>
+  </footer>
 
-        // Countdown Timer
-        const countdownElement = document.getElementById("countdown");
-        const targetDate = new Date("2024-12-29T09:38:00+01:00").getTime();
+  <script>
+    // Countdown Timer
+    const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
 
-        async function fetchCurrentTime() {
-            try {
-                const response = await fetch("https://www.timeapi.io/api/time/current/zone?timeZone=Europe%2FAmsterdam");
-                const data = await response.json();
-                return new Date(data.dateTime).getTime();
-            } catch (error) {
-                console.error("Error fetching time from API:", error);
-                return new Date().getTime();
-            }
-        }
+    const timerInterval = setInterval(function() {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
 
-        async function startCountdown() {
-            const apiTime = await fetchCurrentTime();
-            const timeOffset = apiTime - new Date().getTime();
+      if (distance < 0) {
+        clearInterval(timerInterval);
+        document.getElementById("timer").innerHTML = "Lansering pågår!";
+        window.location.href = "https://webstay.se/home"; // Redirect after countdown reaches zero
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+    }, 1000);
 
-            function updateCountdown() {
-                const now = new Date().getTime() + timeOffset;
-                const distance = targetDate - now;
-
-                if (distance <= 0) {
-                    countdownElement.innerHTML = "Vi är live!";
-                    setTimeout(() => {
-                        window.location.href = "https://webstay.se/home";
-                    }, 2000);
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % 1000) / 1000);
-
-                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }
-
-            setInterval(updateCountdown, 1000);
-            updateCountdown();
-        }
-
-        startCountdown();
-    </script>
+    // Redirect to "webstay.se/ex" when the button is clicked
+    document.getElementById("futureButton").addEventListener("click", function() {
+      window.location.href = "https://webstay.se/ex";
+    });
+  </script>
 </body>
 </html>
