@@ -1,1021 +1,491 @@
 <!DOCTYPE html>
 <html lang="sv">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500"
-    />
-    <title>HTML Preview</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
-    <link rel="stylesheet" type="text/css" href="compiled-styles.css" />
-  </head>
-  <body style="margin: 0px">
-    <!-- This only removes default margins in our renderer iframe, you may remove -->
-    <div id="firejet-html-app">
-      <div class="homepage-wrapper">
-        <div class="homepage-homepage">
-          <div class="homepage-rectangle">
-            <div class="homepage-t-rectangle">
-              <div class="homepage-rectangle-1">
-                <div class="homepage-t-webstay-se-them-kpnu-adminpanel">
-                  <div class="homepage-webstay-se">
-                    <span class="homepage-text">Webstay.se</span>
-                  </div>
-                  <div class="homepage-t-hem-kpnu-adminpanel">
-                    <div>Hem</div>
-                    <div>Köp Nu</div>
-                    <div>Adminpanel</div>
-                  </div>
-                </div>
-              </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webstay - Modern webbdesign och hosting</title>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <style>
+        /* Grundläggande reset och typografi */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        /* Header och navigation */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #007bff;
+        }
+
+        /* Hero section */
+        #hero {
+            background: url('path/to/your/hero-image.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 1rem;
+        }
+
+        #hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        #hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn.primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn.secondary {
+            background-color: #fff;
+            color: #007bff;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 10%;
+        }
+
+        section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+
+        /* Features section */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-item i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials section */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-item {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .testimonial-item p {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-item cite {
+            font-weight: bold;
+        }
+
+        /* Clients section */
+        .client-logos {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .client-logos img {
+            max-width: 150px;
+            margin: 1rem;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .client-logos img:hover {
+            filter: grayscale(0%);
+        }
+
+        /* Pricing section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-item {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .pricing-item.featured {
+            transform: scale(1.05);
+            border: 2px solid #007bff;
+        }
+
+        .pricing-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-item .price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-item ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-item ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Newsletter section */
+        #newsletter {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+        }
+
+        #newsletter form {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        #newsletter input[type="email"] {
+            padding: 0.75rem;
+            width: 300px;
+            border: none;
+            border-radius: 5px 0 0 5px;
+        }
+
+        #newsletter button {
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 3rem 10%;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+        }
+
+        /* Responsivitet */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+            }
+
+            nav ul li {
+                margin: 0 1rem;
+            }
+
+            #hero h1 {
+                font-size: 2rem;
+            }
+
+            #hero p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="path/to/your/logo.png" alt="Webstay Logo">
             </div>
-            <div class="homepage-tttt-perspective-grid-tbg-perspective-grid-vector-rectangle-60ttbg-perspective-grid-rectangle-13trectangle-16tperspective-grid-tbg-perspective-grid-trectangle-31trectangle-36trectangle-32trectangle-39ttbg-perspective-grid-tttrectangle-46trectangle-44ttttbg-perspective-grid-vector-sk-rmbild-20241219182733ttttbg-perspective-grid-vector-rectangle-13tbg-rectangle-13tultimate-t1000kr-100kr-imntvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tttrectangle-52trectangle-53bg-perspective-grid-ttbg-perspective-grid-rectangle-38trectangle-33trectangle-37rectangle-34ttvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tttrectangle-51rectangle-27ttbg-perspective-grid-trectangle-41ttttrectangle-50trectangle" >
-              <div class="homepage-ttt-perspective-grid-tbg-perspective-grid-vector-rectangle-60ttbg-perspective-grid-rectangle-13trectangle-16tperspective-grid-tbg-perspective-grid-trectangle-31trectangle-36trectangle-32trectangle-39ttbg-perspective-grid-tttrectangle-46trectangle-44ttttbg-perspective-grid-vector-sk-rmbild" >
-                <div class="homepage-tt-perspective-grid-tbg-perspective-grid-vector-rectangle-60ttbg-perspective-grid-rectangle-13trectangle-16tperspective-grid-tbg-perspective-grid-trectangle-31trectangle-36trectangle-32trectangle-39ttbg-perspective-grid-tttrectangle-46trectangle" >
-                  <div class="homepage-t-perspective-grid-tbg-perspective-grid-vector-rectangle" >
-                    <object
-                      data="/assets/PerspectiveGrid3.svg"
-                      class="homepage-perspective-grid"
-                    ></object>
-                    <div class="homepage-t-bg-perspective-grid-vector-rectangle" >
-                      <object
-                        data="/assets/PerspectiveGrid4.svg"
-                        class="homepage-bg-perspective-grid"
-                      ></object
-                      ><object
-                        data="/assets/Vector.svg"
-                        class="homepage-vector"
-                      ></object>
-                      <div class="homepage-rectangle-2">
-                        <div class="homepage-best-ll-nu">Beställ Nu</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="homepage-tt-bg-perspective-grid-rectangle-13trectangle" >
-                    <div class="homepage-t-bg-perspective-grid-rectangle-13trectangle" >
-                      <div class="homepage-rectangle-3">
-                        <div class="homepage-t-start">
-                          <div class="homepage-start">start</div>
-                        </div>
-                        <div class="homepage-t-300kr-10kr-imn">
-                          <div class="homepage-kr-10kr-imn">
-                            <span class="homepage-main-text" ><p>300kR</p>
-                              <p>10KR I MÅN</p></span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                      <div class="homepage-t-rectangle-1">
-                        <div class="homepage-rectangle-4">
-                          <div class="homepage-populr">POPULÄR</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="homepage-t-perspective-grid-tbg-perspective-grid-trectangle-31trectangle-36trectangle-32trectangle-39ttbg-perspective-grid-tttrectangle-46trectangle" >
-                    <object
-                      data="/assets/PerspectiveGrid5.svg"
-                      class="homepage-perspective-grid-1"
-                    ></object>
-                    <div class="homepage-t-bg-perspective-grid-trectangle-31trectangle-36trectangle-32trectangle" >
-                      <object
-                        data="/assets/PerspectiveGrid5.svg"
-                        class="homepage-bg-perspective-grid-1"
-                      ></object>
-                      <div class="homepage-t-rectangle-31trectangle">
-                        <div class="homepage-t-rectangle-2">
-                          <div class="homepage-rectangle-5">
-                            <div class="homepage-t-eutnyygyrwc-6cqlsuytzbq">
-                              <img
-                                src="/assets/e-ut-nyy-gy-rwc6cqls-uytzb-q.png"
-                                loading="lazy"
-                                class="homepage-e-ut-nyy-gy-rwc6cqls-uytzb-q"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="homepage-rectangle-6">
-                          <div class="homepage-tt-rectangle-42ttrectangle-55tjag-beh-vde-en-plitlig-hemsida-frmin-verksamhet-och-webstay-levererade-betalningarna-via-stripe-rsupersmidiga-och-knns-vldigt-skra-jag-rsnjd-med-hur-snabbt-och-enkelt-allt-gick-att-stta-upp" >
-                            <div class="homepage-t-rectangle-3">
-                              <div class="homepage-anna-l">Anna L</div>
-                            </div>
-                            <div class="homepage-tt-rectangle-55tjag-beh-vde-en-plitlig-hemsida-frmin-verksamhet-och-webstay-levererade-betalningarna-via-stripe-rsupersmidiga-och-knns-vldigt-skra-jag-rsnjd-med-hur-snabbt-och-enkelt-allt-gick-att-stta-upp" >
-                              <div class="homepage-t-rectangle-4">
-                                <div class="homepage-component">⭐ 4.9/5</div>
-                              </div>
-                              <div class="homepage-t-jag-beh-vde-en-plitlig-hemsida-frmin-verksamhet-och-webstay-levererade-betalningarna-via-stripe-rsupersmidiga-och-knns-vldigt-skra-jag-rsnjd-med-hur-snabbt-och-enkelt-allt-gick-att-stta-upp" >
-                                <div class="homepage-jag-beh-vde-en-plitlig-hemsida-frmin-verksamhet-och-webstay-levererade-betalningarna-via-stripe-rsupersmidiga-och-knns-vldigt-skra-jag-rsnjd-med-hur-snabbt-och-enkelt-allt-gick-att-stta-upp" >
-                                  <p>
-                                    Jag behövde en pålitlig hemsida för min
-                                    verksamhet, och Webstay levererade.
-                                    Betalningarna via Stripe är supersmidiga och
-                                    känns väldigt säkra. Jag är så nöjd med hur
-                                    snabbt och enkelt allt gick att sätta upp!
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="homepage-t-rectangle-32trectangle">
-                        <div class="homepage-t-rectangle-5">
-                          <div class="homepage-rectangle-7">
-                            <div class="homepage-t-image">
-                              <img
-                                src="/assets/image.png"
-                                loading="lazy"
-                                class="homepage-image"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                        <div class="homepage-rectangle-8">
-                          <div class="homepage-t-rectangle-6">
-                            <div class="homepage-rectangle-9">
-                              <div class="homepage-component-1">⭐ 5/5</div>
-                            </div>
-                          </div>
-                          <div class="homepage-jag-lskar-hur-enkelt-det-var-att-stta-upp-min-hemsida-med-webstay-integrationen-med-dsers-och-flera-andra-tj-nster-var-smidig-och-designen-rmodern-och-enkel-att-justera-en-fantastisk-lsning" >
-                            <p>
-                              Jag älskar hur enkelt det var att sätta upp min
-                              hemsida med Webstay. Integrationen med DSers och
-                              flera andra tjänster var smidig, och designen är
-                              modern och enkel att justera. En fantastisk
-                              lösning!
-                            </p>
-                          </div>
-                          <div class="homepage-rectangle-10">
-                            <div class="homepage-erik-p">Erik P</div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="homepage-tt-bg-perspective-grid-tttrectangle-46trectangle" >
-                      <div class="homepage-t-bg-perspective-grid-tttrectangle-46trectangle" >
-                        <object
-                          data="/assets/PerspectiveGrid6.svg"
-                          class="homepage-bg-perspective-grid-2"
-                        ></object>
-                        <div class="homepage-ttt-rectangle-46trectangle">
-                          <div class="homepage-tt-rectangle">
-                            <div class="homepage-t-rectangle-7">
-                              <div class="homepage-varf-rvlja-oss">
-                                Varför Välja Oss?
-                              </div>
-                            </div>
-                          </div>
-                          <div class="homepage-t-rectangle-8">
-                            <div class="homepage-rectangle-11">
-                              <div class="homepage-enkel-installation-skapa-din-hemsida-snabbt-och-utan-kr-ngel-skra-betalningar-stripe-garanterar-trygga-transaktioner-flexibel-design-anpassa-din-hemsida-med-moderna-och-snygga-mallar-smidiga-integrationer-koppla-enkelt-ihop-med-dsers-och-fler-verktyg-plitlig-support-vi-hj-lper-dig-varje-steg-pvgen-vlj-webstay-och-grdin-vision-till-verklighet" >
-                                <span
-                                  ><ul class="homepage-list">
-                                    <li>
-                                      Enkel installation: Skapa din hemsida
-                                      snabbt och utan krångel.
-                                    </li>
-                                    <li>
-                                      Säkra betalningar: Stripe garanterar
-                                      trygga transaktioner.
-                                    </li>
-                                    <li>
-                                      Flexibel design: Anpassa din hemsida med
-                                      moderna och snygga mallar.
-                                    </li>
-                                    <li>
-                                      Smidiga integrationer: Koppla enkelt ihop
-                                      med DSers och fler verktyg.
-                                    </li>
-                                    <li>
-                                      Pålitlig support: Vi hjälper dig varje
-                                      steg på vägen.
-                                    </li>
-                                  </ul>
-                                  <p>
-                                    &nbsp;&nbsp;Välj Webstay och gör din vision
-                                    till verklighet! 🌟
-                                  </p></span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="homepage-tttt-bg-perspective-grid-vector-sk-rmbild">
-                  <div class="homepage-ttt-bg-perspective-grid-vector-sk-rmbild" >
-                    <div class="homepage-tt-bg-perspective-grid-vector">
-                      <div class="homepage-t-bg-perspective-grid-vector">
-                        <object
-                          data="/assets/Vector1.svg"
-                          class="homepage-vector-1"
-                        ></object>
-                      </div>
-                    </div>
-                    <img
-                      src="/assets/sk-rmbild.png"
-                      loading="lazy"
-                      class="homepage-sk-rmbild"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="homepage-tttt-bg-perspective-grid-vector-rectangle-13tbg-rectangle-13tultimate-t1000kr-100kr-imntvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tttrectangle-52trectangle-53bg-perspective-grid-ttbg-perspective-grid-rectangle-38trectangle-33trectangle-37rectangle-34ttvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tttrectangle-51rectangle" >
-                <div class="homepage-ttt-bg-perspective-grid-vector-rectangle-13tbg-rectangle-13tultimate-t1000kr-100kr-imntvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tttrectangle-52trectangle-53bg-perspective-grid-ttbg-perspective-grid-rectangle-38trectangle-33trectangle-37rectangle-34ttvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector" >
-                  <div class="homepage-tt-bg-perspective-grid-vector-rectangle-13tbg-rectangle-13tultimate-t1000kr-100kr-imntvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tttrectangle-52trectangle-53bg-perspective-grid-ttbg-perspective-grid-rectangle-38trectangle-33trectangle-37rectangle" >
-                    <div class="homepage-t-bg-perspective-grid-vector-rectangle-13tbg-rectangle-13tultimate-t1000kr-100kr-imn" >
-                      <object
-                        data="/assets/Vector2.svg"
-                        class="homepage-vector-2"
-                      ></object>
-                      <div class="homepage-rectangle-12">
-                        <div class="homepage-t-premium-400kr-50kr-imn">
-                          <div class="homepage-premium">Premium</div>
-                          <div class="homepage-kr-50kr-imn">
-                            <span class="homepage-main-text-2" ><p>400kr</p>
-                              <p>50kr i mån</p></span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                      <div class="homepage-t-bg-rectangle-13tultimate-t1000kr-100kr-imn" >
-                        <div class="homepage-t-ultimate">
-                          <div class="homepage-ultimate">ultimate</div>
-                        </div>
-                        <div class="homepage-t-1000kr-100kr-imn">
-                          <div class="homepage-kr-100kr-imn">
-                            <span class="homepage-main-text-3" ><p>1000KR</p>
-                              <p>100KR I MÅN</p></span
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="homepage-ttt-rectangle-52trectangle-53bg-perspective-grid" >
-                      <div class="homepage-tt-rectangle-52trectangle-53bg-perspective-grid" >
-                        <div class="homepage-t-rectangle-9">
-                          <div class="homepage-rectangle-13">
-                            <div class="homepage-t-statistik">
-                              <div class="homepage-statistik">Statistik</div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="homepage-t-rectangle-10">
-                          <div class="homepage-rectangle-14">
-                            <div class="homepage-n-jda-kunder-100sker-betalning-snittbetyg-495100integrationer" >
-                              <span class="homepage-main-text-4" ><p>&nbsp;-- 200+ nöjda kunder --</p>
-                                <div class="homepage-spacer"></div>
-                                <p>-- 100% säker betalning --</p>
-                                <div class="homepage-spacer-1"></div>
-                                <p>-- Snittbetyg: 4.9/5 --</p>
-                                <div class="homepage-spacer-2"></div>
-                                <p>-- 100+ integrationer --</p></span
-                              >
-                            </div>
-                            <div class="homepage-siffrorna-talar-frsig-sj-lva-ltoss-hj-lpa-dig-att-lyckas" >
-                              <p class="homepage-para-18">
-                                Siffrorna talar för sig själva – låt oss hjälpa
-                                dig att lyckas! 🚀
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="homepage-tt-bg-perspective-grid-rectangle-38trectangle-33trectangle-37rectangle" >
-                      <div class="homepage-t-bg-perspective-grid-rectangle-38trectangle-33trectangle-37rectangle" >
-                        <div class="homepage-rectangle-15">
-                          <div class="homepage-t-download">
-                            <img
-                              src="/assets/download.jpeg"
-                              loading="lazy"
-                              class="homepage-download"
-                            />
-                          </div>
-                        </div>
-                        <div class="homepage-t-rectangle-33trectangle">
-                          <div class="homepage-t-rectangle-11">
-                            <div class="homepage-rectangle-16">
-                              <div class="homepage-t-23year-old-man-1a-9fd-151_0_m" >
-                                <img
-                                  src="/assets/year-old-man-1a-9fd-151_0_m.png"
-                                  loading="lazy"
-                                  class="homepage-year-old-man-1a-9fd-151_0_m"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div class="homepage-rectangle-17">
-                            <div class="homepage-tt-rectangle-56twebstay-gjorde-det-enkelt-frmig-att-skapa-en-hemsida-som-ser-bde-modern-och-proffsig-ut-stripe-hanterar-alla-betalningar-och-jag-knner-mig-trygg-med-att-mina-kunder-fren-sker-betalningsl-sning" >
-                              <div class="homepage-t-rectangle-12">
-                                <div class="homepage-rectangle-18">
-                                  <div class="homepage-component-2">⭐ 5/5</div>
-                                </div>
-                              </div>
-                              <div class="homepage-t-webstay-gjorde-det-enkelt-frmig-att-skapa-en-hemsida-som-ser-bde-modern-och-proffsig-ut-stripe-hanterar-alla-betalningar-och-jag-knner-mig-trygg-med-att-mina-kunder-fren-sker-betalningsl-sning" >
-                                <div class="homepage-webstay-gjorde-det-enkelt-frmig-att-skapa-en-hemsida-som-ser-bde-modern-och-proffsig-ut-stripe-hanterar-alla-betalningar-och-jag-knner-mig-trygg-med-att-mina-kunder-fren-sker-betalningsl-sning" >
-                                  <p>
-                                    Webstay gjorde det enkelt för mig att skapa
-                                    en hemsida som ser både modern och proffsig
-                                    ut. Stripe hanterar alla betalningar, och
-                                    jag känner mig trygg med att mina kunder får
-                                    en säker betalningslösning.
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="homepage-t-rectangle-13">
-                              <div class="homepage-rectangle-19">
-                                <div class="homepage-johan-k">Johan K</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="homepage-rectangle-20">
-                          <div class="homepage-rectangle-21">
-                            <div class="homepage-component-3">⭐ 4.8/5</div>
-                          </div>
-                          <div class="homepage-det-bsta-med-webstay-rhur-smidigt-allt-fungerar-integrationen-med-dsers-och-andra-verktyg-gick-enkelt-och-stripe-betalningarna-fungerar-perfekt-dessutom-rhemsidan-bde-snygg-och-ltt" >
-                            <p>
-                              Det bästa med Webstay är hur smidigt allt
-                              fungerar. Integrationen med DSers och andra
-                              verktyg gick enkelt, och Stripe-betalningarna
-                              fungerar perfekt. Dessutom är hemsidan både snygg
-                              och lätt!
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="homepage-t-vector">
-                      <object
-                        data="/assets/Vector3.svg"
-                        class="homepage-vector-3"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-1">
-                      <object
-                        data="/assets/Vector4.svg"
-                        class="homepage-vector-4"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-2">
-                      <object
-                        data="/assets/Vector5.svg"
-                        class="homepage-vector-5"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-3">
-                      <object
-                        data="/assets/Vector6.svg"
-                        class="homepage-vector-6"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-4">
-                      <object
-                        data="/assets/Vector7.svg"
-                        class="homepage-vector-7"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-5">
-                      <object
-                        data="/assets/Vector8.svg"
-                        class="homepage-vector-8"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-6">
-                      <object
-                        data="/assets/Vector9.svg"
-                        class="homepage-vector-9"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-7">
-                      <object
-                        data="/assets/Vector10.svg"
-                        class="homepage-vector-10"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-8">
-                      <object
-                        data="/assets/Vector11.svg"
-                        class="homepage-vector-11"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-9">
-                      <object
-                        data="/assets/Vector12.svg"
-                        class="homepage-vector-12"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-10">
-                      <object
-                        data="/assets/Vector13.svg"
-                        class="homepage-vector-13"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-11">
-                      <object
-                        data="/assets/Vector14.svg"
-                        class="homepage-vector-14"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-12">
-                      <object
-                        data="/assets/Vector15.svg"
-                        class="homepage-vector-15"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-13">
-                      <object
-                        data="/assets/Vector16.svg"
-                        class="homepage-vector-16"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-14">
-                      <object
-                        data="/assets/Vector17.svg"
-                        class="homepage-vector-17"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-15">
-                      <object
-                        data="/assets/Vector18.svg"
-                        class="homepage-vector-18"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-16">
-                      <object
-                        data="/assets/Vector19.svg"
-                        class="homepage-vector-19"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-17">
-                      <object
-                        data="/assets/Vector20.svg"
-                        class="homepage-vector-20"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-18">
-                      <object
-                        data="/assets/Vector21.svg"
-                        class="homepage-vector-21"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-19">
-                      <object
-                        data="/assets/Vector22.svg"
-                        class="homepage-vector-22"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-20">
-                      <object
-                        data="/assets/Vector23.svg"
-                        class="homepage-vector-23"
-                      ></object>
-                    </div>
-                  </div>
-                  <div class="homepage-tt-vector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector-tvector" >
-                    <div class="homepage-t-vector-21">
-                      <object
-                        data="/assets/Vector24.svg"
-                        class="homepage-vector-24"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-22">
-                      <object
-                        data="/assets/Vector25.svg"
-                        class="homepage-vector-25"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-23">
-                      <object
-                        data="/assets/Vector26.svg"
-                        class="homepage-vector-26"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-24">
-                      <object
-                        data="/assets/Vector27.svg"
-                        class="homepage-vector-27"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-25">
-                      <object
-                        data="/assets/Vector28.svg"
-                        class="homepage-vector-28"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-26">
-                      <object
-                        data="/assets/Vector29.svg"
-                        class="homepage-vector-29"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-27">
-                      <object
-                        data="/assets/Vector30.svg"
-                        class="homepage-vector-30"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-28">
-                      <object
-                        data="/assets/Vector31.svg"
-                        class="homepage-vector-31"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-29">
-                      <object
-                        data="/assets/Vector32.svg"
-                        class="homepage-vector-32"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-30">
-                      <object
-                        data="/assets/Vector33.svg"
-                        class="homepage-vector-33"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-31">
-                      <object
-                        data="/assets/Vector.svg"
-                        class="homepage-vector-34"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-32">
-                      <object
-                        data="/assets/Vector3.svg"
-                        class="homepage-vector-35"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-33">
-                      <object
-                        data="/assets/Vector4.svg"
-                        class="homepage-vector-36"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-34">
-                      <object
-                        data="/assets/Vector24.svg"
-                        class="homepage-vector-37"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-35">
-                      <object
-                        data="/assets/Vector25.svg"
-                        class="homepage-vector-38"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-36">
-                      <object
-                        data="/assets/Vector26.svg"
-                        class="homepage-vector-39"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-37">
-                      <object
-                        data="/assets/Vector34.svg"
-                        class="homepage-vector-40"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-38">
-                      <object
-                        data="/assets/Vector35.svg"
-                        class="homepage-vector-41"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-39">
-                      <object
-                        data="/assets/Vector29.svg"
-                        class="homepage-vector-42"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-40">
-                      <object
-                        data="/assets/Vector30.svg"
-                        class="homepage-vector-43"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-41">
-                      <object
-                        data="/assets/Vector31.svg"
-                        class="homepage-vector-44"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-42">
-                      <object
-                        data="/assets/Vector32.svg"
-                        class="homepage-vector-45"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-43">
-                      <object
-                        data="/assets/Vector33.svg"
-                        class="homepage-vector-46"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-44">
-                      <object
-                        data="/assets/Vector.svg"
-                        class="homepage-vector-47"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-45">
-                      <object
-                        data="/assets/Vector3.svg"
-                        class="homepage-vector-48"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-46">
-                      <object
-                        data="/assets/Vector36.svg"
-                        class="homepage-vector-49"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-47">
-                      <object
-                        data="/assets/Vector37.svg"
-                        class="homepage-vector-50"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-48">
-                      <object
-                        data="/assets/Vector25.svg"
-                        class="homepage-vector-51"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-49">
-                      <object
-                        data="/assets/Vector26.svg"
-                        class="homepage-vector-52"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-50">
-                      <object
-                        data="/assets/Vector27.svg"
-                        class="homepage-vector-53"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-51">
-                      <object
-                        data="/assets/Vector28.svg"
-                        class="homepage-vector-54"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-52">
-                      <object
-                        data="/assets/Vector38.svg"
-                        class="homepage-vector-55"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-53">
-                      <object
-                        data="/assets/Vector39.svg"
-                        class="homepage-vector-56"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-54">
-                      <object
-                        data="/assets/Vector40.svg"
-                        class="homepage-vector-57"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-55">
-                      <object
-                        data="/assets/Vector41.svg"
-                        class="homepage-vector-58"
-                      ></object>
-                    </div>
-                    <div class="homepage-t-vector-56">
-                      <object
-                        data="/assets/Vector42.svg"
-                        class="homepage-vector-59"
-                      ></object>
-                    </div>
-                  </div>
-                </div>
-                <div class="homepage-ttt-rectangle-51rectangle">
-                  <div class="homepage-tt-rectangle-51rectangle">
-                    <div class="homepage-t-rectangle-14">
-                      <div class="homepage-rectangle-22">
-                        <div class="homepage-planer">planer</div>
-                      </div>
-                    </div>
-                    <div class="homepage-rectangle-23">
-                      <div class="homepage-tt-rectangle-18trectangle-19trectangle" >
-                        <div class="homepage-t-rectangle-18trectangle-19trectangle" >
-                          <div class="homepage-start">START</div>
-                          <div class="homepage-t-rectangle-15">
-                            <div class="homepage-premium">PREMIUM</div>
-                          </div>
-                          <div class="homepage-ultimate">ULTIMATE</div>
-                        </div>
-                      </div>
-                      <div class="homepage-ttt-rectangle-21tgrundl-ggande-hosting-epostsupport-gratis-ssl-certifikat-egen-dom-nseo-verktyg-avancerad-analys-tttttttttttttt" >
-                        <div class="homepage-tt-rectangle-21tgrundl-ggande-hosting-epostsupport-gratis-ssl-certifikat-egen-dom-nseo-verktyg-avancerad-analys-tttttttt" >
-                          <div class="homepage-t-rectangle-21tgrundl-ggande-hosting-epostsupport-gratis-ssl-certifikat-egen-dom-nseo-verktyg-avancerad-analys" >
-                            <div class="homepage-rectangle-24"></div>
-                            <div class="homepage-t-grundl-ggande-hosting-epostsupport-gratis-ssl-certifikat-egen-dom-nseo-verktyg-avancerad-analys" >
-                              <div class="homepage-grundl-ggande-hosting-epostsupport-gratis-ssl-certifikat-egen-dom-nseo-verktyg-avancerad-analys" >
-                                <span
-                                  ><p class="homepage-para-21">
-                                    Grundläggande hostinG:
-                                  </p>
-                                  <div class="homepage-spacer-3"></div>
-                                  <p class="homepage-para-22">E-postsupport:</p>
-                                  <div class="homepage-spacer-4"></div>
-                                  <p class="homepage-para-23">
-                                    Gratis SSL-certifikat:
-                                  </p>
-                                  <div class="homepage-spacer-5"></div>
-                                  <p class="homepage-para-24">Egen domån:</p>
-                                  <div class="homepage-spacer-6"></div>
-                                  <p class="homepage-para-25">SEO-verktyg:</p>
-                                  <div class="homepage-spacer-7"></div>
-                                  <p class="homepage-para-26">
-                                    Avancerad analys:
-                                  </p></span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <div class="homepage-tttttttt">
-                            <div class="homepage-ttttttt">
-                              <div class="homepage-t">
-                                <div class="homepage-component-4">&nbsp;✔</div>
-                                <div class="homepage-component-5">&nbsp;✔</div>
-                              </div>
-                              <div class="homepage-t-1">
-                                <div class="homepage-component-6">&nbsp;✔</div>
-                                <div class="homepage-component-7">&nbsp;✔</div>
-                              </div>
-                              <div class="homepage-t-2">
-                                <div class="homepage-component-8">&nbsp;✔</div>
-                                <div class="homepage-component-9">&nbsp;✔</div>
-                              </div>
-                              <div class="homepage-t-3">
-                                <div class="homepage-component-10">&nbsp;—</div>
-                                <div class="homepage-component-11">&nbsp;✔</div>
-                              </div>
-                              <div class="homepage-t-4">
-                                <div class="homepage-component-12">&nbsp;✔</div>
-                                <div class="homepage-component-13">&nbsp;✔</div>
-                              </div>
-                              <div class="homepage-t-5">
-                                <div class="homepage-component-14">&nbsp;—</div>
-                                <div class="homepage-component-15">&nbsp;—</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="homepage-tttttt">
-                          <div class="homepage-ttttt">
-                            <div>&nbsp;✔</div>
-                            <div class="homepage-t-6">
-                              <div class="homepage-component-17">&nbsp;✔</div>
-                            </div>
-                            <div class="homepage-t-7">
-                              <div class="homepage-component-18">&nbsp;✔</div>
-                            </div>
-                            <div>&nbsp;✔</div>
-                            <div class="homepage-t-8">
-                              <div class="homepage-component-20">&nbsp;✔</div>
-                            </div>
-                            <div class="homepage-t-9">
-                              <div class="homepage-component-21">&nbsp;✔</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="homepage-tt-bg-perspective-grid-trectangle-41ttttrectangle-50trectangle" >
-                <div class="homepage-t-bg-perspective-grid-trectangle-41ttttrectangle-50trectangle" >
-                  <object
-                    data="/assets/PerspectiveGrid7.svg"
-                    class="homepage-bg-perspective-grid-3"
-                  ></object>
-                  <div class="homepage-t-rectangle-16">
-                    <div class="homepage-rectangle-25">
-                      <div class="homepage-sara-m">Sara M</div>
-                    </div>
-                  </div>
-                  <div class="homepage-tttt-rectangle-50trectangle">
-                    <div class="homepage-ttt-rectangle">
-                      <div class="homepage-tt-rectangle-1">
-                        <div class="homepage-t-rectangle-17">
-                          <div class="homepage-rectangle-26">
-                            <div class="homepage-t-kom-ig-ng">
-                              <div class="homepage-kom-ig-ng">Kom igång!</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="homepage-t-rectangle-18">
-                      <div class="homepage-rectangle-27">
-                        <div class="homepage-v-lj-en-mall-bl-ddra-bland-vra-moderna-och-anpassningsbara-mallar-och-vlj-den-som-passar-din-verksamhet-fyll-idina-detaljer-lgg-till-ditt-inneh-ll-bilder-och-fretagsinformation-allt-pngra-minuter-publicera-och-brja-slja-med-skra-betalningar-via-stripe-rdin-hemsida-redo-att-ta-emot-kunder-direkt" >
-                          <ol class="homepage-list-1">
-                            <li>Välj en mall</li>
-                            <li>
-                              Bläddra bland våra moderna och anpassningsbara
-                              mallar och välj den som passar din verksamhet.
-                            </li>
-                            <li>Fyll i dina detaljer</li>
-                            <li>
-                              Lägg till ditt innehåll, bilder och
-                              företagsinformation – allt på några minuter.
-                            </li>
-                            <li>Publicera och börja sälja</li>
-                            <li>
-                              Med säkra betalningar via Stripe är din hemsida
-                              redo att ta emot kunder direkt.
-                            </li>
-                          </ol>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <ul>
+                <li><a href="#home">Hem</a></li>
+                <li><a href="#services">Tjänster</a></li>
+                <li><a href="#about">Om oss</a></li>
+                <li><a href="#contact">Kontakta oss</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <h1>Moderna webbplatser för moderna företag</h1>
+            <p>Skapa din drömwebbplats med Webstay</p>
+            <div class="cta-buttons">
+                <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
+                <a href="https://admin.webstay.se" class="btn secondary">Admin-portal</a>
             </div>
-            <div class="homepage-tt-rectangle-49trectangle">
-              <div class="homepage-t-rectangle-19">
-                <div class="homepage-vanliga-misstag">Vanliga Misstag</div>
-              </div>
-              <div class="homepage-t-rectangle-20">
-                <div class="homepage-problem-sv-rt-att-komma-ig-ng-lsning-med-vra-enkla-steg-frsteg-guider-rdu-ig-ng-pnolltid-problem-os-kra-betalningar-lsning-stripe-garanterar-trygga-och-skra-transaktioner-frdig-och-dina-kunder-problem-komplicerade-integrationer-lsning-vra-lsningar-st-der-smidiga-kopplingar-till-dsers-och-andra-tj-nster-problem-sv-rdesignanpassning-lsning-vra-mallar-rltta-att-ndra-fratt-passa-din-stil-och-behov" >
-                  <ul class="homepage-list-2">
-                    <li>Problem: Svårt att komma igång.</li>
-                    <li>
-                      Lösning: Med våra enkla steg-för-steg-guider är du igång
-                      på nolltid.
-                    </li>
-                    <li>Problem: Osäkra betalningar.</li>
-                    <li>
-                      Lösning: Stripe garanterar trygga och säkra transaktioner
-                      för dig och dina kunder.
-                    </li>
-                    <li>Problem: Komplicerade integrationer.</li>
-                    <li>
-                      Lösning: Våra lösningar stöder smidiga kopplingar till
-                      DSers och andra tjänster.
-                    </li>
-                    <li>Problem: Svår designanpassning.</li>
-                    <li>
-                      Lösning: Våra mallar är lätta att ändra för att passa din
-                      stil och behov.
-                    </li>
-                  </ul>
+        </section>
+
+        <section id="about">
+            <h2>Om Webstay</h2>
+            <p>Vi är experter på att skapa moderna, användarvänliga webbplatser som hjälper ditt företag att växa online.</p>
+            <a href="#" class="btn tertiary">Läs mer</a>
+        </section>
+
+        <section id="features">
+            <h2>Våra funktioner</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>Modern design</h3>
+                    <p>Skapa en snygg och funktionell webbplats</p>
                 </div>
-              </div>
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Responsiv</h3>
+                    <p>Fungerar perfekt på alla enheter</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Snabb</h3>
+                    <p>Optimerad för bästa prestanda</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-lock"></i>
+                    <h3>Säker</h3>
+                    <p>SSL-certifikat och säkerhetsuppdateringar</p>
+                </div>
             </div>
-            <div class="homepage-t-rectangle-64trectangle">
-              <div class="homepage-rectangle-28">
-                <div class="homepage-teamet-bakom">Teamet Bakom</div>
-              </div>
-              <div class="homepage-t-rectangle-21">
-                <div class="homepage-rectangle-29">
-                  <div class="homepage-t-vi-rett-engagerat-team-med-en-passion-fratt-skapa-smarta-och-anv-ndarv-nliga-lsningar-med-erfarenhet-inom-design-utveckling-och-kundservice-arbetar-vi-tillsammans-fratt-leverera-den-bsta-upplevelsen-frdig-som-kund-lrknna-oss" >
-                    <div class="homepage-vi-rett-engagerat-team-med-en-passion-fratt-skapa-smarta-och-anv-ndarv-nliga-lsningar-med-erfarenhet-inom-design-utveckling-och-kundservice-arbetar-vi-tillsammans-fratt-leverera-den-bsta-upplevelsen-frdig-som-kund-lrknna-oss" >
-                      <p>
-                        Vi är ett engagerat team med en passion för att skapa
-                        smarta och användarvänliga lösningar. Med erfarenhet
-                        inom design, utveckling och kundservice arbetar vi
-                        tillsammans för att leverera den bästa upplevelsen för
-                        dig som kund. Lär känna oss!
-                      </p>
-                    </div>
-                  </div>
+        </section>
+
+        <section id="testimonials">
+            <h2>Vad våra kunder säger</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-item">
+                    <p>"Webstay har revolutionerat vår online-närvaro. Vår nya webbplats är fantastisk!"</p>
+                    <cite>- Anna Andersson, VD på TechCorp</cite>
                 </div>
-              </div>
+                <div class="testimonial-item">
+                    <p>"Snabb, professionell service och ett otroligt resultat. Rekommenderas starkt!"</p>
+                    <cite>- Johan Svensson, Marknadschef på InnovateCo</cite>
+                </div>
             </div>
-            <div class="homepage-faq-vanliga-fr-gor">
-              <p>FAQ (Vanliga Frågor)</p>
+        </section>
+
+        <section id="clients">
+            <h2>Våra kunder</h2>
+            <div class="client-logos">
+                <!-- Lägg till logotyper för dina kunder här -->
+                <img src="path/to/client1-logo.png" alt="Client 1">
+                <img src="path/to/client2-logo.png" alt="Client 2">
+                <img src="path/to/client3-logo.png" alt="Client 3">
+                <img src="path/to/client4-logo.png" alt="Client 4">
             </div>
-            <div class="homepage-t-rectangle-65rectangle">
-              <div class="homepage-rectangle-30">
-                <div class="homepage-hur-snabbt-kan-jag-fmin-hemsida-live">
-                  <p>Hur snabbt kan jag få min hemsida live?</p>
+        </section>
+
+        <section id="pricing">
+            <h2>Priser</h2>
+            <div class="pricing-grid">
+                <div class="pricing-item">
+                    <h3>Start</h3>
+                    <p class="price">300 kr engångsavgift + 10 kr/mån</p>
+                    <ul>
+                        <li>1 dag gratis provperiod</li>
+                        <li>Grundläggande funktioner</li>
+                        <li>E-postsupport</li>
+                    </ul>
+                    <a href="#" class="btn primary">Välj plan</a>
                 </div>
-              </div>
-              <div class="homepage-rectangle-31">
-                <div class="homepage-kan-jag-anv-nda-min-egen-dom-n">
-                  <p>Kan jag använda min egen domän?</p>
+                <div class="pricing-item featured">
+                    <h3>Premium</h3>
+                    <p class="price">400 kr engångsavgift + 50 kr/mån</p>
+                    <ul>
+                        <li>3 dagar gratis provperiod</li>
+                        <li>Avancerade funktioner</li>
+                        <li>Prioriterad support</li>
+                    </ul>
+                    <a href="#" class="btn primary">Välj plan</a>
                 </div>
-              </div>
+                <div class="pricing-item">
+                    <h3>Ultimate</h3>
+                    <p class="price">1000 kr engångsavgift + 100 kr/mån</p>
+                    <ul>
+                        <li>5 dagar gratis provperiod</li>
+                        <li>Alla funktioner inkluderade</li>
+                        <li>24/7 support</li>
+                    </ul>
+                    <a href="#" class="btn primary">Välj plan</a>
+                </div>
             </div>
-            <div class="homepage-tttt-du-kan-ha-din-hemsida-redo-pbara-ngra-minuter-efter-att-du-fyllt-iall-information-och-genomf-rt-betalningen-trectangle-66tja-om-du-vljer-premium-eller-ultimate-paketet-kan-du-koppla-en-egen-dom-ntill-din-hemsida-trectangle-68tttvi-anv-nder-stripe-frskra-betalningar-vilket-st-djer-de-flesta-betalningar-trectangle-69tabsolut-med-vrt-anv-ndarv-nliga-gr-nssnitt-kan-du-nrsom-helst-anpassa-design-och-inneh-ll-trectangle" >
-              <div class="homepage-ttt-du-kan-ha-din-hemsida-redo-pbara-ngra-minuter-efter-att-du-fyllt-iall-information-och-genomf-rt-betalningen-trectangle-66tja-om-du-vljer-premium-eller-ultimate-paketet-kan-du-koppla-en-egen-dom-ntill-din-hemsida-trectangle-68tttvi-anv-nder-stripe-frskra-betalningar-vilket-st-djer-de-flesta-betalningar-trectangle-69tabsolut-med-vrt-anv-ndarv-nliga-gr-nssnitt-kan-du-nrsom-helst-anpassa-design-och-inneh-ll-trectangle" >
-                <div class="homepage-tt-du-kan-ha-din-hemsida-redo-pbara-ngra-minuter-efter-att-du-fyllt-iall-information-och-genomf-rt-betalningen-trectangle-66tja-om-du-vljer-premium-eller-ultimate-paketet-kan-du-koppla-en-egen-dom-ntill-din-hemsida-trectangle" >
-                  <div class="homepage-t-du-kan-ha-din-hemsida-redo-pbara-ngra-minuter-efter-att-du-fyllt-iall-information-och-genomf-rt-betalningen-trectangle" >
-                    <div class="homepage-du-kan-ha-din-hemsida-redo-pbara-ngra-minuter-efter-att-du-fyllt-iall-information-och-genomf-rt-betalningen" >
-                      <p>
-                        Du kan ha din hemsida redo på bara några minuter efter
-                        att du fyllt i all information och genomfört
-                        betalningen.
-                      </p>
-                    </div>
-                    <div class="homepage-t-rectangle-22">
-                      <div class="homepage-rectangle-32">
-                        <div class="homepage-vilka-betalningsmetoder-st-djer-ni" >
-                          <p>Vilka betalningsmetoder stödjer ni?</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="homepage-t-ja-om-du-vljer-premium-eller-ultimate-paketet-kan-du-koppla-en-egen-dom-ntill-din-hemsida-trectangle" >
-                    <div class="homepage-t-rectangle-23">
-                      <div class="homepage-rectangle-33">
-                        <div class="homepage-kan-jag-ndra-designen">
-                          <p>Kan jag ändra designen?</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="homepage-ja-om-du-vljer-premium-eller-ultimate-paketet-kan-du-koppla-en-egen-dom-ntill-din-hemsida" >
-                      <p>
-                        Ja, om du väljer Premium eller Ultimate paketet kan du
-                        koppla en egen domän till din hemsida.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="homepage-ttt-vi-anv-nder-stripe-frskra-betalningar-vilket-st-djer-de-flesta-betalningar-trectangle-69tabsolut-med-vrt-anv-ndarv-nliga-gr-nssnitt-kan-du-nrsom-helst-anpassa-design-och-inneh-ll-trectangle" >
-                  <div class="homepage-tt-vi-anv-nder-stripe-frskra-betalningar-vilket-st-djer-de-flesta-betalningar-trectangle" >
-                    <div class="homepage-t-vi-anv-nder-stripe-frskra-betalningar-vilket-st-djer-de-flesta-betalningar-trectangle" >
-                      <div class="homepage-t-rectangle-24">
-                        <div class="homepage-erbjuder-ni-kundsupport">
-                          Erbjuder ni kundsupport?
-                        </div>
-                      </div>
-                      <div class="homepage-vi-anv-nder-stripe-frskra-betalningar-vilket-st-djer-de-flesta-betalningar" >
-                        <p>
-                          Vi använder Stripe för säkra betalningar, vilket
-                          stödjer de flesta betalningar.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="homepage-t-absolut-med-vrt-anv-ndarv-nliga-gr-nssnitt-kan-du-nrsom-helst-anpassa-design-och-inneh-ll-trectangle" >
-                    <div class="homepage-absolut-med-vrt-anv-ndarv-nliga-gr-nssnitt-kan-du-nrsom-helst-anpassa-design-och-inneh-ll" >
-                      <p>
-                        Absolut! Med vårt användarvänliga gränssnitt kan du när
-                        som helst anpassa design och innehåll.
-                      </p>
-                    </div>
-                    <div class="homepage-t-rectangle-25">
-                      <div class="homepage-erbjuder-ni-kundsupport-1">
-                        Erbjuder ni kundsupport?
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        </section>
+
+        <section id="newsletter">
+            <h2>Håll dig uppdaterad</h2>
+            <p>Prenumerera på vårt nyhetsbrev för att få de senaste uppdateringarna och erbjudandena.</p>
+            <form>
+                <input type="email" placeholder="Din e-postadress" required>
+                <button type="submit" class="btn primary">Prenumerera</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Kontakta oss</h3>
+                <p>E-post: support@webstay.se</p>
             </div>
-            <div class="homepage-tt-ja-vi-erbjuder-epostsupport-till-alla-vra-kunder-premium-och-ultimate-anv-ndare-frdessutom-prioriterad-support-ja-alla-vra-hemsidor-levereras-med-ett-gratis-ssl-certifikat-fratt-skydda-din-och-dina-kunders-data" >
-              <div class="homepage-t-ja-vi-erbjuder-epostsupport-till-alla-vra-kunder-premium-och-ultimate-anv-ndare-frdessutom-prioriterad-support-ja-alla-vra-hemsidor-levereras-med-ett-gratis-ssl-certifikat-fratt-skydda-din-och-dina-kunders-data" >
-                <div class="homepage-ja-vi-erbjuder-epostsupport-till-alla-vra-kunder-premium-och-ultimate-anv-ndare-frdessutom-prioriterad-support" >
-                  <p>
-                    Ja, vi erbjuder e-postsupport till alla våra kunder.
-                    Premium- och Ultimate-användare får dessutom prioriterad
-                    support.
-                  </p>
+            <div class="footer-section">
+                <h3>Följ oss</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
                 </div>
-                <div class="homepage-ja-alla-vra-hemsidor-levereras-med-ett-gratis-ssl-certifikat-fratt-skydda-din-och-dina-kunders-data" >
-                  <p>
-                    Ja, alla våra hemsidor levereras med ett gratis
-                    SSL-certifikat för att skydda din och dina kunders data.
-                  </p>
-                </div>
-              </div>
             </div>
-            <div class="homepage-t-rectangle-26">
-              <div class="homepage-rectangle-34">
-                <div class="homepage-webstay-se-alla-rttigheter-frbeh-llna-frfr-gor-eller-support-kontakta-oss-psupport-webstay-se" >
-                  <span
-                    ><p class="homepage-para-53">
-                      © 2024 Webstay.se – Alla rättigheter förbehållna.
-                    </p>
-                    <p class="homepage-para-54">
-                      För frågor eller support, kontakta oss på:
-                      <a
-                        href="mailto:support@webstay.se"
-                        class="homepage-text-1"
-                        >support@webstay.se</a
-                      >
-                    </p></span
-                  >
-                </div>
-              </div>
+            <div class="footer-section">
+                <h3>Snabblänkar</h3>
+                <ul>
+                    <li><a href="#">Hem</a></li>
+                    <li><a href="#">Tjänster</a></li>
+                    <li><a href="#">Om oss</a></li>
+                    <li><a href="#">Kontakta oss</a></li>
+                </ul>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </body>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Webstay. Alla rättigheter förbehållna.</p>
+        </div>
+    </footer>
+</body>
 </html>
