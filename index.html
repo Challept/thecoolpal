@@ -12,7 +12,7 @@
       font-family: 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); /* Blue, Red, Yellow Gradient */
+      background: linear-gradient(135deg, #003366, #336699, #66ccff); /* Gradient with shades of blue */
       color: #f1f1f1;
       display: flex;
       flex-direction: column;
@@ -24,7 +24,6 @@
       scroll-behavior: smooth;
       background-size: 400% 400%;
       animation: gradientAnimation 10s ease infinite; /* Animated gradient */
-      position: relative;
     }
 
     @keyframes gradientAnimation {
@@ -43,50 +42,24 @@
       box-sizing: border-box;
     }
 
-    /* Abstract Shapes in the Background */
-    .background-shapes {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1; /* Send behind the content */
-      background: radial-gradient(circle, #1a2a6c 20%, #444 80%);
+    /* Glitch effect for titles */
+    @keyframes glitch {
+      0% { text-shadow: 1px 0 blue, -1px 0 red, 1px 0 green; }
+      20% { text-shadow: -1px 0 blue, 1px 0 red, 1px 0 green; }
+      40% { text-shadow: 1px 0 blue, -1px 0 red, 1px 0 green; }
+      60% { text-shadow: -1px 0 blue, 1px 0 red, 1px 0 green; }
+      80% { text-shadow: 1px 0 blue, -1px 0 red, 1px 0 green; }
+      100% { text-shadow: -1px 0 blue, 1px 0 red, 1px 0 green; }
     }
 
-    .background-shapes::before, .background-shapes::after {
-      content: '';
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .background-shapes::before {
-      width: 500px;
-      height: 500px;
-      top: 20%;
-      left: 10%;
-      animation: moveShape1 8s infinite ease-in-out;
-    }
-
-    .background-shapes::after {
-      width: 600px;
-      height: 600px;
-      top: 60%;
-      right: 10%;
-      animation: moveShape2 10s infinite ease-in-out;
-    }
-
-    @keyframes moveShape1 {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(50px, -50px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    @keyframes moveShape2 {
-      0% { transform: translate(0, 0); }
-      50% { transform: translate(-70px, 60px); }
-      100% { transform: translate(0, 0); }
+    .glitch-text {
+      position: relative;
+      font-family: 'Zilla Slab', serif;
+      font-size: 30px;
+      color: #fff;
+      text-transform: uppercase;
+      display: inline-block;
+      animation: glitch 1.5s infinite;
     }
 
     /* Container Style */
@@ -152,29 +125,6 @@
       transform: scale(1.05);
     }
 
-    /* Progress Bar Section */
-    .progress-bar-container {
-      margin-top: 40px;
-      width: 100%;
-      background-color: #444; /* Dark grey */
-      border-radius: 5px;
-      overflow: hidden;
-    }
-
-    .progress-bar-title {
-      font-size: 22px;
-      color: #fff;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    .progress-bar {
-      width: 0%; /* Default starting width */
-      height: 20px;
-      background-color: #1e90ff; /* Bright blue */
-      transition: width 0.5s ease;
-    }
-
     /* About Section */
     .about {
       margin-top: 50px;
@@ -190,6 +140,7 @@
       color: #4682b4; /* Steel blue */
       margin-bottom: 20px;
       text-transform: uppercase;
+      animation: glitch 1.5s infinite; /* Glitch effect */
     }
 
     .about p {
@@ -213,6 +164,7 @@
       color: #4682b4; /* Steel blue */
       margin-bottom: 20px;
       text-transform: uppercase;
+      animation: glitch 1.5s infinite; /* Glitch effect */
     }
 
     .quote {
@@ -271,6 +223,7 @@
       color: #4682b4; /* Steel blue */
       margin-bottom: 10px;
       text-transform: uppercase;
+      animation: glitch 1.5s infinite; /* Glitch effect */
     }
 
     .launch-info p {
@@ -342,38 +295,32 @@
   </style>
 </head>
 <body>
-  <div class="background-shapes"></div> <!-- Abstract shapes behind the content -->
   <div class="container">
     <h1>Webstay - Kommer Snart!</h1>
     <div class="timer" id="timer"></div>
 
     <button class="btn-future" id="futureButton">Föreväntning!</button>
 
-    <div class="progress-bar-container">
-      <div class="progress-bar-title">Webstay Lansering - Progress</div>
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-
     <div class="about">
-      <h2>Om Webstay</h2>
+      <h2 class="glitch-text">Om Webstay</h2>
       <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
     </div>
 
     <div class="quotes">
-      <h2>Vad säger folk om oss?</h2>
+      <h2 class="glitch-text">Vad säger folk om oss?</h2>
       <div class="quote">"Webstay är framtiden för webbplatsbyggande. Jag ser fram emot lanseringen!" - Entusiastisk Användare</div>
       <div class="quote">"Enkel, prisvärd och kraftfull. Jag är verkligen nyfiken på att se det i action!" - Teknikexpert</div>
     </div>
 
     <div class="newsletter">
-      <h2>Nyhetsbrev</h2>
+      <h2 class="glitch-text">Nyhetsbrev</h2>
       <p>Få de senaste uppdateringarna och nyheter om lanseringen direkt i din inkorg!</p>
       <input type="email" placeholder="Din e-postadress" id="email">
       <button onclick="subscribeNewsletter()">Prenumerera</button>
     </div>
 
     <div class="launch-info">
-      <h2>Kommande Lansering</h2>
+      <h2 class="glitch-text">Kommande Lansering</h2>
       <p>Webstay kommer att vara tillgängligt för allmänheten den 25 februari 2025. Vi ser fram emot att hjälpa dig skapa din drömwebbplats!</p>
     </div>
 
@@ -390,15 +337,10 @@
   <script>
     // Countdown Timer
     const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
-    const startDate = new Date("Dec 31, 2024 00:00:00").getTime();
-    const progressBar = document.getElementById("progressBar");
 
     const timerInterval = setInterval(function() {
       const now = new Date().getTime();
       const distance = countdownDate - now;
-      const totalTime = countdownDate - startDate;
-      const timeElapsed = totalTime - distance;
-      const progressPercentage = (timeElapsed / totalTime) * 100;
 
       if (distance < 0) {
         clearInterval(timerInterval);
@@ -410,9 +352,6 @@
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((distance % (1000 * 60)) / 1000);
         document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-
-        // Update progress bar width based on time elapsed
-        progressBar.style.width = progressPercentage + "%"; 
       }
     }, 1000);
 
