@@ -121,19 +121,20 @@
 #hero h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 #hero p {
     font-size: 1.5rem;
     margin-bottom: 2rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .cta-buttons {
     display: flex;
     gap: 1rem;
     justify-content: center;
+    display: none; /* Hide buttons by default */
 }
 
 .btn {
@@ -157,7 +158,7 @@
 
 .btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* Mobile Responsiveness */
@@ -182,6 +183,16 @@
     .btn {
         font-size: 1rem;
         padding: 10px 20px;
+    }
+
+    /* Show buttons only on small screens */
+    .cta-buttons {
+        display: flex; /* Show buttons only on small screens */
+    }
+
+    /* Hide text and video on small screens */
+    #hero h1, #hero p {
+        display: none;
     }
 }
 
@@ -488,24 +499,27 @@
 </section>
 
 <script>
-    // JavaScript to adjust video size dynamically
-    window.addEventListener('resize', adjustVideoSize);
+    // JavaScript to adjust video size dynamically and show buttons only on small screens
+    window.addEventListener('resize', adjustVideoSizeAndButtons);
 
-    function adjustVideoSize() {
+    function adjustVideoSizeAndButtons() {
         const video = document.getElementById('hero-video');
+        const ctaButtons = document.querySelector('.cta-buttons');
         const windowWidth = window.innerWidth;
         
         // Adjust video height based on window width for mobile and tablet screens
         if (windowWidth <= 768) { // Mobile or tablet
             video.style.height = 'auto'; // Adjust video height to 'auto' for better fitting
             video.style.maxHeight = '70vh'; // Limit the height on mobile/tablets
+            ctaButtons.style.display = 'flex'; // Show buttons on mobile
         } else {
             video.style.height = '100vh'; // Full height for larger screens
+            ctaButtons.style.display = 'flex'; // Keep buttons visible on large screens
         }
     }
 
-    // Initial call to adjust the video size on page load
-    adjustVideoSize();
+    // Initial call to adjust the video size and buttons on page load
+    adjustVideoSizeAndButtons();
 </script>
 
         <section id="features">
