@@ -6,149 +6,148 @@
     <title>Webstay - Modern webbdesign och hosting</title>
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box !important;
-    }
-    :root {
-        --primary-blue: #007bff;
-        --secondary-blue: #0056b3;
-        --light-blue: #e6f2ff;
-        --dark-blue: #004085;
-        --darker-blue: #001f3f;
-        --darkest-blue: #00131f;
-        --white: #ffffff;
-        --light-gray: #f8f9fa;
-        --dark-gray: #343a40;
-    }
-    html, body {
-        height: 100%;
-        width: 100%;
-        overflow-x: hidden;
-    }
-    body {
-        display: flex;
-        flex-direction: column;
-        background-color: var(--darkest-blue);
-        color: var(--light-gray);
-        line-height: 1.6;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        padding-top: 90px; /* Add padding to account for fixed header */
-    }
-    .lines {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        margin: auto;
-        width: 90vw;
-        z-index: -1;
-    }
-    .line {
-        position: absolute;
-        width: 1px;
-        height: 100%;
-        top: 0;
-        left: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        overflow: hidden;
-    }
-    .line::after {
-        content: '';
-        display: block;
-        position: absolute;
-        height: 15vh;
-        width: 100%;
-        top: -50%;
-        left: 0;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
-        animation: drop 7s 0s infinite;
-        animation-fill-mode: forwards;
-        animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
-    }
-    .line:nth-child(1) {
-        margin-left: -45%;
-    }
-    .line:nth-child(1)::after {
-        animation-delay: 2s;
-    }
-    .line:nth-child(3) {
-        margin-left: 45%;
-    }
-    .line:nth-child(3)::after {
-        animation-delay: 2.5s;
-    }
-    .line:nth-child(4) {
-        margin-left: -15%;
-    }
-    .line:nth-child(4)::after {
-        animation-delay: 1.5s;
-    }
-    .line:nth-child(5) {
-        margin-left: 15%;
-    }
-    .line:nth-child(5)::after {
-        animation-delay: 3s;
-    }
-    @keyframes drop {
-        0% {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box !important;
+        }
+        :root {
+            --primary-blue: #007bff;
+            --secondary-blue: #0056b3;
+            --light-blue: #e6f2ff;
+            --dark-blue: #004085;
+            --darker-blue: #001f3f;
+            --darkest-blue: #00131f;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--darkest-blue);
+            color: var(--light-gray);
+            line-height: 1.6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 90px; /* Add padding to account for fixed header */
+        }
+        .lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            margin: auto;
+            width: 90vw;
+            z-index: -1;
+        }
+        .line {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        .line::after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 15vh;
+            width: 100%;
             top: -50%;
+            left: 0;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
+            animation: drop 7s 0s infinite;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
         }
-        100% {
-            top: 110%;
+        .line:nth-child(1) {
+            margin-left: -45%;
         }
-    }
-
-    /* Header and navigation */
-    header {
-        background-color: var(--darker-blue);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
-        top: 0;
-        left: 0;
-    }
-    nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 1rem 5%;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    .logo img {
-        height: 60px; /* Reduced height to fit fixed header */
-    }
-    .nav-links {
-        display: flex;
-        list-style: none;
-    }
-    .nav-links li {
-        margin-left: 2rem;
-    }
-    .nav-links li a {
-        text-decoration: none;
-        color: var(--light-gray);
-        font-weight: 500;
-        transition: color 0.3s ease;
-    }
-    .nav-links li a:hover {
-        color: var(--primary-blue);
-    }
-    .burger {
-        display: none;
-        cursor: pointer;
-    }
-    .burger div {
-        width: 25px;
-        height: 3px;
-        background-color: var(--light-gray);
-        margin: 5px;
-        transition: all 0.3s ease;
-    }
+        .line:nth-child(1)::after {
+            animation-delay: 2s;
+        }
+        .line:nth-child(3) {
+            margin-left: 45%;
+        }
+        .line:nth-child(3)::after {
+            animation-delay: 2.5s;
+        }
+        .line:nth-child(4) {
+            margin-left: -15%;
+        }
+        .line:nth-child(4)::after {
+            animation-delay: 1.5s;
+        }
+        .line:nth-child(5) {
+            margin-left: 15%;
+        }
+        .line:nth-child(5)::after {
+            animation-delay: 3s;
+        }
+        @keyframes drop {
+            0% {
+                top: -50%;
+            }
+            100% {
+                top: 110%;
+            }
+        }
+        /* Header and navigation */
+        header {
+            background-color: var(--darker-blue);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo img {
+            height: 60px; /* Reduced height to fit fixed header */
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        .nav-links li a {
+            text-decoration: none;
+            color: var(--light-gray);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .nav-links li a:hover {
+            color: var(--primary-blue);
+        }
+        .burger {
+            display: none;
+            cursor: pointer;
+        }
+        .burger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-gray);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
         /* Hero section */
         #hero {
             position: relative;
@@ -216,7 +215,6 @@
             transform: translateY(-3px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-
         /* Sections */
         section {
             padding: 5rem 10%;
@@ -228,7 +226,6 @@
             font-size: 2.5rem;
             color: var(--primary-blue);
         }
-
         /* Features section */
         .feature-grid {
             display: grid;
@@ -251,7 +248,6 @@
             color: var(--primary-blue);
             margin-bottom: 1rem;
         }
-
         /* Testimonials section */
         .testimonial-grid {
             display: grid;
@@ -272,7 +268,6 @@
             font-weight: bold;
             color: var(--primary-blue);
         }
-
         /* Clients section */
         .client-logos {
             display: flex;
@@ -289,7 +284,6 @@
         .client-logos img:hover {
             transform: scale(1.1);
         }
-
         /* Pricing section */
         .pricing-grid {
             display: grid;
@@ -328,7 +322,6 @@
         .pricing-item ul li {
             margin-bottom: 0.5rem;
         }
-
         /* Newsletter section */
         #newsletter {
             background-color: var(--dark-blue);
@@ -353,7 +346,6 @@
             background-color: var(--primary-blue);
             color: var(--white);
         }
-
         /* Security and Trust section */
         #security-trust {
             background-color: var(--darker-blue);
@@ -375,14 +367,13 @@
             color: var(--primary-blue);
             margin-bottom: 1rem;
         }
-
         /* FAQ section */
         .faq-container {
             max-width: 800px;
             margin: 0 auto;
         }
         .faq-item {
-            background-color: var(--dark-blue);
+            background-color: var (--dark-blue);
             margin-bottom: 1rem;
             border-radius: 5px;
             overflow: hidden;
@@ -413,7 +404,6 @@
             max-height: 1000px;
             padding: 1rem;
         }
-
         /* New sections */
         #portfolio {
             background-color: var(--darkest-blue);
@@ -456,7 +446,6 @@
             color: var(--white);
             text-align: center;
         }
-
         #team {
             background-color: var(--darker-blue);
         }
@@ -485,7 +474,6 @@
         .team-member p {
             color: var(--light-gray);
         }
-
         #contact {
             background-color: var(--darkest-blue);
         }
@@ -516,7 +504,6 @@
         .contact-form button:hover {
             background-color: var(--secondary-blue);
         }
-
         /* Footer */
         footer {
             background-color: var(--darker-blue);
@@ -574,7 +561,6 @@
             padding-top: 1rem;
             border-top: 1px solid var(--dark-gray);
         }
-
         /* Responsive design */
         @media screen and (max-width: 768px) {
             .nav-links {
@@ -629,8 +615,10 @@
                 text-align: center;
                 margin-bottom: 2rem;
             }
+            #hero video {
+                display: none; /* Hide video on mobile devices */
+            }
         }
-
         @keyframes navLinkFade {
             from {
                 opacity: 0;
@@ -651,7 +639,6 @@
         <div class="line"></div>
         <div class="line"></div>
     </div>
-
     <header>
         <nav>
             <div class="logo">
@@ -671,23 +658,21 @@
             </div>
         </nav>
     </header>
-
     <main>
         <section id="hero">
             <video autoplay muted loop id="hero-video">
-                <source src="hero-video.mp4" type="video/mp4">
+                <source src="sell around the world (1).mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             <div class="hero-content">
                 <h1>Moderna webbdesign och hosting lösningar</h1>
                 <p>Skapa en imponerande online närvaro med våra skräddarsydda tjänster</p>
-<div class="cta-buttons">
-    <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
-    <a href="https://admin.webstay.se" class="btn secondary">Admin</a>
-</div>
+                <div class="cta-buttons">
+                    <a href="https://webstay.se/order" class="btn primary">Beställ nu</a>
+                    <a href="https://admin.webstay.se" class="btn secondary">Admin</a>
+                </div>
             </div>
         </section>
-
         <section id="features">
             <h2>Våra funktioner</h2>
             <div class="feature-grid">
@@ -713,7 +698,6 @@
                 </div>
             </div>
         </section>
-
         <section id="testimonials">
             <h2>Vad våra kunder säger</h2>
             <div class="testimonial-grid">
@@ -731,7 +715,6 @@
                 </div>
             </div>
         </section>
-
         <section id="clients">
             <h2>Våra kunder</h2>
             <div class="client-logos">
@@ -741,52 +724,50 @@
                 <img src="ALFERS__2_-removebg-preview.png" alt="Client 4">
             </div>
         </section>
-
-<section id="pricing">
-    <h2>Våra priser</h2>
-    <div class="pricing-grid">
-        <div class="pricing-item">
-            <h3>Start</h3>
-            <p class="price">300 kr en gång + 10 kr/mån</p>
-            <ul>
-                <li>Responsiv webbdesign</li>
-                <li>Alla funktioner utan begränsningar</li>
-                <li>Grundläggande SEO</li>
-                <li>1 GB lagring</li>
-                <li>E-postsupport</li>
-                <li>Ingen begränsning på antal sidor eller funktioner</li>
-            </ul>
-            <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
-        </div>
-        <div class="pricing-item featured">
-            <h3>Premium</h3>
-            <p class="price">400 kr en gång + 50 kr/mån</p>
-            <ul>
-                <li>Allt i Start, plus:</li>
-                <li>Avancerad SEO</li>
-                <li>5 GB lagring</li>
-                <li>Prioriterad support</li>
-                <li>Teman och anpassad design</li>
-                <li>Alla funktioner utan begränsningar</li>
-            </ul>
-            <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
-        </div>
-        <div class="pricing-item">
-            <h3>Ultimate</h3>
-            <p class="price">1000 kr en gång + 100 kr/mån</p>
-            <ul>
-                <li>Allt i Premium, plus:</li>
-                <li>Obegränsad lagring</li>
-                <li>24/7 support</li>
-                <li>Exklusiva teman och avancerad design</li>
-                <li>Flera premiumfunktioner som API-integrationer</li>
-                <li>Alla funktioner utan begränsningar</li>
-            </ul>
-            <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
-        </div>
-    </div>
-</section>
-
+        <section id="pricing">
+            <h2>Våra priser</h2>
+            <div class="pricing-grid">
+                <div class="pricing-item">
+                    <h3>Start</h3>
+                    <p class="price">300 kr en gång + 10 kr/mån</p>
+                    <ul>
+                        <li>Responsiv webbdesign</li>
+                        <li>Alla funktioner utan begränsningar</li>
+                        <li>Grundläggande SEO</li>
+                        <li>1 GB lagring</li>
+                        <li>E-postsupport</li>
+                        <li>Ingen begränsning på antal sidor eller funktioner</li>
+                    </ul>
+                    <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
+                </div>
+                <div class="pricing-item featured">
+                    <h3>Premium</h3>
+                    <p class="price">400 kr en gång + 50 kr/mån</p>
+                    <ul>
+                        <li>Allt i Start, plus:</li>
+                        <li>Avancerad SEO</li>
+                        <li>5 GB lagring</li>
+                        <li>Prioriterad support</li>
+                        <li>Teman och anpassad design</li>
+                        <li>Alla funktioner utan begränsningar</li>
+                    </ul>
+                    <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
+                </div>
+                <div class="pricing-item">
+                    <h3>Ultimate</h3>
+                    <p class="price">1000 kr en gång + 100 kr/mån</p>
+                    <ul>
+                        <li>Allt i Premium, plus:</li>
+                        <li>Obegränsad lagring</li>
+                        <li>24/7 support</li>
+                        <li>Exklusiva teman och avancerad design</li>
+                        <li>Flera premiumfunktioner som API-integrationer</li>
+                        <li>Alla funktioner utan begränsningar</li>
+                    </ul>
+                    <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
+                </div>
+            </div>
+        </section>
         <section id="newsletter">
             <h2>Prenumerera på vårt nyhetsbrev</h2>
             <p>Få de senaste nyheterna och erbjudandena direkt i din inkorg.</p>
@@ -795,7 +776,6 @@
                 <button type="submit" class="btn primary">Prenumerera</button>
             </form>
         </section>
-
         <section id="security-trust">
             <h2>Säkerhet och förtroende</h2>
             <div class="security-grid">
@@ -816,7 +796,6 @@
                 </div>
             </div>
         </section>
-
         <section id="faq">
             <h2>Vanliga frågor</h2>
             <div class="faq-container">
@@ -838,7 +817,6 @@
                 </div>
             </div>
         </section>
-
         <section id="contact">
             <h2>Kontakta oss</h2>
             <div class="contact-form">
@@ -852,7 +830,6 @@
             </div>
         </section>
     </main>
-
     <footer>
         <div class="footer-content">
             <div class="footer-section">
@@ -886,17 +863,14 @@
             <p>&copy; 2023 Webstay. Alla rättigheter förbehållna.</p>
         </div>
     </footer>
-
     <script>
         // Navigation toggle
         const burger = document.querySelector('.burger');
         const nav = document.querySelector('.nav-links');
         const navLinks = document.querySelectorAll('.nav-links li');
-
         burger.addEventListener('click', () => {
             // Toggle Nav
             nav.classList.toggle('nav-active');
-
             // Animate Links
             navLinks.forEach((link, index) => {
                 if (link.style.animation) {
@@ -905,7 +879,6 @@
                     link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
                 }
             });
-
             // Burger Animation
             burger.classList.toggle('toggle');
         });
@@ -914,7 +887,6 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
@@ -923,7 +895,6 @@
 
         // FAQ toggle
         const faqItems = document.querySelectorAll('.faq-item');
-
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
             question.addEventListener('click', () => {
@@ -938,6 +909,17 @@
             // Add your form submission logic here
             alert('Tack för ditt meddelande! Vi återkommer så snart som möjligt.');
             form.reset();
+        });
+
+        // JavaScript to control video play
+        window.addEventListener('load', () => {
+            const video = document.getElementById('hero-video');
+            if (window.innerWidth > 768) {
+                video.style.display = 'block';
+                video.play();
+            } else {
+                video.style.display = 'none';
+            }
         });
     </script>
 </body>
