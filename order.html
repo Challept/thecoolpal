@@ -5,349 +5,349 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="file.png" type="image/png">
     <title>Beställ</title>
-    <style>
-        body {
-            background-color: #001f3f;
-            color: #e0e0e0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+<style>
+    body {
+        background-color: #001f3f;
+        color: #e0e0e0;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 50px auto;
-            padding: 30px;
-            background-color: #0056b3;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            animation: fadeIn 1s ease-in-out;
-        }
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #0056b3;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 
-        h2.main-title {
-            color: #e6f2ff;
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            animation: glitch 1s infinite;
-            position: relative;
-        }
+    h2.main-title {
+        color: #e6f2ff;
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        animation: glitch 1s infinite;
+        position: relative;
+    }
 
-        @keyframes glitch {
-            0% {
-                text-shadow: 2px 0 red, -2px 0 blue;
-            }
-            20% {
-                text-shadow: -2px 0 green, 2px 0 orange;
-            }
-            40% {
-                text-shadow: 2px 0 blue, -2px 0 red;
-            }
-            60% {
-                text-shadow: -2px 0 orange, 2px 0 green;
-            }
-            80% {
-                text-shadow: 2px 0 red, -2px 0 blue;
-            }
-            100% {
-                text-shadow: -2px 0 green, 2px 0 orange;
-            }
+    @keyframes glitch {
+        0% {
+            text-shadow: 2px 0 red, -2px 0 blue;
         }
-
-        .pricing-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
+        20% {
+            text-shadow: -2px 0 green, 2px 0 orange;
         }
+        40% {
+            text-shadow: 2px 0 blue, -2px 0 red;
+        }
+        60% {
+            text-shadow: -2px 0 orange, 2px 0 green;
+        }
+        80% {
+            text-shadow: 2px 0 red, -2px 0 blue;
+        }
+        100% {
+            text-shadow: -2px 0 green, 2px 0 orange;
+        }
+    }
 
+    .pricing-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .pricing-plan {
+        background-color: #007bff;
+        border: 2px solid transparent;
+        border-radius: 10px;
+        padding: 20px;
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pricing-plan:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 123, 255, 0.15);
+        border-color: #e6f2ff;
+    }
+
+    .pricing-plan.selected {
+        border-color: #e6f2ff;
+        background-color: #004085;
+    }
+
+    .plan-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #e6f2ff;
+    }
+
+    .plan-description {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #d0e7ff;
+    }
+
+    .plan-price {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #e6f2ff;
+    }
+
+    .button-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .pay-button,
+    .create-store-button {
+        display: none;
+        margin: 10px;
+        padding: 12px 25px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .pay-button:hover,
+    .create-store-button:hover {
+        background-color: #005bb5;
+        transform: translateY(-3px);
+    }
+
+    .features-container {
+        width: 100%;
+        margin-top: 50px;
+        text-align: left;
+    }
+
+    .features-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .features-table th, .features-table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    .features-table th {
+        background-color: #004085;
+        color: #e6f2ff;
+    }
+
+    .features-table td {
+        background-color: #0056b3;
+        color: #e6f2ff;
+    }
+
+    .features-table tr:nth-child(even) td {
+        background-color: #006bb3;
+    }
+
+    .features-table .feature-name {
+        text-align: left;
+        padding-left: 20px;
+    }
+
+    .cool-info {
+        background-color: #007bff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .cool-info-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #e6f2ff;
+        margin-bottom: 10px;
+    }
+
+    .cool-info-content {
+        font-size: 16px;
+        color: #d0e7ff;
+    }
+
+    .stripe-info {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: #007bff;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .stripe-title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #e6f2ff;
+        margin-bottom: 10px;
+    }
+
+    .stripe-content {
+        font-size: 16px;
+        color: #d0e7ff;
+        line-height: 1.5;
+    }
+
+    /* Popup styles */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        width: 80%;
+        max-width: 600px;
+        background-color: #0056b3;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .popup-content {
+        color: #e0e0e0;
+    }
+
+    .popup .close-btn {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        float: right;
+    }
+
+    .popup .close-btn:hover {
+        background-color: #005bb5;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+    }
+
+    /* Additional styles and sections */
+    .additional-sections {
+        margin-top: 50px;
+        width: 100%;
+    }
+
+    .section {
+        padding: 20px;
+        background-color: #007bff;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: bold;
+        color: #e6f2ff;
+        margin-bottom: 10px;
+    }
+
+    .section-content {
+        font-size: 16px;
+        color: #d0e7ff;
+    }
+
+    .cta-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #005bb5;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .cta-button:hover {
+        background-color: #003f7f;
+        transform: translateY(-3px);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
         .pricing-plan {
-            background-color: #007bff;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            padding: 20px;
-            width: 100%;
-            max-width: 280px;
-            text-align: center;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-            animation: fadeInUp 1s ease-in-out;
+            max-width: 100%;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .pricing-plan:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 24px rgba(0, 123, 255, 0.15);
-            border-color: #e6f2ff;
-        }
-
-        .pricing-plan.selected {
-            border-color: #e6f2ff;
-            background-color: #004085;
-        }
-
-        .plan-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #e6f2ff;
-        }
-
-        .plan-description {
-            font-size: 16px;
-            margin-bottom: 15px;
-            color: #d0e7ff;
-        }
-
-        .plan-price {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #e6f2ff;
-        }
-
-        .button-container {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .pay-button,
-        .create-store-button {
-            display: none;
-            margin: 10px;
-            padding: 12px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .pay-button:hover,
-        .create-store-button:hover {
-            background-color: #005bb5;
-            transform: translateY(-3px);
-        }
-
-        .features-container {
-            width: 100%;
-            margin-top: 50px;
-            text-align: left;
-        }
-
-        .features-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .features-table th, .features-table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        .features-table th {
-            background-color: #004085;
-            color: #e6f2ff;
-        }
-
+        .features-table th,
         .features-table td {
-            background-color: #0056b3;
-            color: #e6f2ff;
+            font-size: 14px;
+            padding: 5px;
         }
+    }
 
-        .features-table tr:nth-child(even) td {
-            background-color: #006bb3;
-        }
-
-        .features-table .feature-name {
-            text-align: left;
-            padding-left: 20px;
-        }
-
-        .cool-info {
-            background-color: #007bff;
+    @media (max-width: 480px) {
+        .container {
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .cool-info-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #e6f2ff;
-            margin-bottom: 10px;
-        }
-
-        .cool-info-content {
-            font-size: 16px;
-            color: #d0e7ff;
-        }
-
-        .stripe-info {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #007bff;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .stripe-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #e6f2ff;
-            margin-bottom: 10px;
-        }
-
-        .stripe-content {
-            font-size: 16px;
-            color: #d0e7ff;
-            line-height: 1.5;
-        }
-
-        /* Popup styles */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
-            width: 80%;
-            max-width: 600px;
-            background-color: #0056b3;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .popup-content {
-            color: #e0e0e0;
-        }
-
-        .popup .close-btn {
-            background-color: #007bff;
-            border: none;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            float: right;
-        }
-
-        .popup .close-btn:hover {
-            background-color: #005bb5;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
-
-        /* Additional styles and sections */
-        .additional-sections {
-            margin-top: 50px;
-            width: 100%;
-        }
-
-        .section {
-            padding: 20px;
-            background-color: #007bff;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .section-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #e6f2ff;
-            margin-bottom: 10px;
-        }
-
-        .section-content {
-            font-size: 16px;
-            color: #d0e7ff;
         }
 
         .cta-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #005bb5;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+            width: 100%;
         }
-
-        .cta-button:hover {
-            background-color: #003f7f;
-            transform: translateY(-3px);
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .pricing-plan {
-                max-width: 100%;
-            }
-
-            .features-table th,
-            .features-table td {
-                font-size: 14px;
-                padding: 5px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px;
-            }
-
-            .cta-button {
-                width: 100%;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
     <div class="container">
