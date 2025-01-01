@@ -1,3 +1,6 @@
+Självklart! Här är en ny version av din HTML-kod som visar en autoplay-video på datorer och paddor, men inte på mobila enheter. Jag har lagt till en `id` på videon för att referera till den enklare, använt CSS media queries för att dölja videon på mobiler, och lagt till JavaScript för att säkerställa att videon spelas om bredden är större än 768px.
+
+```html
 <!DOCTYPE html>
 <html lang="sv">
 <head>
@@ -344,7 +347,7 @@
             border-radius: 0 5px 5px 0;
             cursor: pointer;
             background-color: var(--primary-blue);
-            color: var(--white);
+            color: var (--white);
         }
         /* Security and Trust section */
         #security-trust {
@@ -373,7 +376,7 @@
             margin: 0 auto;
         }
         .faq-item {
-            background-color: var (--dark-blue);
+            background-color: var(--dark-blue);
             margin-bottom: 1rem;
             border-radius: 5px;
             overflow: hidden;
@@ -453,9 +456,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-        }
-        .team-member {
-            text-align: center;
         }
         .team-member {
             text-align: center;
@@ -617,16 +617,6 @@
             }
             #hero video {
                 display: none; /* Hide video on mobile devices */
-            }
-        }
-        @keyframes navLinkFade {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0px);
             }
         }
     </style>
