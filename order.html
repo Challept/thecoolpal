@@ -7,7 +7,7 @@
     <title>Beställ</title>
     <style>
         body {
-            background-color: #1a1a2e;
+            background-color: #001f3f;
             color: #e0e0e0;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
@@ -15,6 +15,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -24,7 +25,7 @@
             max-width: 1200px;
             margin: 50px auto;
             padding: 30px;
-            background-color: #16213e;
+            background-color: #0056b3;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
@@ -37,7 +38,7 @@
         }
 
         h2.main-title {
-            color: #0f3460;
+            color: #e6f2ff;
             font-size: 36px;
             font-weight: bold;
             margin-bottom: 20px;
@@ -57,7 +58,7 @@
         }
 
         .pricing-plan {
-            background-color: #0f3460;
+            background-color: #007bff;
             border: 2px solid transparent;
             border-radius: 10px;
             padding: 20px;
@@ -78,37 +79,32 @@
         .pricing-plan:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 24px rgba(0, 123, 255, 0.15);
-            border-color: #e94560;
+            border-color: #e6f2ff;
         }
 
         .pricing-plan.selected {
-            border-color: #e94560;
-            background-color: #1a1a2e;
+            border-color: #e6f2ff;
+            background-color: #0056b3;
         }
 
         .plan-title {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #e94560;
+            color: #e6f2ff;
         }
 
         .plan-description {
             font-size: 16px;
             margin-bottom: 15px;
-            color: #aaa;
+            color: #d0e7ff;
         }
 
         .plan-price {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 15px;
-            color: #e94560;
-        }
-
-        .plan-features {
-            font-size: 14px;
-            color: #ccc;
+            color: #e6f2ff;
         }
 
         .button-container {
@@ -124,101 +120,62 @@
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
-            background-color: #e94560;
+            background-color: #007bff;
             border: none;
             border-radius: 8px;
             text-decoration: none;
-            box-shadow: 0 8px 15px rgba(233, 69, 96, 0.3);
+            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
 
         .pay-button:hover,
         .create-store-button:hover {
-            background-color: #d63447;
+            background-color: #005bb5;
             transform: translateY(-3px);
         }
 
-        .plan-features ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .plan-features li {
-            margin-bottom: 10px;
-        }
-
-        .plan-features li:before {
-            content: "";
-            display: inline-block;
-            width: 1em;
-            height: 1em;
-            margin-right: 10px;
-            background-size: contain;
-        }
-
-        .plan-features li.available:before {
-            content: "✔️";
-            color: #0f3460;
-        }
-
-        .plan-features li.unavailable:before {
-            content: "❌";
-            color: #ff0000;
-        }
-
-        .additional-sections {
-            margin-top: 50px;
+        .features-container {
             width: 100%;
+            margin-top: 50px;
+            text-align: left;
         }
 
-        .section {
-            padding: 20px;
-            background-color: #0f3460;
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            animation: fadeIn 1s ease-in-out;
+        .features-table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .section-title {
-            font-size: 28px;
-            font-weight: bold;
-            color: #e94560;
-            margin-bottom: 10px;
+        .features-table th, .features-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
         }
 
-        .section-content {
-            font-size: 16px;
-            color: #aaa;
+        .features-table th {
+            background-color: #004085;
+            color: #e6f2ff;
         }
 
-        .cta-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #e94560;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            box-shadow: 0 8px 15px rgba(233, 69, 96, 0.3);
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.3s;
+        .features-table td {
+            background-color: #0056b3;
+            color: #e6f2ff;
         }
 
-        .cta-button:hover {
-            background-color: #d63447;
-            transform: translateY(-3px);
+        .features-table tr:nth-child(even) td {
+            background-color: #006bb3;
+        }
+
+        .features-table .feature-name {
+            text-align: left;
+            padding-left: 20px;
         }
 
         .chart-container {
             width: 100%;
             max-width: 600px;
             margin: 50px auto;
-            background-color: #0f3460;
+            background-color: #007bff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -228,7 +185,7 @@
         .chart-title {
             font-size: 24px;
             font-weight: bold;
-            color: #e94560;
+            color: #e6f2ff;
             margin-bottom: 20px;
         }
 
@@ -240,7 +197,7 @@
         .stripe-info {
             margin-top: 30px;
             padding: 20px;
-            background-color: #0f3460;
+            background-color: #007bff;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             animation: fadeIn 1s ease-in-out;
@@ -249,13 +206,13 @@
         .stripe-title {
             font-size: 28px;
             font-weight: bold;
-            color: #e94560;
+            color: #e6f2ff;
             margin-bottom: 10px;
         }
 
         .stripe-content {
             font-size: 16px;
-            color: #aaa;
+            color: #d0e7ff;
             line-height: 1.5;
         }
 
@@ -263,6 +220,12 @@
         @media (max-width: 768px) {
             .pricing-plan {
                 max-width: 100%;
+            }
+
+            .features-table th,
+            .features-table td {
+                font-size: 14px;
+                padding: 5px;
             }
         }
 
@@ -275,7 +238,6 @@
                 width: 100%;
             }
         }
-
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -287,51 +249,90 @@
                 <h3 class="plan-title">Start</h3>
                 <p class="plan-description">Enkel och pålitlig</p>
                 <p class="plan-price"><strong>300 kr</strong> engångsavgift + <strong>10 kr/månad</strong></p>
-                <div class="plan-features">
-                    <ul>
-                        <li class="available">Grundläggande funktioner</li>
-                        <li class="available">1 GB lagring</li>
-                        <li class="available">SEO-optimerad</li>
-                        <li class="available">E-postsupport</li>
-                        <li class="unavailable">Avancerad SEO</li>
-                        <li class="unavailable">Prioriterad support</li>
-                        <li class="unavailable">Exklusiva teman</li>
-                        <li class="unavailable">Obegränsad lagring</li>
-                    </ul>
-                </div>
             </div>
             <div class="pricing-plan" onclick="selectPlan('premium')">
                 <h3 class="plan-title">Premium</h3>
                 <p class="plan-description">Mest valda paketet</p>
                 <p class="plan-price"><strong>400 kr</strong> engångsavgift + <strong>50 kr/månad</strong></p>
-                <div class="plan-features">
-                    <ul>
-                        <li class="available">Allt i Start</li>
-                        <li class="available">5 GB lagring</li>
-                        <li class="available">Avancerad SEO</li>
-                        <li class="available">Prioriterad support</li>
-                        <li class="unavailable">Exklusiva teman</li>
-                        <li class="unavailable">Obegränsad lagring</li>
-                    </ul>
-                </div>
             </div>
             <div class="pricing-plan" onclick="selectPlan('ultimate')">
                 <h3 class="plan-title">Ultimate</h3>
                 <p class="plan-description">Full kontroll och alla funktioner</p>
                 <p class="plan-price"><strong>1000 kr</strong> engångsavgift + <strong>100 kr/månad</strong></p>
-                <div class="plan-features">
-                    <ul>
-                        <li class="available">Allt i Premium</li>
-                        <li class="available">Obegränsad lagring</li>
-                        <li class="available">Exklusiva teman</li>
-                        <li class="available">24/7 support</li>
-                    </ul>
-                </div>
             </div>
         </div>
         <div class="button-container">
             <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
             <button id="create-store-button" class="create-store-button" onclick="window.location.href='confirmation.html'">Skapa Butik</button>
+        </div>
+        <div class="features-container">
+            <h3 class="main-title">Funktioner</h3>
+            <table class="features-table">
+                <thead>
+                    <tr>
+                        <th>Funktion</th>
+                        <th>Start</th>
+                        <th>Premium</th>
+                        <th>Ultimate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature-name">Grundläggande funktioner</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">1 GB lagring</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">SEO-optimerad</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">E-postsupport</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Avancerad SEO</td>
+                        <td>❌</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Prioriterad support</td>
+                        <td>❌</td>
+                        <td>✔️</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Exklusiva teman</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Obegränsad lagring</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✔️</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">24/7 support</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✔️</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="additional-sections">
@@ -400,8 +401,8 @@
             datasets: [{
                 label: 'Pris (kr/månad)',
                 data: [10, 50, 100],
-                backgroundColor: ['#e94560', '#e94560', '#e94560'],
-                borderColor: ['#e94560', '#e94560', '#e94560'],
+                backgroundColor: ['#e6f2ff', '#e6f2ff', '#e6f2ff'],
+                borderColor: ['#e6f2ff', '#e6f2ff', '#e6f2ff'],
                 borderWidth: 1
             }]
         },
