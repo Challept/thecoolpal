@@ -1,18 +1,11 @@
 {
-  "name": "thecoolpal",
+  "name": "webstay",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build": "npm install"
+    "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "morgan": "^1.10.0",
-    "helmet": "^4.6.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.13"
+    "express": "^4.17.1"
   }
 }
