@@ -84,7 +84,7 @@
 
         .pricing-plan.selected {
             border-color: #e6f2ff;
-            background-color: #0056b3;
+            background-color: #004085;
         }
 
         .plan-title {
@@ -171,27 +171,25 @@
             padding-left: 20px;
         }
 
-        .chart-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 50px auto;
+        .cool-info {
             background-color: #007bff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
             animation: fadeIn 1s ease-in-out;
         }
 
-        .chart-title {
+        .cool-info-title {
             font-size: 24px;
             font-weight: bold;
             color: #e6f2ff;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
-        canvas {
-            width: 100%;
-            height: auto;
+        .cool-info-content {
+            font-size: 16px;
+            color: #d0e7ff;
         }
 
         .stripe-info {
@@ -239,7 +237,6 @@
             }
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
@@ -263,6 +260,7 @@
         </div>
         <div class="button-container">
             <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
+            <button id="create-store-button" class="create-store-button" onclick="window.location.href='confirmation.html'">Skapa Butik</button>
         </div>
         <div class="features-container">
             <h3 class="main-title">Funktioner</h3>
@@ -333,31 +331,14 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="additional-sections">
-        <div class="section">
-            <h3 class="section-title">Varför välja oss?</h3>
-            <p class="section-content">Vi erbjuder de bästa tjänsterna för att hjälpa dig att bygga och växa din online-verksamhet. Våra planer är utformade för att passa alla behov och budgetar.</p>
-            <a href="about.html" class="cta-button">Läs mer</a>
+        <div class="cool-info">
+            <h3 class="cool-info-title">Cool Info om Priser</h3>
+            <p class="cool-info-content">Våra prisplaner är designade för att passa alla behov och budgetar. Med vår Premium-plan får du tillgång till avancerad SEO och prioriterad support, medan vår Ultimate-plan erbjuder obegränsad lagring och 24/7 support.</p>
         </div>
-        <div class="section">
-            <h3 class="section-title">Kundrecensioner</h3>
-            <p class="section-content">Våra kunder älskar oss! Läs vad de har att säga om våra tjänster och support.</p>
-            <a href="testimonials.html" class="cta-button">Läs recensioner</a>
-        </div>
-        <div class="section">
-            <h3 class="section-title">Kontakta oss</h3>
-            <p class="section-content">Har du frågor eller behöver du hjälp? Kontakta vårt supportteam för snabb och vänlig service.</p>
-            <a href="contact.html" class="cta-button">Kontakta oss</a>
-        </div>
-        <div class="section">
+        <div class="stripe-info">
             <h3 class="stripe-title">Trygg och Säker Betalning med Stripe</h3>
             <p class="stripe-content">Stripe är en av de mest betrodda betalningsplattformarna i världen. Med Stripe kan du känna dig trygg med att dina betalningar hanteras säkert och effektivt. Stripe erbjuder avancerade säkerhetsfunktioner för att skydda dina betalningsuppgifter och säkerställer att dina transaktioner är skyddade mot bedrägerier.</p>
         </div>
-    </div>
-    <div class="chart-container">
-        <h3 class="chart-title">Plan Jämförelse</h3>
-        <canvas id="planComparisonChart"></canvas>
     </div>
 
 <script>
@@ -390,29 +371,6 @@
         payButton.style.display = "inline-block";
         createStoreButton.style.display = "inline-block";
     }
-
-    // Chart.js setup
-    const ctx = document.getElementById('planComparisonChart').getContext('2d');
-    const planComparisonChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Start', 'Premium', 'Ultimate'],
-            datasets: [{
-                label: 'Pris (kr/månad)',
-                data: [10, 50, 100],
-                backgroundColor: ['#e6f2ff', '#e6f2ff', '#e6f2ff'],
-                borderColor: ['#e6f2ff', '#e6f2ff', '#e6f2ff'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 </script>
 </body>
 </html>
