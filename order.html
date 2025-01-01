@@ -12,6 +12,7 @@
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            overflow-x: hidden;
         }
 
         .container {
@@ -23,6 +24,12 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         h2.main-title {
@@ -41,7 +48,7 @@
 
         .pricing-plan {
             background-color: #ffffff;
-            border: 1px solid #007bff;
+            border: 2px solid transparent;
             border-radius: 10px;
             padding: 20px;
             width: 100%;
@@ -49,16 +56,17 @@
             text-align: center;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
         }
 
         .pricing-plan:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 24px rgba(0, 123, 255, 0.15);
+            border-color: #007bff;
         }
 
         .pricing-plan.selected {
-            border: 2px solid #007bff;
+            border-color: #007bff;
             background-color: #d0e7ff;
         }
 
@@ -130,6 +138,51 @@
             margin-right: 10px;
             color: #007bff;
         }
+
+        .additional-sections {
+            margin-top: 50px;
+        }
+
+        .section {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .section-content {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .cta-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #005bb5;
+            transform: translateY(-3px);
+        }
     </style>
 </head>
 <body>
@@ -178,6 +231,24 @@
         </div>
         <div class="button-container">
             <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
+            <button id="create-store-button" class="create-store-button" onclick="window.location.href='confirmation.html'">Skapa Butik</button>
+        </div>
+    </div>
+    <div class="additional-sections">
+        <div class="section">
+            <h3 class="section-title">Varför välja oss?</h3>
+            <p class="section-content">Vi erbjuder de bästa tjänsterna för att hjälpa dig att bygga och växa din online-verksamhet. Våra planer är utformade för att passa alla behov och budgetar.</p>
+            <a href="about.html" class="cta-button">Läs mer</a>
+        </div>
+        <div class="section">
+            <h3 class="section-title">Kundrecensioner</h3>
+            <p class="section-content">Våra kunder älskar oss! Läs vad de har att säga om våra tjänster och support.</p>
+            <a href="testimonials.html" class="cta-button">Läs recensioner</a>
+        </div>
+        <div class="section">
+            <h3 class="section-title">Kontakta oss</h3>
+            <p class="section-content">Har du frågor eller behöver du hjälp? Kontakta vårt supportteam för snabb och vänlig service.</p>
+            <a href="contact.html" class="cta-button">Kontakta oss</a>
         </div>
     </div>
 
