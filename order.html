@@ -7,11 +7,15 @@
     <title>Beställ</title>
     <style>
         body {
-            background-color: #f0f4ff;
-            color: #333;
+            background-color: #222;
+            color: #ccc;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             overflow-x: hidden;
         }
 
@@ -20,9 +24,9 @@
             max-width: 1200px;
             margin: 50px auto;
             padding: 30px;
-            background-color: #ffffff;
+            background-color: #333;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
             animation: fadeIn 1s ease-in-out;
         }
@@ -47,7 +51,7 @@
         }
 
         .pricing-plan {
-            background-color: #ffffff;
+            background-color: #444;
             border: 2px solid transparent;
             border-radius: 10px;
             padding: 20px;
@@ -67,7 +71,7 @@
 
         .pricing-plan.selected {
             border-color: #007bff;
-            background-color: #d0e7ff;
+            background-color: #555;
         }
 
         .plan-title {
@@ -80,7 +84,7 @@
         .plan-description {
             font-size: 16px;
             margin-bottom: 15px;
-            color: #666;
+            color: #aaa;
         }
 
         .plan-price {
@@ -92,7 +96,7 @@
 
         .plan-features {
             font-size: 14px;
-            color: #333;
+            color: #ccc;
         }
 
         .button-container {
@@ -145,7 +149,7 @@
 
         .section {
             padding: 20px;
-            background-color: #ffffff;
+            background-color: #444;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
@@ -161,7 +165,7 @@
 
         .section-content {
             font-size: 16px;
-            color: #666;
+            color: #aaa;
         }
 
         .cta-button {
@@ -231,7 +235,6 @@
         </div>
         <div class="button-container">
             <a id="pay-button" href="#" class="pay-button">Betala med Stripe</a>
-            <button id="create-store-button" class="create-store-button" onclick="window.location.href='confirmation.html'">Skapa Butik</button>
         </div>
     </div>
     <div class="additional-sections">
