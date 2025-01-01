@@ -42,12 +42,29 @@
             font-size: 36px;
             font-weight: bold;
             margin-bottom: 20px;
-            animation: slideIn 1s ease-in-out;
+            animation: glitch 1s infinite;
+            position: relative;
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-100%); }
-            to { opacity: 1; transform: translateX(0); }
+        @keyframes glitch {
+            0% {
+                text-shadow: 2px 0 red, -2px 0 blue;
+            }
+            20% {
+                text-shadow: -2px 0 green, 2px 0 orange;
+            }
+            40% {
+                text-shadow: 2px 0 blue, -2px 0 red;
+            }
+            60% {
+                text-shadow: -2px 0 orange, 2px 0 green;
+            }
+            80% {
+                text-shadow: 2px 0 red, -2px 0 blue;
+            }
+            100% {
+                text-shadow: -2px 0 green, 2px 0 orange;
+            }
         }
 
         .pricing-container {
@@ -212,6 +229,53 @@
             font-size: 16px;
             color: #d0e7ff;
             line-height: 1.5;
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            width: 80%;
+            max-width: 600px;
+            background-color: #0056b3;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .popup-content {
+            color: #e0e0e0;
+        }
+
+        .popup .close-btn {
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            float: right;
+        }
+
+        .popup .close-btn:hover {
+            background-color: #005bb5;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
         }
 
         /* Additional styles and sections */
@@ -386,17 +450,17 @@
             <div class="section">
                 <h3 class="section-title">Varför välja oss?</h3>
                 <p class="section-content">Vi erbjuder de bästa tjänsterna för att hjälpa dig att bygga och växa din online-verksamhet. Våra planer är utformade för att passa alla behov och budgetar.</p>
-                <a href="about.html" class="cta-button">Läs mer</a>
+                <button onclick="showPopup('aboutPopup')">Läs mer</button>
             </div>
             <div class="section">
                 <h3 class="section-title">Kundrecensioner</h3>
                 <p class="section-content">Våra kunder älskar oss! Läs vad de har att säga om våra tjänster och support.</p>
-                <a href="testimonials.html" class="cta-button">Läs recensioner</a>
+                <button onclick="showPopup('testimonialsPopup')">Läs recensioner</button>
             </div>
             <div class="section">
                 <h3 class="section-title">Kontakta oss</h3>
                 <p class="section-content">Har du frågor eller behöver du hjälp? Kontakta vårt supportteam för snabb och vänlig service.</p>
-                <a href="contact.html" class="cta-button">Kontakta oss</a>
+                <button onclick="showPopup('contactPopup')">Kontakta oss</button>
             </div>
         </div>
         <div class="stripe-info">
@@ -405,36 +469,98 @@
         </div>
     </div>
 
-<script>
-    let selectedPlan = null;
+    <div class="popup" id="testimonialsPopup" style="display: none;">
+        <button class="close-btn" onclick="hidePopup()">Stäng</button>
+        <div class="popup-content">
+            <h2 class="main-title">Kundrecensioner</h2>
+            <div class="testimonial">
+                <h3>Fantastisk tjänst!</h3>
+                <p>"Jag har använt denna tjänst i över ett år och det har verkligen hjälpt mig att växa min verksamhet online. Supporten är snabb och hjälpsam."</p>
+            </div>
+            <div class="testimonial">
+                <h3>Rekommenderas varmt</h3>
+                <p>"Enkel att använda och mycket pålitlig. Jag rekommenderar denna tjänst till alla som vill ha en stabil och effektiv lösning."</p>
+            </div>
+            <div class="testimonial">
+                <h3>Bästa investeringen</h3>
+                <p>"Att investera i denna tjänst var ett av de bästa besluten jag har tagit för min verksamhet. Resultaten talar för sig själva."</p>
+            </div>
+        </div>
+    </div>
 
-    function selectPlan(plan) {
-        document.querySelectorAll('.pricing-plan').forEach(planEl => {
-            planEl.classList.remove('selected');
-        });
+    <div class="popup" id="aboutPopup" style="display: none;">
+        <button class="close-btn" onclick="hidePopup()">Stäng</button>
+        <div class="popup-content">
+            <h2 class="main-title">Om Oss</h2>
+            <p class="about-content">Vi är passionerade över att hjälpa företag att växa online. Vår plattform erbjuder en mängd olika tjänster som är utformade för att passa alla behov och budgetar. Med vår användarvänliga plattform kan du enkelt skapa och hantera din online-närvaro.</p>
+            <p class="about-content">Vårt team består av erfarna proffs som är dedikerade till att ge dig den bästa servicen och supporten. Vi är här för att hjälpa dig att nå dina mål och ta din verksamhet till nästa nivå.</p>
+        </div>
+    </div>
 
-        const selectedPlanEl = document.querySelector(`.pricing-plan[onclick="selectPlan('${plan}')"]`);
-        selectedPlanEl.classList.add('selected');
+    <div class="popup" id="contactPopup" style="display: none;">
+        <button class="close-btn" onclick="hidePopup()">Stäng</button>
+        <div class="popup-content">
+            <h2 class="main-title">Kontakta Oss</h2>
+            <p class="contact-content">Har du frågor eller behöver du hjälp? Fyll i formuläret nedan så återkommer vi till dig så snart som möjligt.</p>
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">Namn</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-post</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Meddelande</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="contact-button">Skicka Meddelande</button>
+            </form>
+        </div>
+    </div>
 
-        selectedPlan = plan;
-        updateButtons();
-    }
-
-    function updateButtons() {
-        const payButton = document.getElementById('pay-button');
-        const createStoreButton = document.getElementById('create-store-button');
-
-        if (selectedPlan === 'basic') {
-            payButton.href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
-        } else if (selectedPlan === 'premium') {
-            payButton.href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
-        } else if (selectedPlan === 'ultimate') {
-            payButton.href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
+    <script>
+        function showPopup(popupId) {
+            document.getElementById(popupId).style.display = 'block';
         }
 
-        payButton.style.display = "inline-block";
-        createStoreButton.style.display = "inline-block";
-    }
-</script>
+        function hidePopup() {
+            var popups = document.querySelectorAll('.popup');
+            popups.forEach(function(popup) {
+                popup.style.display = 'none';
+            });
+        }
+
+        let selectedPlan = null;
+
+        function selectPlan(plan) {
+            document.querySelectorAll('.pricing-plan').forEach(planEl => {
+                planEl.classList.remove('selected');
+            });
+
+            const selectedPlanEl = document.querySelector(`.pricing-plan[onclick="selectPlan('${plan}')"]`);
+            selectedPlanEl.classList.add('selected');
+
+            selectedPlan = plan;
+            updateButtons();
+        }
+
+        function updateButtons() {
+            const payButton = document.getElementById('pay-button');
+            const createStoreButton = document.getElementById('create-store-button');
+
+            if (selectedPlan === 'basic') {
+                payButton.href = "https://buy.stripe.com/bIY15Z0mbebS3JucMP";
+            } else if (selectedPlan === 'premium') {
+                payButton.href = "https://buy.stripe.com/8wM7unb0Pc3Keo8aEI";
+            } else if (selectedPlan === 'ultimate') {
+                payButton.href = "https://buy.stripe.com/6oEaGzfh53xe7ZKdQV";
+            }
+
+            payButton.style.display = "inline-block";
+            createStoreButton.style.display = "inline-block";
+        }
+    </script>
 </body>
 </html>
