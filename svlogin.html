@@ -72,17 +72,20 @@
   <script>
     let auth0Client;
 
-    // Skapa Auth0-klient
-    async function createAuth0Client() {
-      auth0Client = await createAuth0Client({
-        domain: 'dev-vwing545t8ky8xgf.us.auth0.com', // Ersätt med din Auth0-domän
-        client_id: 'iqx7ppromEUyfFPwLcYLxkollnLypzHM', // Ersätt med din Auth0-klient-ID
-        redirect_uri: window.location.origin,
-      });
+    // Skapa Auth0-klient (Anropa denna en gång vid sidan av laddning)
+    async function createAuth0ClientOnce() {
+      if (!auth0Client) {
+        auth0Client = await createAuth0Client({
+          domain: 'dev-vwing545t8ky8xgf.us.auth0.com', // Ersätt med din Auth0-domän
+          client_id: 'iqx7ppromEUyfFPwLcYLxkollnLypzHM', // Ersätt med din Auth0-klient-ID
+          redirect_uri: window.location.origin,
+        });
+      }
     }
 
     // Login med Google
     async function loginWithGoogle() {
+      await createAuth0ClientOnce(); // Skapa Auth0-klienten först om den inte är skapad
       if (auth0Client) {
         await auth0Client.loginWithRedirect({
           connection: 'google-oauth2'
@@ -95,6 +98,7 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
+      await createAuth0ClientOnce(); // Skapa Auth0-klienten först om den inte är skapad
       if (auth0Client) {
         await auth0Client.loginWithRedirect({
           email: email,
@@ -114,7 +118,7 @@
     }
 
     window.onload = async () => {
-      await createAuth0Client();
+      await createAuth0ClientOnce(); // Ensure Auth0 client is initialized before any login actions
       await handleRedirectCallback();
     };
   </script>
