@@ -13,7 +13,7 @@ app.use(express.static(join(__dirname)));
 
 // Serve index.html for all routes
 app.get("/*", (_, res) => {
-  res.sendFile(join(__dirname, "index.html"));
+  res.sendFile(join(__dirname, "svlogin.html"));
 });
 
 // Serve environment variables from process.env
