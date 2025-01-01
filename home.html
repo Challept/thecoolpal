@@ -6,152 +6,149 @@
     <title>Webstay - Modern webbdesign och hosting</title>
     <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box !important;
-        }
-        :root {
-            --primary-blue: #007bff;
-            --secondary-blue: #0056b3;
-            --light-blue: #e6f2ff;
-            --dark-blue: #004085;
-            --darker-blue: #001f3f;
-            --darkest-blue: #00131f;
-            --white: #ffffff;
-            --light-gray: #f8f9fa;
-            --dark-gray: #343a40;
-        }
-        html, body {
-            height: 100%;
-        }
-        body {
-            display: table;
-            width: 100%;
-            height: 100%;
-            background-color: var(--darkest-blue);
-            color: var(--light-gray);
-            line-height: 1.6;
-            position: relative;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow-x: hidden;
-        }
-        .lines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            margin: auto;
-            width: 90vw;
-            z-index: -1;
-        }
-        .line {
-            position: absolute;
-            width: 1px;
-            height: 100%;
-            top: 0;
-            left: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-        }
-        .line::after {
-            content: '';
-            display: block;
-            position: absolute;
-            height: 15vh;
-            width: 100%;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box !important;
+    }
+    :root {
+        --primary-blue: #007bff;
+        --secondary-blue: #0056b3;
+        --light-blue: #e6f2ff;
+        --dark-blue: #004085;
+        --darker-blue: #001f3f;
+        --darkest-blue: #00131f;
+        --white: #ffffff;
+        --light-gray: #f8f9fa;
+        --dark-gray: #343a40;
+    }
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        background-color: var(--darkest-blue);
+        color: var(--light-gray);
+        line-height: 1.6;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding-top: 90px; /* Add padding to account for fixed header */
+    }
+    .lines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        margin: auto;
+        width: 90vw;
+        z-index: -1;
+    }
+    .line {
+        position: absolute;
+        width: 1px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+    }
+    .line::after {
+        content: '';
+        display: block;
+        position: absolute;
+        height: 15vh;
+        width: 100%;
+        top: -50%;
+        left: 0;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
+        animation: drop 7s 0s infinite;
+        animation-fill-mode: forwards;
+        animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+    }
+    .line:nth-child(1) {
+        margin-left: -45%;
+    }
+    .line:nth-child(1)::after {
+        animation-delay: 2s;
+    }
+    .line:nth-child(3) {
+        margin-left: 45%;
+    }
+    .line:nth-child(3)::after {
+        animation-delay: 2.5s;
+    }
+    .line:nth-child(4) {
+        margin-left: -15%;
+    }
+    .line:nth-child(4)::after {
+        animation-delay: 1.5s;
+    }
+    .line:nth-child(5) {
+        margin-left: 15%;
+    }
+    .line:nth-child(5)::after {
+        animation-delay: 3s;
+    }
+    @keyframes drop {
+        0% {
             top: -50%;
-            left: 0;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
-            animation: drop 7s 0s infinite;
-            animation-fill-mode: forwards;
-            animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
         }
-        .line:nth-child(1) {
-            margin-left: -45%;
+        100% {
+            top: 110%;
         }
-        .line:nth-child(1)::after {
-            animation-delay: 2s;
-        }
-        .line:nth-child(3) {
-            margin-left: 45%;
-        }
-        .line:nth-child(3)::after {
-            animation-delay: 2.5s;
-        }
-        .line:nth-child(4) {
-            margin-left: -15%;
-        }
-        .line:nth-child(4)::after {
-            animation-delay: 1.5s;
-        }
-        .line:nth-child(5) {
-            margin-left: 15%;
-        }
-        .line:nth-child(5)::after {
-            animation-delay: 3s;
-        }
-        @keyframes drop {
-            0% {
-                top: -50%;
-            }
-            100% {
-                top: 110%;
-            }
-        }
+    }
 
-        /* Header and navigation */
-        header {
-            background-color: var(--darker-blue);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            transform: none;
-            transition: none;
-        }
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .logo img {
-            height: 90px;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        .nav-links li {
-            margin-left: 2rem;
-        }
-        .nav-links li a {
-            text-decoration: none;
-            color: var(--light-gray);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        .nav-links li a:hover {
-            color: var(--primary-blue);
-        }
-        .burger {
-            display: none;
-            cursor: pointer;
-        }
-        .burger div {
-            width: 25px;
-            height: 3px;
-            background-color: var(--light-gray);
-            margin: 5px;
-            transition: all 0.3s ease;
-        }
-
+    /* Header and navigation */
+    header {
+        background-color: var(--darker-blue);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+    }
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .logo img {
+        height: 60px; /* Reduced height to fit fixed header */
+    }
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+    .nav-links li {
+        margin-left: 2rem;
+    }
+    .nav-links li a {
+        text-decoration: none;
+        color: var(--light-gray);
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+    .nav-links li a:hover {
+        color: var(--primary-blue);
+    }
+    .burger {
+        display: none;
+        cursor: pointer;
+    }
+    .burger div {
+        width: 25px;
+        height: 3px;
+        background-color: var(--light-gray);
+        margin: 5px;
+        transition: all 0.3s ease;
+    }
         /* Hero section */
         #hero {
             position: relative;
@@ -738,55 +735,57 @@
         <section id="clients">
             <h2>Våra kunder</h2>
             <div class="client-logos">
-                <img src="client1-logo.png" alt="Client 1">
-                <img src="client2-logo.png" alt="Client 2">
-                <img src="client3-logo.png" alt="Client 3">
-                <img src="client4-logo.png" alt="Client 4">
-                <img src="client5-logo.png" alt="Client 5">
+                <img src="Client_one-removebg-preview.png" alt="Client 1">
+                <img src="ALFERS-removebg-preview.png" alt="Client 2">
+                <img src="ALFERS__1_-removebg-preview.png" alt="Client 3">
+                <img src="ALFERS__2_-removebg-preview.png" alt="Client 4">
             </div>
         </section>
 
-        <section id="pricing">
-            <h2>Våra priser</h2>
-            <div class="pricing-grid">
-                <div class="pricing-item">
-                    <h3>Bas</h3>
-                    <p class="price">299 kr/mån</p>
-                    <ul>
-                        <li>Responsiv webbdesign</li>
-                        <li>5 sidor</li>
-                        <li>Grundläggande SEO</li>
-                        <li>1 GB lagring</li>
-                        <li>E-postsupport</li>
-                    </ul>
-                    <a href="#contact" class="btn primary">Välj plan</a>
-                </div>
-                <div class="pricing-item featured">
-                    <h3>Pro</h3>
-                    <p class="price">599 kr/mån</p>
-                    <ul>
-                        <li>Allt i Bas, plus:</li>
-                        <li>10 sidor</li>
-                        <li>Avancerad SEO</li>
-                        <li>5 GB lagring</li>
-                        <li>Prioriterad support</li>
-                    </ul>
-                    <a href="#contact" class="btn primary">Välj plan</a>
-                </div>
-                <div class="pricing-item">
-                    <h3>Enterprise</h3>
-                    <p class="price">Kontakta oss</p>
-                    <ul>
-                        <li>Skräddarsydd lösning</li>
-                        <li>Obegränsat antal sidor</li>
-                        <li>Premium SEO</li>
-                        <li>Obegränsad lagring</li>
-                        <li>24/7 support</li>
-                    </ul>
-                    <a href="#contact" class="btn primary">Kontakta oss</a>
-                </div>
-            </div>
-        </section>
+<section id="pricing">
+    <h2>Våra priser</h2>
+    <div class="pricing-grid">
+        <div class="pricing-item">
+            <h3>Start</h3>
+            <p class="price">300 kr en gång + 10 kr/mån</p>
+            <ul>
+                <li>Responsiv webbdesign</li>
+                <li>Alla funktioner utan begränsningar</li>
+                <li>Grundläggande SEO</li>
+                <li>1 GB lagring</li>
+                <li>E-postsupport</li>
+                <li>Ingen begränsning på antal sidor eller funktioner</li>
+            </ul>
+            <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
+        </div>
+        <div class="pricing-item featured">
+            <h3>Premium</h3>
+            <p class="price">400 kr en gång + 50 kr/mån</p>
+            <ul>
+                <li>Allt i Start, plus:</li>
+                <li>Avancerad SEO</li>
+                <li>5 GB lagring</li>
+                <li>Prioriterad support</li>
+                <li>Teman och anpassad design</li>
+                <li>Alla funktioner utan begränsningar</li>
+            </ul>
+            <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
+        </div>
+        <div class="pricing-item">
+            <h3>Ultimate</h3>
+            <p class="price">1000 kr en gång + 100 kr/mån</p>
+            <ul>
+                <li>Allt i Premium, plus:</li>
+                <li>Obegränsad lagring</li>
+                <li>24/7 support</li>
+                <li>Exklusiva teman och avancerad design</li>
+                <li>Flera premiumfunktioner som API-integrationer</li>
+                <li>Alla funktioner utan begränsningar</li>
+            </ul>
+            <a href="https://webstay.se/order" class="btn primary">Välj plan</a>
+        </div>
+    </div>
+</section>
 
         <section id="newsletter">
             <h2>Prenumerera på vårt nyhetsbrev</h2>
@@ -871,9 +870,7 @@
             </div>
             <div class="footer-section">
                 <h3>Kontakt</h3>
-                <p>Email: info@webstay.se</p>
-                <p>Telefon: 08-123 45 67</p>
-                <p>Adress: Webbgatan 1, 123 45 Stockholm</p>
+                <p>Email: support@webstay.se</p>
             </div>
             <div class="footer-section">
                 <h3>Följ oss</h3>
