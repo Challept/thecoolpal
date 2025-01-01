@@ -148,48 +148,78 @@
             margin: 5px;
             transition: all 0.3s ease;
         }
-        /* Hero section */
-        #hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: var(--white);
-            padding: 0 1rem;
-            overflow: hidden;
-        }
-        #hero video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -1;
-            object-fit: cover;
-        }
-        .hero-content {
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 2rem;
-            border-radius: 10px;
-            max-width: 800px;
-            z-index: 1;
-        }
-        #hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        #hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
+/* Hero section */
+#hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--white);
+    padding: 0 1rem;
+    overflow: hidden;
+}
+
+/* Ensure video is scaled to fit nicely on all screens */
+#hero video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 80%; /* Ensures the video doesn't stretch too much horizontally */
+    min-height: 60%; /* Adjust the video height to fit better */
+    max-width: 100%; /* Prevents video from overflowing on large screens */
+    max-height: 100%; /* Ensures the video height doesn't go out of bounds */
+    z-index: -1;
+    object-fit: cover; /* Ensures the video fills the section */
+}
+
+/* Hero content */
+.hero-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 800px;
+    z-index: 1;
+}
+
+#hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    #hero {
+        height: 70vh; /* Adjust height on smaller screens */
+    }
+
+    #hero video {
+        min-width: 90%; /* Scale the video to fit well on mobile */
+        min-height: 50%; /* Scale the height appropriately */
+    }
+
+    .hero-content {
+        padding: 1.5rem;
+    }
+
+    #hero h1 {
+        font-size: 2.5rem;
+    }
+
+    #hero p {
+        font-size: 1.4rem;
+    }
+}
         .cta-buttons {
             display: flex;
             gap: 1rem;
@@ -647,10 +677,10 @@
     </header>
     <main>
         <section id="hero">
-            <video autoplay muted loop id="hero-video">
-                <source src="sell around the world (1).mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+<video autoplay muted loop id="hero-video">
+    <source src="sell around the world (1).mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
             <div class="hero-content">
                 <h1>Moderna webbdesign och hosting lösningar</h1>
                 <p>Skapa en imponerande online närvaro med våra skräddarsydda tjänster</p>
@@ -898,16 +928,39 @@
             form.reset();
         });
 
-        // JavaScript to control video play
-        window.addEventListener('load', () => {
-            const video = document.getElementById('hero-video');
-            if (window.innerWidth > 768) {
-                video.style.display = 'block';
-                video.play();
-            } else {
-                video.style.display = 'none';
-            }
-        });
+      // JavaScript to control video play and size adjustment
+window.addEventListener('load', () => {
+    const video = document.getElementById('hero-video');
+    const windowWidth = window.innerWidth;
+
+    // Adjust video size based on screen width
+    if (windowWidth > 768) {
+        // For large screens, set video to fill the container (adjusted by CSS)
+        video.style.display = 'block';
+        video.play();
+    } else {
+        // For small screens, still show the video but resize it properly
+        video.style.display = 'block';
+        video.play();
+    }
+});
+
+// Optionally, you can add event listener for resizing, to dynamically adjust the video size
+window.addEventListener('resize', () => {
+    const video = document.getElementById('hero-video');
+    const windowWidth = window.innerWidth;
+
+    // Dynamically adjust video size and play behavior on screen resize
+    if (windowWidth <= 768) {
+        // On small screens, adjust the video size accordingly (scaled down)
+        video.style.display = 'block';
+        video.play();
+    } else {
+        // On larger screens, set the video to fill the space (adjusted by CSS)
+        video.style.display = 'block';
+        video.play();
+    }
+});
     </script>
 </body>
 </html>
