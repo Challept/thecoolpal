@@ -7,8 +7,8 @@
     <title>Beställ</title>
     <style>
         body {
-            background-color: #222;
-            color: #ccc;
+            background-color: #1a1a2e;
+            color: #e0e0e0;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -24,7 +24,7 @@
             max-width: 1200px;
             margin: 50px auto;
             padding: 30px;
-            background-color: #333;
+            background-color: #16213e;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
@@ -37,10 +37,16 @@
         }
 
         h2.main-title {
-            color: #007bff;
+            color: #0f3460;
             font-size: 36px;
             font-weight: bold;
             margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-100%); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .pricing-container {
@@ -51,7 +57,7 @@
         }
 
         .pricing-plan {
-            background-color: #444;
+            background-color: #0f3460;
             border: 2px solid transparent;
             border-radius: 10px;
             padding: 20px;
@@ -61,24 +67,30 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .pricing-plan:hover {
             transform: translateY(-5px);
             box-shadow: 0 12px 24px rgba(0, 123, 255, 0.15);
-            border-color: #007bff;
+            border-color: #e94560;
         }
 
         .pricing-plan.selected {
-            border-color: #007bff;
-            background-color: #555;
+            border-color: #e94560;
+            background-color: #1a1a2e;
         }
 
         .plan-title {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #007bff;
+            color: #e94560;
         }
 
         .plan-description {
@@ -91,7 +103,7 @@
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 15px;
-            color: #007bff;
+            color: #e94560;
         }
 
         .plan-features {
@@ -112,18 +124,18 @@
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
-            background-color: #007bff;
+            background-color: #e94560;
             border: none;
             border-radius: 8px;
             text-decoration: none;
-            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 8px 15px rgba(233, 69, 96, 0.3);
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
 
         .pay-button:hover,
         .create-store-button:hover {
-            background-color: #005bb5;
+            background-color: #d63447;
             transform: translateY(-3px);
         }
 
@@ -148,7 +160,7 @@
 
         .plan-features li.available:before {
             content: "✔️";
-            color: #007bff;
+            color: #0f3460;
         }
 
         .plan-features li.unavailable:before {
@@ -158,11 +170,12 @@
 
         .additional-sections {
             margin-top: 50px;
+            width: 100%;
         }
 
         .section {
             padding: 20px;
-            background-color: #444;
+            background-color: #0f3460;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
@@ -172,7 +185,7 @@
         .section-title {
             font-size: 28px;
             font-weight: bold;
-            color: #007bff;
+            color: #e94560;
             margin-bottom: 10px;
         }
 
@@ -187,17 +200,17 @@
             font-size: 16px;
             font-weight: bold;
             color: #ffffff;
-            background-color: #007bff;
+            background-color: #e94560;
             border: none;
             border-radius: 8px;
             text-decoration: none;
-            box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 8px 15px rgba(233, 69, 96, 0.3);
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
         }
 
         .cta-button:hover {
-            background-color: #005bb5;
+            background-color: #d63447;
             transform: translateY(-3px);
         }
 
@@ -205,7 +218,7 @@
             width: 100%;
             max-width: 600px;
             margin: 50px auto;
-            background-color: #444;
+            background-color: #0f3460;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
@@ -215,7 +228,7 @@
         .chart-title {
             font-size: 24px;
             font-weight: bold;
-            color: #007bff;
+            color: #e94560;
             margin-bottom: 20px;
         }
 
@@ -227,7 +240,7 @@
         .stripe-info {
             margin-top: 30px;
             padding: 20px;
-            background-color: #444;
+            background-color: #0f3460;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
             animation: fadeIn 1s ease-in-out;
@@ -236,7 +249,7 @@
         .stripe-title {
             font-size: 28px;
             font-weight: bold;
-            color: #007bff;
+            color: #e94560;
             margin-bottom: 10px;
         }
 
@@ -245,6 +258,24 @@
             color: #aaa;
             line-height: 1.5;
         }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .pricing-plan {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -319,14 +350,14 @@
             <p class="section-content">Har du frågor eller behöver du hjälp? Kontakta vårt supportteam för snabb och vänlig service.</p>
             <a href="contact.html" class="cta-button">Kontakta oss</a>
         </div>
+        <div class="section">
+            <h3 class="stripe-title">Trygg och Säker Betalning med Stripe</h3>
+            <p class="stripe-content">Stripe är en av de mest betrodda betalningsplattformarna i världen. Med Stripe kan du känna dig trygg med att dina betalningar hanteras säkert och effektivt. Stripe erbjuder avancerade säkerhetsfunktioner för att skydda dina betalningsuppgifter och säkerställer att dina transaktioner är skyddade mot bedrägerier.</p>
+        </div>
     </div>
     <div class="chart-container">
         <h3 class="chart-title">Plan Jämförelse</h3>
         <canvas id="planComparisonChart"></canvas>
-    </div>
-    <div class="stripe-info">
-        <h3 class="stripe-title">Trygg och Säker Betalning med Stripe</h3>
-        <p class="stripe-content">Stripe är en av de mest betrodda betalningsplattformarna i världen. Med Stripe kan du känna dig trygg med att dina betalningar hanteras säkert och effektivt. Stripe erbjuder avancerade säkerhetsfunktioner för att skydda dina betalningsuppgifter och säkerställer att dina transaktioner är skyddade mot bedrägerier.</p>
     </div>
 
 <script>
@@ -369,8 +400,8 @@
             datasets: [{
                 label: 'Pris (kr/månad)',
                 data: [10, 50, 100],
-                backgroundColor: ['#007bff', '#007bff', '#007bff'],
-                borderColor: ['#007bff', '#007bff', '#007bff'],
+                backgroundColor: ['#e94560', '#e94560', '#e94560'],
+                borderColor: ['#e94560', '#e94560', '#e94560'],
                 borderWidth: 1
             }]
         },
