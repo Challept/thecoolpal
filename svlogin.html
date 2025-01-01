@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Webstay</title>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/1.18/auth0-spa-js.production.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .btn {
+      padding: 15px 30px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Logga in på Webstay</h2>
+    <p>Klicka nedan för att logga in med Google:</p>
+    <button id="google-login-button" class="btn">Logga in med Google</button>
+  </div>
+
+  <script>
+    // Skapa Auth0-klient
+    let auth0Client;
+
+    async function createAuth0Client() {
+      auth0Client = await createAuth0Client({
+        domain: 'dev-vwing545t8ky8xgf.us.auth0.com', // Ersätt med din Auth0-domän
+        client_id: 'iqx7ppromEUyfFPwLcYLxkollnLypzHM', // Ersätt med din Auth0-klient-ID
+        redirect_uri: window.location.origin,
+      });
+    }
+
+    async function loginWithGoogle() {
+      await auth0Client.loginWithRedirect({
+        connection: 'google-oauth2'
+      });
+    }
+
+    async function handleRedirectCallback() {
+      if (window.location.search.includes('code=')) {
+        await auth0Client.handleRedirectCallback();
+        window.history.replaceState({}, document.title, window.location.pathname);
+        const user = await auth0Client.getUser();
+        alert('Välkommen ' + user.name);
+      }
+    }
+
+    window.onload = async () => {
+      await createAuth0Client();
+      await handleRedirectCallback();
+
+      document.getElementById('google-login-button').addEventListener('click', loginWithGoogle);
+    };
+  </script>
+</body>
+</html>
