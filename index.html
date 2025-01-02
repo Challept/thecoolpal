@@ -1,399 +1,408 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webstay - Kommer Snart!</title>
-  <!-- Google Font for the page -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Zilla+Slab&display=swap" rel="stylesheet">
-  <style>
-    /* General Page Styles */
-    html, body {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #003366, #336699, #66ccff); /* Gradient with shades of blue */
-      color: #f1f1f1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden; /* Prevent horizontal scrolling */
-      text-align: center;
-      scroll-behavior: smooth;
-      background-size: 400% 400%;
-      animation: gradientAnimation 10s ease infinite; /* Animated gradient */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webstay - Kommer Snart!</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Zilla+Slab:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* General Page Styles */
+        html, body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #003366, #336699, #66ccff);
+            color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-align: center;
+            scroll-behavior: smooth;
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+        }
 
-    @keyframes gradientAnimation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    body {
-      width: 100%;
-      height: 100%;
-    }
+        body {
+            width: 100%;
+            height: 100%;
+        }
 
-    /* Prevent any horizontal overflow */
-    * {
-      box-sizing: border-box;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-/* Glitch effect for titles */
-@keyframes glitch {
-  0% {
-    text-shadow: 3px 0 rgba(0, 0, 255, 0.8), -3px 0 rgba(0, 0, 255, 0.8);
-    transform: translateX(0);
-  }
-  25% {
-    text-shadow: -4px 0 rgba(0, 0, 255, 0.9), 4px 0 rgba(0, 0, 255, 0.9);
-    transform: translateX(-3px);
-  }
-  50% {
-    text-shadow: 4px 0 rgba(0, 0, 255, 0.8), -4px 0 rgba(0, 0, 255, 0.8);
-    transform: translateX(3px);
-  }
-  75% {
-    text-shadow: -3px 0 rgba(0, 0, 255, 0.9), 3px 0 rgba(0, 0, 255, 0.9);
-    transform: translateX(-2px);
-  }
-  100% {
-    text-shadow: 3px 0 rgba(0, 0, 255, 0.8), -3px 0 rgba(0, 0, 255, 0.8);
-    transform: translateX(0);
-  }
-}
+        /* Container Style */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            margin-top: 60px;
+            animation: fadeIn 1.5s ease-out;
+        }
 
-.glitch-text {
-  position: relative;
-  font-family: 'Zilla Slab', serif;
-  font-size: 90px; /* Large size for impact */
-  color: #fff;
-  text-transform: uppercase;
-  display: inline-block;
-  animation: glitch 1.5s infinite; /* Continuous glitching effect */
-  font-weight: bold;
-  letter-spacing: 4px;
-  text-shadow: 3px 0 rgba(0, 0, 255, 0.8), -3px 0 rgba(0, 0, 255, 0.8); /* Simple blue shadow */
-}
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(-50px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
 
-/* Optional: Hover effect to make it pop */
-.glitch-text:hover {
-  transform: scale(1.1); /* Slight scale up on hover for more impact */
-}
+        /* Title Styles */
+        h1, .glitch-text {
+            font-family: 'Zilla Slab', serif;
+            font-size: 60px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 4px;
+            position: relative;
+            animation: glitch 1.5s infinite;
+        }
 
-    /* Container Style */
-    .container {
-      max-width: 1000px;
-      width: 100%;
-      padding: 40px;
-      background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
-      border-radius: 15px;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-      margin-top: 60px;
-      animation: fadeIn 1.5s ease-out;
-    }
+        @keyframes glitch {
+            0% {
+                text-shadow: 3px 0 rgba(0, 0, 255, 0.8), -3px 0 rgba(0, 0, 255, 0.8);
+                transform: translateX(0);
+            }
+            25% {
+                text-shadow: -4px 0 rgba(0, 0, 255, 0.9), 4px 0 rgba(0, 0, 255, 0.9);
+                transform: translateX(-3px);
+            }
+            50% {
+                text-shadow: 4px 0 rgba(0, 0, 255, 0.8), -4px 0 rgba(0, 0, 255, 0.8);
+                transform: translateX(3px);
+            }
+            75% {
+                text-shadow: -3px 0 rgba(0, 0, 255, 0.9), 3px 0 rgba(0, 0, 255, 0.9);
+                transform: translateX(-2px);
+            }
+            100% {
+                text-shadow: 3px 0 rgba(0, 0, 255, 0.8), -3px 0 rgba(0, 0, 255, 0.8);
+                transform: translateX(0);
+            }
+        }
 
-    /* Fade-in Animation */
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(-50px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+        /* Countdown Timer Styles */
+        .timer {
+            font-size: 45px;
+            margin: 20px 0;
+            font-weight: 500;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite;
+        }
 
-/* Title Styles */
-h1 {
-  font-family: 'Zilla Slab', serif;
-  font-size: 80px;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  line-height: 1.2;
-  position: relative;
-  animation: glitch 1.5s infinite; /* Apply the glitch animation */
-}
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
-    /* Countdown Timer Styles */
-    .timer {
-      font-size: 45px;
-      margin: 20px 0;
-      font-weight: 500;
-      letter-spacing: 2px;
-      animation: pulse 1.5s infinite;
-    }
+        /* Button Styles */
+        .btn-future {
+            padding: 15px 30px;
+            background-color: #4682b4;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
 
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
+        .btn-future:hover {
+            background-color: #5f9ea0;
+            transform: scale(1.05);
+        }
 
-    /* Button Styles */
-    .btn-future {
-      padding: 15px 30px;
-      background-color: #4682b4; /* Steel blue */
-      color: #fff;
-      font-size: 18px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
+        /* Section Styles */
+        .section {
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            animation: slideIn 1s ease-out;
+        }
 
-    .btn-future:hover {
-      background-color: #5f9ea0; /* Darker teal-blue */
-      transform: scale(1.05);
-    }
+        @keyframes slideIn {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
-    /* About Section */
-    .about {
-      margin-top: 50px;
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-    }
+        h2 {
+            font-family: 'Zilla Slab', serif;
+            font-size: 30px;
+            color: #4682b4;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            animation: glitch 1.5s infinite;
+        }
 
-    .about h2 {
-      font-family: 'Zilla Slab', serif;
-      font-size: 30px;
-      color: #4682b4; /* Steel blue */
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      animation: glitch 1.5s infinite; /* Glitch effect */
-    }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #ddd;
+        }
 
-    .about p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #ddd; /* Light grey */
-    }
+        /* Quotes Section */
+        .quote {
+            font-size: 18px;
+            line-height: 1.6;
+            font-style: italic;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
 
-    /* Quotes Section */
-    .quotes {
-      margin-top: 60px;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-    }
+        /* Newsletter Styles */
+        .newsletter input {
+            padding: 15px;
+            width: 300px;
+            font-size: 16px;
+            border: 2px solid #4682b4;
+            border-radius: 5px;
+            margin-right: 10px;
+            background-color: #1a1a1a;
+            color: #fff;
+        }
 
-    .quotes h2 {
-      font-family: 'Zilla Slab', serif;
-      font-size: 30px;
-      color: #4682b4; /* Steel blue */
-      margin-bottom: 20px;
-      text-transform: uppercase;
-      animation: glitch 1.5s infinite; /* Glitch effect */
-    }
+        .newsletter button {
+            padding: 15px 30px;
+            background-color: #4682b4;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
 
-    .quote {
-      font-size: 18px;
-      line-height: 1.6;
-      font-style: italic;
-      color: #ddd; /* Light grey */
-      margin-bottom: 15px;
-    }
+        .newsletter button:hover {
+            background-color: #5f9ea0;
+        }
 
-/* Newsletter Sign-Up Section */
-.newsletter {
-  margin-top: 60px;
-  background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-}
+        /* Footer Styles */
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #bbb;
+        }
 
-.newsletter input {
-  padding: 15px;
-  width: 300px;
-  font-size: 16px;
-  border: 2px solid #4682b4; /* Steel blue border */
-  border-radius: 5px;
-  margin-right: 10px;
-  background-color: #1a1a1a; /* Dark background for input */
-  color: #fff; /* White text inside input */
-}
+        /* Contact Link Styles */
+        .contact a {
+            font-size: 18px;
+            color: #4682b4;
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid #4682b4;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
 
-.newsletter button {
-  padding: 15px 30px;
-  background-color: #4682b4; /* Steel blue background */
-  color: #fff;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+        .contact a:hover {
+            background-color: #4682b4;
+            color: #fff;
+        }
 
-.newsletter button:hover {
-  background-color: #5f9ea0; /* Darker teal-blue on hover */
-}
+        /* Animated Lines Background */
+        .lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            margin: auto;
+            width: 90vw;
+            z-index: -1;
+        }
 
-    /* Upcoming Launch Information Section */
-    .launch-info {
-      margin-top: 60px;
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.8);
-      border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-    }
+        .line {
+            position: absolute;
+            width: 1px;
+            height: 100%;
+            top: 0;
+            left: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
 
-    .launch-info h2 {
-      font-family: 'Zilla Slab', serif;
-      font-size: 30px;
-      color: #4682b4; /* Steel blue */
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      animation: glitch 1.5s infinite; /* Glitch effect */
-    }
+        .line::after {
+            content: '';
+            display: block;
+            position: absolute;
+            height: 15vh;
+            width: 100%;
+            top: -50%;
+            left: 0;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
+            animation: drop 7s 0s infinite;
+            animation-fill-mode: forwards;
+            animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+        }
 
-    .launch-info p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #ddd; /* Light grey */
-    }
+        @keyframes drop {
+            0% {
+                top: -50%;
+            }
+            100% {
+                top: 110%;
+            }
+        }
 
-    /* Footer Styles */
-    footer {
-      margin-top: 30px;
-      font-size: 14px;
-      color: #bbb;
-    }
+        .line:nth-child(odd) {
+            margin-left: calc(50% - 45%);
+        }
 
-    /* Contact Link Styles */
-    .contact a {
-      font-size: 18px;
-      color: #4682b4; /* Steel blue */
-      text-decoration: none;
-      padding: 10px;
-      border: 1px solid #4682b4;
-      border-radius: 5px;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
+        .line:nth-child(even) {
+            margin-left: calc(50% + 45%);
+        }
 
-    .contact a:hover {
-      background-color: #4682b4;
-      color: #fff;
-    }
+        .line:nth-child(2) {
+            margin-left: calc(50% - 15%);
+        }
 
-    /* Scroll Animation */
-    .container, .about, .quotes, .newsletter, .launch-info {
-      animation: slideIn 1s ease-out;
-    }
+        .line:nth-child(4) {
+            margin-left: calc(50% + 15%);
+        }
 
-    @keyframes slideIn {
-      from {
-        transform: translateY(50px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+        .line:nth-child(1)::after {
+            animation-delay: 2s;
+        }
 
-    /* Mobile Responsiveness */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 50px;
-      }
-      .timer {
-        font-size: 35px;
-      }
-      .container {
-        padding: 20px;
-      }
-      .about h2 {
-        font-size: 25px;
-      }
-      .about p {
-        font-size: 16px;
-      }
-      .btn-future {
-        font-size: 16px;
-      }
-    }
-  </style>
+        .line:nth-child(2)::after {
+            animation-delay: 1.5s;
+        }
+
+        .line:nth-child(3)::after {
+            animation-delay: 2.5s;
+        }
+
+        .line:nth-child(4)::after {
+            animation-delay: 1.5s;
+        }
+
+        .line:nth-child(5)::after {
+            animation-delay: 3s;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 50px;
+            }
+            .timer {
+                font-size: 35px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 25px;
+            }
+            p {
+                font-size: 16px;
+            }
+            .btn-future {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Webstay - Kommer Snart!</h1>
-    <div class="timer" id="timer"></div>
-
-    <button class="btn-future" id="futureButton">Föreväntning!</button>
-
-    <div class="about">
-      <h2 class="glitch-text">Om Webstay</h2>
-      <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
+    <div class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
     </div>
 
-    <div class="quotes">
-      <h2 class="glitch-text">Vad säger folk om oss?</h2>
-      <div class="quote">"Webstay är framtiden för webbplatsbyggande. Jag ser fram emot lanseringen!" - Entusiastisk Användare</div>
-      <div class="quote">"Enkel, prisvärd och kraftfull. Jag är verkligen nyfiken på att se det i action!" - Teknikexpert</div>
+    <div class="container">
+        <h1 class="glitch-text">Webstay - Kommer Snart!</h1>
+        <div class="timer" id="timer"></div>
+        <button class="btn-future" id="futureButton">Föreväntning!</button>
+        <div class="section">
+            <h2 class="glitch-text">Om Webstay</h2>
+            <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
+        </div>
+        <div class="section">
+            <h2 class="glitch-text">Vad säger folk om oss?</h2>
+            <div class="quote">"Webstay är framtiden för webbplatsbyggande. Jag ser fram emot lanseringen!" - Entusiastisk Användare</div>
+            <div class="quote">"Enkel, prisvärd och kraftfull. Jag är verkligen nyfiken på att se det i action!" - Teknikexpert</div>
+        </div>
+        <div class="section newsletter">
+            <h2 class="glitch-text">Nyhetsbrev</h2>
+            <p>Få de senaste uppdateringarna och nyheter om lanseringen direkt i din inkorg!</p>
+            <input type="email" placeholder="Din e-postadress" id="email">
+            <button onclick="subscribeNewsletter()">Prenumerera</button>
+        </div>
+        <div class="section">
+            <h2 class="glitch-text">Kommande Lansering</h2>
+            <p>Webstay kommer att vara tillgängligt för allmänheten den 25 februari 2025. Vi ser fram emot att hjälpa dig skapa din drömwebbplats!</p>
+        </div>
+        <div class="contact">
+            <p>Har du frågor? Kontakta oss på:</p>
+            <a href="mailto:support@webstay.se">support@webstay.se</a>
+        </div>
     </div>
+    <footer>
+        <p>&copy; 2024 Webstay.se - Alla rättigheter förbehållna</p>
+    </footer>
+    <script>
+        // Countdown Timer
+        const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            if (distance < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("timer").innerHTML = "Lansering pågår!";
+                window.location.href = "https://webstay.se/home"; // Redirect after countdown reaches zero
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+        }, 1000);
 
-    <div class="newsletter">
-      <h2 class="glitch-text">Nyhetsbrev</h2>
-      <p>Få de senaste uppdateringarna och nyheter om lanseringen direkt i din inkorg!</p>
-      <input type="email" placeholder="Din e-postadress" id="email">
-      <button onclick="subscribeNewsletter()">Prenumerera</button>
-    </div>
+        // Redirect to "webstay.se/ex" when the button is clicked
+        document.getElementById("futureButton").addEventListener("click", function() {
+            window.location.href = "https://webstay.se/ex";
+        });
 
-    <div class="launch-info">
-      <h2 class="glitch-text">Kommande Lansering</h2>
-      <p>Webstay kommer att vara tillgängligt för allmänheten den 25 februari 2025. Vi ser fram emot att hjälpa dig skapa din drömwebbplats!</p>
-    </div>
-
-    <div class="contact">
-      <p>Har du frågor? Kontakta oss på:</p>
-      <a href="mailto:support@webstay.se">support@webstay.se</a>
-    </div>
-  </div>
-
-  <footer>
-    <p>&copy; 2024 Webstay.se - Alla rättigheter förbehållna</p>
-  </footer>
-
-  <script>
-    // Countdown Timer
-    const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
-
-    const timerInterval = setInterval(function() {
-      const now = new Date().getTime();
-      const distance = countdownDate - now;
-
-      if (distance < 0) {
-        clearInterval(timerInterval);
-        document.getElementById("timer").innerHTML = "Lansering pågår!";
-        window.location.href = "https://webstay.se/home"; // Redirect after countdown reaches zero
-      } else {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      }
-    }, 1000);
-
-    // Redirect to "webstay.se/ex" when the button is clicked
-    document.getElementById("futureButton").addEventListener("click", function() {
-      window.location.href = "https://webstay.se/ex";
-    });
-
-    // Newsletter Subscription Function
-    function subscribeNewsletter() {
-      const email = document.getElementById('email').value;
-      if (email) {
-        alert("Tack för att du prenumererar!");
-      } else {
-        alert("Vänligen ange en giltig e-postadress.");
-      }
-    }
-  </script>
+        // Newsletter Subscription Function
+        function subscribeNewsletter() {
+            const email = document.getElementById('email').value;
+            if (email) {
+                alert("Tack för att du prenumererar!");
+            } else {
+                alert("Vänligen ange en giltig e-postadress.");
+            }
+        }
+    </script>
 </body>
 </html>
