@@ -567,7 +567,17 @@ button:nth-of-type(3):hover {
         </div>
     </div>
 
-    <script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Check if there is an existing session
+        const userSession = sessionStorage.getItem('userSession');
+
+        // If no session exists, redirect to hosting.webstay.se#order.html
+        if (!userSession) {
+            window.location.href = 'https://hosting.webstay.se#order.html';
+        }
+
+        // Otherwise, proceed with the existing functionality
         function showPopup(popupId) {
             document.getElementById(popupId).style.display = 'block';
         }
@@ -608,6 +618,12 @@ button:nth-of-type(3):hover {
             payButton.style.display = "inline-block";
             createStoreButton.style.display = "inline-block";
         }
-    </script>
+
+        // Expose functions to the global scope
+        window.showPopup = showPopup;
+        window.hidePopup = hidePopup;
+        window.selectPlan = selectPlan;
+    });
+</script>
 </body>
 </html>
