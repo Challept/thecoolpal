@@ -12,7 +12,7 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #003366, #336699, #66ccff);
+            background: #000;
             color: #f1f1f1;
             display: flex;
             flex-direction: column;
@@ -22,14 +22,6 @@
             overflow-x: hidden;
             text-align: center;
             scroll-behavior: smooth;
-            background-size: 400% 400%;
-            animation: gradientAnimation 10s ease infinite;
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         body {
@@ -46,7 +38,7 @@
             max-width: 1000px;
             width: 100%;
             padding: 40px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             border-radius: 15px;
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
             margin-top: 60px;
@@ -73,23 +65,23 @@
 
         @keyframes glitch {
             0% {
-                text-shadow: 3px 0 rgba(0, 0, 255, 0.8), -3px 0 rgba(0, 0, 255, 0.8);
+                text-shadow: 3px 0 rgba(255, 255, 255, 0.8), -3px 0 rgba(255, 255, 255, 0.8);
                 transform: translateX(0);
             }
             25% {
-                text-shadow: -4px 0 rgba(0, 0, 255, 0.9), 4px 0 rgba(0, 0, 255, 0.9);
+                text-shadow: -4px 0 rgba(255, 255, 255, 0.9), 4px 0 rgba(255, 255, 255, 0.9);
                 transform: translateX(-3px);
             }
             50% {
-                text-shadow: 4px 0 rgba(0, 0, 255, 0.8), -4px 0 rgba(0, 0, 255, 0.8);
+                text-shadow: 4px 0 rgba(255, 255, 255, 0.8), -4px 0 rgba(255, 255, 255, 0.8);
                 transform: translateX(3px);
             }
             75% {
-                text-shadow: -3px 0 rgba(0, 0, 255, 0.9), 3px 0 rgba(0, 0, 255, 0.9);
+                text-shadow: -3px 0 rgba(255, 255, 255, 0.9), 3px 0 rgba(255, 255, 255, 0.9);
                 transform: translateX(-2px);
             }
             100% {
-                text-shadow: 3px 0 rgba(0, 0, 255, 0.8), -3px 0 rgba(0, 0, 255, 0.8);
+                text-shadow: 3px 0 rgba(255, 255, 255, 0.8), -3px 0 rgba(255, 255, 255, 0.8);
                 transform: translateX(0);
             }
         }
@@ -130,7 +122,7 @@
         .section {
             margin-top: 50px;
             padding: 30px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.9);
             border-radius: 8px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
             animation: slideIn 1s ease-out;
@@ -235,11 +227,11 @@
 
         .line {
             position: absolute;
-            width: 1px;
+            width: 2px;
             height: 100%;
             top: 0;
             left: 50%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             overflow: hidden;
         }
 
@@ -247,12 +239,12 @@
             content: '';
             display: block;
             position: absolute;
-            height: 15vh;
+            height: 20vh;
             width: 100%;
             top: -50%;
             left: 0;
             background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
-            animation: drop 7s 0s infinite;
+            animation: drop 3s 0s infinite;
             animation-fill-mode: forwards;
             animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
         }
@@ -283,23 +275,23 @@
         }
 
         .line:nth-child(1)::after {
-            animation-delay: 2s;
+            animation-delay: 1s;
         }
 
         .line:nth-child(2)::after {
-            animation-delay: 1.5s;
+            animation-delay: 0.5s;
         }
 
         .line:nth-child(3)::after {
-            animation-delay: 2.5s;
+            animation-delay: 1.25s;
         }
 
         .line:nth-child(4)::after {
-            animation-delay: 1.5s;
+            animation-delay: 0.75s;
         }
 
         .line:nth-child(5)::after {
-            animation-delay: 3s;
+            animation-delay: 1.5s;
         }
 
         /* Mobile Responsiveness */
@@ -342,7 +334,7 @@
     <div class="container">
         <h1 class="glitch-text">Webstay - Kommer Snart!</h1>
         <div class="timer" id="timer"></div>
-        <button class="btn-future" id="futureButton">Föreväntning!</button>
+        <button class="btn-future" id="futureButton">Förväntning!</button>
         <div class="section">
             <h2 class="glitch-text">Om Webstay</h2>
             <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
