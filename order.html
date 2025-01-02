@@ -575,9 +575,12 @@ button:nth-of-type(3):hover {
         // If no session exists, redirect to hosting.webstay.se#order.html
         if (!userSession) {
             window.location.href = 'https://hosting.webstay.se#order.html';
+        } else {
+            // If a session exists (user is logged in), block the redirect and proceed with the functionality
+            console.log('User is logged in:', JSON.parse(userSession));
         }
 
-        // Otherwise, proceed with the existing functionality
+        // Proceed with the existing functionality if logged in
         function showPopup(popupId) {
             document.getElementById(popupId).style.display = 'block';
         }
