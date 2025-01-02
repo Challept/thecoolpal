@@ -42,7 +42,7 @@
             border-radius: 15px;
             box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
             margin-top: 60px;
-            animation: fadeIn 1.5s ease-out;
+            z-index: 1; /* Ensure the container is in front of the lines */
         }
 
         @keyframes fadeIn {
@@ -221,8 +221,8 @@
             right: 0;
             height: 100%;
             margin: auto;
-            width: 90vw;
-            z-index: -1;
+            width: 100vw;
+            z-index: 0; /* Ensure lines are behind the container but in front of the background */
         }
 
         .line {
@@ -294,6 +294,26 @@
             animation-delay: 1.5s;
         }
 
+        .line:nth-child(6)::after {
+            animation-delay: 1.75s;
+        }
+
+        .line:nth-child(7)::after {
+            animation-delay: 1.25s;
+        }
+
+        .line:nth-child(8)::after {
+            animation-delay: 1.5s;
+        }
+
+        .line:nth-child(9)::after {
+            animation-delay: 1.75s;
+        }
+
+        .line:nth-child(10)::after {
+            animation-delay: 2s;
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 600px) {
             h1 {
@@ -334,7 +354,7 @@
     <div class="container">
         <h1 class="glitch-text">Webstay - Kommer Snart!</h1>
         <div class="timer" id="timer"></div>
-        <button class="btn-future" id="futureButton">Förväntning!</button>
+        <button class="btn-future" id="futureButton">Föreväntning!</button>
         <div class="section">
             <h2 class="glitch-text">Om Webstay</h2>
             <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
