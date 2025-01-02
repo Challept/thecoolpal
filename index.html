@@ -12,8 +12,8 @@
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background: #000;
-            color: #f1f1f1;
+            background: #f0f0f0; /* Lighter background */
+            color: #333; /* Darker text color */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -38,9 +38,9 @@
             max-width: 1000px;
             width: 100%;
             padding: 40px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             margin-top: 60px;
             z-index: 1; /* Ensure the container is in front of the lines */
         }
@@ -55,7 +55,7 @@
             font-family: 'Zilla Slab', serif;
             font-size: 60px;
             font-weight: 700;
-            color: #fff;
+            color: #333;
             text-transform: uppercase;
             margin-bottom: 20px;
             letter-spacing: 4px;
@@ -65,23 +65,23 @@
 
         @keyframes glitch {
             0% {
-                text-shadow: 3px 0 rgba(255, 255, 255, 0.8), -3px 0 rgba(255, 255, 255, 0.8);
+                text-shadow: 3px 0 rgba(0, 0, 0, 0.3), -3px 0 rgba(0, 0, 0, 0.3);
                 transform: translateX(0);
             }
             25% {
-                text-shadow: -4px 0 rgba(255, 255, 255, 0.9), 4px 0 rgba(255, 255, 255, 0.9);
+                text-shadow: -4px 0 rgba(0, 0, 0, 0.4), 4px 0 rgba(0, 0, 0, 0.4);
                 transform: translateX(-3px);
             }
             50% {
-                text-shadow: 4px 0 rgba(255, 255, 255, 0.8), -4px 0 rgba(255, 255, 255, 0.8);
+                text-shadow: 4px 0 rgba(0, 0, 0, 0.3), -4px 0 rgba(0, 0, 0, 0.3);
                 transform: translateX(3px);
             }
             75% {
-                text-shadow: -3px 0 rgba(255, 255, 255, 0.9), 3px 0 rgba(255, 255, 255, 0.9);
+                text-shadow: -3px 0 rgba(0, 0, 0, 0.4), 3px 0 rgba(0, 0, 0, 0.4);
                 transform: translateX(-2px);
             }
             100% {
-                text-shadow: 3px 0 rgba(255, 255, 255, 0.8), -3px 0 rgba(255, 255, 255, 0.8);
+                text-shadow: 3px 0 rgba(0, 0, 0, 0.3), -3px 0 rgba(0, 0, 0, 0.3);
                 transform: translateX(0);
             }
         }
@@ -122,9 +122,9 @@
         .section {
             margin-top: 50px;
             padding: 30px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             animation: slideIn 1s ease-out;
         }
 
@@ -151,7 +151,7 @@
         p {
             font-size: 18px;
             line-height: 1.6;
-            color: #ddd;
+            color: #555;
         }
 
         /* Quotes Section */
@@ -159,7 +159,7 @@
             font-size: 18px;
             line-height: 1.6;
             font-style: italic;
-            color: #ddd;
+            color: #555;
             margin-bottom: 15px;
         }
 
@@ -171,8 +171,8 @@
             border: 2px solid #4682b4;
             border-radius: 5px;
             margin-right: 10px;
-            background-color: #1a1a1a;
-            color: #fff;
+            background-color: #fff;
+            color: #333;
         }
 
         .newsletter button {
@@ -194,7 +194,7 @@
         footer {
             margin-top: 30px;
             font-size: 14px;
-            color: #bbb;
+            color: #888;
         }
 
         /* Contact Link Styles */
@@ -220,7 +220,6 @@
             left: 0;
             right: 0;
             height: 100%;
-            margin: auto;
             width: 100vw;
             z-index: 0; /* Ensure lines are behind the container but in front of the background */
         }
@@ -230,8 +229,8 @@
             width: 2px;
             height: 100%;
             top: 0;
-            left: 50%;
-            background: rgba(255, 255, 255, 0.2);
+            left: 0;
+            background: rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
@@ -243,7 +242,7 @@
             width: 100%;
             top: -50%;
             left: 0;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, #ffffff 75%, #ffffff 100%);
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 75%, #000 100%);
             animation: drop 3s 0s infinite;
             animation-fill-mode: forwards;
             animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
@@ -251,27 +250,27 @@
 
         @keyframes drop {
             0% {
-                top: -50%;
+                left: -50%;
             }
             100% {
-                top: 110%;
+                left: 110%;
             }
         }
 
         .line:nth-child(odd) {
-            margin-left: calc(50% - 45%);
+            top: calc(50% - 45%);
         }
 
         .line:nth-child(even) {
-            margin-left: calc(50% + 45%);
+            top: calc(50% + 45%);
         }
 
         .line:nth-child(2) {
-            margin-left: calc(50% - 15%);
+            top: calc(50% - 15%);
         }
 
         .line:nth-child(4) {
-            margin-left: calc(50% + 15%);
+            top: calc(50% + 15%);
         }
 
         .line:nth-child(1)::after {
