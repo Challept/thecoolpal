@@ -3,163 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Öppnar Snart</title>
+    <title>Webstay - Kommer Snart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #ffffff;
-            height: 100vh;
+            background: #080816;
+            min-height: 100vh;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: #fff;
         }
 
-        .container {
+        .scene {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            perspective: 1000px;
+            opacity: 0.5;
+        }
+
+        .grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: 
+                linear-gradient(90deg, rgba(0, 195, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 195, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: rotateX(60deg) translateY(-50%) translateX(-25%);
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: rotateX(60deg) translateY(-50%) translateX(-25%) translateZ(0px); }
+            100% { transform: rotateX(60deg) translateY(-50%) translateX(-25%) translateZ(1000px); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            padding: 2rem;
         }
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .logo {
+            font-size: 120px;
+            font-weight: 900;
+            margin-bottom: 20px;
             opacity: 0;
             transform: translateY(-50px);
-            animation: fadeInDown 1s ease-out forwards;
+            background: linear-gradient(to right, #00ff88, #00a2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3));
         }
 
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
+        .tagline {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 40px;
             opacity: 0;
-            transform: translateY(-30px);
-            animation: fadeInDown 1s ease-out 0.5s forwards;
+            letter-spacing: 4px;
         }
 
-        .countdown {
+        .timer-container {
+            display: inline-flex;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 20px;
+            padding: 15px 30px;
+            gap: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+        }
+
+        .timer-segment {
             display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
+            align-items: center;
+            gap: 5px;
         }
 
-        .countdown-item {
-            margin: 0 1rem;
-            opacity: 0;
-            transform: scale(0.5);
-            animation: scaleIn 0.5s ease-out 1s forwards;
+        .timer-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #00ff88;
+            min-width: 45px;
+            text-align: right;
         }
 
-        .countdown-number {
-            font-size: 3rem;
-            font-weight: bold;
-        }
-
-        .countdown-label {
-            font-size: 0.9rem;
+        .timer-label {
+            font-size: 12px;
+            color: #ffffff80;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .cta-button {
-            background-color: #ffffff;
-            color: #667eea;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease-out 1.5s forwards;
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
         }
 
-        .cta-button:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ff88;
+            border-radius: 50%;
+            filter: blur(1px);
         }
 
-        @keyframes fadeInDown {
-            to {
+        .circles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            animation: pulseAndRotate 4s infinite linear;
+        }
+
+        @keyframes pulseAndRotate {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
                 opacity: 1;
-                transform: translateY(0);
+            }
+            100% {
+                transform: scale(2) rotate(360deg);
+                opacity: 0;
             }
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .glitch-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 136, 0.1);
+            mix-blend-mode: overlay;
+            pointer-events: none;
+            animation: glitch 2s infinite;
+            opacity: 0.3;
         }
 
-        @keyframes scaleIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            .logo {
+                font-size: 60px;
             }
-
-            p {
-                font-size: 1rem;
+            .tagline {
+                font-size: 18px;
+                letter-spacing: 2px;
             }
-
-            .countdown-number {
-                font-size: 2rem;
+            .timer-container {
+                padding: 10px 20px;
+                gap: 15px;
             }
-
-            .countdown-label {
-                font-size: 0.8rem;
+            .timer-number {
+                font-size: 24px;
+                min-width: 35px;
             }
-
-            .cta-button {
-                font-size: 1rem;
-                padding: 0.8rem 1.6rem;
+            .timer-label {
+                font-size: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Webstay öppnar snart!</h1>
-        <p>Skapa och hosta din webbplats med oss. Vi lanserar den 10 juni 2025.</p>
-        <div class="countdown">
-            <div class="countdown-item">
-                <div class="countdown-number" id="days">00</div>
-                <div class="countdown-label">Dagar</div>
+    <div class="scene">
+        <div class="grid"></div>
+    </div>
+    <div class="circles"></div>
+    <div class="particles"></div>
+    <div class="glitch-effect"></div>
+    
+    <main class="content">
+        <h1 class="logo">WEBSTAY</h1>
+        <p class="tagline">FRAMTIDENS WEBBPLATTFORM</p>
+        <div class="timer-container">
+            <div class="timer-segment">
+                <div class="timer-number" id="days">00</div>
+                <div class="timer-label">d</div>
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="hours">00</div>
-                <div class="countdown-label">Timmar</div>
+            <div class="timer-segment">
+                <div class="timer-number" id="hours">00</div>
+                <div class="timer-label">h</div>
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="minutes">00</div>
-                <div class="countdown-label">Minuter</div>
+            <div class="timer-segment">
+                <div class="timer-number" id="minutes">00</div>
+                <div class="timer-label">m</div>
             </div>
-            <div class="countdown-item">
-                <div class="countdown-number" id="seconds">00</div>
-                <div class="countdown-label">Sekunder</div>
+            <div class="timer-segment">
+                <div class="timer-number" id="seconds">00</div>
+                <div class="timer-label">s</div>
             </div>
         </div>
-        <button class="cta-button">Meddela mig vid lansering</button>
-    </div>
+    </main>
 
     <script>
-        const countdownDate = new Date("June 10, 2025 00:00:00").getTime();
+        // Create particles
+        const particles = document.querySelector('.particles');
+        for (let i = 0; i < 100; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+            particles.appendChild(particle);
+        }
+
+        // Create circles
+        const circles = document.querySelector('.circles');
+        for (let i = 0; i < 5; i++) {
+            const circle = document.createElement('div');
+            circle.className = 'circle';
+            circle.style.width = `${Math.random() * 300 + 200}px`;
+            circle.style.height = circle.style.width;
+            circle.style.left = `${Math.random() * 100}%`;
+            circle.style.top = `${Math.random() * 100}%`;
+            circle.style.animationDelay = `${Math.random() * 2}s`;
+            circles.appendChild(circle);
+        }
+
+        // Animations
+        gsap.to('.logo', {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: "power4.out"
+        });
+
+        gsap.to('.tagline', {
+            opacity: 1,
+            duration: 1.5,
+            delay: 0.3,
+            ease: "power4.out"
+        });
+
+        gsap.to('.timer-container', {
+            opacity: 1,
+            scale: 1,
+            duration: 1.5,
+            delay: 0.6,
+            ease: "elastic.out(1, 0.7)"
+        });
+
+        // Countdown Timer
+        const countdownDate = new Date('June 10, 2025 00:00:00').getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
@@ -170,23 +288,30 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = days.toString().padStart(2, '0');
-            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
-            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
-            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
 
             if (distance < 0) {
-                clearInterval(countdownTimer);
-                document.querySelector(".countdown").innerHTML = "<h2>Vi har öppnat!</h2>";
+                clearInterval(timer);
+                document.querySelector('.timer-container').innerHTML = 'VI HAR ÖPPNAT!';
             }
         }
 
-        const countdownTimer = setInterval(updateCountdown, 1000);
-
         updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
 
-        document.querySelector(".cta-button").addEventListener("click", function() {
-            alert("Tack för ditt intresse! Vi kommer att meddela dig när vi lanserar.");
+        // Mouse interaction
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            gsap.to('.grid', {
+                duration: 1,
+                x: (mouseX - 0.5) * 50,
+                y: (mouseY - 0.5) * 50,
+            });
         });
     </script>
 </body>
