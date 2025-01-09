@@ -88,12 +88,38 @@
     margin-bottom: 20px;
     opacity: 0;
     transform: translateY(-50px);
-    background: linear-gradient(to right, #00a2ff, #00ff88); /* Static blue and green gradient */
-    background-size: 100%; /* No animation */
+    background: linear-gradient(to right, #00ff88, #00a2ff, #ff0088);
+    background-size: 300% auto; /* Enhanced gradient movement */
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: fadeIn 2s ease-out, shine 5s linear infinite; /* Combined fade-in and shine animation */
     filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3));
+    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transitions for hover effects */
+}
+
+@keyframes shine {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add hover effect for a smoother interactive feel */
+.logo:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+    filter: drop-shadow(0 0 50px rgba(0, 255, 136, 0.5)); /* Enhanced glow */
+    transition: transform 0.3s ease, filter 0.3s ease;
 }
         .tagline {
             font-size: 24px;
