@@ -82,26 +82,19 @@
             text-align: center;
         }
 
-        .logo {
-            font-size: 120px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(-50px);
-            background: linear-gradient(to right, #00ff88, #00a2ff, #ff0088);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 3s linear infinite;
-            filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3));
-        }
-
-        @keyframes shine {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
-
+.logo {
+    font-size: 120px;
+    font-weight: 900;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(-50px);
+    background: linear-gradient(to right, #00a2ff, #00ff88); /* Static blue and green gradient */
+    background-size: 100%; /* No animation */
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3));
+}
         .tagline {
             font-size: 24px;
             color: #fff;
@@ -250,11 +243,6 @@
 </head>
 <body>
     <div class="background"></div>
-    <div class="noise"></div>
-    <div class="grid-container">
-        <div class="grid"></div>
-        <div class="grid"></div>
-    </div>
     <div class="floating-elements"></div>
     
     <main class="content">
