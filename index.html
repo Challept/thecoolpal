@@ -3,417 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Kommer Snart!</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Zilla+Slab:wght@700&display=swap" rel="stylesheet">
+    <title>Webstay - Öppnar Snart</title>
     <style>
-        /* General Page Styles */
-        html, body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f0f0f0; /* Lighter background */
-            color: #333; /* Darker text color */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-            text-align: center;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            width: 100%;
-            height: 100%;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        /* Container Style */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         .container {
-            max-width: 1000px;
-            width: 100%;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-            margin-top: 60px;
-            z-index: 1; /* Ensure the container is in front of the lines */
+            text-align: center;
+            padding: 2rem;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(-50px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Title Styles */
-        h1, .glitch-text {
-            font-family: 'Zilla Slab', serif;
-            font-size: 60px;
-            font-weight: 700;
-            color: #333;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            letter-spacing: 4px;
-            position: relative;
-            animation: glitch 1.5s infinite;
-        }
-
-        @keyframes glitch {
-            0% {
-                text-shadow: 3px 0 rgba(0, 0, 0, 0.3), -3px 0 rgba(0, 0, 0, 0.3);
-                transform: translateX(0);
-            }
-            25% {
-                text-shadow: -4px 0 rgba(0, 0, 0, 0.4), 4px 0 rgba(0, 0, 0, 0.4);
-                transform: translateX(-3px);
-            }
-            50% {
-                text-shadow: 4px 0 rgba(0, 0, 0, 0.3), -4px 0 rgba(0, 0, 0, 0.3);
-                transform: translateX(3px);
-            }
-            75% {
-                text-shadow: -3px 0 rgba(0, 0, 0, 0.4), 3px 0 rgba(0, 0, 0, 0.4);
-                transform: translateX(-2px);
-            }
-            100% {
-                text-shadow: 3px 0 rgba(0, 0, 0, 0.3), -3px 0 rgba(0, 0, 0, 0.3);
-                transform: translateX(0);
-            }
-        }
-
-        /* Countdown Timer Styles */
-        .timer {
-            font-size: 45px;
-            margin: 20px 0;
-            font-weight: 500;
-            letter-spacing: 2px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        /* Button Styles */
-        .btn-future {
-            padding: 15px 30px;
-            background-color: #4682b4;
-            color: #fff;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .btn-future:hover {
-            background-color: #5f9ea0;
-            transform: scale(1.05);
-        }
-
-        /* Section Styles */
-        .section {
-            margin-top: 50px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            animation: slideIn 1s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        h2 {
-            font-family: 'Zilla Slab', serif;
-            font-size: 30px;
-            color: #4682b4;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            animation: glitch 1.5s infinite;
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(-50px);
+            animation: fadeInDown 1s ease-out forwards;
         }
 
         p {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(-30px);
+            animation: fadeInDown 1s ease-out 0.5s forwards;
         }
 
-        /* Quotes Section */
-        .quote {
-            font-size: 18px;
-            line-height: 1.6;
-            font-style: italic;
-            color: #555;
-            margin-bottom: 15px;
+        .countdown {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
         }
 
-        /* Newsletter Styles */
-        .newsletter input {
-            padding: 15px;
-            width: 300px;
-            font-size: 16px;
-            border: 2px solid #4682b4;
-            border-radius: 5px;
-            margin-right: 10px;
-            background-color: #fff;
-            color: #333;
+        .countdown-item {
+            margin: 0 1rem;
+            opacity: 0;
+            transform: scale(0.5);
+            animation: scaleIn 0.5s ease-out 1s forwards;
         }
 
-        .newsletter button {
-            padding: 15px 30px;
-            background-color: #4682b4;
-            color: #fff;
-            font-size: 18px;
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .cta-button {
+            background-color: #ffffff;
+            color: #667eea;
             border: none;
-            border-radius: 5px;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease-out 1.5s forwards;
         }
 
-        .newsletter button:hover {
-            background-color: #5f9ea0;
+        .cta-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Footer Styles */
-        footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #888;
-        }
-
-        /* Contact Link Styles */
-        .contact a {
-            font-size: 18px;
-            color: #4682b4;
-            text-decoration: none;
-            padding: 10px;
-            border: 1px solid #4682b4;
-            border-radius: 5px;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        .contact a:hover {
-            background-color: #4682b4;
-            color: #fff;
-        }
-
-        /* Animated Lines Background */
-        .lines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            width: 100vw;
-            z-index: 0; /* Ensure lines are behind the container but in front of the background */
-        }
-
-        .line {
-            position: absolute;
-            width: 2px;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background: rgba(0, 0, 0, 0.2); /* Black lines */
-            overflow: hidden;
-        }
-
-        .line::after {
-            content: '';
-            display: block;
-            position: absolute;
-            height: 20vh;
-            width: 100%;
-            top: -50%;
-            left: 0;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000 75%, #000 100%);
-            animation: drop 3s 0s infinite;
-            animation-fill-mode: forwards;
-            animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
-        }
-
-        @keyframes drop {
-            0% {
-                left: -50%;
-            }
-            100% {
-                left: 110%;
+        @keyframes fadeInDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .line:nth-child(odd) {
-            top: calc(50% - 45%);
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .line:nth-child(even) {
-            top: calc(50% + 45%);
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-        .line:nth-child(2) {
-            top: calc(50% - 15%);
-        }
-
-        .line:nth-child(4) {
-            top: calc(50% + 15%);
-        }
-
-        .line:nth-child(1)::after {
-            animation-delay: 1s;
-        }
-
-        .line:nth-child(2)::after {
-            animation-delay: 0.5s;
-        }
-
-        .line:nth-child(3)::after {
-            animation-delay: 1.25s;
-        }
-
-        .line:nth-child(4)::after {
-            animation-delay: 0.75s;
-        }
-
-        .line:nth-child(5)::after {
-            animation-delay: 1.5s;
-        }
-
-        .line:nth-child(6)::after {
-            animation-delay: 1.75s;
-        }
-
-        .line:nth-child(7)::after {
-            animation-delay: 1.25s;
-        }
-
-        .line:nth-child(8)::after {
-            animation-delay: 1.5s;
-        }
-
-        .line:nth-child(9)::after {
-            animation-delay: 1.75s;
-        }
-
-        .line:nth-child(10)::after {
-            animation-delay: 2s;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             h1 {
-                font-size: 50px;
+                font-size: 2rem;
             }
-            .timer {
-                font-size: 35px;
-            }
-            .container {
-                padding: 20px;
-            }
-            h2 {
-                font-size: 25px;
-            }
+
             p {
-                font-size: 16px;
+                font-size: 1rem;
             }
-            .btn-future {
-                font-size: 16px;
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.8rem;
+            }
+
+            .cta-button {
+                font-size: 1rem;
+                padding: 0.8rem 1.6rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="lines">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
+    <div class="container">
+        <h1>Webstay öppnar snart!</h1>
+        <p>Skapa och hosta din webbplats med oss. Vi lanserar den 10 juni 2025.</p>
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Dagar</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Timmar</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minuter</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Sekunder</div>
+            </div>
+        </div>
+        <button class="cta-button">Meddela mig vid lansering</button>
     </div>
 
-    <div class="container">
-        <h1 class="glitch-text">Webstay - Kommer Snart!</h1>
-        <div class="timer" id="timer"></div>
-        <button class="btn-future" id="futureButton">Föreväntning!</button>
-        <div class="section">
-            <h2 class="glitch-text">Om Webstay</h2>
-            <p>Webstay.se är en webbplatsbyggare och hostingtjänst som hjälper dig att skapa och hantera din egen webbplats med lätthet. Vi erbjuder enkla och effektiva lösningar för att skapa en professionell webbplats snabbt och enkelt.</p>
-        </div>
-        <div class="section">
-            <h2 class="glitch-text">Vad säger folk om oss?</h2>
-            <div class="quote">"Webstay är framtiden för webbplatsbyggande. Jag ser fram emot lanseringen!" - Entusiastisk Användare</div>
-            <div class="quote">"Enkel, prisvärd och kraftfull. Jag är verkligen nyfiken på att se det i action!" - Teknikexpert</div>
-        </div>
-        <div class="section newsletter">
-            <h2 class="glitch-text">Nyhetsbrev</h2>
-            <p>Få de senaste uppdateringarna och nyheter om lanseringen direkt i din inkorg!</p>
-            <input type="email" placeholder="Din e-postadress" id="email">
-            <button onclick="subscribeNewsletter()">Prenumerera</button>
-        </div>
-        <div class="section">
-            <h2 class="glitch-text">Kommande Lansering</h2>
-            <p>Webstay kommer att vara tillgängligt för allmänheten den 25 februari 2025. Vi ser fram emot att hjälpa dig skapa din drömwebbplats!</p>
-        </div>
-        <div class="contact">
-            <p>Har du frågor? Kontakta oss på:</p>
-            <a href="mailto:support@webstay.se">support@webstay.se</a>
-        </div>
-    </div>
-    <footer>
-        <p>&copy; 2024 Webstay.se - Alla rättigheter förbehållna</p>
-    </footer>
     <script>
-        // Countdown Timer
-        const countdownDate = new Date("Feb 25, 2025 00:00:00").getTime();
-        const timerInterval = setInterval(function() {
+        const countdownDate = new Date("June 10, 2025 00:00:00").getTime();
+
+        function updateCountdown() {
             const now = new Date().getTime();
             const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
+
             if (distance < 0) {
-                clearInterval(timerInterval);
-                document.getElementById("timer").innerHTML = "Lansering pågår!";
-                window.location.href = "https://webstay.se/home"; // Redirect after countdown reaches zero
-            } else {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }
-        }, 1000);
-
-        // Redirect to "webstay.se/ex" when the button is clicked
-        document.getElementById("futureButton").addEventListener("click", function() {
-            window.location.href = "https://webstay.se/ex";
-        });
-
-        // Newsletter Subscription Function
-        function subscribeNewsletter() {
-            const email = document.getElementById('email').value;
-            if (email) {
-                alert("Tack för att du prenumererar!");
-            } else {
-                alert("Vänligen ange en giltig e-postadress.");
+                clearInterval(countdownTimer);
+                document.querySelector(".countdown").innerHTML = "<h2>Vi har öppnat!</h2>";
             }
         }
+
+        const countdownTimer = setInterval(updateCountdown, 1000);
+
+        updateCountdown();
+
+        document.querySelector(".cta-button").addEventListener("click", function() {
+            alert("Tack för ditt intresse! Vi kommer att meddela dig när vi lanserar.");
+        });
     </script>
 </body>
 </html>
