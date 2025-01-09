@@ -14,7 +14,7 @@
         }
 
         body {
-            background: #080816;
+            background: #050510;
             min-height: 100vh;
             overflow: hidden;
             display: flex;
@@ -23,24 +23,52 @@
             color: #fff;
         }
 
-        .scene {
+        .background {
             position: fixed;
             width: 100%;
             height: 100%;
+            background: 
+                radial-gradient(circle at center, rgba(0,255,136,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 20% 20%, rgba(0,162,255,0.1) 0%, transparent 30%),
+                radial-gradient(circle at 80% 80%, rgba(255,0,136,0.1) 0%, transparent 30%);
+            filter: blur(80px);
+            z-index: 0;
+        }
+
+        .noise {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iLjA1Ii8+PC9zdmc+');
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .grid-container {
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            transform-style: preserve-3d;
             perspective: 1000px;
-            opacity: 0.5;
         }
 
         .grid {
             position: absolute;
-            width: 200%;
-            height: 200%;
+            width: 100%;
+            height: 100%;
             background: 
-                linear-gradient(90deg, rgba(0, 195, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(rgba(0, 195, 255, 0.1) 1px, transparent 1px);
+                linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px);
             background-size: 40px 40px;
             transform: rotateX(60deg) translateY(-50%) translateX(-25%);
             animation: gridMove 20s linear infinite;
+        }
+
+        .grid:nth-child(2) {
+            background: 
+                linear-gradient(90deg, rgba(0, 162, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0, 162, 255, 0.1) 1px, transparent 1px);
+            animation-delay: -10s;
         }
 
         @keyframes gridMove {
@@ -50,7 +78,7 @@
 
         .content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             text-align: center;
         }
 
@@ -60,11 +88,18 @@
             margin-bottom: 20px;
             opacity: 0;
             transform: translateY(-50px);
-            background: linear-gradient(to right, #00ff88, #00a2ff);
+            background: linear-gradient(to right, #00ff88, #00a2ff, #ff0088);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
             filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3));
+        }
+
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
 
         .tagline {
@@ -73,24 +108,72 @@
             margin-bottom: 40px;
             opacity: 0;
             letter-spacing: 4px;
+            position: relative;
+        }
+
+        .tagline::before, .tagline::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background: #00ff88;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: linesPulse 2s infinite;
+        }
+
+        .tagline::before { left: -40px; }
+        .tagline::after { right: -40px; }
+
+        @keyframes linesPulse {
+            0%, 100% { width: 30px; opacity: 0.5; }
+            50% { width: 40px; opacity: 1; }
         }
 
         .timer-container {
             display: inline-flex;
-            background: rgba(0, 255, 136, 0.1);
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
             padding: 15px 30px;
             gap: 20px;
             opacity: 0;
             transform: scale(0.8);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 255, 136, 0.2);
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.1);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 136, 0.1),
+                inset 0 0 20px rgba(0, 255, 136, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(0, 255, 136, 0.1) 50%,
+                transparent 100%
+            );
+            animation: shine-effect 3s infinite;
+            transform: rotate(45deg);
+        }
+
+        @keyframes shine-effect {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
         }
 
         .timer-segment {
             display: flex;
             align-items: center;
             gap: 5px;
+            position: relative;
         }
 
         .timer-number {
@@ -99,6 +182,8 @@
             color: #00ff88;
             min-width: 45px;
             text-align: right;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            transition: all 0.3s ease;
         }
 
         .timer-label {
@@ -108,70 +193,37 @@
             letter-spacing: 1px;
         }
 
-        .particles {
+        .floating-elements {
             position: fixed;
             width: 100%;
             height: 100%;
             pointer-events: none;
+            z-index: 1;
         }
 
-        .particle {
+        .floating-element {
             position: absolute;
-            width: 2px;
-            height: 2px;
+            width: 4px;
+            height: 4px;
             background: #00ff88;
             border-radius: 50%;
-            filter: blur(1px);
+            filter: blur(2px);
+            opacity: 0;
+            animation: float-up 5s infinite linear;
         }
 
-        .circles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 255, 136, 0.1);
-            animation: pulseAndRotate 4s infinite linear;
-        }
-
-        @keyframes pulseAndRotate {
+        @keyframes float-up {
             0% {
-                transform: scale(1) rotate(0deg);
+                transform: translateY(100vh) scale(0);
                 opacity: 0;
             }
             50% {
-                opacity: 1;
+                opacity: 0.5;
             }
             100% {
-                transform: scale(2) rotate(360deg);
+                transform: translateY(-100vh) scale(1);
                 opacity: 0;
             }
-        }
-
-        .glitch-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 255, 136, 0.1);
-            mix-blend-mode: overlay;
-            pointer-events: none;
-            animation: glitch 2s infinite;
-            opacity: 0.3;
-        }
-
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
         }
 
         @media (max-width: 768px) {
@@ -197,12 +249,13 @@
     </style>
 </head>
 <body>
-    <div class="scene">
+    <div class="background"></div>
+    <div class="noise"></div>
+    <div class="grid-container">
+        <div class="grid"></div>
         <div class="grid"></div>
     </div>
-    <div class="circles"></div>
-    <div class="particles"></div>
-    <div class="glitch-effect"></div>
+    <div class="floating-elements"></div>
     
     <main class="content">
         <h1 class="logo">WEBSTAY</h1>
@@ -228,43 +281,28 @@
     </main>
 
     <script>
-        // Create particles
-        const particles = document.querySelector('.particles');
-        for (let i = 0; i < 100; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = `${Math.random() * 100}%`;
-            particle.style.top = `${Math.random() * 100}%`;
-            particle.style.opacity = Math.random() * 0.5 + 0.2;
-            particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
-            particles.appendChild(particle);
+        // Create floating elements
+        const floatingElements = document.querySelector('.floating-elements');
+        for (let i = 0; i < 50; i++) {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            element.style.left = `${Math.random() * 100}%`;
+            element.style.animationDelay = `${Math.random() * 5}s`;
+            floatingElements.appendChild(element);
         }
 
-        // Create circles
-        const circles = document.querySelector('.circles');
-        for (let i = 0; i < 5; i++) {
-            const circle = document.createElement('div');
-            circle.className = 'circle';
-            circle.style.width = `${Math.random() * 300 + 200}px`;
-            circle.style.height = circle.style.width;
-            circle.style.left = `${Math.random() * 100}%`;
-            circle.style.top = `${Math.random() * 100}%`;
-            circle.style.animationDelay = `${Math.random() * 2}s`;
-            circles.appendChild(circle);
-        }
-
-        // Animations
+        // Enhanced animations
         gsap.to('.logo', {
             opacity: 1,
             y: 0,
-            duration: 1.5,
-            ease: "power4.out"
+            duration: 2,
+            ease: "elastic.out(1, 0.7)"
         });
 
         gsap.to('.tagline', {
             opacity: 1,
             duration: 1.5,
-            delay: 0.3,
+            delay: 0.5,
             ease: "power4.out"
         });
 
@@ -272,8 +310,35 @@
             opacity: 1,
             scale: 1,
             duration: 1.5,
-            delay: 0.6,
+            delay: 0.8,
             ease: "elastic.out(1, 0.7)"
+        });
+
+        // Mouse parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            
+            gsap.to('.grid-container', {
+                duration: 1,
+                rotateX: mouseY * 10,
+                rotateY: mouseX * 10,
+                ease: "power2.out"
+            });
+
+            gsap.to('.background', {
+                duration: 1,
+                x: mouseX * 50,
+                y: mouseY * 50,
+                ease: "power2.out"
+            });
+
+            gsap.to('.logo', {
+                duration: 1,
+                x: mouseX * 20,
+                y: mouseY * 20,
+                ease: "power2.out"
+            });
         });
 
         // Countdown Timer
@@ -288,10 +353,25 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            // Animate number changes
+            ['days', 'hours', 'minutes', 'seconds'].forEach(unit => {
+                const element = document.getElementById(unit);
+                const newValue = {
+                    days: days,
+                    hours: hours,
+                    minutes: minutes,
+                    seconds: seconds
+                }[unit];
+
+                if (element.textContent !== String(newValue).padStart(2, '0')) {
+                    gsap.from(element, {
+                        scale: 1.2,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                }
+                element.textContent = String(newValue).padStart(2, '0');
+            });
 
             if (distance < 0) {
                 clearInterval(timer);
@@ -301,18 +381,6 @@
 
         updateCountdown();
         const timer = setInterval(updateCountdown, 1000);
-
-        // Mouse interaction
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            gsap.to('.grid', {
-                duration: 1,
-                x: (mouseX - 0.5) * 50,
-                y: (mouseY - 0.5) * 50,
-            });
-        });
     </script>
 </body>
 </html>
