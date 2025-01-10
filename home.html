@@ -399,6 +399,233 @@
             animation: float-reverse 3s ease-in-out infinite;
             animation-delay: 1.5s;
         }
+
+        .hero {
+    padding: 8rem 5% 5rem;
+    background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero .hero-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    max-width: 100%;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .hero-image img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+        .features {
+    padding: 6rem 5%;
+    background-color: var(--light);
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 2.5rem;
+    color: var(--dark);
+    margin-bottom: 2rem;
+}
+
+.feature-cards {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.feature-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    flex: 1;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h3 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    font-size: 1.1rem;
+    color: var(--secondary);
+}
+
+.testimonials {
+    padding: 6rem 5%;
+    background-color: var(--white);
+    text-align: center;
+}
+
+.testimonials h2 {
+    font-size: 2.5rem;
+    color: var(--dark);
+    margin-bottom: 2rem;
+}
+
+.testimonial-cards {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background-color: var(--light);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.testimonial-card p {
+    font-size: 1.2rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+}
+
+.testimonial-card cite {
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-style: italic;
+}
+
+.pricing {
+    padding: 6rem 5%;
+    background-color: var(--light);
+    text-align: center;
+}
+
+.pricing h2 {
+    font-size: 2.5rem;
+    color: var(--dark);
+    margin-bottom: 2rem;
+}
+
+.pricing-cards {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+}
+
+.pricing-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+}
+
+.pricing-card h3 {
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.pricing-card p {
+    font-size: 1.2rem;
+    color: var(--secondary);
+    margin-bottom: 1rem;
+}
+
+.pricing-card ul {
+    list-style: none;
+    margin-bottom: 1.5rem;
+}
+
+.pricing-card ul li {
+    margin: 5px 0;
+}
+
+.pricing-card .btn {
+    padding: 1rem 2rem;
+    background-color: var(--primary);
+    color: var(--white);
+    border-radius: 5px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.pricing-card .btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.cta {
+    padding: 6rem 5%;
+    background-color: var(--primary);
+    color: var(--white);
+    text-align: center;
+}
+
+.cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta .btn-primary {
+    background-color: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--white);
+}
+
+.cta .btn-primary:hover {
+    background-color: var(--primary-light);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -475,6 +702,98 @@
         Integrerat med verktyg
     </li>
 </ul>
+
+<section class="hero">
+    <div class="hero-content">        
+        <picture class="hero-image">
+            <source media="(min-width: 768px)" srcset="sell-around-the-world-large.jpg">
+            <img src="sell-around-the-world-small.jpg" alt="A global view for your website" />
+        </picture>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Redo att komma igång?</h2>
+    <p>Skapa din webbplats idag och börja växa online med Webstay!</p>
+    <a href="webstay.se/order" class="btn btn-primary">Starta din resa</a>
+    <a href="admin.webstay.se" class="btn btn-primary">Admin sida</a>
+</section>
+                    
+<section class="features">
+    <h2>Våra Funktioner</h2>
+    <div class="feature-cards">
+        <div class="feature-card">
+            <h3>Helt Responsiv Design</h3>
+            <p>Skapa webbplatser som ser fantastiska ut på alla enheter, från mobiler till datorer.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Snabb Prestanda</h3>
+            <p>Våra webbplatser laddas snabbt, vilket förbättrar användarupplevelsen och SEO.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Enkel Anpassning</h3>
+            <p>Bygg din webbplats med ett användarvänligt gränssnitt som ger fullständig kontroll.</p>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials">
+    <h2>Vad Våra Kunder Säger</h2>
+    <div class="testimonial-cards">
+        <div class="testimonial-card">
+            <p>"Webstay hjälpte oss att skapa vår drömwebbplats. Den är snabb, säker och enkel att använda!"</p>
+            <cite>- Lisa, CEO på WebTech</cite>
+        </div>
+        <div class="testimonial-card">
+            <p>"Tack vare Webstay har vi fått fler kunder online, och vår sida ser fantastisk ut!"</p>
+            <cite>- Johan, Marknadschef på RetailCo</cite>
+        </div>
+        <div class="testimonial-card">
+            <p>"Väldigt lätt att skapa en webbsida med Webstay. Hela processen var smidig och snabb!"</p>
+            <cite>- Maria, Grundare av EcoShop</cite>
+        </div>
+    </div>
+</section>
+
+<section class="pricing">
+    <h2>Våra Paket</h2>
+    <div class="pricing-cards">
+        <div class="pricing-card">
+            <h3>Start</h3>
+            <p>Enkel och pålitlig</p>
+            <p>300 kr engångsavgift + 10 kr/månad</p>
+            <ul>
+                <li>1 GB lagring</li>
+                <li>SEO-optimerad</li>
+                <li>E-postsupport</li>
+            </ul>
+            <a href="#order" class="btn">Beställ nu</a>
+        </div>
+        <div class="pricing-card">
+            <h3>Premium</h3>
+            <p>Det mest valda paketet</p>
+            <p>400 kr engångsavgift + 50 kr/månad</p>
+            <ul>
+                <li>5 GB lagring</li>
+                <li>Prioriterad support</li>
+                <li>Exklusiva teman</li>
+            </ul>
+            <a href="#order" class="btn">Beställ nu</a>
+        </div>
+        <div class="pricing-card">
+            <h3>Ultimate</h3>
+            <p>Full kontroll och alla funktioner</p>
+            <p>1000 kr engångsavgift + 100 kr/månad</p>
+            <ul>
+                <li>Obegränsad lagring</li>
+                <li>API-integrationer</li>
+                <li>24/7 support</li>
+            </ul>
+            <a href="#order" class="btn">Beställ nu</a>
+        </div>
+    </div>
+</section>
+
 
 </body>
 </html>
