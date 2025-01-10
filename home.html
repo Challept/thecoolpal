@@ -1,474 +1,482 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Skapa Din Perfekta Webbplats</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
-    <style>
-        /* Reset and Base Styles */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webstay - Skapa Din Perfekta Webbplats</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
+<style>
+/* Reset and Base Styles */
+*, *::before, *::after {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Inter', sans-serif;
+}
 
-        :root {
-            --primary: #0066FF;
-            --primary-dark: #0052cc;
-            --primary-light: #e6f0ff;
-            --secondary: #6c757d;
-            --success: #28a745;
-            --white: #ffffff;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --border: #dee2e6;
-            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
-        }
+:root {
+--primary: #0066FF;
+--primary-dark: #0052cc;
+--primary-light: #e6f0ff;
+--secondary: #6c757d;
+--success: #28a745;
+--white: #ffffff;
+--light: #f8f9fa;
+--dark: #343a40;
+--border: #dee2e6;
+--shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+--shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+--shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
 
-        body {
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--white);
-            overflow-x: hidden;
-        }
+body {
+line-height: 1.6;
+color: var(--dark);
+background-color: var(--white);
+overflow-x: hidden;
+}
 
-        /* Header & Navigation */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-sm);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
+/* Header & Navigation */
+header {
+background: rgba(255, 255, 255, 0.95);
+backdrop-filter: blur(10px);
+box-shadow: var(--shadow-sm);
+position: fixed;
+width: 100%;
+top: 0;
+z-index: 1000;
+transition: all 0.3s ease;
+}
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+header.scrolled {
+background: rgba(255, 255, 255, 0.98);
+box-shadow: var(--shadow);
+}
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+nav {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 5%;
+max-width: 1400px;
+margin: 0 auto;
+}
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+.logo {
+font-size: 1.8rem;
+font-weight: 700;
+color: var(--primary);
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+.logo svg {
+width: 32px;
+height: 32px;
+}
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
+.nav-links {
+display: flex;
+gap: 2rem;
+list-style: none;
+}
 
-        /* Hero Section */
-        .hero {
-            padding: 8rem 5% 5rem;
-            background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
+.nav-links a {
+text-decoration: none;
+color: var(--dark);
+font-weight: 500;
+transition: all 0.3s ease;
+position: relative;
+}
 
-        .hero-image {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            max-width: 100%;
-        }
+.nav-links a::after {
+content: '';
+position: absolute;
+width: 0;
+height: 2px;
+bottom: -4px;
+left: 0;
+background-color: var(--primary);
+transition: width 0.3s ease;
+}
 
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-        }
+.nav-links a:hover::after {
+width: 100%;
+}
 
-        /* Responsive for smaller screens */
-        @media (max-width: 768px) {
-            .hero-image img {
-                width: 100%;
-                height: auto;
-            }
-        }
+.mobile-menu-btn {
+display: none;
+background: none;
+border: none;
+cursor: pointer;
+padding: 0.5rem;
+}
 
-        .hero .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
+/* Hero Section */
+.hero {
+padding: 8rem 5% 5rem;
+background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
+min-height: 90vh;
+display: flex;
+align-items: center;
+position: relative;
+overflow: hidden;
+}
 
-        .hero-text h1 {
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            font-weight: 800;
-        }
+.hero::before {
+content: '';
+position: absolute;
+width: 100%;
+height: 100%;
+top: 0;
+left: 0;
+background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+opacity: 0.5;
+}
 
-        .hero-features {
-            list-style: none;
-            margin-bottom: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
+.hero-content {
+max-width: 1400px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 4rem;
+align-items: center;
+position: relative;
+z-index: 1;
+}
 
-        .hero-features li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.1rem;
-        }
+.hero-text h1 {
+font-size: 3.5rem;
+line-height: 1.2;
+margin-bottom: 1rem;
+color: var(--dark);
+font-weight: 800;
+}
 
-        /* CTA section */
-        .cta {
-            padding: 6rem 5%;
-            background-color: var(--primary);
-            color: var(--white);
-            text-align: center;
-        }
+.hero-text h2 {
+font-size: 1.8rem;
+color: var(--primary);
+margin-bottom: 1.5rem;
+font-weight: 600;
+}
 
-        .cta h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
+.hero-text p {
+font-size: 1.1rem;
+margin-bottom: 2rem;
+color: var(--secondary);
+max-width: 600px;
+}
 
-        .cta .btn-primary {
-            background-color: var(--white);
-            color: var(--primary);
-            border: 2px solid var(--white);
-        }
+.hero-features {
+list-style: none;
+margin-bottom: 2rem;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
+}
 
-        .cta .btn-primary:hover {
-            background-color: var(--primary-light);
-            color: var(--white);
-            transform: translateY(-2px);
-        }
+.hero-features li {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 1.1rem;
+}
 
-        /* Features Section */
-        .features {
-            padding: 6rem 5%;
-            background-color: var(--light);
-            text-align: center;
-        }
+.hero-features li svg {
+color: var(--primary);
+width: 20px;
+height: 20px;
+}
 
-        .features h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 2rem;
-        }
+.hero-buttons {
+display: flex;
+gap: 1rem;
+margin-bottom: 2rem;
+}
 
-        .feature-cards {
-            display: flex;
-            justify-content: space-around;
-            gap: 2rem;
-        }
+.button {
+padding: 1rem 2rem;
+border-radius: 8px;
+font-size: 1.1rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+text-decoration: none;
+}
 
-        .feature-card {
-            background-color: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            flex: 1;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
+.button-primary {
+background: var(--primary);
+color: var(--white);
+border: none;
+box-shadow: var(--shadow);
+}
 
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
+.button-primary:hover {
+background: var(--primary-dark);
+transform: translateY(-2px);
+box-shadow: var(--shadow-lg);
+}
 
-        .feature-card h3 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
+.button-secondary {
+background: var(--white);
+color: var(--primary);
+border: 2px solid var(--primary);
+}
 
-        .feature-card p {
-            font-size: 1.1rem;
-            color: var(--secondary);
-        }
+.button-secondary:hover {
+background: var(--primary-light);
+transform: translateY(-2px);
+}
 
-        /* Testimonials Section */
-        .testimonials {
-            padding: 6rem 5%;
-            background-color: var(--white);
-            text-align: center;
-        }
+.hero-stats {
+display: flex;
+gap: 2rem;
+}
 
-        .testimonials h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 2rem;
-        }
+.stat {
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+padding: 1rem;
+background: rgba(255, 255, 255, 0.8);
+backdrop-filter: blur(10px);
+border-radius: 10px;
+box-shadow: var(--shadow-sm);
+transition: transform 0.3s ease;
+}
 
-        .testimonial-cards {
-            display: flex;
-            justify-content: space-around;
-            gap: 2rem;
-        }
+.stat:hover {
+transform: translateY(-5px);
+}
 
-        .testimonial-card {
-            background-color: var(--light);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow-sm);
-            flex: 1;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
+.stat-number {
+font-size: 1.8rem;
+font-weight: 700;
+color: var(--primary);
+}
 
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-        }
+.stat-text {
+font-size: 0.9rem;
+color: var(--secondary);
+}
 
-        .testimonial-card p {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
+.hero-image {
+position: relative;
+perspective: 1000px;
+}
 
-        .testimonial-card cite {
-            font-size: 1.1rem;
-            color: var(--primary);
-            font-style: italic;
-        }
+.hero-image img {
+width: 100%;
+border-radius: 20px;
+box-shadow: var(--shadow-lg);
+transform: rotateY(-5deg) rotateX(5deg);
+transition: transform 0.5s ease;
+}
 
-        /* Pricing Section */
-        .pricing {
-            padding: 6rem 5%;
-            background-color: var(--light);
-            text-align: center;
-        }
+.hero-image:hover img {
+transform: rotateY(0deg) rotateX(0deg);
+}
 
-        .pricing h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 2rem;
-        }
+.floating-card {
+position: absolute;
+background: var(--white);
+padding: 1.5rem;
+border-radius: 12px;
+box-shadow: var(--shadow-lg);
+transition: all 0.5s ease;
+max-width: 250px;
+}
 
-        .pricing-cards {
-            display: flex;
-            justify-content: space-around;
-            gap: 2rem;
-        }
+.floating-card.card-1 {
+top: 20%;
+left: -15%;
+transform: rotate(-5deg);
+}
 
-        .pricing-card {
-            background-color: var(--white);
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: var(--shadow-sm);
-            flex: 1;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
+.floating-card.card-2 {
+bottom: 20%;
+right: -15%;
+transform: rotate(5deg);
+}
 
-        .pricing-card:hover {
-            transform: translateY(-5px);
-        }
+.floating-card:hover {
+transform: rotate(0deg) scale(1.05);
+}
 
-        .pricing-card h3 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
+/* Responsive Design */
+@media (max-width: 1024px) {
+.hero-content {
+grid-template-columns: 1fr;
+text-align: center;
+}
 
-        .pricing-card p {
-            font-size: 1.2rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
+.hero-stats {
+justify-content: center;
+}
 
-        .pricing-card ul {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
+.hero-buttons {
+justify-content: center;
+}
 
-        .pricing-card ul li {
-            margin: 5px 0;
-        }
+.hero-features {
+display: inline-grid;
+text-align: left;
+}
 
-        .pricing-card .btn {
-            padding: 1rem 2rem;
-            background-color: var(--primary);
-            color: var(--white);
-            border-radius: 5px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
+.hero-image {
+max-width: 600px;
+margin: 0 auto;
+}
+}
 
-        .pricing-card .btn:hover {
-            background-color: var(--primary-dark);
-        }
-    </style>
+@media (max-width: 768px) {
+.mobile-menu-btn {
+display: block;
+}
+
+.nav-links {
+display: none;
+position: absolute;
+top: 100%;
+left: 0;
+width: 100%;
+background: var(--white);
+padding: 1rem;
+box-shadow: var(--shadow);
+flex-direction: column;
+gap: 1rem;
+}
+
+.nav-links.active {
+display: flex;
+}
+
+.hero-text h1 {
+font-size: 2.5rem;
+}
+
+.hero-text h2 {
+font-size: 1.5rem;
+}
+
+.hero-features {
+grid-template-columns: 1fr;
+}
+
+.hero-buttons {
+flex-direction: column;
+}
+
+.floating-card {
+display: none;
+}
+}
+
+/* Animations */
+@keyframes float {
+0% { transform: translateY(0px) rotate(-5deg); }
+50% { transform: translateY(-10px) rotate(-5deg); }
+100% { transform: translateY(0px) rotate(-5deg); }
+}
+
+.floating-card.card-1 {
+animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float-reverse {
+0% { transform: translateY(0px) rotate(5deg); }
+50% { transform: translateY(-10px) rotate(5deg); }
+100% { transform: translateY(0px) rotate(5deg); }
+}
+
+.floating-card.card-2 {
+animation: float-reverse 3s ease-in-out infinite;
+animation-delay: 1.5s;
+}
+    
+</style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#" class="logo">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                    <polyline points="2 17 12 22 22 17"/>
-                    <polyline points="2 12 12 17 22 12"/>
-                </svg>
-                Webstay
-            </a>
-            <button class="mobile-menu-btn">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"/>
-                    <line x1="3" y1="6" x2="21" y2="6"/>
-                    <line x1="3" y1="18" x2="21" y2="18"/>
-                </svg>
-            </button>
-            <ul class="nav-links">
-                <li><a href="#hem">Hem</a></li>
-                <li><a href="#losningar">Lösningar</a></li>
-                <li><a href="#funktioner">Funktioner</a></li>
-                <li><a href="#priser">Priser</a></li>
-                <li><a href="#exempel">Exempel</a></li>
-                <li><a href="#kom-igang">Kom igång</a></li>
-            </ul>
-        </nav>
-    </header>
+<header>
+<nav>
+<a href="#" class="logo">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<polygon points="12 2 2 7 12 12 22 7 12 2"/>
+<polyline points="2 17 12 22 22 17"/>
+<polyline points="2 12 12 17 22 12"/>
+</svg>
+Webstay
+</a>
+<button class="mobile-menu-btn">
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<line x1="3" y1="12" x2="21" y2="12"/>
+<line x1="3" y1="6" x2="21" y2="6"/>
+<line x1="3" y1="18" x2="21" y2="18"/>
+</svg>
+</button>
+<ul class="nav-links">
+<li><a href="#hem">Hem</a></li>
+<li><a href="#losningar">Lösningar</a></li>
+<li><a href="#funktioner">Funktioner</a></li>
+<li><a href="#priser">Priser</a></li>
+<li><a href="#exempel">Exempel</a></li>
+<li><a href="#kom-igang">Kom igång</a></li>
+</ul>
+</nav>
+</header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Skapa Din Framgångsrika Online-butik Idag</h1>
-                    <h2>Utan kodning. Utan krångel. Bara resultat.</h2>
-                    <p>Med Webstay kan du enkelt bygga professionella e-handelssidor och företagshemsidor. Perfekt för dropshipping, produktförsäljning eller för att visa upp ditt företag online.</p>
-                    
-                    <ul class="hero-features">
-                        <li>Färdiga mallar för snabb start</li>
-                        <li>Fullständig kontroll</li>
-                        <li>Enkelt att anpassa sidlayout</li>
-                        <li>Snabb laddningstid</li>
-                        <li>Integrerat med verktyg</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+<main>
+<section class="hero">
+<div class="hero-content">
+<div class="hero-text">
+<h1>Skapa Din Framgångsrika Online-butik Idag</h1>
+<h2>Utan kodning. Utan krångel. Bara resultat.</h2>
+<p>Med Webstay kan du enkelt bygga professionella e-handelssidor och företagshemsidor. Perfekt för dropshipping, produktförsäljning eller för att visa upp ditt företag online.</p>
 
-        <section class="cta">
-            <h2>Redo att komma igång?</h2>
-            <p>Skapa din webbplats idag och börja växa online med Webstay!</p>
-            <a href="webstay.se/order" class="btn btn-primary">Starta din resa</a>
-            <a href="admin.webstay.se" class="btn btn-primary">Admin sida</a>
-        </section>
+<ul class="hero-features">
+<li>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+<polyline points="22 4 12 14.01 9 11.01"/>
+</svg>
+Färdiga mallar för snabb start
+</li>
+<li>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+<polyline points="22 4 12 14.01 9 11.01"/>
+</svg>
+Fullständig kontroll
+</li>
+<li>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+<polyline points="22 4 12 14.01 9 11.01"/>
+</svg>
+Enkelt att anpassa sidlayout
+</li>
+<li>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+<polyline points="22 4 12 14.01 9 11.01"/>
+</svg>
+Snabb laddningstid
+</li>
+<li>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+<polyline points="22 4 12 14.01 9 11.01"/>
+</svg>
+Integrerat med verktyg
+</li>
+</ul>
 
-        <section class="features">
-            <h2>Våra Funktioner</h2>
-            <div class="feature-cards">
-                <div class="feature-card">
-                    <h3>Helt Responsiv Design</h3>
-                    <p>Skapa webbplatser som ser fantastiska ut på alla enheter, från mobiler till datorer.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Snabb Prestanda</h3>
-                    <p>Våra webbplatser laddas snabbt, vilket förbättrar användarupplevelsen och SEO.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>Enkel Anpassning</h3>
-                    <p>Bygg din webbplats med ett användarvänligt gränssnitt som ger fullständig kontroll.</p>
-                </div>
-            </div>
-        </section>
 
-        <section class="testimonials">
-            <h2>Vad Våra Kunder Säger</h2>
-            <div class="testimonial-cards">
-                <div class="testimonial-card">
-                    <p>"Webstay hjälpte oss att skapa vår drömwebbplats. Den är snabb, säker och enkel att använda!"</p>
-                    <cite>- Lisa, CEO på WebTech</cite>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Tack vare Webstay har vi fått fler kunder online, och vår sida ser fantastisk ut!"</p>
-                    <cite>- Johan, Marknadschef på RetailCo</cite>
-                </div>
-                <div class="testimonial-card">
-                    <p>"Väldigt lätt att skapa en webbsida med Webstay. Hela processen var smidig och snabb!"</p>
-                    <cite>- Maria, Grundare av EcoShop</cite>
-                </div>
-            </div>
-        </section>
-
-        <section class="pricing">
-            <h2>Våra Paket</h2>
-            <div class="pricing-cards">
-                <div class="pricing-card">
-                    <h3>Start</h3>
-                    <p>Enkel och pålitlig</p>
-                    <p>300 kr engångsavgift + 10 kr/månad</p>
-                    <ul>
-                        <li>1 GB lagring</li>
-                        <li>SEO-optimerad</li>
-                        <li>E-postsupport</li>
-                    </ul>
-                    <a href="#order" class="btn">Beställ nu</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Premium</h3>
-                    <p>Det mest valda paketet</p>
-                    <p>400 kr engångsavgift + 50 kr/månad</p>
-                    <ul>
-                        <li>5 GB lagring</li>
-                        <li>Prioriterad support</li>
-                        <li>Exklusiva teman</li>
-                    </ul>
-                    <a href="#order" class="btn">Beställ nu</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>Ultimate</h3>
-                    <p>Full kontroll och alla funktioner</p>
-                    <p>1000 kr engångsavgift + 100 kr/månad</p>
-                    <ul>
-                        <li>Obegränsad lagring</li>
-                        <li>API-integrationer</li>
-                        <li>24/7 support</li>
-                    </ul>
-                    <a href="#order" class="btn">Beställ nu</a>
-                </div>
-            </div>
-        </section>
-    </main>
 </body>
 </html>
