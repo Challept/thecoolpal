@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Template</title>
+    <title>Webstay</title>
+    <link rel="stylesheet" href="home.css">
+    <script src="home.js"></script>
 </head>
 <body>
     <header>
@@ -11,17 +13,104 @@
             <div class="logo">
                 Webstay
             </div>
+            <ul class="nav-links">
+                <li><a href="#about">Om oss</a></li>
+                <li><a href="#plans">Priser</a></li>
+                <li><a href="#testimonials">Testimonialer</a></li>
+                <li><a href="#contact">Kontakt</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
-#content HERE:
-        
+        <section id="about">
+            <h2>Om Webstay</h2>
+            <p>Webstay erbjuder professionell webbdesign och hostinglösningar för företag och individer. Vi fokuserar på att skapa användarvänliga, snabba och säkra webbplatser som hjälper våra kunder att växa online.</p>
+            <p>Vårt team av erfarna utvecklare och designers arbetar med de senaste teknologierna för att leverera högkvalitativa lösningar till alla våra kunder.</p>
+        </section>
+
+        <section id="plans">
+            <h2>Våra Paket</h2>
+            <div class="pricing">
+                <div class="plan">
+                    <h3>Start</h3>
+                    <p>Enkel och pålitlig</p>
+                    <p>300 kr engångsavgift + 10 kr/månad</p>
+                    <ul>
+                        <li>Grundläggande funktioner</li>
+                        <li>1 GB lagring</li>
+                        <li>SEO-optimerad</li>
+                        <li>E-postsupport</li>
+                    </ul>
+                    <a href="#order" class="btn">Beställ nu</a>
+                </div>
+                <div class="plan">
+                    <h3>Premium</h3>
+                    <p>Det mest valda paketet</p>
+                    <p>400 kr engångsavgift + 50 kr/månad</p>
+                    <ul>
+                        <li>Avancerad SEO</li>
+                        <li>5 GB lagring</li>
+                        <li>Prioriterad support</li>
+                        <li>Exklusiva teman</li>
+                    </ul>
+                    <a href="#order" class="btn">Beställ nu</a>
+                </div>
+                <div class="plan">
+                    <h3>Ultimate</h3>
+                    <p>Full kontroll och alla funktioner</p>
+                    <p>1000 kr engångsavgift + 100 kr/månad</p>
+                    <ul>
+                        <li>Obegränsad lagring</li>
+                        <li>24/7 support</li>
+                        <li>Exklusiva teman och avancerad design</li>
+                        <li>API-integrationer</li>
+                    </ul>
+                    <a href="#order" class="btn">Beställ nu</a>
+                </div>
+            </div>
+
+            <div class="pricing-buttons">
+                <a href="https://admin.webstay.se" class="btn dashboard-btn">Gå till Admin Dashboard</a>
+                <a href="https://webstay.se/order" class="btn order-btn">Beställ Paket</a>
+            </div>
+        </section>
+
+        <section id="testimonials">
+            <h2>Vad våra kunder säger</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>"Webstay hjälpte oss att skapa en fantastisk webbplats som har förbättrat vårt företags online-närvaro!"</p>
+                    <cite>- Anna Andersson, VD på TechCorp</cite>
+                </div>
+                <div class="testimonial">
+                    <p>"Fantastisk service och snabb respons. Webstay gjorde vårt projekt lätt att förstå och levererade det snabbt!"</p>
+                    <cite>- Erik Eriksson, Marknadsföringschef på GrowFast</cite>
+                </div>
+                <div class="testimonial">
+                    <p>"Jag rekommenderar Webstay till alla. Deras design är förstklassig och de erbjuder pålitlig hosting!"</p>
+                    <cite>- Maria Svensson, Grundare av EcoLife</cite>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Kontakt</h2>
+            <form>
+                <input type="text" placeholder="Ditt namn" required>
+                <input type="email" placeholder="Din e-postadress" required>
+                <textarea placeholder="Ditt meddelande" required></textarea>
+                <button type="submit" class="btn">Skicka meddelande</button>
+            </form>
+        </section>
     </main>
+
     <footer>
         <div class="footer-content">
             <p>&copy; 2023 Webstay. Alla rättigheter förbehållna.</p>
         </div>
     </footer>
+
+    <script src="home.js"></script>
 </body>
 </html>
