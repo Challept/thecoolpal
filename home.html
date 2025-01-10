@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Professionell Webbhotell</title>
+    <title>Webstay - Skapa Din Perfekta Webbplats</title>
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
@@ -12,39 +12,84 @@
             <div class="logo">Webstay</div>
             <ul class="nav-links">
                 <li><a href="#hem">Hem</a></li>
-                <li><a href="#tjanster">Tjänster</a></li>
+                <li><a href="#losningar">Lösningar</a></li>
+                <li><a href="#funktioner">Funktioner</a></li>
                 <li><a href="#priser">Priser</a></li>
-                <li><a href="#om-oss">Om oss</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
+                <li><a href="#exempel">Exempel</a></li>
+                <li><a href="#kom-igang">Kom igång</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+        <!-- 1. Hero Section -->
         <section id="hero" class="hero-section">
-            <h1>Välkommen till Webstay</h1>
-            <p>Din pålitliga partner för webbhosting och domäntjänster</p>
-            <a href="#priser" class="cta-button">Se våra paket</a>
+            <h1>Skapa Din Webbplats På Minuter</h1>
+            <p>Perfekt för dropshipping, företagshemsidor och mer - ingen kodning krävs!</p>
+            <div class="hero-cta">
+                <a href="#priser" class="cta-button primary">Börja Gratis</a>
+                <a href="#demo" class="cta-button secondary">Se Demo</a>
+            </div>
         </section>
 
-        <section id="tjanster" class="services-section">
-            <h2>Våra Tjänster</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Webbhotell</h3>
-                    <p>Snabbt och säkert webbhotell med svensk support</p>
+        <!-- 2. Solutions Section -->
+        <section id="losningar" class="solutions-section">
+            <h2>Välj Din Lösning</h2>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <h3>Dropshipping</h3>
+                    <ul>
+                        <li>Automatisk produktimport</li>
+                        <li>Leverantörsintegration</li>
+                        <li>Orderhantering</li>
+                        <li>Betalningslösningar</li>
+                    </ul>
                 </div>
-                <div class="service-card">
-                    <h3>Domänhantering</h3>
-                    <p>Registrera och hantera dina domäner enkelt</p>
+                <div class="solution-card">
+                    <h3>Företagshemsida</h3>
+                    <ul>
+                        <li>Professionella mallar</li>
+                        <li>SEO-optimerad</li>
+                        <li>Kontaktformulär</li>
+                        <li>Företagspresentation</li>
+                    </ul>
                 </div>
-                <div class="service-card">
-                    <h3>SSL-Certifikat</h3>
-                    <p>Säkra din webbplats med SSL-certifikat</p>
+                <div class="solution-card">
+                    <h3>E-handel</h3>
+                    <ul>
+                        <li>Produkthantering</li>
+                        <li>Kundvagn</li>
+                        <li>Säkra betalningar</li>
+                        <li>Lagerhantering</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
+        <!-- 3. Features Section -->
+        <section id="funktioner" class="features-section">
+            <h2>Allt Du Behöver</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>Drag & Drop Builder</h3>
+                    <p>Bygg din sida enkelt genom att dra och släppa element</p>
+                </div>
+                <div class="feature">
+                    <h3>E-handelsfunktioner</h3>
+                    <p>Komplett webshop med produkthantering och betalning</p>
+                </div>
+                <div class="feature">
+                    <h3>Mobilanpassad</h3>
+                    <p>Alla sidor är automatiskt mobilanpassade</p>
+                </div>
+                <div class="feature">
+                    <h3>SSL-Certifikat</h3>
+                    <p>Säker anslutning för dina besökare</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Pricing Section -->
         <section id="priser" class="pricing-section">
             <h2>Våra Paket</h2>
             <div class="pricing-grid">
@@ -57,9 +102,10 @@
                         <span class="monthly">10 kr/månad</span>
                     </div>
                     <ul class="features">
-                        <li>Grundläggande funktioner</li>
+                        <li>1 webbplats</li>
+                        <li>Drag & drop builder</li>
+                        <li>Grundläggande mallar</li>
                         <li>1 GB lagring</li>
-                        <li>SEO-optimerad</li>
                         <li>E-postsupport</li>
                     </ul>
                     <button class="select-plan" data-plan="start">Välj paket</button>
@@ -67,72 +113,113 @@
 
                 <div class="pricing-card featured" id="premium-plan">
                     <h3>Premium</h3>
-                    <p class="subtitle">Mest valda paketet</p>
+                    <p class="subtitle">För e-handel & dropshipping</p>
                     <div class="price">
                         <span class="amount">400 kr</span> engångsavgift
                         <br>
                         <span class="monthly">50 kr/månad</span>
                     </div>
                     <ul class="features">
-                        <li>Alla Start-funktioner</li>
-                        <li>Avancerad SEO</li>
+                        <li>E-handelsplattform</li>
+                        <li>Produkthantering</li>
+                        <li>Leverantörsintegration</li>
+                        <li>10 GB lagring</li>
                         <li>Prioriterad support</li>
-                        <li>Utökad lagring</li>
                     </ul>
                     <button class="select-plan" data-plan="premium">Välj paket</button>
                 </div>
 
                 <div class="pricing-card" id="ultimate-plan">
                     <h3>Ultimate</h3>
-                    <p class="subtitle">Full kontroll och alla funktioner</p>
+                    <p class="subtitle">Obegränsade möjligheter</p>
                     <div class="price">
                         <span class="amount">1000 kr</span> engångsavgift
                         <br>
                         <span class="monthly">100 kr/månad</span>
                     </div>
                     <ul class="features">
-                        <li>Alla Premium-funktioner</li>
+                        <li>Flera webbplatser</li>
+                        <li>Avancerad e-handel</li>
                         <li>Obegränsad lagring</li>
+                        <li>API-integration</li>
                         <li>24/7 support</li>
-                        <li>Exklusiva teman</li>
                     </ul>
                     <button class="select-plan" data-plan="ultimate">Välj paket</button>
                 </div>
             </div>
         </section>
 
-        <section id="testimonials" class="testimonials-section">
-            <h2>Vad våra kunder säger</h2>
-            <div class="testimonials-slider">
-                <div class="testimonial">
-                    <p>"Webstay har gett oss exakt vad vi behövde för vår e-handel. Snabb support och pålitlig tjänst!"</p>
-                    <cite>- Anna Andersson, Digitalt AB</cite>
+        <!-- 5. Templates Section -->
+        <section id="mallar" class="templates-section">
+            <h2>Professionella Mallar</h2>
+            <div class="templates-grid">
+                <div class="template">
+                    <h3>E-handel</h3>
+                    <p>20+ mallar för online-butiker</p>
                 </div>
-                <div class="testimonial">
-                    <p>"Bästa webbhotellet jag använt. Enkelt att komma igång och fantastisk prestanda."</p>
-                    <cite>- Erik Eriksson, Tech Solutions</cite>
+                <div class="template">
+                    <h3>Dropshipping</h3>
+                    <p>Optimerade för snabb försäljning</p>
                 </div>
-                <div class="testimonial">
-                    <p>"Suverän kundservice och mycket prisvärda paket. Rekommenderas starkt!"</p>
-                    <cite>- Maria Nilsson, Design Studio</cite>
+                <div class="template">
+                    <h3>Företag</h3>
+                    <p>Professionella företagsmallar</p>
                 </div>
             </div>
         </section>
 
-        <section id="features" class="features-section">
-            <h2>Varför välja Webstay?</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <h3>99.9% Upptid</h3>
-                    <p>Vi garanterar högsta möjliga tillgänglighet för din webbplats</p>
+        <!-- 6. Success Stories -->
+        <section id="exempel" class="examples-section">
+            <h2>Framgångsrika Kunder</h2>
+            <div class="examples-slider">
+                <div class="example">
+                    <h3>TechGear Store</h3>
+                    <p>"Startade min dropshipping-butik på en dag. Nu omsätter vi 100,000 kr/månad."</p>
+                    <cite>- Erik Svensson</cite>
                 </div>
-                <div class="feature">
-                    <h3>Svensk Support</h3>
-                    <p>Personlig support på svenska när du behöver det</p>
+                <div class="example">
+                    <h3>Design Studio AB</h3>
+                    <p>"Den bästa plattformen för att visa upp vårt företag online."</p>
+                    <cite>- Anna Lindström</cite>
                 </div>
-                <div class="feature">
-                    <h3>Miljövänligt</h3>
-                    <p>Våra serverhallar drivs med 100% förnybar energi</p>
+            </div>
+        </section>
+
+        <!-- 7. Getting Started -->
+        <section id="kom-igang" class="getting-started-section">
+            <h2>Kom Igång På 3 Steg</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <h3>1. Välj Mall</h3>
+                    <p>Välj bland våra professionella mallar</p>
+                </div>
+                <div class="step">
+                    <h3>2. Anpassa</h3>
+                    <p>Använd vår drag & drop builder</p>
+                </div>
+                <div class="step">
+                    <h3>3. Publicera</h3>
+                    <p>Din sida är redo på några minuter</p>
+                </div>
+            </div>
+            <a href="#priser" class="cta-button">Starta Nu</a>
+        </section>
+
+        <!-- 8. Support Section -->
+        <section id="support" class="support-section">
+            <h2>Vi Hjälper Dig</h2>
+            <div class="support-options">
+                <div class="support-card">
+                    <h3>Live Chat</h3>
+                    <p>Få hjälp direkt när du bygger</p>
+                </div>
+                <div class="support-card">
+                    <h3>Guider</h3>
+                    <p>Steg-för-steg tutorials</p>
+                </div>
+                <div class="support-card">
+                    <h3>Support</h3>
+                    <p>E-post & telefonsupport</p>
                 </div>
             </div>
         </section>
@@ -141,47 +228,43 @@
     <footer>
         <div class="footer-content">
             <div class="footer-section">
-                <h4>Kontakt</h4>
-                <p>support@webstay.se</p>
-                <p>08-123 45 67</p>
-            </div>
-            <div class="footer-section">
-                <h4>Företaget</h4>
+                <h4>Om Webstay</h4>
                 <ul>
                     <li><a href="#om-oss">Om oss</a></li>
-                    <li><a href="#karriar">Karriär</a></li>
-                    <li><a href="#villkor">Villkor</a></li>
+                    <li><a href="#kontakt">Kontakt</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <p>&copy; 2023 Webstay. Alla rättigheter förbehållna.</p>
+                <h4>Resurser</h4>
+                <ul>
+                    <li><a href="#guider">Guider</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#villkor">Villkor</a></li>
+                    <li><a href="#gdpr">GDPR</a></li>
+                </ul>
             </div>
         </div>
     </footer>
 
     <script>
-        // Testimonial slider functionality
-        let currentTestimonial = 0;
-        const testimonials = document.querySelectorAll('.testimonial');
+        // Example Slider
+        let currentExample = 0;
+        const examples = document.querySelectorAll('.example');
         
-        function showNextTestimonial() {
-            testimonials[currentTestimonial].style.opacity = '0';
-            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-            testimonials[currentTestimonial].style.opacity = '1';
+        function showNextExample() {
+            examples[currentExample].style.opacity = '0';
+            currentExample = (currentExample + 1) % examples.length;
+            examples[currentExample].style.opacity = '1';
         }
 
-        // Auto-rotate testimonials
-        setInterval(showNextTestimonial, 5000);
+        setInterval(showNextExample, 5000);
 
-        // Pricing plan selection
-        document.querySelectorAll('.select-plan').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const plan = e.target.getAttribute('data-plan');
-                alert(`Tack för ditt intresse för vårt ${plan}-paket! Vi kontaktar dig snart.`);
-            });
-        });
-
-        // Smooth scroll for navigation
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -191,23 +274,11 @@
             });
         });
 
-        // Highlight current section in navigation
-        window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (pageYOffset >= sectionTop - 60) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').substring(1) === current) {
-                    link.classList.add('active');
-                }
+        // Plan Selection
+        document.querySelectorAll('.select-plan').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const plan = this.getAttribute('data-plan');
+                alert(`Tack för ditt intresse! Du kommer nu att guidas genom uppsättningen av din ${plan}-webbplats.`);
             });
         });
     </script>
