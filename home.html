@@ -4,382 +4,421 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay - Skapa Din Perfekta Webbplats</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/inter-ui/3.19.3/inter.min.css" rel="stylesheet">
     <style>
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
+        /* Reset and Base Styles */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
-:root {
-    --primary: #007BFF;
-    --primary-dark: #0056b3;
-    --secondary: #6c757d;
-    --success: #28a745;
-    --white: #ffffff;
-    --light: #f8f9fa;
-    --dark: #343a40;
-    --border: #dee2e6;
-    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+        :root {
+            --primary: #0066FF;
+            --primary-dark: #0052cc;
+            --primary-light: #e6f0ff;
+            --secondary: #6c757d;
+            --success: #28a745;
+            --white: #ffffff;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --border: #dee2e6;
+            --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
 
-body {
-    line-height: 1.6;
-    color: var(--dark);
-    background-color: var(--white);
-}
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
 
-/* Header & Navigation */
-header {
-    background: var(--white);
-    box-shadow: var(--shadow);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-}
+        /* Header & Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 5%;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow);
+        }
 
-.logo {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary);
-}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
 
-.nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-}
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.nav-links a {
-    text-decoration: none;
-    color: var(--dark);
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
+        .logo svg {
+            width: 32px;
+            height: 32px;
+        }
 
-.nav-links a:hover {
-    color: var(--primary);
-}
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-/* Hero Section */
-.hero {
-    padding: 8rem 5% 5rem;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-.hero-content {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-}
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
 
-.hero-text h1 {
-    font-size: 3.5rem;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-    color: var(--dark);
-}
+        .nav-links a:hover::after {
+            width: 100%;
+        }
 
-.hero-text h2 {
-    font-size: 1.8rem;
-    color: var(--primary);
-    margin-bottom: 1.5rem;
-}
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
 
-.hero-text p {
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    color: var(--secondary);
-}
+        /* Hero Section */
+        .hero {
+            padding: 8rem 5% 5rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-.hero-features {
-    list-style: none;
-    margin-bottom: 2rem;
-}
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230066FF' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
 
-.hero-features li {
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
 
-.hero-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-weight: 800;
+        }
 
-.cta-primary {
-    padding: 1rem 2rem;
-    background: var(--primary);
-    color: var(--white);
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
+        .hero-text h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
 
-.cta-primary:hover {
-    background: var(--primary-dark);
-}
+        .hero-text p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            max-width: 600px;
+        }
 
-.cta-secondary {
-    padding: 1rem 2rem;
-    background: var(--white);
-    color: var(--primary);
-    border: 2px solid var(--primary);
-    border-radius: 5px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .hero-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
 
-.cta-secondary:hover {
-    background: var(--primary);
-    color: var(--white);
-}
+        .hero-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
 
-.hero-stats {
-    display: flex;
-    gap: 2rem;
-}
+        .hero-features li svg {
+            color: var(--primary);
+            width: 20px;
+            height: 20px;
+        }
 
-.stat {
-    display: flex;
-    flex-direction: column;
-}
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
 
-.stat-number {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--primary);
-}
+        .button {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
 
-.stat-text {
-    font-size: 0.9rem;
-    color: var(--secondary);
-}
+        .button-primary {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            box-shadow: var(--shadow);
+        }
 
-.hero-image {
-    position: relative;
-}
+        .button-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
 
-.hero-image img {
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-}
+        .button-secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
 
-.floating-card {
-    position: absolute;
-    background: var(--white);
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    transition: transform 0.5s ease;
-}
+        .button-secondary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
 
-.card-1 {
-    top: 20%;
-    left: -10%;
-}
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+        }
 
-.card-2 {
-    bottom: 20%;
-    right: -10%;
-}
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s ease;
+        }
 
-/* Pricing Section */
-.pricing-section {
-    padding: 5rem 5%;
-    background: var(--light);
-}
+        .stat:hover {
+            transform: translateY(-5px);
+        }
 
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
 
-.pricing-card {
-    background: var(--white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
-}
+        .stat-text {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
 
-.pricing-card:hover {
-    transform: translateY(-5px);
-}
+        .hero-image {
+            position: relative;
+            perspective: 1000px;
+        }
 
-.pricing-card.featured {
-    border: 2px solid var(--primary);
-}
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            transform: rotateY(-5deg) rotateX(5deg);
+            transition: transform 0.5s ease;
+        }
 
-/* Features Section */
-.features-section {
-    padding: 5rem 5%;
-}
+        .hero-image:hover img {
+            transform: rotateY(0deg) rotateX(0deg);
+        }
 
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+        .floating-card {
+            position: absolute;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.5s ease;
+            max-width: 250px;
+        }
 
-.feature {
-    padding: 2rem;
-    background: var(--light);
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
+        .floating-card.card-1 {
+            top: 20%;
+            left: -15%;
+            transform: rotate(-5deg);
+        }
 
-.feature:hover {
-    transform: translateY(-5px);
-}
+        .floating-card.card-2 {
+            bottom: 20%;
+            right: -15%;
+            transform: rotate(5deg);
+        }
 
-/* Common Section Styles */
-section {
-    padding: 5rem 5%;
-}
+        .floating-card:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
 
-h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    text-align: center;
-}
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
 
-/* Footer */
-footer {
-    background: var(--dark);
-    color: var(--white);
-    padding: 3rem 5%;
-}
+            .hero-stats {
+                justify-content: center;
+            }
 
-.footer-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
+            .hero-buttons {
+                justify-content: center;
+            }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
+            .hero-features {
+                display: inline-grid;
+                text-align: left;
+            }
 
-    .hero-stats {
-        justify-content: center;
-    }
+            .hero-image {
+                max-width: 600px;
+                margin: 0 auto;
+            }
+        }
 
-    .hero-buttons {
-        justify-content: center;
-    }
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
 
-    .hero-features {
-        display: inline-block;
-        text-align: left;
-    }
-}
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--white);
+                padding: 1rem;
+                box-shadow: var(--shadow);
+                flex-direction: column;
+                gap: 1rem;
+            }
 
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-    }
+            .nav-links.active {
+                display: flex;
+            }
 
-    .hero-text h1 {
-        font-size: 2.5rem;
-    }
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
 
-    .hero-text h2 {
-        font-size: 1.5rem;
-    }
+            .hero-text h2 {
+                font-size: 1.5rem;
+            }
 
-    .pricing-grid {
-        grid-template-columns: 1fr;
-    }
-}
+            .hero-features {
+                grid-template-columns: 1fr;
+            }
 
-/* Animations */
-@keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
+            .hero-buttons {
+                flex-direction: column;
+            }
 
-.floating-card {
-    animation: float 3s ease-in-out infinite;
-}
+            .floating-card {
+                display: none;
+            }
+        }
 
-/* Button hover effects */
-.cta-primary, .cta-secondary {
-    position: relative;
-    overflow: hidden;
-}
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(-5deg); }
+            100% { transform: translateY(0px) rotate(-5deg); }
+        }
 
-.cta-primary::after, .cta-secondary::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-}
+        .floating-card.card-1 {
+            animation: float 3s ease-in-out infinite;
+        }
 
-.cta-primary:hover::after, .cta-secondary:hover::after {
-    width: 300px;
-    height: 300px;
-}
+        @keyframes float-reverse {
+            0% { transform: translateY(0px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+            100% { transform: translateY(0px) rotate(5deg); }
+        }
 
-/* Loading Effects */
-.lazy-load {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.lazy-load.loaded {
-    opacity: 1;
-    transform: translateY(0);
-}
+        .floating-card.card-2 {
+            animation: float-reverse 3s ease-in-out infinite;
+            animation-delay: 1.5s;
+        }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">Webstay</div>
+            <a href="#" class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                    <polyline points="2 17 12 22 22 17"/>
+                    <polyline points="2 12 12 17 22 12"/>
+                </svg>
+                Webstay
+            </a>
+            <button class="mobile-menu-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
             <ul class="nav-links">
                 <li><a href="#hem">Hem</a></li>
                 <li><a href="#losningar">Lösningar</a></li>
@@ -392,304 +431,22 @@ footer {
     </header>
 
     <main>
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Skapa Din Framgångsrika Online-butik Idag</h1>
-                <h2>Utan kodning. Utan krångel. Bara resultat.</h2>
-                <p>Med Webstay kan du enkelt bygga professionella e-handelssidor och företagshemsidor. Perfekt för dropshipping, 
-                produktförsäljning eller för att visa upp ditt företag online.</p>
-                
-                <ul class="hero-features">
-                    <li>✓ Färdiga mallar för snabb start</li>
-                    <li>✓ Drag-and-drop byggare</li>
-                    <li>✓ Inbyggd e-handel</li>
-                    <li>✓ SEO-optimerad</li>
-                </ul>
-
-                <div class="hero-buttons">
-                    <button class="cta-primary">Börja Gratis</button>
-                    <button class="cta-secondary">Se Hur Det Fungerar</button>
-                </div>
-
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">10,000+</span>
-                        <span class="stat-text">Aktiva butiker</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">99.9%</span>
-                        <span class="stat-text">Upptid</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">24/7</span>
-                        <span class="stat-text">Support</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero-image">
-                <img src="/api/placeholder/600/400" alt="Webstay plattform demonstration" />
-                <div class="floating-card card-1">
-                    "Min butik gick från 0 till 50,000 kr/månad på 3 månader!"
-                </div>
-                <div class="floating-card card-2">
-                    "+127% försäljning första månaden"
-                </div>
-            </div>
-        </div>
-    </section>
-
-        <!-- 2. Solutions Section -->
-        <section id="losningar" class="solutions-section">
-            <h2>Välj Din Lösning</h2>
-            <div class="solutions-grid">
-                <div class="solution-card">
-                    <h3>Dropshipping</h3>
-                    <ul>
-                        <li>Automatisk produktimport</li>
-                        <li>Leverantörsintegration</li>
-                        <li>Orderhantering</li>
-                        <li>Betalningslösningar</li>
-                    </ul>
-                </div>
-                <div class="solution-card">
-                    <h3>Företagshemsida</h3>
-                    <ul>
-                        <li>Professionella mallar</li>
-                        <li>SEO-optimerad</li>
-                        <li>Kontaktformulär</li>
-                        <li>Företagspresentation</li>
-                    </ul>
-                </div>
-                <div class="solution-card">
-                    <h3>E-handel</h3>
-                    <ul>
-                        <li>Produkthantering</li>
-                        <li>Kundvagn</li>
-                        <li>Säkra betalningar</li>
-                        <li>Lagerhantering</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. Features Section -->
-        <section id="funktioner" class="features-section">
-            <h2>Allt Du Behöver</h2>
-            <div class="features-grid">
-                <div class="feature">
-                    <h3>Drag & Drop Builder</h3>
-                    <p>Bygg din sida enkelt genom att dra och släppa element</p>
-                </div>
-                <div class="feature">
-                    <h3>E-handelsfunktioner</h3>
-                    <p>Komplett webshop med produkthantering och betalning</p>
-                </div>
-                <div class="feature">
-                    <h3>Mobilanpassad</h3>
-                    <p>Alla sidor är automatiskt mobilanpassade</p>
-                </div>
-                <div class="feature">
-                    <h3>SSL-Certifikat</h3>
-                    <p>Säker anslutning för dina besökare</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. Pricing Section -->
-        <section id="priser" class="pricing-section">
-            <h2>Våra Paket</h2>
-            <div class="pricing-grid">
-                <div class="pricing-card" id="start-plan">
-                    <h3>Start</h3>
-                    <p class="subtitle">Enkel och pålitlig</p>
-                    <div class="price">
-                        <span class="amount">300 kr</span> engångsavgift
-                        <br>
-                        <span class="monthly">10 kr/månad</span>
-                    </div>
-                    <ul class="features">
-                        <li>1 webbplats</li>
-                        <li>Drag & drop builder</li>
-                        <li>Grundläggande mallar</li>
-                        <li>1 GB lagring</li>
-                        <li>E-postsupport</li>
-                    </ul>
-                    <button class="select-plan" data-plan="start">Välj paket</button>
-                </div>
-
-                <div class="pricing-card featured" id="premium-plan">
-                    <h3>Premium</h3>
-                    <p class="subtitle">För e-handel & dropshipping</p>
-                    <div class="price">
-                        <span class="amount">400 kr</span> engångsavgift
-                        <br>
-                        <span class="monthly">50 kr/månad</span>
-                    </div>
-                    <ul class="features">
-                        <li>E-handelsplattform</li>
-                        <li>Produkthantering</li>
-                        <li>Leverantörsintegration</li>
-                        <li>10 GB lagring</li>
-                        <li>Prioriterad support</li>
-                    </ul>
-                    <button class="select-plan" data-plan="premium">Välj paket</button>
-                </div>
-
-                <div class="pricing-card" id="ultimate-plan">
-                    <h3>Ultimate</h3>
-                    <p class="subtitle">Obegränsade möjligheter</p>
-                    <div class="price">
-                        <span class="amount">1000 kr</span> engångsavgift
-                        <br>
-                        <span class="monthly">100 kr/månad</span>
-                    </div>
-                    <ul class="features">
-                        <li>Flera webbplatser</li>
-                        <li>Avancerad e-handel</li>
-                        <li>Obegränsad lagring</li>
-                        <li>API-integration</li>
-                        <li>24/7 support</li>
-                    </ul>
-                    <button class="select-plan" data-plan="ultimate">Välj paket</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Templates Section -->
-        <section id="mallar" class="templates-section">
-            <h2>Professionella Mallar</h2>
-            <div class="templates-grid">
-                <div class="template">
-                    <h3>E-handel</h3>
-                    <p>20+ mallar för online-butiker</p>
-                </div>
-                <div class="template">
-                    <h3>Dropshipping</h3>
-                    <p>Optimerade för snabb försäljning</p>
-                </div>
-                <div class="template">
-                    <h3>Företag</h3>
-                    <p>Professionella företagsmallar</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. Success Stories -->
-        <section id="exempel" class="examples-section">
-            <h2>Framgångsrika Kunder</h2>
-            <div class="examples-slider">
-                <div class="example">
-                    <h3>TechGear Store</h3>
-                    <p>"Startade min dropshipping-butik på en dag. Nu omsätter vi 100,000 kr/månad."</p>
-                    <cite>- Erik Svensson</cite>
-                </div>
-                <div class="example">
-                    <h3>Design Studio AB</h3>
-                    <p>"Den bästa plattformen för att visa upp vårt företag online."</p>
-                    <cite>- Anna Lindström</cite>
-                </div>
-            </div>
-        </section>
-
-        <!-- 7. Getting Started -->
-        <section id="kom-igang" class="getting-started-section">
-            <h2>Kom Igång På 3 Steg</h2>
-            <div class="steps-grid">
-                <div class="step">
-                    <h3>1. Välj Mall</h3>
-                    <p>Välj bland våra professionella mallar</p>
-                </div>
-                <div class="step">
-                    <h3>2. Anpassa</h3>
-                    <p>Använd vår drag & drop builder</p>
-                </div>
-                <div class="step">
-                    <h3>3. Publicera</h3>
-                    <p>Din sida är redo på några minuter</p>
-                </div>
-            </div>
-            <a href="#priser" class="cta-button">Starta Nu</a>
-        </section>
-
-        <!-- 8. Support Section -->
-        <section id="support" class="support-section">
-            <h2>Vi Hjälper Dig</h2>
-            <div class="support-options">
-                <div class="support-card">
-                    <h3>Live Chat</h3>
-                    <p>Få hjälp direkt när du bygger</p>
-                </div>
-                <div class="support-card">
-                    <h3>Guider</h3>
-                    <p>Steg-för-steg tutorials</p>
-                </div>
-                <div class="support-card">
-                    <h3>Support</h3>
-                    <p>E-post & telefonsupport</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Om Webstay</h4>
-                <ul>
-                    <li><a href="#om-oss">Om oss</a></li>
-                    <li><a href="#kontakt">Kontakt</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Resurser</h4>
-                <ul>
-                    <li><a href="#guider">Guider</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#villkor">Villkor</a></li>
-                    <li><a href="#gdpr">GDPR</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Example Slider
-        let currentExample = 0;
-        const examples = document.querySelectorAll('.example');
-        
-        function showNextExample() {
-            examples[currentExample].style.opacity = '0';
-            currentExample = (currentExample + 1) % examples.length;
-            examples[currentExample].style.opacity = '1';
-        }
-
-        setInterval(showNextExample, 5000);
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Plan Selection
-        document.querySelectorAll('.select-plan').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const plan = this.getAttribute('data-plan');
-                alert(`Tack för ditt intresse! Du kommer nu att guidas genom uppsättningen av din ${plan}-webbplats.`);
-            });
-        });
-    </script>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Skapa Din Framgångsrika Online-butik Idag</h1>
+                    <h2>Utan kodning. Utan krångel. Bara resultat.</h2>
+                    <p>Med Webstay kan du enkelt bygga professionella e-handelssidor och företagshemsidor. Perfekt för dropshipping, produktförsäljning eller för att visa upp ditt företag online.</p>
+                    
+                    <ul class="hero-features">
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            Färdiga mallar för snabb start
+                        </li>
+                        <li>
+                            <svg viewBox="0 0 24 24" fill="none" stroke
 </body>
 </html>
