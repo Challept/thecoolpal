@@ -572,26 +572,6 @@ button:nth-of-type(3):hover {
         // Check if there is an existing session
         const userSession = sessionStorage.getItem('userSession');
 
-        // If no session exists, redirect to hosting.webstay.se#order.html
-        if (!userSession) {
-            window.location.href = 'https://hosting.webstay.se#order.html';
-        } else {
-            // If a session exists (user is logged in), block the redirect and proceed with the functionality
-            console.log('User is logged in:', JSON.parse(userSession));
-        }
-
-        // Proceed with the existing functionality if logged in
-        function showPopup(popupId) {
-            document.getElementById(popupId).style.display = 'block';
-        }
-
-        function hidePopup() {
-            var popups = document.querySelectorAll('.popup');
-            popups.forEach(function(popup) {
-                popup.style.display = 'none';
-            });
-        }
-
         let selectedPlan = null;
 
         function selectPlan(plan) {
