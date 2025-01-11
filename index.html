@@ -23,7 +23,6 @@
             color: #fff;
         }
 
-        /* Loading Screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -43,13 +42,17 @@
             margin-bottom: 20px;
         }
 
-        /* Main Content */
         .main-content {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             opacity: 0;
             visibility: hidden;
-            width: 100%;
-            height: 100vh;
-            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .background {
@@ -68,7 +71,6 @@
             position: relative;
             z-index: 2;
             text-align: center;
-            width: 100%;
             padding: 20px;
         }
 
@@ -81,6 +83,8 @@
             background-clip: text;
             -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3));
+            opacity: 0;
+            transform: translateY(-20px);
         }
 
         .tagline {
@@ -88,6 +92,8 @@
             color: #fff;
             margin-bottom: 40px;
             letter-spacing: 4px;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .timer-container {
@@ -101,6 +107,8 @@
             box-shadow: 
                 0 0 30px rgba(0, 255, 136, 0.1),
                 inset 0 0 20px rgba(0, 255, 136, 0.05);
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .timer-segment {
@@ -148,17 +156,14 @@
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loading-content">
             <video class="loading-video" autoplay muted playsinline>
                 <source src="WEBSTAY.mp4" type="video/mp4">
-                Your browser does not support the video tag.
             </video>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content">
         <div class="background"></div>
         <main class="content">
@@ -191,62 +196,54 @@
             const loadingScreen = document.querySelector('.loading-screen');
             const mainContent = document.querySelector('.main-content');
 
+            // Start with main content invisible but positioned
+            mainContent.style.visibility = 'visible';
+            mainContent.style.opacity = '0';
+
             // Ensure video plays
             video.play().catch(function(error) {
                 console.log("Video play failed:", error);
             });
 
-            // After 4 seconds, transition to main content
+            // Timeline for smooth transition
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    // Start countdown after animations complete
+                    startCountdown();
+                }
+            });
+
+            // After 4 seconds, start transition sequence
             setTimeout(() => {
-                // Fade out loading screen
-                gsap.to(loadingScreen, {
+                tl.to(loadingScreen, {
                     opacity: 0,
                     duration: 1,
-                    onComplete: () => {
-                        loadingScreen.style.display = 'none';
-                        
-                        // Show main content
-                        mainContent.style.visibility = 'visible';
-                        gsap.to(mainContent, {
-                            opacity: 1,
-                            duration: 1,
-                            onComplete: startMainAnimations
-                        });
-                    }
-                });
+                    onComplete: () => loadingScreen.style.display = 'none'
+                })
+                .to(mainContent, {
+                    opacity: 1,
+                    duration: 1
+                }, "-=0.5")
+                .to('.logo', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                }, "-=0.3")
+                .to('.tagline', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                }, "-=0.5")
+                .to('.timer-container', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: "power2.out"
+                }, "-=0.5");
             }, 4000);
         });
-
-        function startMainAnimations() {
-            // Animate logo
-            gsap.from('.logo', {
-                y: -50,
-                opacity: 0,
-                duration: 1.5,
-                ease: "elastic.out(1, 0.7)"
-            });
-
-            // Animate tagline
-            gsap.from('.tagline', {
-                y: 20,
-                opacity: 0,
-                duration: 1,
-                delay: 0.5,
-                ease: "power4.out"
-            });
-
-            // Animate timer
-            gsap.from('.timer-container', {
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                delay: 1,
-                ease: "power4.out"
-            });
-
-            // Start countdown
-            startCountdown();
-        }
 
         function startCountdown() {
             const countdownDate = new Date('June 10, 2025 00:00:00').getTime();
@@ -268,14 +265,7 @@
                         minutes: minutes,
                         seconds: seconds
                     }[unit];
-
-                    if (element.textContent !== String(newValue).padStart(2, '0')) {
-                        gsap.from(element, {
-                            scale: 1.2,
-                            duration: 0.3,
-                            ease: "power2.out"
-                        });
-                    }
+                    
                     element.textContent = String(newValue).padStart(2, '0');
                 });
 
