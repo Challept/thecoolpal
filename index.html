@@ -249,9 +249,9 @@
     background: rgba(0, 0, 0, 0.6);
 }
 
-/* Centering the logo and adding a glow */
+/* Centering the logo, making it smaller, and brighter glow */
 .logo {
-    font-size: 80px; /* Adjusted size */
+    font-size: 60px; /* Adjusted size to make the logo smaller */
     font-weight: 900;
     margin-bottom: 20px;
     opacity: 0;
@@ -261,7 +261,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.7)); /* Brighter glow */
+    filter: drop-shadow(0 0 50px rgba(0, 255, 136, 0.8)); /* Brighter glow */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -327,14 +327,14 @@
     </main>
 
     <script>
-// Wait for video to end, then switch to second screen after 4.5 seconds
+// Wait for video to end, then switch to second screen after 4 seconds
 document.querySelector('.video-background').addEventListener('ended', function () {
     setTimeout(function () {
         document.querySelector('.first-screen').style.display = 'none';
         document.querySelector('.background').style.display = 'block';
         document.querySelector('.floating-elements').style.display = 'block';
         document.querySelector('.content').style.display = 'block';
-    }, 4500);  // 4.5 seconds transition delay
+    }, 4000);  // 4 seconds transition delay
 });
         
 // Create floating elements
