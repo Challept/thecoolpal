@@ -220,54 +220,6 @@
             }
         }
 
-/* First Screen (Video) */
-.first-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    background: #000;
-}
-
-.video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-}
-
-/* Centering the logo, making it smaller, and brighter glow */
-.logo {
-    font-size: 60px; /* Adjusted size to make the logo smaller */
-    font-weight: 900;
-    margin-bottom: 20px;
-    opacity: 0;
-    transform: translateY(-50px);
-    background: linear-gradient(to right, #00a2ff, #00ff88); /* Static blue and green gradient */
-    background-size: 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 50px rgba(0, 255, 136, 0.8)); /* Brighter glow */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centering */
-}
-
         @media (max-width: 768px) {
             .logo {
                 font-size: 60px;
@@ -291,8 +243,6 @@
     </style>
 </head>
 <body>
-
-    <!-- Second Screen (Main Content) -->
     <div class="background"></div>
     <div class="floating-elements"></div>
     
@@ -320,116 +270,106 @@
     </main>
 
     <script>
-// Wait for video to end, then switch to second screen after 4 seconds
-document.querySelector('.video-background').addEventListener('ended', function () {
-    setTimeout(function () {
-        document.querySelector('.first-screen').style.display = 'none';
-        document.querySelector('.background').style.display = 'block';
-        document.querySelector('.floating-elements').style.display = 'block';
-        document.querySelector('.content').style.display = 'block';
-    }, 4000);  // 4 seconds transition delay
-});
-        
-// Create floating elements
-const floatingElements = document.querySelector('.floating-elements');
-for (let i = 0; i < 50; i++) {
-    const element = document.createElement('div');
-    element.className = 'floating-element';
-    element.style.left = `${Math.random() * 100}%`;
-    element.style.animationDelay = `${Math.random() * 5}s`;
-    floatingElements.appendChild(element);
-}
+        // Create floating elements
+        const floatingElements = document.querySelector('.floating-elements');
+        for (let i = 0; i < 50; i++) {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            element.style.left = ${Math.random() * 100}%;
+            element.style.animationDelay = ${Math.random() * 5}s;
+            floatingElements.appendChild(element);
+        }
 
-// Enhanced animations
-gsap.to('.logo', {
-    opacity: 1,
-    y: 0,
-    duration: 2,
-    ease: "elastic.out(1, 0.7)"
-});
+        // Enhanced animations
+        gsap.to('.logo', {
+            opacity: 1,
+            y: 0,
+            duration: 2,
+            ease: "elastic.out(1, 0.7)"
+        });
 
-gsap.to('.tagline', {
-    opacity: 1,
-    duration: 1.5,
-    delay: 0.5,
-    ease: "power4.out"
-});
+        gsap.to('.tagline', {
+            opacity: 1,
+            duration: 1.5,
+            delay: 0.5,
+            ease: "power4.out"
+        });
 
-gsap.to('.timer-container', {
-    opacity: 1,
-    scale: 1,
-    duration: 1.5,
-    delay: 0.8,
-    ease: "elastic.out(1, 0.7)"
-});
+        gsap.to('.timer-container', {
+            opacity: 1,
+            scale: 1,
+            duration: 1.5,
+            delay: 0.8,
+            ease: "elastic.out(1, 0.7)"
+        });
 
-// Mouse parallax effect
-document.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth - 0.5;
-    const mouseY = e.clientY / window.innerHeight - 0.5;
-    
-    gsap.to('.grid-container', {
-        duration: 1,
-        rotateX: mouseY * 10,
-        rotateY: mouseX * 10,
-        ease: "power2.out"
-    });
-
-    gsap.to('.background', {
-        duration: 1,
-        x: mouseX * 50,
-        y: mouseY * 50,
-        ease: "power2.out"
-    });
-
-    gsap.to('.logo', {
-        duration: 1,
-        x: mouseX * 20,
-        y: mouseY * 20,
-        ease: "power2.out"
-    });
-});
-
-// Countdown Timer
-const countdownDate = new Date('June 10, 2025 00:00:00').getTime();
-
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = countdownDate - now;
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Animate number changes
-    ['days', 'hours', 'minutes', 'seconds'].forEach(unit => {
-        const element = document.getElementById(unit);
-        const newValue = {
-            days: days,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
-        }[unit];
-
-        if (element.textContent !== String(newValue).padStart(2, '0')) {
-            gsap.from(element, {
-                scale: 1.2,
-                duration: 0.3,
+        // Mouse parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+            
+            gsap.to('.grid-container', {
+                duration: 1,
+                rotateX: mouseY * 10,
+                rotateY: mouseX * 10,
                 ease: "power2.out"
             });
+
+            gsap.to('.background', {
+                duration: 1,
+                x: mouseX * 50,
+                y: mouseY * 50,
+                ease: "power2.out"
+            });
+
+            gsap.to('.logo', {
+                duration: 1,
+                x: mouseX * 20,
+                y: mouseY * 20,
+                ease: "power2.out"
+            });
+        });
+
+        // Countdown Timer
+        const countdownDate = new Date('June 10, 2025 00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Animate number changes
+            ['days', 'hours', 'minutes', 'seconds'].forEach(unit => {
+                const element = document.getElementById(unit);
+                const newValue = {
+                    days: days,
+                    hours: hours,
+                    minutes: minutes,
+                    seconds: seconds
+                }[unit];
+
+                if (element.textContent !== String(newValue).padStart(2, '0')) {
+                    gsap.from(element, {
+                        scale: 1.2,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                }
+                element.textContent = String(newValue).padStart(2, '0');
+            });
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector('.timer-container').innerHTML = 'VI HAR ÖPPNAT!';
+            }
         }
-        element.textContent = String(newValue).padStart(2, '0');
-    });
 
-    if (distance < 0) {
-        clearInterval(timer);
-        document.querySelector('.timer-container').innerHTML = 'VI HAR ÖPPNAT!';
-    }
-}
-
-updateCountdown();
-const timer = setInterval(updateCountdown, 1000);
+        updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
