@@ -220,6 +220,35 @@
             }
         }
 
+        /* First Screen (Video) */
+.first-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: #000;
+}
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
         @media (max-width: 768px) {
             .logo {
                 font-size: 60px;
@@ -243,6 +272,15 @@
     </style>
 </head>
 <body>
+    <!-- First Screen (Video) -->
+    <div class="first-screen">
+        <video class="video-background" autoplay muted loop>
+            <source src="WEBSTAY.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Second Screen (Main Content) -->
     <div class="background"></div>
     <div class="floating-elements"></div>
     
@@ -330,6 +368,14 @@
             });
         });
 
+        // Wait for video to end, then switch to second screen
+    document.querySelector('.video-background').addEventListener('ended', function () {
+    document.querySelector('.first-screen').style.display = 'none';
+    document.querySelector('.background').style.display = 'block';
+    document.querySelector('.floating-elements').style.display = 'block';
+    document.querySelector('.content').style.display = 'block';
+});
+        
         // Countdown Timer
         const countdownDate = new Date('June 10, 2025 00:00:00').getTime();
 
