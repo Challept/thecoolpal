@@ -59,18 +59,26 @@
             align-items: center;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            color: transparent;
-            transition: transform 0.3s ease;
-        }
+/* Adjusting the logo size and appearance */
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;  /* Adjust width to control size */
+    height: auto;  /* Maintain aspect ratio */
+}
 
-        .logo:hover {
-            transform: scale(1.05);
-        }
+.logo img {
+    width: 100%;  /* Make sure the image fills the container */
+    max-width: 200px; /* Set a max width to prevent it from getting too large */
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Logo hover effect */
+.logo img:hover {
+    transform: scale(1.05);
+}
 
         .nav-links {
             display: flex;
@@ -542,19 +550,21 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="logo">Webstay</div>
-            <div class="nav-links">
-                <a href="#home">Hem</a>
-                <a href="#services">Tjänster</a>
-                <a href="#pricing">Priser</a>
-                <a href="#features">Funktioner</a>
-                <a href="order">Order</a>
-                <a href="https://admin.webstay.se">Admin</a>
-            </div>
+<nav class="navbar">
+    <div class="nav-content">
+        <div class="logo">
+            <img src="logoweb.png" alt="Webstay Logo" />
         </div>
-    </nav>
+        <div class="nav-links">
+            <a href="#home">Hem</a>
+            <a href="#services">Tjänster</a>
+            <a href="#pricing">Priser</a>
+            <a href="#features">Funktioner</a>
+            <a href="order">Order</a>
+            <a href="https://admin.webstay.se">Admin</a>
+        </div>
+    </div>
+</nav>
 
     <section id="home" class="hero">
         <video autoplay muted loop playsinline>
