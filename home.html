@@ -662,25 +662,25 @@
         </div>
     </div>
 
-    <script>
-        function acceptCookies() {
-            localStorage.setItem('cookieConsent', 'accepted');
-            document.getElementById('cookieBanner').classList.add('hidden');
-        }
+<script>
+    function acceptCookies() {
+        sessionStorage.setItem('cookieConsent', 'accepted');  // Save consent in sessionStorage
+        document.getElementById('cookieBanner').classList.add('hidden');  // Hide the banner
+    }
 
-        function declineCookies() {
-            localStorage.setItem('cookieConsent', 'declined');
-            document.getElementById('cookieBanner').classList.add('hidden');
-        }
+    function declineCookies() {
+        sessionStorage.setItem('cookieConsent', 'declined');  // Save declined choice in sessionStorage
+        document.getElementById('cookieBanner').classList.add('hidden');  // Hide the banner
+    }
 
-        // Check if user has already made a choice
-        window.onload = function() {
-            const consent = localStorage.getItem('cookieConsent');
-            if (!consent) {
-                document.getElementById('cookieBanner').classList.remove('hidden');
-            }
+    // Check if the user has already made a choice during the current session
+    window.onload = function() {
+        const consent = sessionStorage.getItem('cookieConsent');
+        if (!consent) {
+            document.getElementById('cookieBanner').classList.remove('hidden');  // Show the banner if no choice
         }
-    </script>
+    }
+</script>
 
     <section id="home" class="hero">
         <video autoplay muted loop playsinline>
