@@ -108,6 +108,70 @@
             width: 100%;
         }
 
+                .cookie-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            padding: 20px 25px;
+            max-width: 400px;
+            z-index: 1000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .cookie-banner.hidden {
+            display: none;
+        }
+
+        .cookie-banner h3 {
+            color: #333;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+
+        .cookie-banner p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0 0 15px 0;
+        }
+
+        .cookie-banner .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .cookie-banner button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .cookie-banner .accept {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .cookie-banner .accept:hover {
+            background-color: #0056b3;
+        }
+
+        .cookie-banner .decline {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .cookie-banner .decline:hover {
+            background-color: #e2e6ea;
+        }
+
         .hero {
             height: 100vh;
             position: relative;
@@ -565,6 +629,35 @@
         </div>
     </div>
 </nav>
+
+        <div id="cookieBanner" class="cookie-banner">
+        <h3>Vi använder cookies</h3>
+        <p>Webstay använder cookies för att förbättra din upplevelse på vår webbplats. Genom att fortsätta använda webbplatsen godkänner du användningen av cookies.</p>
+        <div class="buttons">
+            <button class="accept" onclick="acceptCookies()">Acceptera alla cookies</button>
+            <button class="decline" onclick="declineCookies()">Endast nödvändiga</button>
+        </div>
+    </div>
+
+    <script>
+        function acceptCookies() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieBanner').classList.add('hidden');
+        }
+
+        function declineCookies() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieBanner').classList.add('hidden');
+        }
+
+        // Check if user has already made a choice
+        window.onload = function() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                document.getElementById('cookieBanner').classList.remove('hidden');
+            }
+        }
+    </script>
 
     <section id="home" class="hero">
         <video autoplay muted loop playsinline>
