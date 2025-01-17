@@ -190,94 +190,93 @@
         </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const video = document.querySelector('.loading-video');
-            const loadingScreen = document.querySelector('.loading-screen');
-            const mainContent = document.querySelector('.main-content');
-
-            // Start with main content invisible but positioned
-            mainContent.style.visibility = 'visible';
-            mainContent.style.opacity = '0';
-
-            // Ensure video plays
-            video.play().catch(function(error) {
-                console.log("Video play failed:", error);
-            });
-
-            // Timeline for smooth transition
-            const tl = gsap.timeline({
-                onComplete: () => {
-                    // Start countdown after animations complete
-                    startCountdown();
-                }
-            });
-
-            // After 4 seconds, start transition sequence
-            setTimeout(() => {
-                tl.to(loadingScreen, {
-                    opacity: 0,
-                    duration: 1,
-                    onComplete: () => loadingScreen.style.display = 'none'
-                })
-                .to(mainContent, {
-                    opacity: 1,
-                    duration: 1
-                }, "-=0.5")
-                .to('.logo', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power2.out"
-                }, "-=0.3")
-                .to('.tagline', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power2.out"
-                }, "-=0.5")
-                .to('.timer-container', {
-                    opacity: 1,
-                    y: 0,
-                    duration: 1,
-                    ease: "power2.out"
-                }, "-=0.5");
-            }, 1500);
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const video = document.querySelector('.loading-video');
+        const loadingScreen = document.querySelector('.loading-screen');
+        const mainContent = document.querySelector('.main-content');
+        // Start with main content invisible but positioned
+        mainContent.style.visibility = 'visible';
+        mainContent.style.opacity = '0';
+        // Ensure video plays
+        video.play().catch(function(error) {
+            console.log("Video play failed:", error);
         });
-
-        function startCountdown() {
-            const countdownDate = new Date('June 10, 2025 00:00:00').getTime();
-
-            function updateCountdown() {
-                const now = new Date().getTime();
-                const distance = countdownDate - now;
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                ['days', 'hours', 'minutes', 'seconds'].forEach(unit => {
-                    const element = document.getElementById(unit);
-                    const newValue = {
-                        days: days,
-                        hours: hours,
-                        minutes: minutes,
-                        seconds: seconds
-                    }[unit];
-                    
-                    element.textContent = String(newValue).padStart(2, '0');
-                });
-
-                if (distance < 0) {
-                    clearInterval(timer);
-                    document.querySelector('.timer-container').innerHTML = 'VI HAR ÖPPNAT!';
-                }
+        // Timeline for smooth transition
+        const tl = gsap.timeline({
+            onComplete: () => {
+                // Start countdown after animations complete
+                startCountdown();
             }
-
-            updateCountdown();
-            const timer = setInterval(updateCountdown, 1000);
+        });
+        // After 4 seconds, start transition sequence
+        setTimeout(() => {
+            tl.to(loadingScreen, {
+                opacity: 0,
+                duration: 1,
+                onComplete: () => loadingScreen.style.display = 'none'
+            })
+            .to(mainContent, {
+                opacity: 1,
+                duration: 1
+            }, "-=0.5")
+            .to('.logo', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+            }, "-=0.3")
+            .to('.tagline', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+            }, "-=0.5")
+            .to('.timer-container', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power2.out"
+            }, "-=0.5");
+        }, 1500);
+    });
+    
+    function startCountdown() {
+        const countdownDate = new Date('June 10, 2025 00:00:00').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector('.timer-container').innerHTML = 'VI HAR ÖPPNAT!';
+                // Redirect to home page
+                window.location.href = 'https://home.webstay.se';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            ['days', 'hours', 'minutes', 'seconds'].forEach(unit => {
+                const element = document.getElementById(unit);
+                const newValue = {
+                    days: days,
+                    hours: hours,
+                    minutes: minutes,
+                    seconds: seconds
+                }[unit];
+                
+                element.textContent = String(newValue).padStart(2, '0');
+            });
         }
-    </script>
+        
+        updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
+    }
+</script>
 </body>
 </html>
