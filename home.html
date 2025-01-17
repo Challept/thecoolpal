@@ -2,1024 +2,110 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Din Moderna Webbpartner</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Fel sida - Omdirigerar...</title>
     <style>
-        :root {
-            --primary: #2563eb;
-            --secondary: #1e40af;
-            --accent: #3b82f6;
-            --dark: #1f2937;
-            --light: #f3f4f6;
-            --gradient: linear-gradient(135deg, #2563eb, #1e40af);
-            --hover-gradient: linear-gradient(135deg, #1e40af, #1e3a8a);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 70px;
-        }
-
         body {
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 1rem;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .navbar.scrolled {
-            padding: 0.5rem;
-            background: rgba(255, 255, 255, 0.98);
-        }
-
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
+            margin: 0;
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-/* Adjusting the logo size and appearance */
-.logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 200px;  /* Adjust width to control size */
-    height: auto;  /* Maintain aspect ratio */
-}
-
-.logo img {
-    width: 100%;  /* Make sure the image fills the container */
-    max-width: 200px; /* Set a max width to prevent it from getting too large */
-    height: auto;
-    transition: transform 0.3s ease;
-}
-
-/* Logo hover effect */
-.logo img:hover {
-    transform: scale(1.05);
-}
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background: var(--gradient);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-.cookie-banner {
-    position: fixed;
-    bottom: 20px;
-    left: 20px; /* Move it to the left bottom corner */
-    background-color: #1e40af; /* Dark blue background */
-    color: white;
-    border-radius: 8px;
-    padding: 20px 25px;
-    max-width: 400px;
-    z-index: 1000;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    transform: translateX(-100%); /* Initially hidden to the left */
-    animation: slideIn 0.6s ease-out forwards; /* Slide-in animation */
-    transition: all 0.3s ease;
-}
-
-.cookie-banner.hidden {
-    display: none;
-}
-
-.cookie-banner h3 {
-    margin: 0 0 10px 0;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.cookie-banner p {
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 0 0 15px 0;
-}
-
-.cookie-banner .buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.cookie-banner button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.cookie-banner .accept {
-    background-color: #3b82f6; /* Light blue */
-    color: white;
-    border: 1px solid #3b82f6;
-}
-
-.cookie-banner .accept:hover {
-    background-color: #2563eb; /* Darker blue */
-    transform: translateY(-3px); /* Hover effect to raise the button */
-}
-
-.cookie-banner .decline {
-    background-color: #f8f9fa;
-    color: #333;
-    border: 1px solid #ddd;
-}
-
-.cookie-banner .decline:hover {
-    background-color: #e2e6ea;
-    transform: translateY(-3px);
-}
-
-/* Slide-in animation from left to right */
-@keyframes slideIn {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
-@media (max-width: 768px) {
-    .cookie-banner {
-        max-width: 100%; /* Full width on smaller screens */
-        left: 0;
-        right: 0;
-    }
-}
-
-        .hero {
-            height: 100vh;
-            position: relative;
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            text-align: center;
+            align-items: center;
+            background: linear-gradient(135deg, #d32f2f, #ff6b6b);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: white;
-            overflow: hidden;
+            text-align: center;
         }
-
-        .hero video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.5));
-            z-index: -1;
-        }
-
-        .hero-content {
-            max-width: 800px;
+        
+        .container {
             padding: 2rem;
-            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
         }
-
-        .hero-content h1 {
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .error-icon {
             font-size: 4rem;
             margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: shake 0.5s ease-in-out;
         }
-
-        .hero-content p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.2s;
-            opacity: 0;
-            animation-fill-mode: forwards;
+        
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 1rem auto;
         }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            animation: fadeInUp 1s ease 0.4s;
-            opacity: 0;
-            animation-fill-mode: forwards;
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-
-        .cta-button {
-            display: inline-block;
-            padding: 1rem 2rem;
-            background: var(--gradient);
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        a {
             color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            background: var(--hover-gradient);
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
-        }
-
-        .cta-button.outline {
-            background: transparent;
-            border: 2px solid white;
-        }
-
-        .cta-button.outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .section {
-            padding: 8rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .section-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .section h2 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-
-        .services {
-            background: var(--light);
-        }
-
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .service-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        .service-card i {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-
-        .pricing {
-            background: white;
-        }
-
-        .price-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .price-card {
-            background: var(--light);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .price-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--gradient);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 0;
-        }
-
-        .price-card:hover::before {
-            opacity: 1;
-        }
-
-        .price-card:hover {
-            transform: translateY(-10px);
-            color: white;
-        }
-
-        .price-card.popular {
-            background: var(--gradient);
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .price-card.popular:hover {
-            transform: scale(1.05) translateY(-10px);
-        }
-
-        .price-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .price-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .price-card .price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 1.5rem 0;
-        }
-
-        .features {
-            background: var(--dark);
-            color: white;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-item {
-            text-align: center;
-            padding: 2rem;
-            border-radius: 20px;
-            background: rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255,255,255,0.2);
-        }
-
-        .feature-item i {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent);
-        }
-
-        .stats {
-            background: var(--gradient);
-            color: white;
-            text-align: center;
-            position: relative;
-        }
-
-        .stats::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="white" stroke-width="1" opacity="0.1"/></svg>');
-            background-size: 50px 50px;
-            opacity: 0.1;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            position: relative;
-        }
-
-        .stat-item h3 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact {
-            background: white;
-        }
-
-        .contact-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            margin-top: 3rem;
-        }
-
-        .contact-info {
-            padding: 2rem;
-        }
-
-        .contact-info-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-info-item i {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-right: 1rem;
-        }
-
-        .contact-form {
-            background: var(--light);
-            padding: 3rem;
-            border-radius: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            background: white;
-        }
-
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 6rem 2rem 4rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-column h4 {
-            margin-bottom: 1.5rem;
-            font-size: 1.2rem;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 0.5rem;
-        }
-
-        .footer-column ul li a {
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
+            text-decoration: underline;
             transition: color 0.3s ease;
         }
-
-        .footer-column ul li a:hover {
-            color: white;
+        
+        a:hover {
+            color: #ffcdd2;
         }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+        
+        .pulse {
+            animation: pulse 2s infinite;
         }
-
-        .social-links a {
-            color: white;
-            background: rgba(255,255,255,0.1);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-
-            .contact-wrapper {
-                grid-template-columns: 1fr;
-            }
-
-            .price-card.popular {
-                transform: scale(1);
-            }
-
-            .price-card.popular:hover {
-                transform: translateY(-10px);
-            }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
-<nav class="navbar">
-    <div class="nav-content">
-        <div class="logo">
-            <img src="logoweb.png" alt="Webstay Logo" />
-        </div>
-        <div class="nav-links">
-            <a href="#home">Hem</a>
-            <a href="#services">Tjänster</a>
-            <a href="#pricing">Priser</a>
-            <a href="#features">Funktioner</a>
-            <a href="order">Order</a>
-            <a href="https://admin.webstay.se">Admin</a>
-        </div>
-    </div>
-</nav>
-
-        <div id="cookieBanner" class="cookie-banner">
-        <h3>Vi använder cookies</h3>
-        <p>Webstay använder cookies för att förbättra din upplevelse på vår webbplats. Genom att fortsätta använda webbplatsen godkänner du användningen av cookies.</p>
-        <div class="buttons">
-            <button class="accept" onclick="acceptCookies()">Acceptera alla cookies</button>
-            <button class="decline" onclick="declineCookies()">Endast nödvändiga</button>
-        </div>
+    <div class="container">
+        <div class="error-icon">❌</div>
+        <h1>Oj! Detta är inte rätt sida</h1>
+        <p class="pulse">Vi omdirigerar dig till rätt hemsida...</p>
+        <div class="loader"></div>
+        <p>Om du inte omdirigeras automatiskt, <a href="https://home.webstay.se">klicka här</a></p>
+        <p style="font-size: 0.9rem; opacity: 0.8;">Du kommer att omdirigeras om några sekunder</p>
     </div>
 
-<script>
-    function acceptCookies() {
-        sessionStorage.setItem('cookieConsent', 'accepted');  // Save consent in sessionStorage
-        document.getElementById('cookieBanner').classList.add('hidden');  // Hide the banner
-    }
-
-    function declineCookies() {
-        sessionStorage.setItem('cookieConsent', 'declined');  // Save declined choice in sessionStorage
-        document.getElementById('cookieBanner').classList.add('hidden');  // Hide the banner
-    }
-
-    // Check if the user has already made a choice during the current session
-    window.onload = function() {
-        const consent = sessionStorage.getItem('cookieConsent');
-        if (!consent) {
-            document.getElementById('cookieBanner').classList.remove('hidden');  // Show the banner if no choice
-        }
-    }
-</script>
-
-    <section id="home" class="hero">
-        <video autoplay muted loop playsinline>
-            <source src="heropic.mp4" type="video/mp4">
-        </video>
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1>Bygg Din Framtid Online</h1>
-            <p>Professionella webbplatser och hosting lösningar för moderna företag</p>
-            <div class="cta-buttons">
-                <a href="#pricing" class="cta-button">Utforska Paket</a>
-                <a href="https://admin.webstay.se" class="cta-button outline">Gå Till Admin</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="section services">
-        <div class="section-content">
-            <h2 data-aos="fade-up">Våra Tjänster</h2>
-            <div class="service-grid">
-                <div class="service-card" data-aos="fade-up">
-                    <i class="fas fa-server"></i>
-                    <h3>Webbhotell</h3>
-                    <p>Snabbt och pålitligt webbhotell med garanterad upptid</p>
-                </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-code"></i>
-                    <h3>Webbutveckling</h3>
-                    <p>Skräddarsydda webbplatser byggda för dina behov</p>
-                </div>
-                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-                    <i class="fas fa-headset"></i>
-                    <h3>Support</h3>
-                    <p>24/7 teknisk support för alla våra kunder</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<section id="pricing" class="section pricing">
-    <div class="section-content">
-        <h2 data-aos="fade-up">Välj Ditt Paket</h2>
-        <div class="price-cards">
-            <div class="price-card" data-aos="fade-up">
-                <div class="price-content">
-                    <h3>Start</h3>
-                    <p>Enkel och pålitlig</p>
-                    <div class="price">299 kr</div>
-                    <p>+ 9 kr/månad</p>
-                    <ul>
-                        <li>Grundläggande hosting</li>
-                        <li>1 GB lagring</li>
-                        <li>SSL-certifikat</li>
-                        <li>E-post support</li>
-                    </ul>
-                    <a href="order" class="cta-button">Välj Paket</a>
-                </div>
-            </div>
-            <div class="price-card popular" data-aos="fade-up" data-aos-delay="200">
-                <div class="price-content">
-                    <h3>Premium</h3>
-                    <p>Mest valda paketet</p>
-                    <div class="price">399 kr</div>
-                    <p>+ 49 kr/månad</p>
-                    <ul>
-                        <li>1 GB lagring</li>
-                        <li>Obegränsad bandbredd</li>
-                        <li>Daglig backup</li>
-                        <li>24/7 support</li>
-                    </ul>
-                    <a href="order" class="cta-button">Välj Paket</a>
-                </div>
-            </div>
-            <div class="price-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="price-content">
-                    <h3>Ultimate</h3>
-                    <p>Full kontroll och alla funktioner</p>
-                    <div class="price">999 kr</div>
-                    <p>+ 99 kr/månad</p>
-                    <ul>
-                        <li>1 GB lagring</li>
-                        <li>Dedikerad server</li>
-                        <li>Premium support</li>
-                        <li>Anpassade lösningar</li>
-                    </ul>
-                    <a href="order" class="cta-button">Välj Paket</a>
-                </div>
-            </div>
-            <div class="price-card" data-aos="fade-up" data-aos-delay="400">
-                <div class="price-content">
-                    <h3>Vi bygger din Hemsida</h3>
-                    <p>Full kontroll och alla funktioner</p>
-                    <div class="price">1999 kr</div>
-                    <p>+ 199 kr/månad</p>
-                    <ul>
-                        <li>Vi bygger din Hemsida</li>
-                        <li>1 GB lagring</li>
-                        <li>Dedikerad server</li>
-                        <li>Premium support</li>
-                    </ul>
-                    <a href="order" class="cta-button">Välj Paket</a>
-                </div>
-            </div>
-            <!-- Coming Soon Plans -->
-            <div class="price-card coming-soon" data-aos="fade-up" data-aos-delay="600">
-                <div class="price-content">
-                    <h3>Exklusiv</h3>
-                    <p>Kommer Snart</p>
-                    <button class="cta-button disabled" disabled>Kommer Snart</button>
-                </div>
-            </div>
-            <div class="price-card coming-soon" data-aos="fade-up" data-aos-delay="800">
-                <div class="price-content">
-                    <h3>Professionell</h3>
-                    <p>Kommer Snart</p>
-                    <button class="cta-button disabled" disabled>Kommer Snart</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <section id="process" class="section process">
-        <div class="section-content">
-            <h2 data-aos="fade-up">Vår Process</h2>
-            <div class="process-steps">
-                <div class="step" data-aos="fade-right">
-                    <i class="fas fa-pencil-alt"></i>
-                    <h3>1. Planering</h3>
-                    <p>Vi diskuterar dina behov och mål</p>
-                </div>
-                <div class="step" data-aos="fade-right" data-aos-delay="200">
-                    <i class="fas fa-paint-brush"></i>
-                    <h3>2. Design</h3>
-                    <p>Vi skapar din unika design</p>
-                </div>
-                <div class="step" data-aos="fade-right" data-aos-delay="400">
-                    <i class="fas fa-code"></i>
-                    <h3>3. Utveckling</h3>
-                    <p>Vi bygger din webbplats</p>
-                </div>
-                <div class="step" data-aos="fade-right" data-aos-delay="600">
-                    <i class="fas fa-rocket"></i>
-                    <h3>4. Lansering</h3>
-                    <p>Din webbplats går live</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="features" class="section features">
-        <div class="section-content">
-            <h2 data-aos="fade-up">Funktioner</h2>
-            <div class="feature-grid">
-                <div class="feature-item" data-aos="fade-up">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>SSL-Certifikat</h3>
-                    <p>Säker anslutning för dina besökare</p>
-                </div>
-                <div class="feature-item" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-database"></i>
-                    <h3>Daglig Backup</h3>
-                    <p>Din data är alltid säker</p>
-                </div>
-                <div class="feature-item" data-aos="fade-up" data-aos-delay="400">
-                    <i class="fas fa-globe"></i>
-                    <h3>CDN</h3>
-                    <p>Snabb åtkomst över hela världen</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section stats">
-        <div class="section-content">
-            <h2 data-aos="fade-up">Vår Framgång i Siffror</h2>
-            <div class="stats-grid">
-                <div class="stat-item" data-aos="fade-up">
-                    <h3 class="counter" data-target="1000">0</h3>
-                    <p>Nöjda Kunder</p>
-                </div>
-                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
-                    <h3>99.9%</h3>
-                    <p>Upptid</p>
-                </div>
-                <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
-                    <h3 class="counter" data-target="5000">0</h3>
-                    <p>Webbplatser Online</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="section contact">
-        <div class="section-content">
-            <h2 data-aos="fade-up">Kontakta Oss</h2>
-            <div class="contact-wrapper">
-                <div class="contact-info" data-aos="fade-right">
-                    <div class="contact-info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Härnösand, Sverige</p>
-                    </div>
-                    <div class="contact-info-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>support@webstay.se</p>
-                    </div>
-                </div>
-                <form class="contact-form" data-aos="fade-left">
-                    <div class="form-group">
-                        <label for="name">Namn</label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-post</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Meddelande</label>
-                        <textarea id="message" rows="5" required></textarea>
-                    </div>
-                    <button type="submit" class="cta-button">Skicka</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h4>Om Oss</h4>
-                <p>Webstay erbjuder professionella webblösningar för företag i alla storlekar.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <h4>Snabblänkar</h4>
-                <ul>
-                    <li><a href="#home">Hem</a></li>
-                    <li><a href="#services">Tjänster</a></li>
-                    <li><a href="#pricing">Priser</a></li>
-                    <li><a href="#contact">Kontakt</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Support</h4>
-                <ul>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Dokumentation</a></li>
-                    <li><a href="#">Support Center</a></li>
-                    <li><a href="#">Status</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Legal</h4>
-                <ul>
-                    <li><a href="#">Integritetspolicy</a></li>
-                    <li><a href="#">Villkor</a></li>
-                    <li><a href="#">Cookies</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2025 Webstay. Alla rättigheter förbehållna.</p>
-        </div>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 1000,
-            once: true,
-            offset: 100
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Counter animation
-        const counters = document.querySelectorAll('.counter');
-        const speed = 200;
-
-        const animateCounter = (counter) => {
-            const target = +counter.getAttribute('data-target');
-            let count = 0;
-            
-            const updateCount = () => {
-                const increment = target / speed;
-                if (count < target) {
-                    count += increment;
-                    counter.innerText = Math.ceil(count);
-                    setTimeout(updateCount, 1);
-                } else {
-                    counter.innerText = target;
-                }
-            };
-            
-            updateCount();
-        };
-
-        // Intersection Observer for counters
-        const observerOptions = {
-            threshold: 0.7,
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    if (entry.target.classList.contains('counter')) {
-                        animateCounter(entry.target);
-                    }
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        counters.forEach(counter => {
-            observer.observe(counter);
-        });
-
-        // Form submission
-        const form = document.querySelector('.contact-form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            // Add your form submission logic here
-            alert('Tack för ditt meddelande! Vi återkommer snart.');
-            form.reset();
-        });
+        setTimeout(() => {
+            window.location.href = 'https://home.webstay.se';
+        }, 3000);
+        
+        // Add a little shake animation to the error icon periodically
+        setInterval(() => {
+            document.querySelector('.error-icon').style.animation = 'none';
+            setTimeout(() => {
+                document.querySelector('.error-icon').style.animation = 'shake 0.5s ease-in-out';
+            }, 10);
+        }, 3000);
     </script>
 </body>
 </html>
