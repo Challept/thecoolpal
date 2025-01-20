@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Logga in / Registrera</title>
     <style>
+        /* General Styles */
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6dd5fa, #2980b9);
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
         #auth-container {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 400px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
             text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         h2 {
             margin-bottom: 20px;
+            color: #333;
         }
 
         .form-group {
@@ -35,19 +40,31 @@
 
         .form-group input {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .form-group input:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             background: #007BFF;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            margin-top: 10px;
+            font-size: 16px;
+            transition: background 0.3s ease-in-out;
+            width: 100%;
+            max-width: 200px;
+            margin-top: 15px;
         }
 
         button:hover {
@@ -57,10 +74,58 @@
         #error {
             color: red;
             margin-top: 10px;
+            font-size: 14px;
+        }
+
+        #alert-container {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #007BFF;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 1000;
+            text-align: center;
+            width: 90%;
+            max-width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         #verify-section {
             display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            #auth-container {
+                padding: 20px;
+                width: 95%;
+            }
+
+            button {
+                font-size: 14px;
+            }
+
+            .form-group input {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -94,7 +159,21 @@
         </div>
     </div>
 
+    <div id="alert-container"></div>
+
     <script>
+        function showAlert(message, isError = false) {
+            const alertContainer = document.getElementById("alert-container");
+            alertContainer.innerText = message;
+            alertContainer.style.backgroundColor = isError ? "#FF4C4C" : "#007BFF";
+            alertContainer.style.display = "block";
+
+            // Hide the alert after 3 seconds
+            setTimeout(() => {
+                alertContainer.style.display = "none";
+            }, 3000);
+        }
+
         const originalUrl = document.referrer; // The original page that opened this login page
 
         // Send verification code
@@ -109,11 +188,11 @@
 
             const data = await response.json();
             if (data.success) {
-                alert(data.message);
+                showAlert(data.message);
                 document.getElementById("verify-section").style.display = "block";
                 document.getElementById("signup-section").style.display = "none";
             } else {
-                document.getElementById("error").innerText = data.error;
+                showAlert(data.error, true);
             }
         });
 
@@ -131,13 +210,13 @@
             const data = await response.json();
             if (data.success) {
                 sessionStorage.setItem("loggedIn", true);
-                alert(data.message);
+                showAlert(data.message);
 
                 // Redirect back to the original page
                 window.opener.postMessage({ loggedIn: true }, originalUrl);
                 window.close();
             } else {
-                document.getElementById("error").innerText = data.error;
+                showAlert(data.error, true);
             }
         });
 
@@ -155,13 +234,13 @@
             const data = await response.json();
             if (data.success) {
                 sessionStorage.setItem("loggedIn", true);
-                alert("Inloggning lyckades!");
+                showAlert("Inloggning lyckades!");
 
                 // Redirect back to the original page
                 window.opener.postMessage({ loggedIn: true }, originalUrl);
                 window.close();
             } else {
-                document.getElementById("error").innerText = data.error;
+                showAlert(data.error, true);
             }
         });
     </script>
