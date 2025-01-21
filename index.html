@@ -47,21 +47,32 @@
     top: 10px;
     right: 10px;
     z-index: 2000;
+    display: inline-block;
     background: linear-gradient(90deg, #00a2ff, #00ff88);
-    color: #fff;
-    padding: 10px 20px;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: bold;
     border-radius: 6px;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4), 0 0 5px rgba(0, 162, 255, 0.4);
-    transition: transform 0.2s, background 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 255, 136, 0.4), 0 2px 5px rgba(0, 162, 255, 0.4);
+    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+}
+
+.test-user-button a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-align: center;
 }
 
 .test-user-button:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
     background: linear-gradient(90deg, #007ACC, #00ff66);
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5), 0 0 10px rgba(0, 162, 255, 0.5);
+    box-shadow: 0 6px 15px rgba(0, 255, 136, 0.5), 0 3px 8px rgba(0, 162, 255, 0.5);
+}
+
+.test-user-button a:hover {
+    color: #ffffff;
 }
 
         .main-content {
