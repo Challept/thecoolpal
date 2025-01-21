@@ -42,27 +42,26 @@
             margin-bottom: 20px;
         }
 
-        .test-user-button {
-    text-align: center;
-    margin: 20px auto;
-}
-
-.test-user-button a {
-    display: inline-block;
-    background: linear-gradient(90deg, #007BFF, #00C6FF);
+.test-user-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2000;
+    background: linear-gradient(90deg, #00a2ff, #00ff88);
     color: #fff;
-    padding: 12px 20px;
+    padding: 10px 20px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4), 0 0 5px rgba(0, 162, 255, 0.4);
+    transition: transform 0.2s, background 0.3s;
 }
 
-.test-user-button a:hover {
-    background: linear-gradient(90deg, #0056b3, #007ACC);
+.test-user-button:hover {
     transform: scale(1.05);
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(90deg, #007ACC, #00ff66);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5), 0 0 10px rgba(0, 162, 255, 0.5);
 }
 
         .main-content {
