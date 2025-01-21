@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay Beta - Skapa Din Drömhemsida</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
     <style>
         :root {
             --primary: #6366f1;
@@ -339,13 +340,69 @@
         </div>
     </div>
 
-    <script src="https://js.stripe.com/v3/"></script>
-<!DOCTYPE html>
-<html lang="sv">
-<!-- Previous head and body content remains the same until the JavaScript -->
+   <script>
+        const stripe = Stripe('pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu');
+        const button = document.getElementById('startSubscription');
+        const status = document.getElementById('status');
+        const passwordInput = document.getElementById('betaPassword');
 
-<script>
-    // Previous JavaScript code remains the same until the button click handler...
+        // Set the launch date - May 10, 2025 at 00:00:00
+        const launchDate = new Date('2025-05-10T00:00:00').getTime();
+
+        function formatNumber(number) {
+            return String(number).padStart(2, '0');
+        }
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            // Calculate time units
+            const days = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24)));
+            const hours = Math.max(0, Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+            const minutes = Math.max(0, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
+            const seconds = Math.max(0, Math.floor((distance % (1000 * 60)) / 1000));
+
+            // Update DOM
+            document.getElementById('days').textContent = formatNumber(days);
+            document.getElementById('hours').textContent = formatNumber(hours);
+            document.getElementById('minutes').textContent = formatNumber(minutes);
+            document.getElementById('seconds').textContent = formatNumber(seconds);
+
+            // Enable button if launch date has passed
+            if (distance <= 0) {
+                button.disabled = false;
+                document.querySelector('.countdown').style.display = 'none';
+                document.querySelector('.cta-section p').textContent = 'Betatestningen är nu öppen!';
+                return false; // Stop timer
+            }
+            return true; // Continue timer
+        }
+
+        // Initialize timer
+        if (updateTimer()) {
+            // Only start interval if we haven't passed launch date
+            setInterval(() => {
+                if (!updateTimer()) {
+                    // Clean up interval if launch date has passed
+                    clearInterval(this);
+                }
+            }, 1000);
+        }
+
+        // Password validation
+        passwordInput.addEventListener('input', (e) => {
+            const isCorrectPassword = e.target.value === 'Sse201107!';
+            button.disabled = !isCorrectPassword;
+            
+            if (isCorrectPassword) {
+                passwordInput.style.borderColor = '#10b981';
+                passwordInput.style.boxShadow = '0 0 15px rgba(16, 185, 129, 0.3)';
+            } else {
+                passwordInput.style.borderColor = '';
+                passwordInput.style.boxShadow = '';
+            }
+        });
 
     button.addEventListener('click', async () => {
         button.disabled = true;
