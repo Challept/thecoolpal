@@ -155,17 +155,25 @@
             margin-top: 0.5rem;
         }
 
-        .cta-section {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 1rem;
-            padding: 3rem;
-            text-align: center;
-            width: 100%;
-            max-width: 600px;
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            animation: fadeIn 1s ease;
-        }
+.cta-section {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(17, 24, 39, 0.8));
+    backdrop-filter: blur(15px);
+    border-radius: 1.5rem;
+    padding: 3rem;
+    text-align: center;
+    width: 100%;
+    max-width: 700px;
+    border: 2px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1s ease-in-out;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.5);
+}
 
         .password-form {
             display: flex;
@@ -346,8 +354,8 @@
 
     <div class="cta-section">
         <h2>Exklusivt Betaerbjudande</h2>
-        <div class="price">49 kr <span class="period">/ månad</span></div>
-        <p>Betatestningen är nu öppen!</p>
+       <div class="price">Gratis <span class="period">i 10 dagar</span></div>
+       <p>Betatestningen öppnar den 10 maj!</p>
 
         <div class="user-form">
             <div class="form-group">
