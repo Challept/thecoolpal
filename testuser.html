@@ -347,26 +347,7 @@
     <div class="cta-section">
         <h2>Exklusivt Betaerbjudande</h2>
         <div class="price">49 kr <span class="period">/ månad</span></div>
-        <p>Betatestning öppnar 10 maj 2025</p>
-        
-        <div class="countdown">
-            <div class="countdown-item">
-                <div class="countdown-value" id="days">00</div>
-                <div class="countdown-label">Dagar</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-value" id="hours">00</div>
-                <div class="countdown-label">Timmar</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-value" id="minutes">00</div>
-                <div class="countdown-label">Minuter</div>
-            </div>
-            <div class="countdown-item">
-                <div class="countdown-value" id="seconds">00</div>
-                <div class="countdown-label">Sekunder</div>
-            </div>
-        </div>
+        <p>Betatestningen är nu öppen!</p>
 
         <div class="user-form">
             <div class="form-group">
@@ -409,66 +390,17 @@
     </div>
 </div>
 
-   <script>
-        const stripe = Stripe('pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu');
-        const button = document.getElementById('startSubscription');
-        const status = document.getElementById('status');
-        const passwordInput = document.getElementById('betaPassword');
+<script>
+const stripe = Stripe('pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu');
+const button = document.getElementById('startSubscription');
+const status = document.getElementById('status');
 
-        // Set the launch date - May 10, 2025 at 00:00:00
-        const launchDate = new Date('2025-05-10T00:00:00').getTime();
-
-        function formatNumber(number) {
-            return String(number).padStart(2, '0');
-        }
-
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = launchDate - now;
-
-            // Calculate time units
-            const days = Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24)));
-            const hours = Math.max(0, Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
-            const minutes = Math.max(0, Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)));
-            const seconds = Math.max(0, Math.floor((distance % (1000 * 60)) / 1000));
-
-            // Update DOM
-            document.getElementById('days').textContent = formatNumber(days);
-            document.getElementById('hours').textContent = formatNumber(hours);
-            document.getElementById('minutes').textContent = formatNumber(minutes);
-            document.getElementById('seconds').textContent = formatNumber(seconds);
-
-            // Enable button if launch date has passed
-            if (distance <= 0) {
-                button.disabled = false;
-                document.querySelector('.countdown').style.display = 'none';
-                document.querySelector('.cta-section p').textContent = 'Betatestningen är nu öppen!';
-                return false; // Stop timer
-            }
-            return true; // Continue timer
-        }
-
-        // Initialize timer
-        if (updateTimer()) {
-            // Only start interval if we haven't passed launch date
-            setInterval(() => {
-                if (!updateTimer()) {
-                    // Clean up interval if launch date has passed
-                    clearInterval(this);
-                }
-            }, 1000);
-        }
-
-// Form validation
 const userForm = {
     name: document.getElementById('userName'),
     email: document.getElementById('userEmail'),
     age: document.getElementById('userAge'),
     password: document.getElementById('betaPassword')
 };
-
-const button = document.getElementById('startSubscription');
-const status = document.getElementById('status');
 
 function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -483,7 +415,6 @@ function validateForm() {
     return isNameValid && isEmailValid && isAgeValid && isPasswordValid;
 }
 
-// Add validation styling for all inputs
 function updateInputStyle(input, isValid) {
     if (input.value) {
         if (isValid) {
@@ -499,7 +430,6 @@ function updateInputStyle(input, isValid) {
     }
 }
 
-// Add input listeners to all form fields
 Object.entries(userForm).forEach(([field, input]) => {
     input.addEventListener('input', () => {
         let isValid = false;
@@ -617,24 +547,6 @@ Object.values(userForm).forEach(input => {
             }
         }
     });
-});
-
-// Initialize the page state
-document.addEventListener('DOMContentLoaded', () => {
-    const now = new Date().getTime();
-    const distance = launchDate - now;
-    
-    if (distance <= 0) {
-        document.querySelector('.countdown').style.display = 'none';
-        document.querySelector('.cta-section p').textContent = 'Betatestningen är nu öppen!';
-        button.disabled = !validateForm();
-    }
-
-    if (!navigator.onLine) {
-        button.disabled = true;
-        status.style.display = 'block';
-        status.innerHTML = '<span style="color: #ef4444;">❌ Du är offline. Kontrollera din internetanslutning.</span>';
-    }
 });
 </script>
 </body>
