@@ -409,7 +409,7 @@ function validateEmail(email) {
 function validateForm() {
     const isNameValid = userForm.name.value.trim().length >= 2;
     const isEmailValid = validateEmail(userForm.email.value);
-    const isAgeValid = userForm.age.value >= 18 && userForm.age.value <= 120;
+    const isAgeValid = userForm.age.value >= 14 && userForm.age.value <= 50;
     const isPasswordValid = userForm.password.value === 'Sse201107!';
 
     return isNameValid && isEmailValid && isAgeValid && isPasswordValid;
