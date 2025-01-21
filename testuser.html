@@ -442,7 +442,7 @@ Object.entries(userForm).forEach(([field, input]) => {
                 isValid = validateEmail(input.value);
                 break;
             case 'age':
-                isValid = input.value >= 18 && input.value <= 120;
+                isValid = input.value >= 14 && input.value <= 50;
                 break;
             case 'password':
                 isValid = input.value === 'Sse201107!';
