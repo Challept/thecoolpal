@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webstay Testanvändare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #f57c00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Välkommen, Testanvändare!</h1>
+        <p>Börja din 7-dagars gratis provperiod nu! Därefter debiteras 49 kr/månad.</p>
+        <button id="startSubscription">Starta prenumeration</button>
+        <div id="status" style="margin-top: 20px;"></div>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        const stripe = Stripe('pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu'); // Ersätt med din Stripe Public Key
+
+        document.getElementById('startSubscription').addEventListener('click', async () => {
+            document.getElementById('status').textContent = 'Startar betalning...';
+            
+            try {
+                const response = await fetch('/create-checkout-testuser', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        plan: 'testuser-plan'
+                    }),
+                });
+
+                if (!response.ok) throw new Error('Något gick fel vid skapandet av betalningen.');
+
+                const { sessionId } = await response.json();
+
+                await stripe.redirectToCheckout({ sessionId });
+            } catch (error) {
+                console.error(error);
+                document.getElementById('status').textContent = 'Fel: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
