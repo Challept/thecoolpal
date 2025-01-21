@@ -42,6 +42,29 @@
             margin-bottom: 20px;
         }
 
+        .test-user-button {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.test-user-button a {
+    display: inline-block;
+    background: linear-gradient(90deg, #007BFF, #00C6FF);
+    color: #fff;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.test-user-button a:hover {
+    background: linear-gradient(90deg, #0056b3, #007ACC);
+    transform: scale(1.05);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
         .main-content {
             position: fixed;
             top: 0;
@@ -156,6 +179,10 @@
     </style>
 </head>
 <body>
+<div class="test-user-button">
+   <a href="https://webstay.se/testuser">Bli en testanvändare!</a>
+</div>
+
     <div class="loading-screen">
         <div class="loading-content">
             <video class="loading-video" autoplay muted playsinline>
