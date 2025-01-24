@@ -1,171 +1,184 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autentisering</title>
-    <style>
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #e0f7ff, #c2e9fb);
-    background-size: 300% 300%;
-    animation: gradientMove 8s ease infinite;
-    color: #333; /* Mörk text för kontrast */
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logga in - Webstay</title>
+  <style>
+    /* General Styling */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1e3a8a, #9333ea);
+      color: #ffffff;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
+    /* Container Styling */
+    .login-container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px 20px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(8px);
+      max-width: 400px;
+      width: 90%;
+      animation: slideIn 1s ease-out;
+    }
 
-.auth-container {
-    text-align: center;
-    background: #ffffff; /* Vit container */
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Mjuk skugga */
-    width: 90%;
-    max-width: 350px; /* Smalare för en modern känsla */
-}
+    /* Title */
+    .login-container h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #93c5fd, #d8b4fe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: textGlow 2s infinite alternate;
+    }
 
-h1 {
-    font-size: 24px;
-    margin-bottom: 15px;
-    color: #0074d9; /* Modern blå textfärg */
-    font-weight: 600; /* Semi-bold för tydlighet */
-}
+    /* Button Styling */
+    .google-btn {
+      background: #ffffff;
+      color: #1a73e8;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
 
-p {
-    font-size: 14px;
-    margin-bottom: 20px;
-    color: #555; /* Ljusare grå för extra texter */
-    line-height: 1.6; /* Förbättrad läsbarhet */
-}
+    .google-btn:hover {
+      background: #f1f5f9;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.4);
+    }
 
-input {
-    display: block;
-    width: 90%;
-    margin: 10px auto;
-    padding: 10px;
-    border: 2px solid #0074d9;
-    border-radius: 5px;
-    font-size: 14px;
-    background: #f9f9f9; /* Ljus bakgrund */
-    color: #333; /* Mörk text */
-    text-align: center;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
+    /* Create Account Link */
+    .create-account {
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
 
-input:focus {
-    border-color: #0056a3;
-    box-shadow: 0 0 8px rgba(0, 116, 217, 0.3); /* Ljus blå skugga */
-}
+    .create-account a {
+      color: #60a5fa;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
 
-button {
-    padding: 10px 20px;
-    margin-top: 20px;
-    background: #0074d9;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
+    .create-account a:hover {
+      color: #a78bfa;
+      text-decoration: underline;
+    }
 
-button:hover {
-    background-color: #0056a3;
-    transform: scale(1.05);
-}
+    /* Success Message */
+    .success-message {
+      display: none;
+      margin-top: 20px;
+      font-size: 1rem;
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      padding: 10px;
+      border-radius: 8px;
+      animation: fadeIn 1s ease-in-out;
+    }
 
-#errorMessage {
-    color: #e63946; /* Röd för felmeddelande */
-    font-size: 14px;
-    margin-top: 10px;
-}
+    /* Animations */
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
-#successMessage {
-    color: #2a9d8f; /* Grön för framgång */
-    font-size: 14px;
-    margin-top: 10px;
-}
+    @keyframes textGlow {
+      from {
+        text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6;
+      }
+      to {
+        text-shadow: 0 0 20px #9333ea, 0 0 30px #9333ea;
+      }
+    }
 
-.info {
-    margin-top: 30px;
-    font-size: 13px;
-    color: #777; /* Mjuk grå text för information */
-    text-align: center;
-    line-height: 1.5;
-}
-    </style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-    <div class="auth-container">
-        <h1>Autentisering</h1>
-        <p>Ange ditt användarnamn och kod för att fortsätta:</p>
-        <input type="text" id="usernameInput" placeholder="Användarnamn" />
-        <input type="text" id="codeInput" placeholder="Kod (endast siffror)" />
-        <div id="errorMessage"></div>
-        <button id="continueButton">Fortsätt</button>
-        <div id="successMessage"></div>
-        <p class="info">
-            Denna autentisering säkerställer att endast behöriga användare får åtkomst. Ange rätt användarnamn och kod för att låsa upp Webstay.
-        </p>
+  <div class="login-container">
+    <h1>Välkommen till Webstay</h1>
+    <div id="g_id_onload"
+         data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+         data-context="signin"
+         data-ux_mode="popup"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
     </div>
+    <button class="google-btn" onclick="loginWithGoogle()">Logga in med Google</button>
+    <div class="create-account">
+      <p>Har du inget konto? <a href="#" onclick="openGoogleAccountPopup()">Skapa ett Google-konto</a></p>
+    </div>
+    <div class="success-message" id="successMessage">Inloggad! Du kommer snart att omdirigeras.</div>
+  </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const usernameInput = document.getElementById("usernameInput");
-            const codeInput = document.getElementById("codeInput");
-            const continueButton = document.getElementById("continueButton");
-            const errorMessage = document.getElementById("errorMessage");
-            const successMessage = document.getElementById("successMessage");
+  <script>
+    // Handle successful login
+    function handleCredentialResponse(response) {
+      console.log('ID Token: ', response.credential); // Debugging purposes
+      localStorage.setItem('google_credential', response.credential); // Save to localStorage
+      document.getElementById('successMessage').style.display = 'block';
 
-            const correctUsername = "admin.15";
-            const correctCode = "2945128";
+      // Simulate a redirection after 2 seconds
+      setTimeout(() => {
+        window.close(); // Close the tab
+      }, 2000);
+    }
 
-            codeInput.addEventListener("input", () => {
-                // Tillåt endast siffror
-                codeInput.value = codeInput.value.replace(/[^0-9]/g, "");
-            });
+    // Trigger Google login popup
+    function loginWithGoogle() {
+      google.accounts.id.prompt();
+    }
 
-            codeInput.addEventListener("input", () => {
-                errorMessage.textContent = ""; // Töm ev. felmeddelande när användaren skriver
-            });
+    // Open the Google Account creation page
+    function openGoogleAccountPopup() {
+      const width = 600, height = 700;
+      const left = (window.innerWidth / 2) - (width / 2);
+      const top = (window.innerHeight / 2) - (height / 2);
 
-            usernameInput.addEventListener("input", () => {
-                errorMessage.textContent = ""; // Töm ev. felmeddelande när användaren skriver
-            });
+      window.open(
+        "https://accounts.google.com/signup",
+        "Skapa Google-konto",
+        `width=${width},height=${height},top=${top},left=${left},resizable=no`
+      );
+    }
 
-            codeInput.addEventListener("keyup", checkInputs);
-            usernameInput.addEventListener("keyup", checkInputs);
-
-            function checkInputs() {
-                if (
-                    usernameInput.value.trim() === correctUsername &&
-                    codeInput.value.trim() === correctCode
-                ) {
-                    successMessage.textContent = "Verifiering lyckades! Du kan fortsätta.";
-                    continueButton.style.display = "block"; // Visa knappen
-                    errorMessage.textContent = ""; // Dölj felmeddelande
-                } else {
-                    successMessage.textContent = "";
-                    continueButton.style.display = "none"; // Dölj knappen
-                }
-            }
-
-            continueButton.addEventListener("click", () => {
-                // Omdirigera till URL med popups inaktiverade
-                window.location.href = "https://webstay.se/#29451288461645816561pass";
-            });
-        });
-    </script>
+    // Initialize Google Login
+    google.accounts.id.initialize({
+      client_id: "216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+      auto_prompt: true
+    });
+  </script>
 </body>
 </html>
