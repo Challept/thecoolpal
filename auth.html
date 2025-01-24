@@ -16,10 +16,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
 
-    /* Container Styling */
+    /* Login Container */
     .login-container {
       background: rgba(255, 255, 255, 0.1);
       padding: 30px 20px;
@@ -29,7 +28,7 @@
       backdrop-filter: blur(8px);
       max-width: 400px;
       width: 90%;
-      animation: slideIn 1s ease-out;
+      animation: fadeIn 1s ease-out;
     }
 
     /* Title */
@@ -39,7 +38,6 @@
       background: linear-gradient(90deg, #93c5fd, #d8b4fe);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: textGlow 2s infinite alternate;
     }
 
     /* Button Styling */
@@ -90,52 +88,25 @@
       color: #22c55e;
       padding: 10px;
       border-radius: 8px;
-      animation: fadeIn 1s ease-in-out;
     }
 
     /* Animations */
-    @keyframes slideIn {
+    @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-
-    @keyframes textGlow {
-      from {
-        text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6;
-      }
-      to {
-        text-shadow: 0 0 20px #9333ea, 0 0 30px #9333ea;
-      }
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
   </style>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
   <div class="login-container">
     <h1>Välkommen till Webstay</h1>
-    <div id="g_id_onload"
-         data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-callback="handleCredentialResponse"
-         data-auto_prompt="false">
-    </div>
-    <button class="google-btn" onclick="loginWithGoogle()">Logga in med Google</button>
+    <button class="google-btn" onclick="openGoogleLoginPopup()">Logga in med Google</button>
     <div class="create-account">
       <p>Har du inget konto? <a href="#" onclick="openGoogleAccountPopup()">Skapa ett Google-konto</a></p>
     </div>
@@ -143,24 +114,48 @@
   </div>
 
   <script>
-    // Handle successful login
-    function handleCredentialResponse(response) {
-      console.log('ID Token: ', response.credential); // Debugging purposes
-      localStorage.setItem('google_credential', response.credential); // Save to localStorage
-      document.getElementById('successMessage').style.display = 'block';
+    // Open Google login popup
+    function openGoogleLoginPopup() {
+      const width = 600, height = 700;
+      const left = (window.innerWidth / 2) - (width / 2);
+      const top = (window.innerHeight / 2) - (height / 2);
 
-      // Simulate a redirection after 2 seconds
-      setTimeout(() => {
-        window.close(); // Close the tab
-      }, 2000);
+      const popup = window.open(
+        "https://accounts.google.com/o/oauth2/v2/auth?" +
+        new URLSearchParams({
+          client_id: "216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com",
+          redirect_uri: "postmessage", // This ensures no actual redirection
+          response_type: "token",
+          scope: "openid email profile",
+        }),
+        "Google Login",
+        `width=${width},height=${height},top=${top},left=${left},resizable=no`
+      );
+
+      const interval = setInterval(() => {
+        try {
+          if (popup.location.hash) {
+            const params = new URLSearchParams(popup.location.hash.substring(1));
+            const token = params.get("access_token");
+            if (token) {
+              localStorage.setItem("google_access_token", token);
+              document.getElementById("successMessage").style.display = "block";
+              clearInterval(interval);
+              popup.close();
+              setTimeout(() => window.close(), 2000); // Close the tab after success
+            }
+          }
+        } catch (error) {
+          // Ignore cross-origin errors until the popup redirects to a Google domain
+        }
+
+        if (popup.closed) {
+          clearInterval(interval);
+        }
+      }, 500);
     }
 
-    // Trigger Google login popup
-    function loginWithGoogle() {
-      google.accounts.id.prompt();
-    }
-
-    // Open the Google Account creation page
+    // Open Google Account creation popup
     function openGoogleAccountPopup() {
       const width = 600, height = 700;
       const left = (window.innerWidth / 2) - (width / 2);
@@ -172,13 +167,6 @@
         `width=${width},height=${height},top=${top},left=${left},resizable=no`
       );
     }
-
-    // Initialize Google Login
-    google.accounts.id.initialize({
-      client_id: "216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com",
-      callback: handleCredentialResponse,
-      auto_prompt: true
-    });
   </script>
 </body>
 </html>
