@@ -14,21 +14,28 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #74ebd5, #9face6);
+            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            color: white;
         }
 
         .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            width: 350px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            width: 400px;
             text-align: center;
         }
 
         h1 {
             color: #333;
-            font-size: 24px;
+            font-size: 26px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
             margin-bottom: 20px;
         }
 
@@ -37,11 +44,11 @@
         }
 
         .create-account {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .create-account a {
-            color: #4CAF50;
+            color: #2193b0;
             text-decoration: none;
             font-weight: bold;
         }
@@ -49,16 +56,22 @@
         .create-account a:hover {
             text-decoration: underline;
         }
+
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #888;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Välkommen till Webstay</h1>
-        <p>Logga in eller registrera dig med Google för att fortsätta.</p>
+        <p>Vi jobbar på det! Logga in eller registrera dig med Google för att fortsätta.</p>
         <div id="g_id_onload"
             data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
             data-callback="handleCredentialResponse"
-            data-auto_prompt="false">
+            data-auto_prompt="true">
         </div>
         <div class="google-button">
             <div class="g_id_signin" data-type="standard"></div>
@@ -66,6 +79,7 @@
         <div class="create-account">
             <p>Har du inget konto? <a href="https://accounts.google.com/signup" target="_blank">Skapa ett Google-konto</a></p>
         </div>
+        <div class="status" id="status">Vi arbetar för att förbättra upplevelsen.</div>
     </div>
 
     <script>
@@ -74,11 +88,25 @@
 
             // Spara Google-uppgifter i localStorage
             localStorage.setItem("googleCredential", credential);
-            alert("Inloggning lyckades!");
 
-            // Du kan lägga till logik för att hantera användaruppgifterna här
-            console.log("Google Token:", credential);
+            // Stäng popup-fönster om det finns några
+            document.querySelector(".status").textContent = "Inloggning lyckades!";
+            setTimeout(() => {
+                document.querySelector(".container").remove();
+                const successMessage = document.createElement("div");
+                successMessage.style.color = "white";
+                successMessage.style.fontSize = "18px";
+                successMessage.style.textAlign = "center";
+                successMessage.textContent = "Välkommen tillbaka!";
+                document.body.appendChild(successMessage);
+            }, 1500);
         }
+
+        // Stäng popup-fönster efter laddning
+        window.onload = function() {
+            const statusElement = document.getElementById("status");
+            statusElement.textContent = "Redo att logga in.";
+        };
     </script>
 </body>
 </html>
