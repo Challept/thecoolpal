@@ -104,7 +104,7 @@
 
             if (isPopup) {
                 window.opener.postMessage({ status: "success", credential }, "*");
-                window.close();
+                setTimeout(() => window.close(), 500); // Ensure popup closes properly
             } else {
                 document.querySelector(".status").textContent = "Inloggning lyckades!";
                 setTimeout(() => {
