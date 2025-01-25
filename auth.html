@@ -1,160 +1,84 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Logga in - Webstay</title>
-  <style>
-    /* General Styling */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #1e3a8a, #9333ea);
-      color: #ffffff;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webstay - Logga in/Registrera</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+        }
 
-    .login-container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 30px 20px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(8px);
-      max-width: 400px;
-      width: 90%;
-      animation: fadeIn 1s ease-out;
-    }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 350px;
+            text-align: center;
+        }
 
-    .login-container h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      background: linear-gradient(90deg, #93c5fd, #d8b4fe);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-    .google-btn {
-      background: #ffffff;
-      color: #1a73e8;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border-radius: 12px;
-      cursor: pointer;
-      margin-top: 20px;
-      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
-      transition: all 0.3s ease;
-    }
+        .google-button {
+            margin-top: 20px;
+        }
 
-    .google-btn:hover {
-      background: #f1f5f9;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.4);
-    }
+        .create-account {
+            margin-top: 15px;
+        }
 
-    .create-account {
-      margin-top: 20px;
-      font-size: 0.9rem;
-    }
+        .create-account a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-    .create-account a {
-      color: #60a5fa;
-      font-weight: bold;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .create-account a:hover {
-      color: #a78bfa;
-      text-decoration: underline;
-    }
-
-    .success-message {
-      display: none;
-      margin-top: 20px;
-      font-size: 1rem;
-      background: rgba(34, 197, 94, 0.2);
-      color: #22c55e;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <div class="login-container">
-    <h1>Välkommen till Webstay</h1>
-    <button class="google-btn" onclick="openGoogleLoginPopup()">Logga in med Google</button>
-    <div class="create-account">
-      <p>Har du inget konto? <a href="#" onclick="openGoogleAccountPopup()">Skapa ett Google-konto</a></p>
+    <div class="container">
+        <h1>Välkommen till Webstay</h1>
+        <p>Logga in eller registrera dig med Google för att fortsätta.</p>
+        <div id="g_id_onload"
+            data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse"
+            data-auto_prompt="false">
+        </div>
+        <div class="google-button">
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
+        <div class="create-account">
+            <p>Har du inget konto? <a href="https://accounts.google.com/signup" target="_blank">Skapa ett Google-konto</a></p>
+        </div>
     </div>
-    <div class="success-message" id="successMessage">Inloggad! Du kommer snart att omdirigeras.</div>
-  </div>
 
-  <script>
-    const clientId = "216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com";
-    const redirectUri = "https://webstay.se/auth"; // Replace with your domain
+    <script>
+        function handleCredentialResponse(response) {
+            const credential = response.credential;
 
-    // Open Google Login Popup
-    function openGoogleLoginPopup() {
-      const width = 600, height = 700;
-      const left = (window.innerWidth / 2) - (width / 2);
-      const top = (window.innerHeight / 2) - (height / 2);
+            // Spara Google-uppgifter i localStorage
+            localStorage.setItem("googleCredential", credential);
+            alert("Inloggning lyckades!");
 
-      const popup = window.open(
-        `https://accounts.google.com/o/oauth2/v2/auth?` +
-        new URLSearchParams({
-          client_id: clientId,
-          redirect_uri: redirectUri,
-          response_type: "token",
-          scope: "openid email profile"
-        }),
-        "Google Login",
-        `width=${width},height=${height},top=${top},left=${left},resizable=no`
-      );
-
-      // Listen for message from popup
-      window.addEventListener("message", (event) => {
-        if (event.origin === "https://webstay.se") { // Ensure the message is from your domain
-          const token = event.data.access_token;
-          if (token) {
-            localStorage.setItem("google_access_token", token);
-            document.getElementById("successMessage").style.display = "block";
-            popup.close();
-            setTimeout(() => window.close(), 2000); // Close the parent tab after success
-          }
+            // Du kan lägga till logik för att hantera användaruppgifterna här
+            console.log("Google Token:", credential);
         }
-      });
-    }
-
-    // Open Google Account Creation Popup
-    function openGoogleAccountPopup() {
-      const width = 600, height = 700;
-      const left = (window.innerWidth / 2) - (width / 2);
-      const top = (window.innerHeight / 2) - (height / 2);
-
-      window.open(
-        "https://accounts.google.com/signup",
-        "Skapa Google-konto",
-        `width=${width},height=${height},top=${top},left=${left},resizable=no`
-      );
-    }
-  </script>
+    </script>
 </body>
 </html>
