@@ -7,36 +7,42 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #6dd5ed, #2193b0);
+            background: linear-gradient(135deg, #74ebd5, #9face6);
             color: white;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            padding: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
             width: 400px;
             text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         h1 {
             color: #333;
-            font-size: 26px;
-            margin-bottom: 15px;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
         p {
             color: #555;
             font-size: 16px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .google-button {
@@ -44,11 +50,11 @@
         }
 
         .create-account {
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .create-account a {
-            color: #2193b0;
+            color: #4CAF50;
             text-decoration: none;
             font-weight: bold;
         }
@@ -61,6 +67,10 @@
             margin-top: 15px;
             font-size: 14px;
             color: #888;
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
@@ -89,20 +99,24 @@
             // Spara Google-uppgifter i localStorage
             localStorage.setItem("googleCredential", credential);
 
-            // Stäng popup-fönster om det finns några
+            // Stäng popup och öppna välkomstmeddelande
             document.querySelector(".status").textContent = "Inloggning lyckades!";
             setTimeout(() => {
-                document.querySelector(".container").remove();
-                const successMessage = document.createElement("div");
-                successMessage.style.color = "white";
-                successMessage.style.fontSize = "18px";
-                successMessage.style.textAlign = "center";
-                successMessage.textContent = "Välkommen tillbaka!";
-                document.body.appendChild(successMessage);
+                window.close(); // Försöker stänga fliken
+                if (!window.closed) {
+                    document.querySelector(".container").remove();
+                    const successMessage = document.createElement("div");
+                    successMessage.style.color = "white";
+                    successMessage.style.fontSize = "20px";
+                    successMessage.style.textAlign = "center";
+                    successMessage.style.padding = "20px";
+                    successMessage.textContent = "Välkommen tillbaka till Webstay!";
+                    document.body.appendChild(successMessage);
+                }
             }, 1500);
         }
 
-        // Stäng popup-fönster efter laddning
+        // Uppdatera status efter laddning
         window.onload = function() {
             const statusElement = document.getElementById("status");
             statusElement.textContent = "Redo att logga in.";
