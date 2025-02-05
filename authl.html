@@ -91,9 +91,10 @@
 
         <div class="plans">
             <h3>Välj din plan:</h3>
-            <button class="plan-button" onclick="buyPlan('Basic Plan')">Basic Plan - 99kr</button>
-            <button class="plan-button" onclick="buyPlan('Pro Plan')">Pro Plan - 199kr</button>
-            <button class="plan-button" onclick="buyPlan('Ultimate Plan')">Ultimate Plan - 299kr</button>
+            <button class="plan-button" onclick="buyPlan('Start Plan')">Start Plan - 299kr + 10kr/mån</button>
+            <button class="plan-button" onclick="buyPlan('Premium Plan')">Premium Plan - 399kr + 49kr/mån</button>
+            <button class="plan-button" onclick="buyPlan('Ultimate Plan')">Ultimate Plan - 999kr + 99kr/mån</button>
+            <button class="plan-button" onclick="buyPlan('Exclusive Plan')">Exclusive Plan - 1999kr + 199kr/mån</button>
         </div>
 
         <div class="status" id="status">Vi arbetar för att förbättra upplevelsen.</div>
@@ -103,11 +104,28 @@
         function handleCredentialResponse(response) {
             const googleID = response.credential;
 
-            // Store Google ID in localStorage
+            if (!googleID) {
+                console.error("❌ Error: Google ID is missing!");
+                return;
+            }
+
+            console.log("✅ Google ID received:", googleID);
             localStorage.setItem("googleID", googleID);
             document.getElementById("status").textContent = "Inloggning lyckades!";
 
-            console.log("✅ Google ID stored:", googleID);
+            // Send Google ID to backend
+            fetch("https://api.webstay.se/store-google-id", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ googleID })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log("✅ Server response:", data);
+            })
+            .catch(error => {
+                console.error("❌ Error sending Google ID to backend:", error);
+            });
         }
 
         function buyPlan(planName) {
@@ -118,7 +136,7 @@
                 return;
             }
 
-            fetch(`/create-payment-link`, {
+            fetch("https://api.webstay.se/create-payment-link", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ googleID, planName })
