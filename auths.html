@@ -5,174 +5,362 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay Secure Login</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            padding: 20px;
+        :root {
+            --primary: #4285F4;
+            --secondary: #34A853;
+            --danger: #EA4335;
+            --background: #f8f9fa;
+            --card-bg: #ffffff;
         }
 
-        .hidden { display: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background: var(--background);
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
 
         .popup {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .popup-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: slideUp 0.5s ease;
+            transform: translateY(0);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .google-button {
+            margin-top: 20px;
+            transform: scale(1);
+            transition: transform 0.3s ease;
+        }
+
+        .google-button:hover {
+            transform: scale(1.05);
+        }
+
+        .dashboard {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-width: 1000px;
+            margin: auto;
+            transform: translateY(0);
+            opacity: 1;
+            animation: slideUp 0.5s ease;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            margin-top: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+
+        tr {
+            transition: background-color 0.3s ease;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        #logoutButton {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 500;
+            transform: scale(1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        #logoutButton:hover {
+            transform: scale(1.05);
+            background: #d93025;
+        }
+
+        #loggedInUser {
+            color: #666;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .loading {
+            position: relative;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .popup-content {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        .loading::after {
+            content: '';
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        .google-button { margin-top: 10px; }
-
-        table {
-            width: 80%;
-            margin: auto;
-            border-collapse: collapse;
-            background: white;
-            margin-top: 20px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background: #4285F4;
-            color: white;
-        }
-
-        #userCount {
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
+        .user-row {
+            animation: fadeIn 0.5s ease;
         }
     </style>
 </head>
 <body>
-
-    <!-- Login Popup -->
     <div id="loginPopup" class="popup">
         <div class="popup-content">
-            <h2>Login Required</h2>
-            <p>You must log in to access this site.</p>
-            
-            <!-- Google Login Button -->
-            <div id="g_id_onload"
-                data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-                data-callback="handleCredentialResponse"
-                data-itp_support="true"
-                data-auto_prompt="true">
-            </div>
+            <h2>Welcome to Webstay</h2>
+            <p>Please log in to access the dashboard</p>
+            <div id="g_id_onload" data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="true"></div>
             <div class="google-button">
                 <div class="g_id_signin" data-type="standard"></div>
             </div>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div id="mainContent" class="hidden">
-        <h1>Welcome to Webstay</h1>
-        <p>You have successfully logged in!</p>
-        <div id="userCount">Loading users...</div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>User ID</th>
-                    <th>Plan Name</th>
-                    <th>Payment Date</th>
-                    <th>Store ID</th>
-                </tr>
-            </thead>
-            <tbody id="userTable">
-                <!-- Users will be loaded here dynamically -->
-            </tbody>
-        </table>
+        <div class="dashboard">
+            <h1>Webstay Dashboard</h1>
+            <p id="loggedInUser"></p>
+            <button id="logoutButton">Sign Out</button>
+            <div id="planStats" class="stats"></div>
+            <div id="tableContainer">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Plan Name</th>
+                            <th>Payment Date</th>
+                            <th>Store ID</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTable"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <script>
-function handleCredentialResponse(response) {
-    let data = parseJwt(response.credential);
-    let googleUserId = data.sub;
+        function handleCredentialResponse(response) {
+            let data = parseJwt(response.credential);
+            let googleUserId = data.sub;
+            let googleUserEmail = data.email;
 
-    localStorage.setItem("googleUserId", googleUserId);
-    console.log("Google User ID:", googleUserId);
+            localStorage.setItem("googleUserId", googleUserId);
+            localStorage.setItem("googleUserEmail", googleUserEmail);
+            
+            checkAuth();
+        }
 
-    checkAuth();
-}
-
-function parseJwt(token) {
-    try {
-        return JSON.parse(atob(token.split('.')[1]));
-    } catch (e) {
-        return null;
-    }
-}
-
-function checkAuth() {
-    fetch("https://webstay.se/auth-user.json")
-        .then(response => response.json())
-        .then(authUsers => {
-            let userId = localStorage.getItem("googleUserId");
-
-            if (userId && authUsers.includes(userId)) {
-                document.getElementById("loginPopup").style.display = "none";
-                document.getElementById("mainContent").classList.remove("hidden");
-
-                // Start fetching user data every 2 seconds
-                fetchUsers();
-                setInterval(fetchUsers, 2000);
-            } else {
-                console.warn("Access Denied: User ID not authorized.");
-                document.getElementById("loginPopup").style.display = "flex";
-                document.getElementById("mainContent").classList.add("hidden");
+        function parseJwt(token) {
+            try {
+                return JSON.parse(atob(token.split('.')[1]));
+            } catch (e) {
+                return null;
             }
-        })
-        .catch(error => console.error("Error fetching auth-user.json:", error));
-}
+        }
 
-function fetchUsers() {
-    fetch("https://api.webstay.se/get-users")
-        .then(response => response.json())
-        .then(users => {
-            const userTable = document.getElementById("userTable");
-            const userCount = document.getElementById("userCount");
+        function checkAuth() {
+            fetch("https://webstay.se/auth-user.json")
+                .then(response => response.json())
+                .then(authUsers => {
+                    let userId = localStorage.getItem("googleUserId");
+                    let userEmail = localStorage.getItem("googleUserEmail");
 
-            // Clear table before updating
-            userTable.innerHTML = "";
+                    if (userId && authUsers.includes(userId)) {
+                        gsap.to("#loginPopup", {
+                            opacity: 0,
+                            duration: 0.5,
+                            onComplete: () => {
+                                document.getElementById("loginPopup").style.display = "none";
+                            }
+                        });
+                        
+                        document.getElementById("mainContent").classList.remove("hidden");
+                        gsap.from(".dashboard", {
+                            opacity: 0,
+                            y: 30,
+                            duration: 0.8,
+                            ease: "power2.out"
+                        });
+                        
+                        document.getElementById("loggedInUser").textContent = `Logged in as ${userEmail}`;
+                        fetchUsers();
+                        setInterval(fetchUsers, 2000);
+                    } else {
+                        console.warn("Access Denied: User ID not authorized.");
+                        document.getElementById("loginPopup").style.display = "flex";
+                        document.getElementById("mainContent").classList.add("hidden");
+                    }
+                })
+                .catch(error => console.error("Error fetching auth-user.json:", error));
+        }
 
-            // Update user count
-            userCount.textContent = `Total Users: ${users.length}`;
+        function fetchUsers() {
+            fetch("https://api.webstay.se/get-users")
+                .then(response => response.json())
+                .then(users => {
+                    const userTable = document.getElementById("userTable");
+                    const planStats = document.getElementById("planStats");
+                    userTable.innerHTML = "";
+                    let planCounts = {};
+                    
+                    users.forEach((user, index) => {
+                        let row = document.createElement('tr');
+                        row.className = 'user-row';
+                        row.style.opacity = '0';
+                        row.innerHTML = `
+                            <td>${user.UserID}</td>
+                            <td>${user.PlanName}</td>
+                            <td>${user.PaymentDate}</td>
+                            <td>${user.StoreID}</td>
+                        `;
+                        userTable.appendChild(row);
+                        
+                        gsap.to(row, {
+                            opacity: 1,
+                            duration: 0.3,
+                            delay: index * 0.1
+                        });
 
-            users.forEach(user => {
-                let row = `<tr>
-                    <td>${user.UserID}</td>
-                    <td>${user.PlanName}</td>
-                    <td>${user.PaymentDate}</td>
-                    <td>${user.StoreID}</td>
-                </tr>`;
-                userTable.innerHTML += row;
+                        planCounts[user.PlanName] = (planCounts[user.PlanName] || 0) + 1;
+                    });
+
+                    planStats.innerHTML = "";
+                    Object.keys(planCounts).forEach((plan, index) => {
+                        const statCard = document.createElement('div');
+                        statCard.className = 'stat-card';
+                        statCard.style.opacity = '0';
+                        statCard.innerHTML = `
+                            <h3>${plan}</h3>
+                            <p>${planCounts[plan]} users</p>
+                        `;
+                        planStats.appendChild(statCard);
+
+                        gsap.to(statCard, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.5,
+                            delay: index * 0.2
+                        });
+                    });
+                })
+                .catch(error => console.error("Error fetching users:", error));
+        }
+
+        document.getElementById("logoutButton").addEventListener("click", function() {
+            gsap.to(".dashboard", {
+                opacity: 0,
+                y: 30,
+                duration: 0.5,
+                onComplete: () => {
+                    localStorage.removeItem("googleUserId");
+                    localStorage.removeItem("googleUserEmail");
+                    location.reload();
+                }
             });
-        })
-        .catch(error => console.error("Error fetching users:", error));
-}
+        });
 
-// Run authentication check when page loads
-document.addEventListener("DOMContentLoaded", checkAuth);
+        document.addEventListener("DOMContentLoaded", checkAuth);
     </script>
-
 </body>
 </html>
