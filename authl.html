@@ -3,136 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Logga in/Registrera</title>
+    <title>Webstay - Logga in</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #74ebd5, #9face6);
-            color: white;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            width: 400px;
-            text-align: center;
-            animation: fadeIn 1s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #555;
-            font-size: 16px;
-            margin-bottom: 25px;
-        }
-
-        .google-button {
-            margin-top: 20px;
-        }
-
-        .plans {
-            margin-top: 30px;
-        }
-
-        .plan-button {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .plan-button:hover {
-            background: #45a049;
-        }
-
-        .status {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #888;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Välkommen till Webstay</h1>
-        <p>Logga in eller registrera dig med Google för att fortsätta.</p>
+<body class="bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center min-h-screen">
+    <div class="bg-white shadow-xl rounded-2xl p-8 w-96 text-center space-y-6 transition-all transform hover:scale-105">
+        <h1 class="text-3xl font-extrabold text-gray-800">Välkommen till Webstay</h1>
+        <p class="text-gray-600">Logga in med Google för att fortsätta.</p>
 
+        <!-- Google Sign-In -->
         <div id="g_id_onload"
             data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
             data-callback="handleCredentialResponse"
+            data-itp_support="true"
             data-auto_prompt="true">
         </div>
-        <div class="google-button">
-            <div class="g_id_signin" data-type="standard"></div>
+        <div class="g_id_signin" data-type="standard"></div>
+
+        <!-- Create Google Account -->
+        <button onclick="window.open('https://accounts.google.com/signup', '_blank')" 
+                class="mt-3 text-sm text-blue-500 hover:underline">
+            Skapa ett Google-konto
+        </button>
+
+        <!-- Pricing Plans -->
+        <div id="pricing-plans" class="hidden">
+            <h3 class="text-lg font-semibold text-gray-800 mt-6">Välj din plan:</h3>
+            <button onclick="buyPlan('Start Plan')" class="w-full mt-2 bg-green-500 hover:bg-green-600 text-white py-2 rounded-lg shadow-md transition-all">Start - 299kr engångs, sedan 10kr/mån</button>
+            <button onclick="buyPlan('Premium Plan')" class="w-full mt-2 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg shadow-md transition-all">Premium - 399kr engångs, sedan 49kr/mån</button>
+            <button onclick="buyPlan('Ultimate Plan')" class="w-full mt-2 bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-lg shadow-md transition-all">Ultimate - 999kr engångs, sedan 99kr/mån</button>
+            <button onclick="buyPlan('Exclusive Plan')" class="w-full mt-2 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg shadow-md transition-all">Exclusive - 1999kr engångs, sedan 199kr/mån</button>
         </div>
 
-        <div class="plans">
-            <h3>Välj din plan:</h3>
-            <button class="plan-button" onclick="buyPlan('Start Plan')">Start Plan - 299kr + 10kr/mån</button>
-            <button class="plan-button" onclick="buyPlan('Premium Plan')">Premium Plan - 399kr + 49kr/mån</button>
-            <button class="plan-button" onclick="buyPlan('Ultimate Plan')">Ultimate Plan - 999kr + 99kr/mån</button>
-            <button class="plan-button" onclick="buyPlan('Exclusive Plan')">Exclusive Plan - 1999kr + 199kr/mån</button>
+        <!-- Custom Alert -->
+        <div id="custom-alert" class="hidden fixed bottom-5 left-1/2 transform -translate-x-1/2 bg-black text-white py-3 px-6 rounded-xl shadow-md">
         </div>
-
-        <div class="status" id="status">Vi arbetar för att förbättra upplevelsen.</div>
     </div>
 
     <script>
         function handleCredentialResponse(response) {
             const googleID = response.credential;
-
-            if (!googleID) {
-                console.error("❌ Error: Google ID is missing!");
-                return;
-            }
-
-            console.log("✅ Google ID received:", googleID);
             localStorage.setItem("googleID", googleID);
-            document.getElementById("status").textContent = "Inloggning lyckades!";
-
-            // Send Google ID to backend
-            fetch("https://api.webstay.se/store-google-id", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ googleID })
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log("✅ Server response:", data);
-            })
-            .catch(error => {
-                console.error("❌ Error sending Google ID to backend:", error);
-            });
+            showAlert("✅ Inloggning lyckades!", "bg-green-600");
+            checkPricing();
         }
 
         function buyPlan(planName) {
             const googleID = localStorage.getItem("googleID");
-
             if (!googleID) {
-                alert("⚠️ Du måste logga in med Google först!");
+                showAlert("⚠️ Du måste logga in med Google först!", "bg-red-500");
                 return;
             }
 
@@ -144,13 +64,30 @@
             .then(res => res.json())
             .then(data => {
                 if (data.url) {
-                    window.location.href = data.url; // Redirect to Stripe Payment Link
+                    window.location.href = data.url;
                 } else {
-                    alert("⚠️ Ett fel uppstod! Försök igen.");
+                    showAlert("⚠️ Ett fel uppstod! Försök igen.", "bg-red-500");
                 }
             })
-            .catch(error => console.error('❌ Error:', error));
+            .catch(error => showAlert("❌ Error: " + error.message, "bg-red-500"));
         }
+
+        function showAlert(message, bgColor) {
+            const alertBox = document.getElementById("custom-alert");
+            alertBox.textContent = message;
+            alertBox.className = `fixed bottom-5 left-1/2 transform -translate-x-1/2 py-3 px-6 rounded-xl shadow-md text-white ${bgColor} transition-opacity`;
+            alertBox.classList.remove("hidden");
+            setTimeout(() => { alertBox.classList.add("hidden"); }, 3000);
+        }
+
+        function checkPricing() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has("showpricingplans")) {
+                document.getElementById("pricing-plans").classList.remove("hidden");
+            }
+        }
+
+        window.onload = checkPricing;
     </script>
 </body>
 </html>
