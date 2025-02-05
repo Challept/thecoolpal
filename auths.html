@@ -104,71 +104,74 @@
     </div>
 
     <script>
-        function handleCredentialResponse(response) {
-            let data = parseJwt(response.credential);
-            let googleUserId = data.sub;
+function handleCredentialResponse(response) {
+    let data = parseJwt(response.credential);
+    let googleUserId = data.sub;
 
-            localStorage.setItem("googleUserId", googleUserId);
-            console.log("Google User ID:", googleUserId);
+    localStorage.setItem("googleUserId", googleUserId);
+    console.log("Google User ID:", googleUserId);
 
-            checkAuth();
-        }
+    checkAuth();
+}
 
-        function parseJwt(token) {
-            try {
-                return JSON.parse(atob(token.split('.')[1]));
-            } catch (e) {
-                return null;
+function parseJwt(token) {
+    try {
+        return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+        return null;
+    }
+}
+
+function checkAuth() {
+    fetch("https://webstay.se/auth-user.json")
+        .then(response => response.json())
+        .then(authUsers => {
+            let userId = localStorage.getItem("googleUserId");
+
+            if (userId && authUsers.includes(userId)) {
+                document.getElementById("loginPopup").style.display = "none";
+                document.getElementById("mainContent").classList.remove("hidden");
+
+                // Start fetching user data every 2 seconds
+                fetchUsers();
+                setInterval(fetchUsers, 2000);
+            } else {
+                console.warn("Access Denied: User ID not authorized.");
+                document.getElementById("loginPopup").style.display = "flex";
+                document.getElementById("mainContent").classList.add("hidden");
             }
-        }
+        })
+        .catch(error => console.error("Error fetching auth-user.json:", error));
+}
 
-        function checkAuth() {
-            fetch("https://webstay.se/auth-user.json")
-                .then(response => response.json())
-                .then(authUsers => {
-                    let userId = localStorage.getItem("googleUserId");
+function fetchUsers() {
+    fetch("https://api.webstay.se/get-users")
+        .then(response => response.json())
+        .then(users => {
+            const userTable = document.getElementById("userTable");
+            const userCount = document.getElementById("userCount");
 
-                    if (userId && authUsers.includes(userId)) {
-                        document.getElementById("loginPopup").style.display = "none";
-                        document.getElementById("mainContent").classList.remove("hidden");
+            // Clear table before updating
+            userTable.innerHTML = "";
 
-                        // Start fetching user data every 2 seconds
-                        fetchUsers();
-                        setInterval(fetchUsers, 2000);
-                    } else {
-                        alert("Access Denied! Your Google ID is not authorized.");
-                    }
-                })
-                .catch(error => console.error("Error fetching auth-user.json:", error));
-        }
+            // Update user count
+            userCount.textContent = `Total Users: ${users.length}`;
 
-        function fetchUsers() {
-            fetch("https://api.webstay.se/get-users")
-                .then(response => response.json())
-                .then(users => {
-                    const userTable = document.getElementById("userTable");
-                    const userCount = document.getElementById("userCount");
+            users.forEach(user => {
+                let row = `<tr>
+                    <td>${user.UserID}</td>
+                    <td>${user.PlanName}</td>
+                    <td>${user.PaymentDate}</td>
+                    <td>${user.StoreID}</td>
+                </tr>`;
+                userTable.innerHTML += row;
+            });
+        })
+        .catch(error => console.error("Error fetching users:", error));
+}
 
-                    // Clear table before updating
-                    userTable.innerHTML = "";
-
-                    // Update user count
-                    userCount.textContent = `Total Users: ${users.length}`;
-
-                    users.forEach(user => {
-                        let row = `<tr>
-                            <td>${user.UserID}</td>
-                            <td>${user.PlanName}</td>
-                            <td>${user.PaymentDate}</td>
-                            <td>${user.StoreID}</td>
-                        </tr>`;
-                        userTable.innerHTML += row;
-                    });
-                })
-                .catch(error => console.error("Error fetching users:", error));
-        }
-
-        document.addEventListener("DOMContentLoaded", checkAuth);
+// Run authentication check when page loads
+document.addEventListener("DOMContentLoaded", checkAuth);
     </script>
 
 </body>
