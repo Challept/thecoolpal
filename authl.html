@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webstay - Logga in/Registrera</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 400px;
+            text-align: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .google-button {
+            margin-top: 20px;
+        }
+
+        .plans {
+            margin-top: 30px;
+        }
+
+        .plan-button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .plan-button:hover {
+            background: #45a049;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Välkommen till Webstay</h1>
+        <p>Logga in eller registrera dig med Google för att fortsätta.</p>
+
+        <div id="g_id_onload"
+            data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+            data-callback="handleCredentialResponse"
+            data-auto_prompt="true">
+        </div>
+        <div class="google-button">
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
+
+        <div class="plans">
+            <h3>Välj din plan:</h3>
+            <button class="plan-button" onclick="buyPlan('Basic Plan')">Basic Plan - 99kr</button>
+            <button class="plan-button" onclick="buyPlan('Pro Plan')">Pro Plan - 199kr</button>
+            <button class="plan-button" onclick="buyPlan('Ultimate Plan')">Ultimate Plan - 299kr</button>
+        </div>
+
+        <div class="status" id="status">Vi arbetar för att förbättra upplevelsen.</div>
+    </div>
+
+    <script>
+        function handleCredentialResponse(response) {
+            const googleID = response.credential;
+
+            // Store Google ID in localStorage
+            localStorage.setItem("googleID", googleID);
+            document.getElementById("status").textContent = "Inloggning lyckades!";
+
+            console.log("✅ Google ID stored:", googleID);
+        }
+
+        function buyPlan(planName) {
+            const googleID = localStorage.getItem("googleID");
+
+            if (!googleID) {
+                alert("⚠️ Du måste logga in med Google först!");
+                return;
+            }
+
+            fetch(`/create-payment-link`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ googleID, planName })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.url) {
+                    window.location.href = data.url; // Redirect to Stripe Payment Link
+                } else {
+                    alert("⚠️ Ett fel uppstod! Försök igen.");
+                }
+            })
+            .catch(error => console.error('❌ Error:', error));
+        }
+    </script>
+</body>
+</html>
