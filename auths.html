@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webstay Secure Login</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        /* Hidden Content */
+        .hidden {
+            display: none;
+        }
+
+        /* Popup Styling */
+        .popup {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .google-button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Login Popup -->
+    <div id="loginPopup" class="popup">
+        <div class="popup-content">
+            <h2>Login Required</h2>
+            <p>You must log in to access this site.</p>
+            
+            <!-- Google Login Button -->
+            <div id="g_id_onload"
+                data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+                data-callback="handleCredentialResponse"
+                data-itp_support="true"
+                data-auto_prompt="true">
+            </div>
+            <div class="google-button">
+                <div class="g_id_signin" data-type="standard"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden by Default) -->
+    <div id="mainContent" class="hidden">
+        <h1>Welcome to Webstay</h1>
+        <p>You have successfully logged in!</p>
+    </div>
+
+    <script>
+        function handleCredentialResponse(response) {
+            // Decode JWT token to get user ID
+            let data = parseJwt(response.credential);
+            let googleUserId = data.sub;
+
+            // Save user ID in localStorage
+            localStorage.setItem("googleUserId", googleUserId);
+            console.log("Google User ID:", googleUserId);
+
+            // Validate login
+            checkAuth();
+        }
+
+        function parseJwt(token) {
+            try {
+                return JSON.parse(atob(token.split('.')[1]));
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function checkAuth() {
+            fetch("https://webstay.se/auth-user.json")
+                .then(response => response.json())
+                .then(authUsers => {
+                    let userId = localStorage.getItem("googleUserId");
+
+                    if (userId && authUsers.includes(userId)) {
+                        document.getElementById("loginPopup").style.display = "none";
+                        document.getElementById("mainContent").classList.remove("hidden");
+                    } else {
+                        alert("Access Denied! Your Google ID is not authorized.");
+                    }
+                })
+                .catch(error => console.error("Error fetching auth-user.json:", error));
+        }
+
+        // Auto-check auth if user already logged in
+        document.addEventListener("DOMContentLoaded", checkAuth);
+    </script>
+
+</body>
+</html>
