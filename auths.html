@@ -1,164 +1,232 @@
-<!DOCTYPE html>
+    <script<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay Secure Login</title>
+    <title>Webstay Premium Dashboard</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         :root {
-            --primary: #4285F4;
-            --secondary: #34A853;
-            --danger: #EA4335;
-            --background: #f8f9fa;
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #22c55e;
+            --background: #f8fafc;
             --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border: #e2e8f0;
+            --hover: #f1f5f9;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: all 0.3s ease;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
             background: var(--background);
             min-height: 100vh;
-            padding: 20px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-primary);
+            line-height: 1.5;
         }
 
-        .hidden {
-            opacity: 0;
-            transform: translateY(20px);
-            pointer-events: none;
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        .popup {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            animation: fadeIn 0.5s ease;
+            color: white;
+            font-weight: 500;
         }
 
-        .popup-content {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            animation: slideUp 0.5s ease;
-            transform: translateY(0);
-            max-width: 90%;
-            width: 400px;
-        }
-
-        .google-button {
-            margin-top: 20px;
-            transform: scale(1);
-            transition: transform 0.3s ease;
-        }
-
-        .google-button:hover {
-            transform: scale(1.05);
-        }
-
-        .dashboard {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            max-width: 1000px;
-            margin: auto;
-            transform: translateY(0);
-            opacity: 1;
-            animation: slideUp 0.5s ease;
-        }
-
-        .stats {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .stat-card {
-            background: var(--primary);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
-            transform: translateY(0);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(66, 133, 244, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .trend-up { color: var(--success); }
+        .trend-down { color: var(--danger); }
+
+        .data-grid {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            border: 1px solid var(--border);
+        }
+
+        .grid-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-container {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            background: var(--card-bg);
-            margin-top: 20px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-collapse: collapse;
         }
 
         th, td {
-            padding: 15px;
+            padding: 1rem 1.5rem;
             text-align: left;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border);
         }
 
         th {
+            background: var(--background);
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        tr:hover td {
+            background: var(--hover);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-pending {
+            background: var(--warning);
+            color: white;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
             background: var(--primary);
             color: white;
-            font-weight: 500;
         }
 
-        tr {
-            transition: background-color 0.3s ease;
+        .btn-primary:hover {
+            background: var(--primary-dark);
         }
 
-        tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        #logoutButton {
-            margin-top: 20px;
-            padding: 12px 30px;
+        .btn-danger {
             background: var(--danger);
             color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-            font-weight: 500;
-            transform: scale(1);
-            transition: transform 0.3s ease, background-color 0.3s ease;
         }
 
-        #logoutButton:hover {
-            transform: scale(1.05);
-            background: #d93025;
+        .btn-danger:hover {
+            background: #dc2626;
         }
 
-        #loggedInUser {
-            color: #666;
-            margin: 10px 0;
-            font-size: 0.9em;
+        .search-bar {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 300px;
+            font-size: 0.875rem;
+        }
+
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .slide-up {
+            animation: slideUp 0.5s ease forwards;
         }
 
         @keyframes fadeIn {
@@ -168,62 +236,73 @@
 
         @keyframes slideUp {
             from {
-                transform: translateY(30px);
                 opacity: 0;
+                transform: translateY(20px);
             }
             to {
-                transform: translateY(0);
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        .loading {
-            position: relative;
-            height: 200px;
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1000;
         }
 
-        .loading::after {
-            content: '';
+        .loading-spinner {
             width: 40px;
             height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--primary);
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .user-row {
-            animation: fadeIn 0.5s ease;
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div id="loginPopup" class="popup">
-        <div class="popup-content">
-            <h2>Welcome to Webstay</h2>
-            <p>Please log in to access the dashboard</p>
-            <div id="g_id_onload" data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="true"></div>
-            <div class="google-button">
-                <div class="g_id_signin" data-type="standard"></div>
-            </div>
-        </div>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
     </div>
 
-    <div id="mainContent" class="hidden">
-        <div class="dashboard">
-            <h1>Webstay Dashboard</h1>
-            <p id="loggedInUser"></p>
-            <button id="logoutButton">Sign Out</button>
-            <div id="planStats" class="stats"></div>
-            <div id="tableContainer">
+    <div id="mainContent" class="container" style="display: none;">
+        <div class="dashboard-header fade-in">
+            <div class="user-info">
+                <div class="avatar" id="userAvatar"></div>
+                <div>
+                    <h2 id="welcomeMessage">Welcome back</h2>
+                    <p id="userEmail" class="text-secondary"></p>
+                </div>
+            </div>
+            <button id="logoutButton" class="btn btn-danger">
+                Sign Out
+            </button>
+        </div>
+
+        <div class="stats-grid" id="statsGrid"></div>
+        
+        <div class="chart-container">
+            <canvas id="trendsChart"></canvas>
+        </div>
+
+        <div class="data-grid slide-up">
+            <div class="grid-header">
+                <h3>Users Overview</h3>
+                <input type="text" class="search-bar" placeholder="Search users..." id="searchInput">
+            </div>
+            <div class="table-container">
                 <table>
                     <thead>
                         <tr>
@@ -231,6 +310,7 @@
                             <th>Plan Name</th>
                             <th>Payment Date</th>
                             <th>Store ID</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody id="userTable"></tbody>
@@ -240,10 +320,214 @@
     </div>
 
     <script>
+        // State management
+        const state = {
+            users: [],
+            planCounts: {},
+            trends: {},
+            lastUpdate: null
+        };
+
+        // Utility functions
+        const utils = {
+            formatDate: (date) => new Date(date).toLocaleDateString(),
+            getInitials: (email) => email.split('@')[0].substring(0, 2).toUpperCase(),
+            calculateTrend: (current, previous) => {
+                if (!previous) return 0;
+                return ((current - previous) / previous) * 100;
+            }
+        };
+
+        // Chart initialization
+        let trendsChart = null;
+
+        function initializeChart() {
+            const ctx = document.getElementById('trendsChart').getContext('2d');
+            trendsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Active Users',
+                        data: [],
+                        borderColor: '#2563eb',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'User Trends'
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateChart(data) {
+            if (!trendsChart) return;
+            
+            const labels = Object.keys(data.planCounts);
+            const values = Object.values(data.planCounts);
+
+            trendsChart.data.labels = labels;
+            trendsChart.data.datasets[0].data = values;
+            trendsChart.update();
+        }
+
+        // UI updates
+        function updateStatsGrid(data) {
+            const statsGrid = document.getElementById('statsGrid');
+            const totalUsers = Object.values(data.planCounts).reduce((a, b) => a + b, 0);
+            const previousTotal = state.lastUpdate ? 
+                Object.values(state.planCounts).reduce((a, b) => a + b, 0) : totalUsers;
+            
+            const trend = utils.calculateTrend(totalUsers, previousTotal);
+
+            const stats = [
+                {
+                    title: 'Total Users',
+                    value: totalUsers,
+                    trend: trend
+                },
+                {
+                    title: 'Active Plans',
+                    value: Object.keys(data.planCounts).length,
+                    trend: 0
+                }
+            ];
+
+            statsGrid.innerHTML = stats.map(stat => `
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">${stat.title}</span>
+                        ${stat.trend !== 0 ? `
+                            <span class="stat-trend ${stat.trend > 0 ? 'trend-up' : 'trend-down'}">
+                                ${stat.trend > 0 ? '↑' : '↓'} ${Math.abs(stat.trend).toFixed(1)}%
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="stat-value">${stat.value.toLocaleString()}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateUserTable(users) {
+            const tbody = document.getElementById('userTable');
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filteredUsers = users.filter(user => 
+                Object.values(user).some(value => 
+                    String(value).toLowerCase().includes(searchTerm)
+                )
+            );
+
+            const rows = filteredUsers.map(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.UserID}</td>
+                    <td>${user.PlanName}</td>
+                    <td>${utils.formatDate(user.PaymentDate)}</td>
+                    <td>${user.StoreID}</td>
+                    <td>
+                        <span class="status-badge ${Math.random() > 0.5 ? 'status-active' : 'status-pending'}">
+                            ${Math.random() > 0.5 ? 'Active' : 'Pending'}
+                        </span>
+                    </td>
+                `;
+                return row;
+            });
+
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // Data fetching and processing
+        async function fetchData() {
+            try {
+                const response = await fetch("https://api.webstay.se/get-users");
+                const users = await response.json();
+                
+                const planCounts = users.reduce((acc, user) => {
+                    acc[user.PlanName] = (acc[user.PlanName] || 0) + 1;
+                    return acc;
+                }, {});
+
+                const data = { users, planCounts };
+                
+                updateStatsGrid(data);
+                updateUserTable(users);
+                updateChart(data);
+
+                state.users = users;
+                state.planCounts = planCounts;
+                state.lastUpdate = new Date();
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        // Authentication and initialization
+        function initializeApp() {
+            const userEmail = localStorage.getItem("googleUserEmail");
+            if (userEmail) {
+                document.getElementById('userEmail').textContent = userEmail;
+                document.getElementById('userAvatar').textContent = utils.getInitials(userEmail);
+                document.getElementById('welcomeMessage').textContent = `Welcome back, ${userEmail.split('@')[0]}`;
+            }
+
+            document.getElementById('loadingOverlay').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+
+            initializeChart();
+            fetchData();
+            setInterval(fetchData, 5000);
+
+            // Event listeners
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                updateUserTable(state.users);
+            });
+
+            document.getElementById('logoutButton').addEventListener('click', () => {
+                gsap.to('#mainContent', {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.5,
+                    onComplete: () => {
+                        localStorage.removeItem("googleUserId");
+                        localStorage.removeItem("googleUserEmail");
+                        location.reload();
+                    }
+                });
+            });
+
+            // Add sorting functionality
+            document.querySelectorAll('th').forEach(header => {
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', () => {
+                    const column = header.textContent.toLowerCase().replace(/ /g, '');
+                    const sortedUsers = [...state.users].sort((a, b) => {
+                        if (a[column] < b[column]) return -1;
+                        if (a[column] > b[column]) return 1;
+                        return 0;
+                    });
+                    updateUserTable(sortedUsers);
+                });
+            });
+        }
+
+        // Handle Google Sign-in
         function handleCredentialResponse(response) {
-            let data = parseJwt(response.credential);
-            let googleUserId = data.sub;
-            let googleUserEmail = data.email;
+            const data = parseJwt(response.credential);
+            const googleUserId = data.sub;
+            const googleUserEmail = data.email;
 
             localStorage.setItem("googleUserId", googleUserId);
             localStorage.setItem("googleUserEmail", googleUserEmail);
@@ -263,104 +547,92 @@
             fetch("https://webstay.se/auth-user.json")
                 .then(response => response.json())
                 .then(authUsers => {
-                    let userId = localStorage.getItem("googleUserId");
-                    let userEmail = localStorage.getItem("googleUserEmail");
-
+                    const userId = localStorage.getItem("googleUserId");
+                    
                     if (userId && authUsers.includes(userId)) {
-                        gsap.to("#loginPopup", {
+                        gsap.to('#loadingOverlay', {
                             opacity: 0,
                             duration: 0.5,
                             onComplete: () => {
-                                document.getElementById("loginPopup").style.display = "none";
+                                initializeApp();
                             }
                         });
-                        
-                        document.getElementById("mainContent").classList.remove("hidden");
-                        gsap.from(".dashboard", {
-                            opacity: 0,
-                            y: 30,
-                            duration: 0.8,
-                            ease: "power2.out"
-                        });
-                        
-                        document.getElementById("loggedInUser").textContent = `Logged in as ${userEmail}`;
-                        fetchUsers();
-                        setInterval(fetchUsers, 2000);
                     } else {
-                        console.warn("Access Denied: User ID not authorized.");
-                        document.getElementById("loginPopup").style.display = "flex";
-                        document.getElementById("mainContent").classList.add("hidden");
+                        showLoginPrompt();
                     }
                 })
-                .catch(error => console.error("Error fetching auth-user.json:", error));
+                .catch(error => {
+                    console.error("Error checking auth:", error);
+                    showLoginPrompt();
+                });
         }
 
-        function fetchUsers() {
-            fetch("https://api.webstay.se/get-users")
-                .then(response => response.json())
-                .then(users => {
-                    const userTable = document.getElementById("userTable");
-                    const planStats = document.getElementById("planStats");
-                    userTable.innerHTML = "";
-                    let planCounts = {};
-                    
-                    users.forEach((user, index) => {
-                        let row = document.createElement('tr');
-                        row.className = 'user-row';
-                        row.style.opacity = '0';
-                        row.innerHTML = `
-                            <td>${user.UserID}</td>
-                            <td>${user.PlanName}</td>
-                            <td>${user.PaymentDate}</td>
-                            <td>${user.StoreID}</td>
-                        `;
-                        userTable.appendChild(row);
-                        
-                        gsap.to(row, {
-                            opacity: 1,
-                            duration: 0.3,
-                            delay: index * 0.1
-                        });
-
-                        planCounts[user.PlanName] = (planCounts[user.PlanName] || 0) + 1;
-                    });
-
-                    planStats.innerHTML = "";
-                    Object.keys(planCounts).forEach((plan, index) => {
-                        const statCard = document.createElement('div');
-                        statCard.className = 'stat-card';
-                        statCard.style.opacity = '0';
-                        statCard.innerHTML = `
-                            <h3>${plan}</h3>
-                            <p>${planCounts[plan]} users</p>
-                        `;
-                        planStats.appendChild(statCard);
-
-                        gsap.to(statCard, {
-                            opacity: 1,
-                            y: 0,
-                            duration: 0.5,
-                            delay: index * 0.2
-                        });
-                    });
-                })
-                .catch(error => console.error("Error fetching users:", error));
+        function showLoginPrompt() {
+            const loginHtml = `
+                <div class="popup fade-in">
+                    <div class="stat-card slide-up" style="max-width: 400px; margin: auto;">
+                        <h2 style="margin-bottom: 1rem;">Welcome to Webstay</h2>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                            Please sign in to access your dashboard
+                        </p>
+                        <div id="g_id_onload"
+                            data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+                            data-callback="handleCredentialResponse"
+                            data-auto_prompt="true">
+                        </div>
+                        <div class="google-button">
+                            <div class="g_id_signin" data-type="standard"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            const loginContainer = document.createElement('div');
+            loginContainer.innerHTML = loginHtml;
+            document.body.appendChild(loginContainer);
+            
+            document.getElementById('loadingOverlay').style.display = 'none';
         }
 
-        document.getElementById("logoutButton").addEventListener("click", function() {
-            gsap.to(".dashboard", {
-                opacity: 0,
-                y: 30,
-                duration: 0.5,
-                onComplete: () => {
-                    localStorage.removeItem("googleUserId");
-                    localStorage.removeItem("googleUserEmail");
-                    location.reload();
-                }
-            });
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + F to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+            
+            // Esc to clear search
+            if (e.key === 'Escape') {
+                document.getElementById('searchInput').value = '';
+                updateUserTable(state.users);
+            }
         });
 
-        document.addEventListener("DOMContentLoaded", checkAuth);
+        // Add dark mode toggle
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+        function toggleDarkMode(e) {
+            if (e.matches) {
+                document.documentElement.style.setProperty('--background', '#1a1a1a');
+                document.documentElement.style.setProperty('--card-bg', '#2d2d2d');
+                document.documentElement.style.setProperty('--text-primary', '#ffffff');
+                document.documentElement.style.setProperty('--text-secondary', '#a0a0a0');
+                document.documentElement.style.setProperty('--border', '#404040');
+                document.documentElement.style.setProperty('--hover', '#353535');
+            } else {
+                document.documentElement.style.setProperty('--background', '#f8fafc');
+                document.documentElement.style.setProperty('--card-bg', '#ffffff');
+                document.documentElement.style.setProperty('--text-primary', '#1e293b');
+                document.documentElement.style.setProperty('--text-secondary', '#64748b');
+                document.documentElement.style.setProperty('--border', '#e2e8f0');
+                document.documentElement.style.setProperty('--hover', '#f1f5f9');
+            }
+        }
+        prefersDark.addListener(toggleDarkMode);
+        toggleDarkMode(prefersDark);
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', checkAuth);
     </script>
 </body>
 </html>
