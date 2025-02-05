@@ -1,0 +1,41 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.stats-container {
+    padding: 50px;
+}
+
+.stats-box {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.stats-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 24px;
+    width: 150px;
+    transition: transform 0.3s;
+}
+
+.stats-card:hover {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.new-user {
+    color: lime;
+    font-size: 30px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
