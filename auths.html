@@ -13,12 +13,8 @@
             padding: 20px;
         }
 
-        /* Hidden Content */
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
 
-        /* Popup Styling */
         .popup {
             position: fixed;
             top: 0; left: 0;
@@ -37,8 +33,31 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
 
-        .google-button {
-            margin-top: 10px;
+        .google-button { margin-top: 10px; }
+
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #4285F4;
+            color: white;
+        }
+
+        #userCount {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -63,23 +82,35 @@
         </div>
     </div>
 
-    <!-- Main Content (Hidden by Default) -->
+    <!-- Main Content -->
     <div id="mainContent" class="hidden">
         <h1>Welcome to Webstay</h1>
         <p>You have successfully logged in!</p>
+        <div id="userCount">Loading users...</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Plan Name</th>
+                    <th>Payment Date</th>
+                    <th>Store ID</th>
+                </tr>
+            </thead>
+            <tbody id="userTable">
+                <!-- Users will be loaded here dynamically -->
+            </tbody>
+        </table>
     </div>
 
     <script>
         function handleCredentialResponse(response) {
-            // Decode JWT token to get user ID
             let data = parseJwt(response.credential);
             let googleUserId = data.sub;
 
-            // Save user ID in localStorage
             localStorage.setItem("googleUserId", googleUserId);
             console.log("Google User ID:", googleUserId);
 
-            // Validate login
             checkAuth();
         }
 
@@ -100,6 +131,10 @@
                     if (userId && authUsers.includes(userId)) {
                         document.getElementById("loginPopup").style.display = "none";
                         document.getElementById("mainContent").classList.remove("hidden");
+
+                        // Start fetching user data every 2 seconds
+                        fetchUsers();
+                        setInterval(fetchUsers, 2000);
                     } else {
                         alert("Access Denied! Your Google ID is not authorized.");
                     }
@@ -107,7 +142,32 @@
                 .catch(error => console.error("Error fetching auth-user.json:", error));
         }
 
-        // Auto-check auth if user already logged in
+        function fetchUsers() {
+            fetch("https://api.webstay.se/get-users")
+                .then(response => response.json())
+                .then(users => {
+                    const userTable = document.getElementById("userTable");
+                    const userCount = document.getElementById("userCount");
+
+                    // Clear table before updating
+                    userTable.innerHTML = "";
+
+                    // Update user count
+                    userCount.textContent = `Total Users: ${users.length}`;
+
+                    users.forEach(user => {
+                        let row = `<tr>
+                            <td>${user.UserID}</td>
+                            <td>${user.PlanName}</td>
+                            <td>${user.PaymentDate}</td>
+                            <td>${user.StoreID}</td>
+                        </tr>`;
+                        userTable.innerHTML += row;
+                    });
+                })
+                .catch(error => console.error("Error fetching users:", error));
+        }
+
         document.addEventListener("DOMContentLoaded", checkAuth);
     </script>
 
