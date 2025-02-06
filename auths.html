@@ -31,7 +31,7 @@
             line-height: 1.6;
         }
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 1rem;
         }
@@ -52,12 +52,7 @@
         }
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 1rem;
-        }
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 3fr 1fr;
             gap: 1rem;
         }
         .card {
@@ -93,18 +88,24 @@
             height: 300px;
         }
         .user-list {
-            max-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
+            border-radius: 8px;
         }
-        .user-item {
-            display: flex;
-            justify-content: space-between;
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .user-table th, .user-table td {
             padding: 0.75rem;
             border-bottom: 1px solid var(--border);
-            transition: background 0.2s ease;
+            text-align: left;
         }
-        .user-item:hover {
+        .user-table th {
             background: var(--background);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
         }
         .badge {
             padding: 0.25rem 0.5rem;
@@ -120,6 +121,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
+            margin-bottom: 1rem;
         }
         .stat-card {
             text-align: center;
@@ -161,15 +163,17 @@
             <button id="logoutBtn" class="btn-logout">Logout</button>
         </div>
 
+        <div class="stats-grid" id="statsGrid"></div>
+
         <div class="dashboard-grid">
-            <div class="main-content">
+            <div>
                 <div class="card">
                     <h4>Plan Distribution</h4>
                     <div class="chart-container">
                         <canvas id="planChart"></canvas>
                     </div>
                 </div>
-                <div class="card">
+                <div class="card" style="margin-top: 1rem;">
                     <h4>User Growth</h4>
                     <div class="chart-container">
                         <canvas id="growthChart"></canvas>
@@ -177,12 +181,21 @@
                 </div>
             </div>
             <div class="card">
-                <h4>Recent Users</h4>
-                <div class="user-list" id="userList"></div>
+                <h4>User Details</h4>
+                <div class="user-list">
+                    <table class="user-table" id="userTable">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Plan</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userList"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
-
-        <div class="stats-grid" id="statsGrid"></div>
     </div>
 
     <script>
@@ -340,11 +353,18 @@
 
         function updateUserList(users) {
             const userList = document.getElementById('userList');
-            userList.innerHTML = users.slice(0, 10).map(user => `
-                <div class="user-item">
-                    <span>${user.UserID}</span>
-                    <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">${user.PlanName}</span>
-                </div>
+            userList.innerHTML = users.slice(0, 20).map(user => `
+                <tr>
+                    <td>${user.UserID}</td>
+                    <td>
+                        <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">${user.PlanName}</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">
+                            ${['Active', 'Pending', 'Expired'][Math.floor(Math.random() * 3)]}
+                        </span>
+                    </td>
+                </tr>
             `).join('');
         }
 
