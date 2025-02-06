@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay Dashboard Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
@@ -84,6 +83,19 @@
         .btn-logout:hover {
             background: #2563eb;
         }
+        .alert {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            color: white;
+            display: none;
+        }
+        .alert-success {
+            background: var(--secondary);
+        }
+        .alert-error {
+            background: #ef4444;
+        }
         .chart-container {
             height: 300px;
         }
@@ -161,12 +173,7 @@
     <div id="loginSection" class="login-container">
         <div id="loginCard" class="login-card">
             <h2>Webstay Dashboard Pro</h2>
-            <div id="g_id_onload"
-                data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-                data-callback="handleCredentialResponse"
-                data-auto_prompt="true">
-            </div>
-            <div class="g_id_signin" data-type="standard"></div>
+            <div id="customAlert" class="alert"></div>
         </div>
     </div>
 
@@ -266,6 +273,31 @@
             history.scrollRestoration = 'manual';
         }
 
+        function showCustomAlert(message, type = 'success') {
+            const alertBox = document.getElementById('customAlert');
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type}`;
+            alertBox.style.display = 'block';
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 3000);
+        }
+
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch("https://api.webstay.se/get-users");
+                const users = await response.json();
+
+                if (JSON.stringify(state.users) !== JSON.stringify(users)) {
+                    state.users = users;
+                    updateDashboard(users);
+                }
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
+                showCustomAlert("Error fetching data", "error");
+            }
+        }
+
         function handleCredentialResponse(response) {
             const credential = parseJwt(response.credential);
             state.user = {
@@ -284,22 +316,8 @@
                 fetchDashboardData();
                 state.dataFetchInterval = setInterval(fetchDashboardData, 2000);
             } else {
-                alert('Unauthorized access');
+                showCustomAlert('Unauthorized access', 'error');
                 logout();
-            }
-        }
-
-        async function fetchDashboardData() {
-            try {
-                const response = await fetch("https://api.webstay.se/get-users");
-                const users = await response.json();
-
-                if (JSON.stringify(state.users) !== JSON.stringify(users)) {
-                    state.users = users;
-                    updateDashboard(users);
-                }
-            } catch (error) {
-                console.error("Error fetching dashboard data:", error);
             }
         }
 
@@ -395,7 +413,6 @@
                 state.analyticsChart.destroy();
             }
 
-            // Simulated analytics data
             const data = users.length;
             const labels = ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5'];
             const chartData = Array(labels.length).fill(data);
@@ -429,7 +446,6 @@
                 state.performanceChart.destroy();
             }
 
-            // Simulated performance data
             const labels = ['Metric 1', 'Metric 2', 'Metric 3', 'Metric 4', 'Metric 5'];
             const chartData = labels.map(() => Math.floor(Math.random() * 100));
 
