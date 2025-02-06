@@ -125,7 +125,7 @@
 
         function fetchUsers() {
             const searchValue = document.getElementById("searchInput").value;
-          const url = searchValue ? `https://api.webstay.se/get-search-user?name=${searchValue}` : "https://api.webstay.se/get-search-user";
+          const url = searchValue ? `https://api.webstay.se/get-search-users?name=${searchValue}` : "https://api.webstay.se/get-search-users";
 
             fetch(url)
             .then(res => res.json())
