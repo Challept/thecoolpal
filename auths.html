@@ -52,7 +52,7 @@
         }
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 3fr 1fr;
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
         }
         .card {
@@ -166,18 +166,10 @@
         <div class="stats-grid" id="statsGrid"></div>
 
         <div class="dashboard-grid">
-            <div>
-                <div class="card">
-                    <h4>Plan Distribution</h4>
-                    <div class="chart-container">
-                        <canvas id="planChart"></canvas>
-                    </div>
-                </div>
-                <div class="card" style="margin-top: 1rem;">
-                    <h4>User Growth</h4>
-                    <div class="chart-container">
-                        <canvas id="growthChart"></canvas>
-                    </div>
+            <div class="card">
+                <h4>Plan Distribution</h4>
+                <div class="chart-container">
+                    <canvas id="planChart"></canvas>
                 </div>
             </div>
             <div class="card">
@@ -203,7 +195,6 @@
             user: null,
             users: [],
             planChart: null,
-            growthChart: null,
             dataFetchInterval: null
         };
 
@@ -252,7 +243,6 @@
         function updateDashboard(users) {
             updateStats(users);
             updatePlanChart(users);
-            updateGrowthChart(users);
             updateUserList(users);
         }
 
@@ -310,42 +300,6 @@
                                 boxWidth: 20
                             }
                         } 
-                    }
-                }
-            });
-        }
-
-        function updateGrowthChart(users) {
-            const ctx = document.getElementById('growthChart').getContext('2d');
-            
-            if (state.growthChart) {
-                state.growthChart.destroy();
-            }
-
-            // Simulated growth data (you'd replace this with actual historical data)
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
-            const growthData = months.map(() => Math.floor(Math.random() * 50) + 10);
-
-            state.growthChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'New Users',
-                        data: growthData,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
                     }
                 }
             });
