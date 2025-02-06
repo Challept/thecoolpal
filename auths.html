@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay Dashboard Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
@@ -39,7 +40,6 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            animation: fadeIn 1s ease-in-out;
         }
         .login-card {
             background: var(--card-bg);
@@ -49,7 +49,6 @@
             width: 100%;
             max-width: 350px;
             text-align: center;
-            animation: zoomIn 1s ease-in-out;
         }
         .dashboard-grid {
             display: grid;
@@ -62,7 +61,6 @@
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
-            animation: slideIn 0.5s ease-in-out;
         }
         .card:hover {
             transform: translateY(-5px);
@@ -73,7 +71,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
-            animation: fadeInDown 1s ease-in-out;
         }
         .btn-logout {
             background: var(--primary);
@@ -86,19 +83,6 @@
         }
         .btn-logout:hover {
             background: #2563eb;
-        }
-        .alert {
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 8px;
-            color: white;
-            display: none;
-        }
-        .alert-success {
-            background: var(--secondary);
-        }
-        .alert-error {
-            background: #ef4444;
         }
         .chart-container {
             height: 300px;
@@ -145,36 +129,23 @@
             border-radius: 8px;
             background: var(--card-bg);
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            animation: fadeInUp 1s ease-in-out;
         }
         .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var (--primary);
+            color: var(--primary);
         }
         .stat-label {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes slideIn {
-            from { transform: translateX(-100px); }
-            to { transform: translateX(0); }
-        }
-        @keyframes fadeInDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes fadeInUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes zoomIn {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        .cool-feature {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            margin-top: 2rem;
         }
     </style>
 </head>
@@ -182,7 +153,12 @@
     <div id="loginSection" class="login-container">
         <div id="loginCard" class="login-card">
             <h2>Webstay Dashboard Pro</h2>
-            <div id="customAlert" class="alert"></div>
+            <div id="g_id_onload"
+                data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+                data-callback="handleCredentialResponse"
+                data-auto_prompt="true">
+            </div>
+            <div class="g_id_signin" data-type="standard"></div>
         </div>
     </div>
 
@@ -220,6 +196,11 @@
                 </div>
             </div>
         </div>
+
+        <div class="cool-feature">
+            <h4>Cool New Feature</h4>
+            <p>This is something cool and new for users to enjoy!</p>
+        </div>
     </div>
 
     <script>
@@ -233,31 +214,6 @@
         // Disable automatic scroll restoration
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
-        }
-
-        function showCustomAlert(message, type = 'success') {
-            const alertBox = document.getElementById('customAlert');
-            alertBox.textContent = message;
-            alertBox.className = `alert alert-${type}`;
-            alertBox.style.display = 'block';
-            setTimeout(() => {
-                alertBox.style.display = 'none';
-            }, 3000);
-        }
-
-        async function fetchDashboardData() {
-            try {
-                const response = await fetch("https://api.webstay.se/get-users");
-                const users = await response.json();
-
-                if (JSON.stringify(state.users) !== JSON.stringify(users)) {
-                    state.users = users;
-                    updateDashboard(users);
-                }
-            } catch (error) {
-                console.error("Error fetching dashboard data:", error);
-                showCustomAlert("Error fetching data", "error");
-            }
         }
 
         function handleCredentialResponse(response) {
@@ -278,8 +234,22 @@
                 fetchDashboardData();
                 state.dataFetchInterval = setInterval(fetchDashboardData, 2000);
             } else {
-                showCustomAlert('Unauthorized access', 'error');
+                alert('Unauthorized access');
                 logout();
+            }
+        }
+
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch("https://api.webstay.se/get-users");
+                const users = await response.json();
+
+                if (JSON.stringify(state.users) !== JSON.stringify(users)) {
+                    state.users = users;
+                    updateDashboard(users);
+                }
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
             }
         }
 
