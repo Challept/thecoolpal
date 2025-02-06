@@ -139,6 +139,14 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
+        .cool-feature {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            margin-top: 2rem;
+        }
     </style>
 </head>
 <body>
@@ -187,6 +195,11 @@
                     </table>
                 </div>
             </div>
+        </div>
+
+        <div class="cool-feature">
+            <h4>Cool New Feature</h4>
+            <p>This is something cool and new for users to enjoy!</p>
         </div>
     </div>
 
@@ -314,9 +327,7 @@
                         <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">${user.PlanName}</span>
                     </td>
                     <td>
-                        <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">
-                            ${['Active', 'Pending', 'Expired'][Math.floor(Math.random() * 3)]}
-                        </span>
+                        <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">Active</span>
                     </td>
                 </tr>
             `).join('');
