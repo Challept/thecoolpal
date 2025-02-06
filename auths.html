@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         :root {
             --primary: #3b82f6;
@@ -29,6 +30,7 @@
             background: var(--background);
             color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .dashboard {
@@ -53,6 +55,7 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
+            opacity: 0;
         }
 
         .dashboard-header {
@@ -60,6 +63,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+            opacity: 0;
         }
 
         .stats-grid {
@@ -74,19 +78,20 @@
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .chart-container {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1rem;
             margin-bottom: 2rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            height: 250px;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .user-table {
@@ -94,6 +99,8 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
         }
 
         .btn-logout {
@@ -103,11 +110,12 @@
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .btn-logout:hover {
             background: #2563eb;
+            transform: scale(1.05);
         }
 
         #userTable {
@@ -119,24 +127,21 @@
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
         }
 
-        .status-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
+        #userTable tr:hover {
+            background: rgba(59,130,246,0.05);
         }
 
-        .status-active { background: #10b981; color: white; }
-        .status-pending { background: #f59e0b; color: white; }
-
-        .hidden { display: none !important; }
+        .hidden { 
+            display: none !important; 
+        }
     </style>
 </head>
 <body>
     <div id="loginSection" class="login-container">
-        <div class="login-card">
+        <div id="loginCard" class="login-card">
             <h2>Webstay Dashboard</h2>
             <p style="margin-bottom: 1.5rem; color: var(--text-secondary)">
                 Sign in to access your dashboard
@@ -172,7 +177,6 @@
                         <th>User ID</th>
                         <th>Plan</th>
                         <th>Payment Date</th>
-                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody id="userTableBody"></tbody>
@@ -181,7 +185,6 @@
     </div>
 
     <script>
-        // Global state
         const state = {
             user: null,
             users: [],
@@ -189,7 +192,6 @@
             dataFetchInterval: null
         };
 
-        // Authentication Handler
         function handleCredentialResponse(response) {
             const credential = parseJwt(response.credential);
             state.user = {
@@ -198,17 +200,53 @@
                 name: credential.name
             };
 
-            // Specific Google ID authorization
             if (state.user.id === '115156821048844521223') {
-                showDashboard();
+                animateLogin();
                 fetchDashboardData();
-                
-                // Refresh data every 2 seconds
                 state.dataFetchInterval = setInterval(fetchDashboardData, 2000);
             } else {
                 alert('Unauthorized access');
                 logout();
             }
+        }
+
+        function animateLogin() {
+            gsap.to('#loginCard', {
+                opacity: 0,
+                y: -50,
+                duration: 0.5,
+                onComplete: () => {
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('dashboardSection').classList.remove('hidden');
+                    
+                    document.getElementById('welcomeMessage').textContent = `Welcome, ${state.user.name}`;
+                    document.getElementById('userEmail').textContent = state.user.email;
+
+                    animateDashboard();
+                }
+            });
+        }
+
+        function animateDashboard() {
+            gsap.fromTo('.dashboard-header', 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.5, delay: 0.2 }
+            );
+
+            gsap.fromTo('.stat-card', 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, delay: 0.4 }
+            );
+
+            gsap.fromTo('.chart-container', 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.5, delay: 0.6 }
+            );
+
+            gsap.fromTo('.user-table', 
+                { opacity: 0, y: 20 }, 
+                { opacity: 1, y: 0, duration: 0.5, delay: 0.8 }
+            );
         }
 
         function parseJwt(token) {
@@ -217,24 +255,17 @@
             return JSON.parse(window.atob(base64));
         }
 
-        // Dashboard Functions
-        function showDashboard() {
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('dashboardSection').classList.remove('hidden');
-            
-            document.getElementById('welcomeMessage').textContent = `Welcome, ${state.user.name}`;
-            document.getElementById('userEmail').textContent = state.user.email;
-        }
-
         async function fetchDashboardData() {
             try {
                 const response = await fetch("https://api.webstay.se/get-users");
                 const users = await response.json();
 
-                state.users = users;
-                updateStatistics(users);
-                updateUserTable(users);
-                initializeChart(users);
+                if (JSON.stringify(state.users) !== JSON.stringify(users)) {
+                    state.users = users;
+                    updateStatistics(users);
+                    updateUserTable(users);
+                    initializeChart(users);
+                }
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
             }
@@ -266,11 +297,6 @@
                     <td>${user.UserID}</td>
                     <td>${user.PlanName}</td>
                     <td>${new Date(user.PaymentDate).toLocaleDateString()}</td>
-                    <td>
-                        <span class="status-badge status-active">
-                            Active
-                        </span>
-                    </td>
                 </tr>
             `).join('');
         }
@@ -278,7 +304,6 @@
         function initializeChart(users) {
             const ctx = document.getElementById('trendsChart').getContext('2d');
             
-            // Destroy previous chart if exists
             if (state.chart) {
                 state.chart.destroy();
             }
@@ -295,8 +320,25 @@
                     datasets: [{
                         label: 'Users per Plan',
                         data: Object.values(planCounts),
-                        backgroundColor: 'var(--primary)'
+                        backgroundColor: 'var(--primary)',
+                        borderRadius: 5
                     }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            grid: { display: false }
+                        },
+                        x: { 
+                            grid: { display: false }
+                        }
+                    }
                 }
             });
         }
@@ -305,17 +347,32 @@
             if (state.dataFetchInterval) {
                 clearInterval(state.dataFetchInterval);
             }
-            state.user = null;
-            document.getElementById('loginSection').classList.remove('hidden');
-            document.getElementById('dashboardSection').classList.add('hidden');
+            
+            gsap.to('.dashboard-header, .stat-card, .chart-container, .user-table', {
+                opacity: 0,
+                y: 20,
+                duration: 0.5,
+                stagger: 0.1,
+                onComplete: () => {
+                    state.user = null;
+                    document.getElementById('loginSection').classList.remove('hidden');
+                    document.getElementById('dashboardSection').classList.add('hidden');
+                    
+                    gsap.fromTo('#loginCard', 
+                        { opacity: 0, y: -50 }, 
+                        { opacity: 1, y: 0, duration: 0.5 }
+                    );
+                }
+            });
         }
 
-        // Event Listeners
         document.getElementById('logoutBtn').addEventListener('click', logout);
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            // Google Sign-In script is already loaded in head
+            gsap.fromTo('#loginCard', 
+                { opacity: 0, y: 50 }, 
+                { opacity: 1, y: 0, duration: 0.5 }
+            );
         });
     </script>
 </body>
