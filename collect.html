@@ -51,7 +51,6 @@
             margin-bottom: 20px;
         }
 
-        /* Google Sign-In Button */
         .google-button {
             margin-top: 20px;
         }
@@ -135,14 +134,18 @@
             const email = decoded.email;
 
             // ✅ Send to Backend (Webstay API)
-            fetch("https://api.webstay.se/save-google-user", {
+            fetch("http://localhost:3000/save-google-user", { // Adjust URL if needed
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ googleID, name, email })
             })
             .then(res => res.json())
             .then(data => {
-                showPopup(data.success ? "✅ Din information har sparats i vår databas!" : "⚠️ Du är redan registrerad!");
+                if (data.success) {
+                    showPopup("✅ Din information har sparats i vår databas!");
+                } else {
+                    showPopup("⚠️ Du är redan registrerad!");
+                }
             })
             .catch(err => {
                 console.error("❌ [ERROR] Kunde inte skicka data:", err);
@@ -161,3 +164,4 @@
     </script>
 </body>
 </html>
+
