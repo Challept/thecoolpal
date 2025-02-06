@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Webstay Dashboard Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
@@ -83,19 +84,6 @@
         .btn-logout:hover {
             background: #2563eb;
         }
-        .alert {
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 8px;
-            color: white;
-            display: none;
-        }
-        .alert-success {
-            background: var(--secondary);
-        }
-        .alert-error {
-            background: #ef4444;
-        }
         .chart-container {
             height: 300px;
         }
@@ -159,21 +147,18 @@
             text-align: center;
             margin-top: 2rem;
         }
-        .additional-section {
-            background: var(--primary);
-            padding: 2rem;
-            border-radius: 12px;
-            color: white;
-            text-align: center;
-            margin-top: 2rem;
-        }
     </style>
 </head>
 <body>
     <div id="loginSection" class="login-container">
         <div id="loginCard" class="login-card">
             <h2>Webstay Dashboard Pro</h2>
-            <div id="customAlert" class="alert"></div>
+            <div id="g_id_onload"
+                data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+                data-callback="handleCredentialResponse"
+                data-auto_prompt="true">
+            </div>
+            <div class="g_id_signin" data-type="standard"></div>
         </div>
     </div>
 
@@ -216,46 +201,6 @@
             <h4>Cool New Feature</h4>
             <p>This is something cool and new for users to enjoy!</p>
         </div>
-
-        <div class="additional-section">
-            <h4>Analytics Overview</h4>
-            <div class="chart-container">
-                <canvas id="analyticsChart"></canvas>
-            </div>
-        </div>
-
-        <div class="additional-section">
-            <h4>Recent Activities</h4>
-            <ul id="recentActivitiesList" class="list">
-                <!-- Recent activities will be dynamically added here -->
-            </ul>
-        </div>
-
-        <div class="additional-section">
-            <h4>Notifications</h4>
-            <div id="notifications" class="notifications">
-                <!-- Notifications will be dynamically added here -->
-            </div>
-        </div>
-
-        <div class="additional-section">
-            <h4>Performance Metrics</h4>
-            <div class="chart-container">
-                <canvas id="performanceChart"></canvas>
-            </div>
-        </div>
-
-        <div class="additional-section">
-            <h4>System Health</h4>
-            <p>All systems are operational.</p>
-        </div>
-
-        <div class="additional-section">
-            <h4>User Feedback</h4>
-            <div id="userFeedback" class="feedback">
-                <!-- User feedback will be dynamically added here -->
-            </div>
-        </div>
     </div>
 
     <script>
@@ -263,39 +208,12 @@
             user: null,
             users: [],
             planChart: null,
-            analyticsChart: null,
-            performanceChart: null,
             dataFetchInterval: null
         };
 
         // Disable automatic scroll restoration
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
-        }
-
-        function showCustomAlert(message, type = 'success') {
-            const alertBox = document.getElementById('customAlert');
-            alertBox.textContent = message;
-            alertBox.className = `alert alert-${type}`;
-            alertBox.style.display = 'block';
-            setTimeout(() => {
-                alertBox.style.display = 'none';
-            }, 3000);
-        }
-
-        async function fetchDashboardData() {
-            try {
-                const response = await fetch("https://api.webstay.se/get-users");
-                const users = await response.json();
-
-                if (JSON.stringify(state.users) !== JSON.stringify(users)) {
-                    state.users = users;
-                    updateDashboard(users);
-                }
-            } catch (error) {
-                console.error("Error fetching dashboard data:", error);
-                showCustomAlert("Error fetching data", "error");
-            }
         }
 
         function handleCredentialResponse(response) {
@@ -316,8 +234,22 @@
                 fetchDashboardData();
                 state.dataFetchInterval = setInterval(fetchDashboardData, 2000);
             } else {
-                showCustomAlert('Unauthorized access', 'error');
+                alert('Unauthorized access');
                 logout();
+            }
+        }
+
+        async function fetchDashboardData() {
+            try {
+                const response = await fetch("https://api.webstay.se/get-users");
+                const users = await response.json();
+
+                if (JSON.stringify(state.users) !== JSON.stringify(users)) {
+                    state.users = users;
+                    updateDashboard(users);
+                }
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
             }
         }
 
@@ -325,11 +257,6 @@
             updateStats(users);
             updatePlanChart(users);
             updateUserList(users);
-            updateAnalyticsChart(users);
-            updatePerformanceChart(users);
-            updateRecentActivities(users);
-            updateNotifications(users);
-            updateUserFeedback(users);
         }
 
         function updateStats(users) {
@@ -404,91 +331,6 @@
                     </td>
                 </tr>
             `).join('');
-        }
-
-        function updateAnalyticsChart(users) {
-            const ctx = document.getElementById('analyticsChart').getContext('2d');
-            
-            if (state.analyticsChart) {
-                state.analyticsChart.destroy();
-            }
-
-            const data = users.length;
-            const labels = ['Data 1', 'Data 2', 'Data 3', 'Data 4', 'Data 5'];
-            const chartData = Array(labels.length).fill(data);
-
-            state.analyticsChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels,
-                    datasets: [{
-                        label: 'Analytics Data',
-                        data: chartData,
-                        backgroundColor: '#3b82f6'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        function updatePerformanceChart(users) {
-            const ctx = document.getElementById('performanceChart').getContext('2d');
-            
-            if (state.performanceChart) {
-                state.performanceChart.destroy();
-            }
-
-            const labels = ['Metric 1', 'Metric 2', 'Metric 3', 'Metric 4', 'Metric 5'];
-            const chartData = labels.map(() => Math.floor(Math.random() * 100));
-
-            state.performanceChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels,
-                    datasets: [{
-                        label: 'Performance Metrics',
-                        data: chartData,
-                        borderColor: '#10b981',
-                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        function updateRecentActivities(users) {
-            const recentActivitiesList = document.getElementById('recentActivitiesList');
-            const activities = users.slice(0, 5).map(user => `<li>User ${user.UserID} performed an action</li>`).join('');
-            recentActivitiesList.innerHTML = activities;
-        }
-
-        function updateNotifications(users) {
-            const notifications = document.getElementById('notifications');
-            const notificationsList = users.slice(0, 5).map(user => `<div class="notification">Notification for user ${user.UserID}</div>`).join('');
-            notifications.innerHTML = notificationsList;
-        }
-
-        function updateUserFeedback(users) {
-            const userFeedback = document.getElementById('userFeedback');
-            const feedbackList = users.slice(0, 5).map(user => `<div class="feedback-item">Feedback from user ${user.UserID}</div>`).join('');
-            userFeedback.innerHTML = feedbackList;
         }
 
         function parseJwt(token) {
