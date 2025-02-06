@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay Premium Dashboard</title>
+    <title>Webstay Dashboard Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -12,140 +12,137 @@
         :root {
             --primary: #3b82f6;
             --secondary: #10b981;
+            --accent: #f59e0b;
             --background: #f0f4f8;
-            --text-primary: #1e293b;
-            --text-secondary: #475569;
             --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
             --border: #e2e8f0;
         }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', sans-serif;
         }
-
         body {
             background: var(--background);
             color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden;
         }
-
-        .dashboard {
+        .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1rem;
         }
-
         .login-container {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: var(--background);
         }
-
         .login-card {
             background: var(--card-bg);
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            padding: 2.5rem;
+            padding: 2rem;
             width: 100%;
-            max-width: 400px;
+            max-width: 350px;
             text-align: center;
-            opacity: 0;
         }
-
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            opacity: 0;
-        }
-
-        .stats-grid {
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            grid-template-columns: 1fr 300px;
+            gap: 1rem;
         }
-
-        .stat-card {
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .card {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
         }
-
-        .chart-container {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            height: 250px;
-            opacity: 0;
-            transform: translateY(20px);
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
         }
-
-        .user-table {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
         }
-
         .btn-logout {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease;
         }
-
         .btn-logout:hover {
             background: #2563eb;
-            transform: scale(1.05);
         }
-
-        #userTable {
-            width: 100%;
-            border-collapse: collapse;
+        .chart-container {
+            height: 300px;
         }
-
-        #userTable th, #userTable td {
-            padding: 1rem;
-            text-align: left;
+        .user-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem;
             border-bottom: 1px solid var(--border);
             transition: background 0.2s ease;
         }
-
-        #userTable tr:hover {
-            background: rgba(59,130,246,0.05);
+        .user-item:hover {
+            background: var(--background);
         }
-
-        .hidden { 
-            display: none !important; 
+        .badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .badge-primary { background: var(--primary); color: white; }
+        .badge-secondary { background: var(--secondary); color: white; }
+        .badge-accent { background: var(--accent); color: white; }
+        .hidden { display: none !important; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background: var(--card-bg);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <div id="loginSection" class="login-container">
         <div id="loginCard" class="login-card">
-            <h2>Webstay Dashboard</h2>
-            <p style="margin-bottom: 1.5rem; color: var(--text-secondary)">
-                Sign in to access your dashboard
-            </p>
+            <h2>Webstay Dashboard Pro</h2>
             <div id="g_id_onload"
                 data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
                 data-callback="handleCredentialResponse"
@@ -155,42 +152,52 @@
         </div>
     </div>
 
-    <div id="dashboardSection" class="dashboard hidden">
+    <div id="dashboardSection" class="container hidden">
         <div class="dashboard-header">
             <div>
-                <h1 id="welcomeMessage">Welcome</h1>
-                <p id="userEmail"></p>
+                <h3 id="welcomeMessage">Welcome</h3>
+                <small id="userEmail"></small>
             </div>
             <button id="logoutBtn" class="btn-logout">Logout</button>
         </div>
 
+        <div class="dashboard-grid">
+            <div class="main-content">
+                <div class="card">
+                    <h4>Plan Distribution</h4>
+                    <div class="chart-container">
+                        <canvas id="planChart"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <h4>User Growth</h4>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h4>Recent Users</h4>
+                <div class="user-list" id="userList"></div>
+            </div>
+        </div>
+
         <div class="stats-grid" id="statsGrid"></div>
-
-        <div class="chart-container">
-            <canvas id="trendsChart"></canvas>
-        </div>
-
-        <div class="user-table">
-            <table id="userTable">
-                <thead>
-                    <tr>
-                        <th>User ID</th>
-                        <th>Plan</th>
-                        <th>Payment Date</th>
-                    </tr>
-                </thead>
-                <tbody id="userTableBody"></tbody>
-            </table>
-        </div>
     </div>
 
     <script>
         const state = {
             user: null,
             users: [],
-            chart: null,
+            planChart: null,
+            growthChart: null,
             dataFetchInterval: null
         };
+
+        // Disable automatic scroll restoration
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
 
         function handleCredentialResponse(response) {
             const credential = parseJwt(response.credential);
@@ -201,58 +208,18 @@
             };
 
             if (state.user.id === '115156821048844521223') {
-                animateLogin();
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                
+                document.getElementById('welcomeMessage').textContent = `Hi, ${state.user.name.split(' ')[0]}`;
+                document.getElementById('userEmail').textContent = state.user.email;
+
                 fetchDashboardData();
                 state.dataFetchInterval = setInterval(fetchDashboardData, 2000);
             } else {
                 alert('Unauthorized access');
                 logout();
             }
-        }
-
-        function animateLogin() {
-            gsap.to('#loginCard', {
-                opacity: 0,
-                y: -50,
-                duration: 0.5,
-                onComplete: () => {
-                    document.getElementById('loginSection').classList.add('hidden');
-                    document.getElementById('dashboardSection').classList.remove('hidden');
-                    
-                    document.getElementById('welcomeMessage').textContent = `Welcome, ${state.user.name}`;
-                    document.getElementById('userEmail').textContent = state.user.email;
-
-                    animateDashboard();
-                }
-            });
-        }
-
-        function animateDashboard() {
-            gsap.fromTo('.dashboard-header', 
-                { opacity: 0, y: 20 }, 
-                { opacity: 1, y: 0, duration: 0.5, delay: 0.2 }
-            );
-
-            gsap.fromTo('.stat-card', 
-                { opacity: 0, y: 20 }, 
-                { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, delay: 0.4 }
-            );
-
-            gsap.fromTo('.chart-container', 
-                { opacity: 0, y: 20 }, 
-                { opacity: 1, y: 0, duration: 0.5, delay: 0.6 }
-            );
-
-            gsap.fromTo('.user-table', 
-                { opacity: 0, y: 20 }, 
-                { opacity: 1, y: 0, duration: 0.5, delay: 0.8 }
-            );
-        }
-
-        function parseJwt(token) {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            return JSON.parse(window.atob(base64));
         }
 
         async function fetchDashboardData() {
@@ -262,16 +229,21 @@
 
                 if (JSON.stringify(state.users) !== JSON.stringify(users)) {
                     state.users = users;
-                    updateStatistics(users);
-                    updateUserTable(users);
-                    initializeChart(users);
+                    updateDashboard(users);
                 }
             } catch (error) {
                 console.error("Error fetching dashboard data:", error);
             }
         }
 
-        function updateStatistics(users) {
+        function updateDashboard(users) {
+            updateStats(users);
+            updatePlanChart(users);
+            updateGrowthChart(users);
+            updateUserList(users);
+        }
+
+        function updateStats(users) {
             const statsGrid = document.getElementById('statsGrid');
             const planCounts = users.reduce((acc, user) => {
                 acc[user.PlanName] = (acc[user.PlanName] || 0) + 1;
@@ -280,32 +252,25 @@
 
             statsGrid.innerHTML = `
                 <div class="stat-card">
-                    <h3>Total Users</h3>
-                    <p>${users.length}</p>
+                    <div class="stat-label">Total Users</div>
+                    <div class="stat-value">${users.length}</div>
                 </div>
                 <div class="stat-card">
-                    <h3>Plan Distribution</h3>
-                    <p>${Object.keys(planCounts).length} Plans</p>
+                    <div class="stat-label">Active Plans</div>
+                    <div class="stat-value">${Object.keys(planCounts).length}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Top Plan</div>
+                    <div class="stat-value">${Object.keys(planCounts).reduce((a, b) => planCounts[a] > planCounts[b] ? a : b)}</div>
                 </div>
             `;
         }
 
-        function updateUserTable(users) {
-            const tableBody = document.getElementById('userTableBody');
-            tableBody.innerHTML = users.map(user => `
-                <tr>
-                    <td>${user.UserID}</td>
-                    <td>${user.PlanName}</td>
-                    <td>${new Date(user.PaymentDate).toLocaleDateString()}</td>
-                </tr>
-            `).join('');
-        }
-
-        function initializeChart(users) {
-            const ctx = document.getElementById('trendsChart').getContext('2d');
+        function updatePlanChart(users) {
+            const ctx = document.getElementById('planChart').getContext('2d');
             
-            if (state.chart) {
-                state.chart.destroy();
+            if (state.planChart) {
+                state.planChart.destroy();
             }
 
             const planCounts = users.reduce((acc, user) => {
@@ -313,34 +278,80 @@
                 return acc;
             }, {});
 
-            state.chart = new Chart(ctx, {
-                type: 'bar',
+            state.planChart = new Chart(ctx, {
+                type: 'doughnut',
                 data: {
                     labels: Object.keys(planCounts),
                     datasets: [{
-                        label: 'Users per Plan',
                         data: Object.values(planCounts),
-                        backgroundColor: 'var(--primary)',
-                        borderRadius: 5
+                        backgroundColor: ['#3b82f6', '#10b981', '#f59e0b']
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
+                    plugins: { 
+                        legend: { 
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 20
+                            }
+                        } 
+                    }
+                }
+            });
+        }
+
+        function updateGrowthChart(users) {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            
+            if (state.growthChart) {
+                state.growthChart.destroy();
+            }
+
+            // Simulated growth data (you'd replace this with actual historical data)
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const growthData = months.map(() => Math.floor(Math.random() * 50) + 10);
+
+            state.growthChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'New Users',
+                        data: growthData,
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
                     scales: {
-                        y: { 
-                            beginAtZero: true,
-                            grid: { display: false }
-                        },
-                        x: { 
-                            grid: { display: false }
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }
             });
+        }
+
+        function updateUserList(users) {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = users.slice(0, 10).map(user => `
+                <div class="user-item">
+                    <span>${user.UserID}</span>
+                    <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">${user.PlanName}</span>
+                </div>
+            `).join('');
+        }
+
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            return JSON.parse(window.atob(base64));
         }
 
         function logout() {
@@ -348,32 +359,12 @@
                 clearInterval(state.dataFetchInterval);
             }
             
-            gsap.to('.dashboard-header, .stat-card, .chart-container, .user-table', {
-                opacity: 0,
-                y: 20,
-                duration: 0.5,
-                stagger: 0.1,
-                onComplete: () => {
-                    state.user = null;
-                    document.getElementById('loginSection').classList.remove('hidden');
-                    document.getElementById('dashboardSection').classList.add('hidden');
-                    
-                    gsap.fromTo('#loginCard', 
-                        { opacity: 0, y: -50 }, 
-                        { opacity: 1, y: 0, duration: 0.5 }
-                    );
-                }
-            });
+            state.user = null;
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('dashboardSection').classList.add('hidden');
         }
 
         document.getElementById('logoutBtn').addEventListener('click', logout);
-
-        document.addEventListener('DOMContentLoaded', () => {
-            gsap.fromTo('#loginCard', 
-                { opacity: 0, y: 50 }, 
-                { opacity: 1, y: 0, duration: 0.5 }
-            );
-        });
     </script>
 </body>
 </html>
