@@ -1,167 +1,122 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webstay - Logga in</title>
+    <title>Google Login | Webstay</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-
     <style>
-        /* 🌟 General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        /* General Page Styling */
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #74ebd5, #9face6);
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1e3c72, #2a5298);
             color: white;
-        }
-
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
             text-align: center;
-            width: 400px;
-            animation: fadeIn 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
         }
 
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Google Button Container */
+        .google-container {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        /* User Info Card */
+        .user-info {
+            display: none;
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+            color: black;
+            width: 300px;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Profile Image */
+        .user-info img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin-top: 10px;
+            border: 3px solid #2a5298;
+        }
+
+        /* Fade-in Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
         }
-
-        h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        p {
-            color: #666;
-            font-size: 15px;
-            margin-bottom: 20px;
-        }
-
-        .google-button {
-            margin-top: 20px;
-        }
-
-        /* 🌟 Custom Popup */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .popup-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            animation: fadeIn 0.3s ease-in-out;
-            width: 300px;
-        }
-
-        .popup-box p {
-            color: #333;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-
-        .popup-box button {
-            background: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        .popup-box button:hover {
-            background: #45a049;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Välkommen till Webstay</h1>
-        <p>Vi samlar din Google ID, namn och e-post för att använda i vår databas.</p>
 
-        <!-- Google Login Button -->
+    <h1>Google Login</h1>
+    <p>Sign in with Google to continue</p>
+
+    <!-- Google Login Button -->
+    <div class="google-container">
         <div id="g_id_onload"
-            data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+            data-client_id="GOOGLE_CLIENT_ID=216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
             data-callback="handleCredentialResponse"
             data-itp_support="true"
             data-auto_prompt="true">
         </div>
-        <div class="google-button">
-            <div class="g_id_signin" data-type="standard"></div>
-        </div>
+        <div class="g_id_signin" data-type="standard"></div>
     </div>
 
-    <!-- Custom Popup -->
-    <div id="popup" class="popup-overlay">
-        <div class="popup-box">
-            <p id="popupMessage"></p>
-            <button onclick="closePopup()">OK</button>
-        </div>
+    <!-- User Info Display -->
+    <div id="user-info" class="user-info">
+        <h2 id="user-name"></h2>
+        <p><strong>Email:</strong> <span id="user-email"></span></p>
+        <p><strong>Google ID:</strong> <span id="user-id"></span></p>
+        <img id="user-picture" src="" alt="Profile Picture">
     </div>
 
     <script>
         function handleCredentialResponse(response) {
-            const jwt = response.credential;
-            const decoded = JSON.parse(atob(jwt.split(".")[1]));
-
-            const googleID = decoded.sub;
-            const name = decoded.name;
-            const email = decoded.email;
-
-            // ✅ Send to Backend (Webstay API)
-            fetch("http://localhost:3000/save-google-user", { // Adjust URL if needed
+            const token = response.credential;
+            
+            // Send token to backend for verification
+            fetch("https://api.webstay.se/verify-google-token", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ googleID, name, email })
+                body: JSON.stringify({ token })
             })
             .then(res => res.json())
             .then(data => {
-                if (data.success) {
-                    showPopup("✅ Din information har sparats i vår databas!");
-                } else {
-                    showPopup("⚠️ Du är redan registrerad!");
-                }
+                console.log("Google ID:", data.googleID);
+                console.log("Name:", data.name);
+                console.log("Email:", data.email);
+                console.log("Profile Picture:", data.picture);
+
+                // Show user info
+                document.getElementById("user-name").innerText = `Welcome, ${data.name}!`;
+                document.getElementById("user-email").innerText = data.email;
+                document.getElementById("user-id").innerText = data.googleID;
+                document.getElementById("user-picture").src = data.picture;
+                
+                document.getElementById("user-info").style.display = "block";
             })
-            .catch(err => {
-                console.error("❌ [ERROR] Kunde inte skicka data:", err);
-                showPopup("❌ Ett fel uppstod!");
-            });
-        }
-
-        function showPopup(message) {
-            document.getElementById("popupMessage").innerText = message;
-            document.getElementById("popup").style.display = "flex";
-        }
-
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
+            .catch(err => console.error("Error verifying token:", err));
         }
     </script>
+
 </body>
 </html>
-
