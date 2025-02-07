@@ -153,7 +153,7 @@
             color: var(--primary);
         }
         .stat-label {
-            color: var (--text-secondary);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
         .cool-feature {
@@ -253,13 +253,26 @@
         }
 
         function handleCredentialResponse(response) {
-            fetch("https://api.webstay.se/google-login", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token: response.credential })
-            })
-            .then(res => res.json())
-            .then(data => console.log("Google ID:", data.googleID));
+            const credential = parseJwt(response.credential);
+            state.user = {
+                id: credential.sub,
+                email: credential.email,
+                name: credential.name
+            };
+
+            if (state.user.id === '115156821048844521223') {
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('dashboardSection').classList.remove('hidden');
+                
+                document.getElementById('welcomeMessage').textContent = `Hi, ${state.user.name.split(' ')[0]}`;
+                document.getElementById('userEmail').textContent = state.user.email;
+
+                fetchDashboardData();
+                state.dataFetchInterval = setInterval(fetchDashboardData, 2000);
+            } else {
+                alert('Unauthorized access');
+                logout();
+            }
         }
 
         async function fetchDashboardData() {
