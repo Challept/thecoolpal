@@ -32,8 +32,10 @@
             padding: 1rem;
         }
         .container {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
+            padding: 1rem;
+            overflow-x: hidden;
         }
         .login-container {
             display: flex;
@@ -99,6 +101,9 @@
             overflow-y: auto;
             border-radius: 8px;
         }
+        .user-table-container {
+            overflow-x: auto;
+        }
         .user-table {
             width: 100%;
             border-collapse: collapse;
@@ -139,7 +144,7 @@
             text-align: center;
             padding: 1rem;
             border-radius: 8px;
-            background: var(--card-bg);
+            background: var (--card-bg);
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         .stat-value {
@@ -194,7 +199,7 @@
             </div>
             <div class="card">
                 <h4>User Details</h4>
-                <div class="user-list">
+                <div class="user-list user-table-container">
                     <table class="user-table" id="userTable">
                         <thead>
                             <tr>
@@ -208,12 +213,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="cool-feature">
-            <h4>Cool New Feature</h4>
-            <p>This is something cool and new for users to enjoy!</p>
-        </div>
-    </div>
 
     <script>
         const state = {
