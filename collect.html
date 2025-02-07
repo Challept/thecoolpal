@@ -3,118 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Login | Webstay</title>
+    <title>Google Login</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
-        /* General Page Styling */
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #1e3c72, #2a5298);
-            color: white;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
+            background: #f5f5f5;
         }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        /* Google Button Container */
-        .google-container {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            margin-top: 20px;
-        }
-
-        /* User Info Card */
-        .user-info {
-            display: none;
-            margin-top: 30px;
+        .container {
+            margin-top: 100px;
             background: white;
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-            color: black;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             width: 300px;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in-out;
+            margin: auto;
         }
-
-        /* Profile Image */
-        .user-info img {
+        img {
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
             margin-top: 10px;
-            border: 3px solid #2a5298;
-        }
-
-        /* Fade-in Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <h1>Google Login</h1>
-    <p>Sign in with Google to continue</p>
-
-    <!-- Google Login Button -->
-    <div class="google-container">
+    <div class="container">
+        <h2>Login with Google</h2>
         <div id="g_id_onload"
-            data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-            data-callback="handleCredentialResponse"
-            data-itp_support="true"
-            data-auto_prompt="true">
+            data-client_id="YOUR_GOOGLE_CLIENT_ID"
+            data-callback="handleCredentialResponse">
         </div>
         <div class="g_id_signin" data-type="standard"></div>
-    </div>
-
-    <!-- User Info Display -->
-    <div id="user-info" class="user-info">
-        <h2 id="user-name"></h2>
-        <p><strong>Email:</strong> <span id="user-email"></span></p>
-        <p><strong>Google ID:</strong> <span id="user-id"></span></p>
-        <img id="user-picture" src="" alt="Profile Picture">
+        
+        <h3 id="user-info"></h3>
+        <p id="user-email"></p>
+        <p id="user-googleID"></p>
+        <img id="user-picture" width="100" height="100">
     </div>
 
     <script>
-        function handleCredentialResponse(response) {
-            const token = response.credential;
-            
-            // Send token to backend for verification
-            fetch("https://api.webstay.se/verify-google-token", {
+        async function handleCredentialResponse(response) {
+            console.log("Google Token:", response.credential);
+
+            const res = await fetch("https://api.webstay.se/verify-google-token", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ token })
-            })
-            .then(res => res.json())
-            .then(data => {
-                console.log("Google ID:", data.googleID);
-                console.log("Name:", data.name);
-                console.log("Email:", data.email);
-                console.log("Profile Picture:", data.picture);
+                body: JSON.stringify({ token: response.credential })
+            });
 
-                // Show user info
-                document.getElementById("user-name").innerText = `Welcome, ${data.name}!`;
-                document.getElementById("user-email").innerText = data.email;
-                document.getElementById("user-id").innerText = data.googleID;
+            const data = await res.json();
+            console.log("User Data:", data);
+
+            if (data.googleID) {
+                document.getElementById("user-info").innerText = `Welcome, ${data.name}!`;
+                document.getElementById("user-email").innerText = `Email: ${data.email}`;
+                document.getElementById("user-googleID").innerText = `Google ID: ${data.googleID}`;
                 document.getElementById("user-picture").src = data.picture;
-                
-                document.getElementById("user-info").style.display = "block";
-            })
-            .catch(err => console.error("Error verifying token:", err));
+            } else {
+                document.getElementById("user-info").innerText = "Login failed.";
+            }
         }
     </script>
 
