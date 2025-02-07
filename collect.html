@@ -6,63 +6,63 @@
     <title>Google Login</title>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: #f5f5f5;
-        }
-        .container {
-            margin-top: 100px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            width: 300px;
-            margin: auto;
-        }
-        img {
-            border-radius: 50%;
-            margin-top: 10px;
-        }
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .google-button { margin: 20px 0; }
+        img { border-radius: 50px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>Login with Google</h2>
+        <h1>Login with Google</h1>
+
         <div id="g_id_onload"
             data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-            data-callback="handleCredentialResponse">
+            data-callback="handleCredentialResponse"
+            data-auto_prompt="true">
         </div>
-        <div class="g_id_signin" data-type="standard"></div>
-        
-        <h3 id="user-info"></h3>
-        <p id="user-email"></p>
-        <p id="user-googleID"></p>
-        <img id="user-picture" width="100" height="100">
+
+        <div class="google-button">
+            <div class="g_id_signin" data-type="standard"></div>
+        </div>
+
+        <h2 id="welcome">Welcome, <span id="userName">Guest</span>!</h2>
+        <p>Email: <span id="userEmail">-</span></p>
+        <p>Google ID: <span id="userGoogleID">-</span></p>
+        <img id="userPic" src="" alt="Profile Picture" width="100" hidden>
     </div>
 
     <script>
-        async function handleCredentialResponse(response) {
-            console.log("Google Token:", response.credential);
+        function handleCredentialResponse(response) {
+            console.log("🔍 Google Token:", response.credential);
 
-            const res = await fetch("https://api.webstay.se/verify-google-token", {
+            fetch("https://api.webstay.se/verify-google-token", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token: response.credential })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error("❌ [ERROR]:", data.error);
+                    alert("Google Login Failed! " + data.error);
+                    return;
+                }
+
+                // ✅ Update UI
+                document.getElementById("userName").innerText = data.name;
+                document.getElementById("userEmail").innerText = data.email;
+                document.getElementById("userGoogleID").innerText = data.googleID;
+                
+                const userPic = document.getElementById("userPic");
+                userPic.src = data.picture;
+                userPic.hidden = false;
+            })
+            .catch(error => {
+                console.error("❌ [ERROR]: Failed to fetch user data", error);
+                alert("Login failed. Please try again.");
             });
-
-            const data = await res.json();
-            console.log("User Data:", data);
-
-            if (data.googleID) {
-                document.getElementById("user-info").innerText = `Welcome, ${data.name}!`;
-                document.getElementById("user-email").innerText = `Email: ${data.email}`;
-                document.getElementById("user-googleID").innerText = `Google ID: ${data.googleID}`;
-                document.getElementById("user-picture").src = data.picture;
-            } else {
-                document.getElementById("user-info").innerText = "Login failed.";
-            }
         }
     </script>
 
