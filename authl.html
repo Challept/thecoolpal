@@ -1,206 +1,164 @@
 <!DOCTYPE html>
 <html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webstay - Logga in/Registrera</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <style>
-        /* General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #74ebd5, #9face6);
-            color: white;
-        }
-
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            width: 400px;
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        p {
-            color: #666;
-            font-size: 15px;
-            margin-bottom: 20px;
-        }
-
-        /* Google Sign-In Button */
-        .google-button {
-            margin-top: 20px;
-        }
-
-        /* Pricing Plans */
-        .plans {
-            display: none; /* Hidden by default */
-            margin-top: 30px;
-        }
-
-        .plan-button {
-            display: block;
-            width: 100%;
-            background: #4CAF50;
-            color: white;
-            padding: 12px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .plan-button:hover {
-            background: #45a049;
-        }
-
-        /* Create Account Link */
-        .create-account {
-            margin-top: 15px;
-        }
-
-        .create-account a {
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .create-account a:hover {
-            text-decoration: underline;
-        }
-
-        /* Custom Alert */
-        .alert {
-            display: none;
-            padding: 10px;
-            background: #ff4444;
-            color: white;
-            border-radius: 5px;
-            margin-top: 15px;
-            font-size: 14px;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Välkommen till Webstay</h1>
-        <p>Logga in eller registrera dig med Google för att fortsätta.</p>
-
-        <!-- Google Login Button -->
-        <div id="g_id_onload"
-            data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-            data-callback="handleCredentialResponse"
-            data-itp_support="true"
-            data-auto_prompt="true">
+  </head>
+  <body class="bg-gray-900 text-gray-100 antialiased">
+    <!-- Main Container -->
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <div class="max-w-4xl w-full bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2">
+          <!-- Left Column: Login Section -->
+          <div class="p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-700">
+            <h1 class="text-2xl font-bold mb-4">Webstay</h1>
+            <p class="text-gray-400 text-center mb-6">
+              Logga in eller registrera dig med Google för att fortsätta.
+            </p>
+            <!-- Google Sign-In Button -->
+            <div id="g_id_onload"
+                 data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+                 data-callback="handleCredentialResponse"
+                 data-itp_support="true"
+                 data-auto_prompt="true"></div>
+            <div class="mt-4">
+              <div class="g_id_signin" data-type="standard"></div>
+            </div>
+            <!-- Create Account Link -->
+            <div class="mt-6">
+              <p class="text-sm text-gray-400">
+                Har du inget konto? 
+                <a href="https://accounts.google.com/signup" target="_blank" class="text-green-400 hover:underline">
+                  Skapa ett Google-konto
+                </a>
+              </p>
+            </div>
+            <!-- Alert Message -->
+            <div id="alertMessage" class="mt-4 text-sm text-center hidden px-3 py-2 rounded"></div>
+          </div>
+          <!-- Right Column: Pricing or Instructions -->
+          <div class="p-8 flex flex-col justify-center">
+            <!-- Pricing Plans Section -->
+            <div id="pricingPlansSection" class="hidden">
+              <h3 class="text-xl font-semibold mb-4 text-center">Välj din plan</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Pricing Card: Start Plan -->
+                <div onclick="buyPlan('Start Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+                  <div class="mb-2 text-lg font-medium">Start Plan</div>
+                  <div class="mb-4 text-sm text-gray-300">299kr engångs, 10kr/månad</div>
+                  <button onclick="event.stopPropagation(); buyPlan('Start Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                    Välj
+                  </button>
+                </div>
+                <!-- Pricing Card: Premium Plan -->
+                <div onclick="buyPlan('Premium Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+                  <div class="mb-2 text-lg font-medium">Premium Plan</div>
+                  <div class="mb-4 text-sm text-gray-300">399kr engångs, 49kr/månad</div>
+                  <button onclick="event.stopPropagation(); buyPlan('Premium Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                    Välj
+                  </button>
+                </div>
+                <!-- Pricing Card: Ultimate Plan -->
+                <div onclick="buyPlan('Ultimate Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+                  <div class="mb-2 text-lg font-medium">Ultimate Plan</div>
+                  <div class="mb-4 text-sm text-gray-300">999kr engångs, 99kr/månad</div>
+                  <button onclick="event.stopPropagation(); buyPlan('Ultimate Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                    Välj
+                  </button>
+                </div>
+                <!-- Pricing Card: Exclusive Plan -->
+                <div onclick="buyPlan('Exclusive Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+                  <div class="mb-2 text-lg font-medium">Exclusive</div>
+                  <div class="mb-4 text-sm text-gray-300">1999kr engångs, 199kr/månad</div>
+                  <button onclick="event.stopPropagation(); buyPlan('Exclusive Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                    Välj
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Instructions Section (shown if ?showpricingplans is absent) -->
+            <div id="instructionsSection" class="hidden text-center">
+              <h3 class="text-xl font-semibold mb-4">Så här loggar du in</h3>
+              <p class="text-gray-400">
+                Klicka på Google-signin i vänstra panelen för att logga in. Om du inte har ett konto, använd länken för att skapa ett Google-konto.
+              </p>
+            </div>
+          </div>
+          <!-- End Right Column -->
         </div>
-        <div class="google-button">
-            <div class="g_id_signin" data-type="standard"></div>
-        </div>
-
-        <!-- Show Pricing Plans if ?showpricingplans is in URL -->
-        <div class="plans" id="pricingPlans">
-            <h3>Välj din plan:</h3>
-            <button class="plan-button" onclick="buyPlan('Start Plan')">Start Plan - 299kr engångs, 10kr/månad</button>
-            <button class="plan-button" onclick="buyPlan('Premium Plan')">Premium Plan - 399kr engångs, 49kr/månad</button>
-            <button class="plan-button" onclick="buyPlan('Ultimate Plan')">Ultimate Plan - 999kr engångs, 99kr/månad</button>
-            <button class="plan-button" onclick="buyPlan('Exclusive Plan')">Exclusive - 1999kr engångs, 199kr/månad</button>
-        </div>
-
-        <!-- Create Google Account -->
-        <div class="create-account">
-            <p>Har du inget konto? <a href="https://accounts.google.com/signup" target="_blank">Skapa ett Google-konto</a></p>
-        </div>
-
-        <!-- Alert Message -->
-        <div class="alert" id="alertMessage"></div>
+      </div>
     </div>
 
     <script>
-        function handleCredentialResponse(response) {
-            const googleID = response.credential;
-
-            // Store Google ID
-            localStorage.setItem("googleID", googleID);
-            showAlert("✅ Inloggning lyckades!", "green");
-            console.log("✅ Google ID stored:", googleID);
-
-            // Show pricing plans if ?showpricingplans is in URL
-            if (window.location.search.includes("showpricingplans")) {
-                document.getElementById("pricingPlans").style.display = "block";
-            }
+      // Callback for Google Sign-In
+      function handleCredentialResponse(response) {
+        const googleID = response.credential;
+        localStorage.setItem("googleID", googleID);
+        showAlert("✅ Inloggning lyckades!", "green");
+        console.log("✅ Google ID stored:", googleID);
+        // Toggle the right column content based on the URL parameter
+        if (window.location.search.includes("showpricingplans")) {
+          document.getElementById("pricingPlansSection").classList.remove("hidden");
+          document.getElementById("instructionsSection").classList.add("hidden");
+        } else {
+          document.getElementById("instructionsSection").classList.remove("hidden");
+          document.getElementById("pricingPlansSection").classList.add("hidden");
         }
+      }
 
-        function buyPlan(planName) {
-            const googleID = localStorage.getItem("googleID");
-
-            if (!googleID) {
-                showAlert("⚠️ Du måste logga in med Google först!", "red");
-                return;
-            }
-
-            fetch("https://api.webstay.se/create-payment-link", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ googleID, planName })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.url) {
-                    window.location.href = data.url; // Redirect to Stripe
-                } else {
-                    showAlert("⚠️ Ett fel uppstod! Försök igen.", "red");
-                }
-            })
-            .catch(error => {
-                console.error('❌ Error:', error);
-                showAlert("❌ Serverfel. Försök igen senare.", "red");
-            });
+      // Function to handle plan purchase
+      function buyPlan(planName) {
+        const googleID = localStorage.getItem("googleID");
+        if (!googleID) {
+          showAlert("⚠️ Du måste logga in med Google först!", "red");
+          return;
         }
-
-        function showAlert(message, color) {
-            const alertBox = document.getElementById("alertMessage");
-            alertBox.textContent = message;
-            alertBox.style.display = "block";
-            alertBox.style.background = color === "red" ? "#ff4444" : "#4CAF50";
-
-            setTimeout(() => {
-                alertBox.style.display = "none";
-            }, 3000);
-        }
-
-        // Show pricing plans if URL contains ?showpricingplans
-        window.onload = function() {
-            if (window.location.search.includes("showpricingplans")) {
-                document.getElementById("pricingPlans").style.display = "block";
+        fetch("https://api.webstay.se/create-payment-link", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ googleID, planName })
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.url) {
+              window.location.href = data.url;
+            } else {
+              showAlert("⚠️ Ett fel uppstod! Försök igen.", "red");
             }
-        };
+          })
+          .catch(error => {
+            console.error("❌ Error:", error);
+            showAlert("❌ Serverfel. Försök igen senare.", "red");
+          });
+      }
+
+      // Function to show alert messages
+      function showAlert(message, color) {
+        const alertBox = document.getElementById("alertMessage");
+        alertBox.textContent = message;
+        alertBox.classList.remove("hidden");
+        alertBox.classList.remove("bg-green-500", "bg-red-500");
+        alertBox.classList.add(color === "red" ? "bg-red-500" : "bg-green-500");
+        setTimeout(() => {
+          alertBox.classList.add("hidden");
+        }, 3000);
+      }
+
+      // On page load, check URL for ?showpricingplans and toggle right column content accordingly
+      window.onload = function() {
+        if (window.location.search.includes("showpricingplans")) {
+          document.getElementById("pricingPlansSection").classList.remove("hidden");
+          document.getElementById("instructionsSection").classList.add("hidden");
+        } else {
+          document.getElementById("instructionsSection").classList.remove("hidden");
+          document.getElementById("pricingPlansSection").classList.add("hidden");
+        }
+      }
     </script>
-</body>
+  </body>
 </html>
