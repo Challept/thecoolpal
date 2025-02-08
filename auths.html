@@ -42,15 +42,21 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         }
         .login-card {
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            padding: 2rem;
+            padding: 3rem;
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
         .dashboard-grid {
             display: grid;
@@ -156,28 +162,16 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
-        .cool-feature {
-            background: var(--secondary);
-            padding: 2rem;
-            border-radius: 12px;
-            color: white;
-            text-align: center;
-            margin-top: 2rem;
-        }
         @media (max-width: 767px) {
             .user-table-container {
                 display: none;
             }
-            .login-card, .card, .cool-feature {
+            .login-card, .card {
                 border-radius: 16px;
                 box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             }
             .card {
                 padding: 2rem;
-            }
-            .cool-feature {
-                padding: 3rem;
-                margin-top: 3rem;
             }
             .btn-logout {
                 padding: 0.75rem 1.5rem;
@@ -232,11 +226,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="cool-feature">
-            <h4>Cool New Feature</h4>
-            <p>This is something cool and new for users to enjoy!</p>
-        </div>
     </div>
 
     <script>
@@ -259,6 +248,9 @@
                 email: credential.email,
                 name: credential.name
             };
+
+            // Save user in session storage
+            sessionStorage.setItem('user', JSON.stringify(state.user));
 
             if (state.user.id === '115156821048844521223') {
                 document.getElementById('loginSection').classList.add('hidden');
@@ -381,11 +373,21 @@
             }
             
             state.user = null;
+            sessionStorage.removeItem('user');
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('dashboardSection').classList.add('hidden');
         }
 
         document.getElementById('logoutBtn').addEventListener('click', logout);
+
+        // Check for saved user in session storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedUser = sessionStorage.getItem('user');
+            if (savedUser) {
+                state.user = JSON.parse(savedUser);
+                handleCredentialResponse({ credential: btoa(JSON.stringify(state.user)) });
+            }
+        });
     </script>
 </body>
 </html>
