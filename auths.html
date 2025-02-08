@@ -218,7 +218,7 @@
                             <tr>
                                 <th>User ID</th>
                                 <th>Plan</th>
-                                <th>Status</th>
+                                <th>StoreID</th>
                             </tr>
                         </thead>
                         <tbody id="userList"></tbody>
@@ -355,7 +355,7 @@
                         <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">${user.PlanName}</span>
                     </td>
                     <td>
-                        <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">Active</span>
+                        <span class="badge badge-${['primary', 'secondary', 'accent'][Math.floor(Math.random() * 3)]}">${user.StoreID}</span>
                     </td>
                 </tr>
             `).join('');
