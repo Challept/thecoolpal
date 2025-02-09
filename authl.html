@@ -12,84 +12,61 @@
   <body class="bg-gray-900 text-gray-100 antialiased">
     <!-- Main Container -->
     <div class="min-h-screen flex items-center justify-center p-4">
-      <div class="max-w-4xl w-full bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2">
-          <!-- Left Column: Login Section -->
-          <div class="p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-gray-700">
-            <h1 class="text-2xl font-bold mb-4">Webstay</h1>
-            <p class="text-gray-400 text-center mb-6">
-              Logga in eller registrera dig med Google för att fortsätta.
-            </p>
-            <!-- Google Sign-In Button -->
-            <div id="g_id_onload"
-                 data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-                 data-callback="handleCredentialResponse"
-                 data-itp_support="true"
-                 data-auto_prompt="true"></div>
-            <div class="mt-4">
-              <div class="g_id_signin" data-type="standard"></div>
-            </div>
-            <!-- Create Account Link -->
-            <div class="mt-6">
-              <p class="text-sm text-gray-400">
-                Har du inget konto? 
-                <a href="https://accounts.google.com/signup" target="_blank" class="text-green-400 hover:underline">
-                  Skapa ett Google-konto
-                </a>
-              </p>
-            </div>
-            <!-- Alert Message -->
-            <div id="alertMessage" class="mt-4 text-sm text-center hidden px-3 py-2 rounded"></div>
+      <div class="max-w-lg w-full bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+        <div class="p-8 flex flex-col items-center justify-center border-b border-gray-700">
+          <h1 class="text-2xl font-bold mb-4">Webstay</h1>
+          <p class="text-gray-400 text-center mb-6" id="loginMessage">
+            Logga in eller registrera dig med Google för att fortsätta.
+          </p>
+          <!-- Google Sign-In Button -->
+          <div id="g_id_onload"
+               data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+               data-callback="handleCredentialResponse"
+               data-itp_support="true"
+               data-auto_prompt="true"></div>
+          <div class="mt-4">
+            <div class="g_id_signin" data-type="standard"></div>
           </div>
-          <!-- Right Column: Pricing or Instructions -->
-          <div class="p-8 flex flex-col justify-center">
-            <!-- Pricing Plans Section -->
-            <div id="pricingPlansSection" class="hidden">
-              <h3 class="text-xl font-semibold mb-4 text-center">Välj din plan</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <!-- Pricing Card: Start Plan -->
-                <div onclick="buyPlan('Start Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-                  <div class="mb-2 text-lg font-medium">Start Plan</div>
-                  <div class="mb-4 text-sm text-gray-300">299kr engångs, 10kr/månad</div>
-                  <button onclick="event.stopPropagation(); buyPlan('Start Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                    Välj
-                  </button>
-                </div>
-                <!-- Pricing Card: Premium Plan -->
-                <div onclick="buyPlan('Premium Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-                  <div class="mb-2 text-lg font-medium">Premium Plan</div>
-                  <div class="mb-4 text-sm text-gray-300">399kr engångs, 49kr/månad</div>
-                  <button onclick="event.stopPropagation(); buyPlan('Premium Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                    Välj
-                  </button>
-                </div>
-                <!-- Pricing Card: Ultimate Plan -->
-                <div onclick="buyPlan('Ultimate Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-                  <div class="mb-2 text-lg font-medium">Ultimate Plan</div>
-                  <div class="mb-4 text-sm text-gray-300">999kr engångs, 99kr/månad</div>
-                  <button onclick="event.stopPropagation(); buyPlan('Ultimate Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                    Välj
-                  </button>
-                </div>
-                <!-- Pricing Card: Exclusive Plan -->
-                <div onclick="buyPlan('Exclusive Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-                  <div class="mb-2 text-lg font-medium">Exclusive</div>
-                  <div class="mb-4 text-sm text-gray-300">1999kr engångs, 199kr/månad</div>
-                  <button onclick="event.stopPropagation(); buyPlan('Exclusive Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                    Välj
-                  </button>
-                </div>
-              </div>
+          <!-- Alert Message -->
+          <div id="alertMessage" class="mt-4 text-sm text-center hidden px-3 py-2 rounded"></div>
+        </div>
+        <!-- Pricing Plans Section -->
+        <div id="pricingPlansSection" class="hidden p-8 flex flex-col justify-center">
+          <h3 class="text-xl font-semibold mb-4 text-center">Välj din plan</h3>
+          <div class="grid grid-cols-1 gap-4">
+            <!-- Pricing Card: Start Plan -->
+            <div onclick="buyPlan('Start Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+              <div class="mb-2 text-lg font-medium">Start Plan</div>
+              <div class="mb-4 text-sm text-gray-300">299kr engångs, 10kr/månad</div>
+              <button onclick="event.stopPropagation(); buyPlan('Start Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                Välj
+              </button>
             </div>
-            <!-- Instructions Section (shown if ?showpricingplans is absent) -->
-            <div id="instructionsSection" class="hidden text-center">
-              <h3 class="text-xl font-semibold mb-4">Så här loggar du in</h3>
-              <p class="text-gray-400">
-                Klicka på Google-signin i vänstra panelen för att logga in. Om du inte har ett konto, använd länken för att skapa ett Google-konto.
-              </p>
+            <!-- Pricing Card: Premium Plan -->
+            <div onclick="buyPlan('Premium Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+              <div class="mb-2 text-lg font-medium">Premium Plan</div>
+              <div class="mb-4 text-sm text-gray-300">399kr engångs, 49kr/månad</div>
+              <button onclick="event.stopPropagation(); buyPlan('Premium Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                Välj
+              </button>
+            </div>
+            <!-- Pricing Card: Ultimate Plan -->
+            <div onclick="buyPlan('Ultimate Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+              <div class="mb-2 text-lg font-medium">Ultimate Plan</div>
+              <div class="mb-4 text-sm text-gray-300">999kr engångs, 99kr/månad</div>
+              <button onclick="event.stopPropagation(); buyPlan('Ultimate Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                Välj
+              </button>
+            </div>
+            <!-- Pricing Card: Exclusive Plan -->
+            <div onclick="buyPlan('Exclusive Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
+              <div class="mb-2 text-lg font-medium">Exclusive</div>
+              <div class="mb-4 text-sm text-gray-300">1999kr engångs, 199kr/månad</div>
+              <button onclick="event.stopPropagation(); buyPlan('Exclusive Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
+                Välj
+              </button>
             </div>
           </div>
-          <!-- End Right Column -->
         </div>
       </div>
     </div>
@@ -103,11 +80,10 @@
         console.log("✅ Google ID stored:", googleID);
         // Toggle the right column content based on the URL parameter
         if (window.location.search.includes("showpricingplans")) {
-          document.getElementById("pricingPlansSection").classList.remove("hidden");
-          document.getElementById("instructionsSection").classList.add("hidden");
-        } else {
-          document.getElementById("instructionsSection").classList.remove("hidden");
-          document.getElementById("pricingPlansSection").classList.add("hidden");
+          document.getElementById("loginMessage").textContent = "Logga in för att fortsätta till köp av plan.";
+          if (googleID) {
+            document.getElementById("pricingPlansSection").classList.remove("hidden");
+          }
         }
       }
 
@@ -152,11 +128,7 @@
       // On page load, check URL for ?showpricingplans and toggle right column content accordingly
       window.onload = function() {
         if (window.location.search.includes("showpricingplans")) {
-          document.getElementById("pricingPlansSection").classList.remove("hidden");
-          document.getElementById("instructionsSection").classList.add("hidden");
-        } else {
-          document.getElementById("instructionsSection").classList.remove("hidden");
-          document.getElementById("pricingPlansSection").classList.add("hidden");
+          document.getElementById("loginMessage").textContent = "Logga in för att fortsätta till köp av plan.";
         }
       }
     </script>
