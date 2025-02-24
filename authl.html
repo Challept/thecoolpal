@@ -8,6 +8,8 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+    <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
     <style>
       body {
         background: linear-gradient(135deg, #1e3a8a, #9333ea);
@@ -99,9 +101,10 @@
           showAlert("✅ Inloggning lyckades!", "success");
           const res = await fetch("https://api.webstay.se/savegoogleuser", {
             method: "POST",
+            mode: "cors",
+            credentials: "include",
             headers: { 
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Origin": "*"
+              "Content-Type": "application/json"
             },
             body: JSON.stringify({ token })
           });
