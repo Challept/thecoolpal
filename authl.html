@@ -12,71 +12,76 @@
       body {
         background: linear-gradient(135deg, #1e3a8a, #9333ea);
         font-family: 'Poppins', sans-serif;
+        animation: fadeIn 1s ease-in-out;
       }
       .glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 12px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        box-shadow: 0 6px 50px rgba(0, 0, 0, 0.3);
         transition: all 0.3s ease-in-out;
       }
       .glass:hover {
-        transform: scale(1.05);
-        box-shadow: 0 6px 40px rgba(0, 0, 0, 0.3);
+        transform: scale(1.07);
+        box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+      }
+      .step-hidden {
+        display: none;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
       }
     </style>
   </head>
   <body class="text-gray-100 antialiased flex items-center justify-center min-h-screen">
     <!-- Main Container -->
-    <div class="w-full max-w-lg p-6 glass text-center">
-      <h1 class="text-4xl font-extrabold mb-4 text-white">Webstay</h1>
-      <p class="text-gray-300 mb-6" id="loginMessage">
+    <div class="w-full max-w-lg p-8 glass text-center">
+      <h1 class="text-5xl font-extrabold mb-4 text-white animate-pulse">Webstay</h1>
+      <p class="text-gray-300 mb-6 text-lg" id="loginMessage">
         Logga in eller registrera dig med Google för att fortsätta.
       </p>
-      <div id="g_id_onload"
-        data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-        data-callback="handleCredentialResponse"
-        data-itp_support="true"
-        data-auto_prompt="true"></div>
-      <div class="mt-4">
-        <div class="g_id_signin" data-type="standard"></div>
+      <div id="step1">
+        <div id="g_id_onload"
+          data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+          data-callback="handleCredentialResponse"
+          data-itp_support="true"
+          data-auto_prompt="true"></div>
+        <div class="mt-6">
+          <div class="g_id_signin" data-type="standard"></div>
+        </div>
       </div>
-      <div id="alertMessage" class="mt-4 text-sm text-center hidden px-3 py-2 rounded"></div>
-      
-      <div id="pricingPlansSection" class="hidden p-8">
-        <h3 class="text-2xl font-semibold mb-4 text-white">Välj din plan</h3>
-        <div class="grid grid-cols-1 gap-4">
-          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Start Plan')">
+      <div id="step2" class="step-hidden mt-6">
+        <h2 class="text-2xl font-bold text-white mb-4">Välj en plan</h2>
+        <div class="grid grid-cols-1 gap-6">
+          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Start Plan')">
             <h4 class="text-lg font-semibold text-white">Start Plan</h4>
             <p class="text-gray-200 text-sm">299kr engångs, 10kr/månad</p>
           </div>
-          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Premium Plan')">
+          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Premium Plan')">
             <h4 class="text-lg font-semibold text-white">Premium Plan</h4>
             <p class="text-gray-200 text-sm">399kr engångs, 49kr/månad</p>
           </div>
-          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Ultimate Plan')">
-            <h4 class="text-lg font-semibold text-white">Ultimate Plan</h4>
-            <p class="text-gray-200 text-sm">999kr engångs, 99kr/månad</p>
-          </div>
-          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Exclusive Plan')">
-            <h4 class="text-lg font-semibold text-white">Exclusive Plan</h4>
-            <p class="text-gray-200 text-sm">1999kr engångs, 199kr/månad</p>
-          </div>
         </div>
       </div>
+      <div id="alertMessage" class="mt-6 text-sm text-center hidden px-4 py-3 rounded-lg shadow-lg"></div>
     </div>
     <script>
       function handleCredentialResponse(response) {
         const token = response.credential;
         localStorage.setItem("googleID", token);
         showAlert("✅ Inloggning lyckades!", "green");
-        fetch("/api/auth", {
+        fetch("https://api.webstay.se/api/auth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ token })
         })
         .then(res => res.json())
-        .then(data => console.log("User saved:", data))
+        .then(data => {
+          console.log("User saved:", data);
+          document.getElementById("step1").classList.add("step-hidden");
+          document.getElementById("step2").classList.remove("step-hidden");
+        })
         .catch(err => console.error("❌ Server error:", err));
       }
       function buyPlan(planName) {
@@ -85,7 +90,7 @@
           showAlert("⚠️ Du måste logga in med Google först!", "red");
           return;
         }
-        fetch("/api/buy", {
+        fetch("https://api.webstay.se/create-payment-link", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ googleID, planName })
@@ -103,7 +108,8 @@
       }
       window.onload = function() {
         if (window.location.search.includes("showpricingplans")) {
-          document.getElementById("loginMessage").textContent = "Logga in för att fortsätta till köp av plan.";
+          document.getElementById("step1").classList.add("step-hidden");
+          document.getElementById("step2").classList.remove("step-hidden");
         }
       }
     </script>
