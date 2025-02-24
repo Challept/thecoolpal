@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webstay - Logga in/Registrera</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
     <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
@@ -46,7 +46,7 @@
           data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
           data-callback="handleCredentialResponse"
           data-itp_support="true"
-          data-auto_prompt="true"></div>
+          data-auto_prompt="false"></div>
         <div class="mt-6">
           <div class="g_id_signin" data-type="standard"></div>
         </div>
@@ -86,6 +86,7 @@
       async function handleCredentialResponse(response) {
         try {
           const token = response.credential;
+          if (!token) throw new Error("Google Authentication failed");
           localStorage.setItem("googleID", token);
           showAlert("✅ Inloggning lyckades!", "green");
           const res = await fetch("https://api.webstay.se/api/auth", {
@@ -106,33 +107,6 @@
           console.error("❌ Server error:", err);
           showAlert("❌ Serverfel. Försök igen senare.", "red");
         }
-      }
-      async function buyPlan(planName) {
-        try {
-          const googleID = localStorage.getItem("googleID");
-          if (!googleID) {
-            showAlert("⚠️ Du måste logga in med Google först!", "red");
-            return;
-          }
-          const res = await fetch("https://api.webstay.se/create-payment-link", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ googleID, planName })
-          });
-          if (!res.ok) throw new Error("Server response not OK");
-          const data = await res.json();
-          window.location.href = data.url;
-        } catch (err) {
-          console.error("❌ Error processing payment:", err);
-          showAlert("❌ Serverfel. Försök igen senare.", "red");
-        }
-      }
-      function showAlert(message, color) {
-        const alertBox = document.getElementById("alertMessage");
-        alertBox.textContent = message;
-        alertBox.classList.remove("hidden");
-        alertBox.classList.add(color === "red" ? "bg-red-500" : "bg-green-500");
-        setTimeout(() => alertBox.classList.add("hidden"), 3000);
       }
     </script>
   </body>
