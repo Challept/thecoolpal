@@ -79,17 +79,13 @@
       <div id="alertMessage" class="mt-6 text-sm text-center hidden px-4 py-3 rounded-lg shadow-lg"></div>
     </div>
     <script>
-      function checkURLParams() {
-        return new URLSearchParams(window.location.search).has("showpricingplans");
-      }
-
       async function handleCredentialResponse(response) {
         try {
           const token = response.credential;
           if (!token) throw new Error("Google Authentication failed");
           localStorage.setItem("googleID", token);
           showAlert("✅ Inloggning lyckades!", "green");
-          const res = await fetch("https://api.webstay.se/api/auth", {
+          const res = await fetch("https://api.webstay.se/savegoogleuser", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token })
@@ -98,11 +94,7 @@
           const data = await res.json();
           console.log("User saved:", data);
           document.getElementById("step1").classList.add("step-hidden");
-          if (checkURLParams()) {
-            document.getElementById("step2").classList.remove("step-hidden");
-          } else {
-            document.getElementById("doneScreen").classList.remove("step-hidden");
-          }
+          document.getElementById("doneScreen").classList.remove("step-hidden");
         } catch (err) {
           console.error("❌ Server error:", err);
           showAlert("❌ Serverfel. Försök igen senare.", "red");
