@@ -74,6 +74,7 @@
         fetch("https://api.webstay.se/api/auth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          mode: "cors",
           body: JSON.stringify({ token })
         })
         .then(res => res.json())
@@ -93,6 +94,7 @@
         fetch("https://api.webstay.se/create-payment-link", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          mode: "cors",
           body: JSON.stringify({ googleID, planName })
         })
         .then(res => res.json())
