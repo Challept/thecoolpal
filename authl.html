@@ -8,960 +8,104 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- AOS Animation Library -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
-      :root {
-        --primary-color: #1e3a8a;
-        --secondary-color: #9333ea;
-        --accent-color: #06b6d4;
-        --text-color: #f3f4f6;
-      }
-      
       body {
-        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        background: linear-gradient(135deg, #1e3a8a, #9333ea);
         font-family: 'Poppins', sans-serif;
-        overflow-x: hidden;
-        position: relative;
       }
-      
-      body::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnN2Z2pzPSJodHRwOi8vc3ZnanMuZGV2L3N2Z2pzIiB2aWV3Qm94PSIwIDAgNzAwIDcwMCIgd2lkdGg9IjcwMCIgaGVpZ2h0PSI3MDAiIG9wYWNpdHk9IjAuMDUiPjxkZWZzPjxmaWx0ZXIgaWQ9Im5ubm9pc2UtZmlsdGVyIiB4PSItMjAlIiB5PSItMjAlIiB3aWR0aD0iMTQwJSIgaGVpZ2h0PSIxNDAlIiBmaWx0ZXJVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giIHByaW1pdGl2ZVVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY29sb3ItaW50ZXJwb2xhdGlvbi1maWx0ZXJzPSJzUkdCIj4KICA8ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC4xMDIiIG51bU9jdGF2ZXM9IjQiIHNlZWQ9IjE1IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHJlc3VsdD0idHVyYnVsZW5jZSI+PC9mZVR1cmJ1bGVuY2U+CiAgPGZlU3BlY3VsYXJMaWdodGluZyBzdXJmYWNlU2NhbGU9IjE1IiBzcGVjdWxhckNvbnN0YW50PSIwLjc1IiBzcGVjdWxhckV4cG9uZW50PSIyMCIgbGlnaHRpbmctY29sb3I9IiNmZmZmZmYiIHg9IjAlIiB5PSIwJSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgaW49InR1cmJ1bGVuY2UiIHJlc3VsdD0ic3BlY3VsYXJMaWdodGluZyI+CiAgICAgIDxmZVBvaW50TGlnaHQgeD0iNTAlIiB5PSI1MCUiIHo9IjcwMCI+PC9mZVBvaW50TGlnaHQ+CiAgPC9mZVNwZWN1bGFyTGlnaHRpbmc+CiAgCiAgPGZlQ29sb3JNYXRyaXggdHlwZT0ibWF0cml4IiB4PSIwJSIgeT0iMCUiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGluPSJzcGVjdWxhckxpZ2h0aW5nIiB2YWx1ZXM9IjEgMCAwIDAgMCAwIDEgMCAwIDAgMCAwIDEgMCAwIDAgMCAwIDEgMCI+PC9mZUNvbG9yTWF0cml4PgogIDwvZmlsdGVyPjwvZGVmcz48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0idHJhbnNwYXJlbnQiPjwvcmVjdD48cmVjdCB3aWR0aD0iNzAwIiBoZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZmlsdGVyPSJ1cmwoI25ubm9pc2UtZmlsdGVyKSI+PC9yZWN0Pjwvc3ZnPg==');
-        opacity: 0.1;
-        z-index: -1;
-      }
-      
-      /* Animation for floating particles */
-      @keyframes float {
-        0% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(5deg); }
-        100% { transform: translateY(0px) rotate(0deg); }
-      }
-      
-      @keyframes floatReverse {
-        0% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(20px) rotate(-5deg); }
-        100% { transform: translateY(0px) rotate(0deg); }
-      }
-      
-      @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-      }
-      
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-      
-      @keyframes shimmer {
-        0% { background-position: -100% 0; }
-        100% { background-position: 100% 0; }
-      }
-      
-      /* Floating elements */
-      .floating {
-        position: absolute;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: -1;
-      }
-      
-      .float-1 {
-        width: 120px;
-        height: 120px;
-        top: 10%;
-        left: 10%;
-        animation: float 8s ease-in-out infinite;
-      }
-      
-      .float-2 {
-        width: 80px;
-        height: 80px;
-        top: 20%;
-        right: 10%;
-        animation: floatReverse 12s ease-in-out infinite;
-      }
-      
-      .float-3 {
-        width: 150px;
-        height: 150px;
-        bottom: 15%;
-        left: 15%;
-        animation: float 10s ease-in-out infinite;
-      }
-      
-      .float-4 {
-        width: 100px;
-        height: 100px;
-        bottom: 10%;
-        right: 15%;
-        animation: floatReverse 9s ease-in-out infinite;
-      }
-      
       .glass {
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(20px);
-        border-radius: 16px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        overflow: hidden;
-        position: relative;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
       }
-      
       .glass:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
-      }
-      
-      .glass::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -50%;
-        width: 150%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.05),
-          transparent
-        );
-        transform: skewX(-25deg);
-        transition: all 0.7s;
-      }
-      
-      .glass:hover::after {
-        left: 100%;
-      }
-      
-      /* Button styles */
-      .btn-glow {
-        position: relative;
-        overflow: hidden;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-      }
-      
-      .btn-glow::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: -2px;
-        right: -2px;
-        bottom: -2px;
-        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
-        background-size: 400%;
-        z-index: -1;
-        filter: blur(7px);
-        animation: glowing 20s linear infinite;
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-        border-radius: 16px;
-      }
-      
-      .btn-glow:hover::before {
-        opacity: 1;
-      }
-      
-      @keyframes glowing {
-        0% { background-position: 0 0; }
-        50% { background-position: 400% 0; }
-        100% { background-position: 0 0; }
-      }
-      
-      /* Plan card styles */
-      .plan-card {
-        background: rgba(255, 255, 255, 0.08);
-        backdrop-filter: blur(15px);
-        border-radius: 16px;
-        padding: 25px;
-        transition: all 0.5s ease;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        position: relative;
-        overflow: hidden;
-        z-index: 1;
-      }
-      
-      .plan-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        z-index: -1;
-      }
-      
-      .plan-card:hover {
-        transform: translateY(-15px) scale(1.03);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      }
-      
-      .plan-card:hover::before {
-        opacity: 0.15;
-      }
-      
-      .premium-indicator {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: linear-gradient(45deg, #f59e0b, #ef4444);
-        border-radius: 20px;
-        padding: 4px 8px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: white;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        transform: translateY(0);
-        animation: pulse 2s infinite ease-in-out;
-      }
-      
-      .popular-indicator {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: linear-gradient(45deg, #8b5cf6, #3b82f6);
-        border-radius: 20px;
-        padding: 4px 8px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: white;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        transform: translateY(0);
-        animation: pulse 2s infinite ease-in-out;
-      }
-      
-      .plan-price {
-        font-size: 1.8rem;
-        font-weight: 800;
-        background: linear-gradient(to right, #ffffff, #bfdbfe);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 10px 0;
-      }
-      
-      .feature-list {
-        margin: 20px 0;
-        text-align: left;
-      }
-      
-      .feature-item {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-        transition: transform 0.3s;
-      }
-      
-      .feature-item i {
-        margin-right: 10px;
-        color: #22d3ee;
-      }
-      
-      /* Logo animation */
-      .logo {
-        display: inline-block;
-        position: relative;
-        animation: pulse 3s infinite;
-        background: linear-gradient(45deg, #f3f4f6, #ffffff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      
-      /* Alert animations */
-      .alert-animate-in {
-        animation: fadeInUp 0.5s ease forwards;
-      }
-      
-      .alert-animate-out {
-        animation: fadeOutDown 0.5s ease forwards;
-      }
-      
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      
-      @keyframes fadeOutDown {
-        from {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        to {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-      }
-      
-      /* Loading animation */
-      .loader {
-        display: none;
-        position: relative;
-        width: 40px;
-        height: 40px;
-        margin: 0 auto;
-      }
-      
-      .loader-circle {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border: 3px solid transparent;
-        border-top-color: #ffffff;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-      }
-      
-      .loader-circle:nth-child(2) {
-        border: 3px solid transparent;
-        border-top-color: #22d3ee;
-        animation: spin 1.5s linear infinite;
-        width: 80%;
-        height: 80%;
-        top: 10%;
-        left: 10%;
-      }
-      
-      /* Theme toggle */
-      .theme-toggle {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      
-      .theme-toggle:hover {
-        transform: rotate(45deg);
-        background: rgba(255, 255, 255, 0.2);
-      }
-      
-      /* Feature highlight */
-      .highlight {
-        position: relative;
-        display: inline-block;
-      }
-      
-      .highlight::after {
-        content: '';
-        position: absolute;
-        bottom: -2px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: linear-gradient(to right, var(--accent-color), transparent);
-      }
-      
-      /* Dark mode */
-      .dark-mode {
-        --primary-color: #0f172a;
-        --secondary-color: #4c1d95;
-        --accent-color: #0e7490;
-        --text-color: #f3f4f6;
+        transform: scale(1.05);
+        box-shadow: 0 6px 40px rgba(0, 0, 0, 0.3);
       }
     </style>
   </head>
-  <body class="text-gray-100 antialiased flex items-center justify-center min-h-screen py-12 px-4">
-    <!-- Floating animation elements -->
-    <div class="floating float-1"></div>
-    <div class="floating float-2"></div>
-    <div class="floating float-3"></div>
-    <div class="floating float-4"></div>
-    
-    <!-- Theme toggle -->
-    <div class="theme-toggle" onclick="toggleTheme()">
-      <i class="fas fa-moon"></i>
-    </div>
-    
+  <body class="text-gray-100 antialiased flex items-center justify-center min-h-screen">
     <!-- Main Container -->
-    <div class="w-full max-w-4xl glass text-center p-8" data-aos="zoom-in" data-aos-duration="1000">
-      <div class="mb-10">
-        <h1 class="text-6xl font-extrabold mb-4 logo">
-          Web<span class="text-cyan-400">stay</span>
-        </h1>
-        <div class="w-24 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto rounded-full mt-2 mb-6"></div>
-        <p class="text-gray-300 text-lg animate__animated animate__fadeIn" id="loginMessage">
-          Logga in eller registrera dig med Google för att fortsätta.
-        </p>
-      </div>
-      
-      <!-- Loader -->
-      <div class="loader mb-8" id="loader">
-        <div class="loader-circle"></div>
-        <div class="loader-circle"></div>
-      </div>
-      
-      <!-- Google Sign-In -->
+    <div class="w-full max-w-lg p-6 glass text-center">
+      <h1 class="text-4xl font-extrabold mb-4 text-white">Webstay</h1>
+      <p class="text-gray-300 mb-6" id="loginMessage">
+        Logga in eller registrera dig med Google för att fortsätta.
+      </p>
       <div id="g_id_onload"
         data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
         data-callback="handleCredentialResponse"
         data-itp_support="true"
         data-auto_prompt="true"></div>
-      <div class="mt-4 transition-all duration-300 hover:scale-105">
+      <div class="mt-4">
         <div class="g_id_signin" data-type="standard"></div>
       </div>
+      <div id="alertMessage" class="mt-4 text-sm text-center hidden px-3 py-2 rounded"></div>
       
-      <!-- Alert Message -->
-      <div id="alertMessage" class="mt-8 text-sm text-center hidden px-4 py-3 rounded-lg shadow-lg max-w-md mx-auto"></div>
-      
-      <!-- Pricing Plans Section -->
-      <div id="pricingPlansSection" class="hidden mt-12" data-aos="fade-up" data-aos-delay="300">
-        <div class="flex flex-col items-center mb-10">
-          <h3 class="text-3xl font-bold mb-3 text-white">Välj din <span class="highlight">plan</span></h3>
-          <p class="text-gray-300 max-w-xl">Våra skräddarsydda planer är designade för att hjälpa dig att få ut det mesta av Webstay. Välj den som passar dina behov bäst.</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Start Plan -->
-          <div class="plan-card" data-aos="fade-up" data-aos-delay="400" onclick="buyPlan('Start Plan')">
-            <h4 class="text-xl font-bold text-white">Start Plan</h4>
-            <p class="plan-price">299kr <span class="text-base font-normal">engångs</span></p>
-            <p class="text-gray-300 text-sm">+10kr/månad</p>
-            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent my-4"></div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Grundläggande funktioner</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>E-postkundtjänst</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>5GB lagring</span>
-              </div>
-            </div>
-            <button class="w-full mt-6 btn-glow bg-gradient-to-r from-cyan-600 to-cyan-400 rounded-lg py-3 font-semibold text-white transition-all hover:shadow-lg">
-              Välj plan
-            </button>
+      <div id="pricingPlansSection" class="hidden p-8">
+        <h3 class="text-2xl font-semibold mb-4 text-white">Välj din plan</h3>
+        <div class="grid grid-cols-1 gap-4">
+          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Start Plan')">
+            <h4 class="text-lg font-semibold text-white">Start Plan</h4>
+            <p class="text-gray-200 text-sm">299kr engångs, 10kr/månad</p>
           </div>
-          
-          <!-- Premium Plan -->
-          <div class="plan-card" data-aos="fade-up" data-aos-delay="500" onclick="buyPlan('Premium Plan')">
-            <div class="popular-indicator">Populär</div>
-            <h4 class="text-xl font-bold text-white">Premium Plan</h4>
-            <p class="plan-price">399kr <span class="text-base font-normal">engångs</span></p>
-            <p class="text-gray-300 text-sm">+49kr/månad</p>
-            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent my-4"></div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Alla Start-funktioner</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Prioriterad support</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>25GB lagring</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Avancerade analyser</span>
-              </div>
-            </div>
-            <button class="w-full mt-6 btn-glow bg-gradient-to-r from-purple-600 to-purple-400 rounded-lg py-3 font-semibold text-white transition-all hover:shadow-lg">
-              Välj plan
-            </button>
+          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Premium Plan')">
+            <h4 class="text-lg font-semibold text-white">Premium Plan</h4>
+            <p class="text-gray-200 text-sm">399kr engångs, 49kr/månad</p>
           </div>
-          
-          <!-- Ultimate Plan -->
-          <div class="plan-card" data-aos="fade-up" data-aos-delay="600" onclick="buyPlan('Ultimate Plan')">
-            <h4 class="text-xl font-bold text-white">Ultimate Plan</h4>
-            <p class="plan-price">999kr <span class="text-base font-normal">engångs</span></p>
-            <p class="text-gray-300 text-sm">+99kr/månad</p>
-            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent my-4"></div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Alla Premium-funktioner</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>24/7 Telefonsupport</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>100GB lagring</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Egen kundansvarig</span>
-              </div>
-            </div>
-            <button class="w-full mt-6 btn-glow bg-gradient-to-r from-blue-600 to-blue-400 rounded-lg py-3 font-semibold text-white transition-all hover:shadow-lg">
-              Välj plan
-            </button>
+          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Ultimate Plan')">
+            <h4 class="text-lg font-semibold text-white">Ultimate Plan</h4>
+            <p class="text-gray-200 text-sm">999kr engångs, 99kr/månad</p>
           </div>
-          
-          <!-- Exclusive Plan -->
-          <div class="plan-card" data-aos="fade-up" data-aos-delay="700" onclick="buyPlan('Exclusive Plan')">
-            <div class="premium-indicator">Premium</div>
-            <h4 class="text-xl font-bold text-white">Exclusive Plan</h4>
-            <p class="plan-price">1999kr <span class="text-base font-normal">engångs</span></p>
-            <p class="text-gray-300 text-sm">+199kr/månad</p>
-            <div class="w-full h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent my-4"></div>
-            <div class="feature-list">
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Alla Ultimate-funktioner</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Obegränsad lagring</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Premium API-tillgång</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>Anpassade lösningar</span>
-              </div>
-              <div class="feature-item">
-                <i class="fas fa-check-circle"></i>
-                <span>VIP-support</span>
-              </div>
-            </div>
-            <button class="w-full mt-6 btn-glow bg-gradient-to-r from-pink-600 to-pink-400 rounded-lg py-3 font-semibold text-white transition-all hover:shadow-lg">
-              Välj plan
-            </button>
+          <div class="bg-white bg-opacity-20 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-lg" onclick="buyPlan('Exclusive Plan')">
+            <h4 class="text-lg font-semibold text-white">Exclusive Plan</h4>
+            <p class="text-gray-200 text-sm">1999kr engångs, 199kr/månad</p>
           </div>
-        </div>
-      </div>
-      
-      <!-- Footer -->
-      <div class="mt-16 text-sm text-gray-400">
-        <p>© 2025 Webstay. Alla rättigheter förbehållna.</p>
-        <div class="flex justify-center mt-4 space-x-4">
-          <a href="#" class="hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="hover:text-white transition-colors"><i class="fab fa-facebook"></i></a>
-          <a href="#" class="hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
         </div>
       </div>
     </div>
-    
     <script>
-      // Initialize AOS
-      AOS.init();
-      
-      // Theme Toggle
-      function toggleTheme() {
-        document.body.classList.toggle('dark-mode');
-        const icon = document.querySelector('.theme-toggle i');
-        if (document.body.classList.contains('dark-mode')) {
-          icon.classList.remove('fa-moon');
-          icon.classList.add('fa-sun');
-        } else {
-          icon.classList.remove('fa-sun');
-          icon.classList.add('fa-moon');
-        }
-      }
-      
-      // Handle Google Login
       function handleCredentialResponse(response) {
         const token = response.credential;
         localStorage.setItem("googleID", token);
-        
-        // Show loader
-        document.getElementById("loader").style.display = "block";
-        
-        // Hide Google sign-in button temporarily
-        document.querySelector(".g_id_signin").style.opacity = "0.5";
-        
-        setTimeout(() => {
-          // Hide loader
-          document.getElementById("loader").style.display = "none";
-          
-          // Show success message
-          showAlert("✅ Inloggning lyckades! Välkommen tillbaka!", "green");
-          
-          // Show pricing plans after successful login
-          setTimeout(() => {
-            document.getElementById("pricingPlansSection").classList.remove("hidden");
-            document.getElementById("pricingPlansSection").classList.add("animate__animated", "animate__fadeIn");
-          }, 500);
-          
-// Send token to server
-          fetch("/api/auth", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ token })
-          })
-          .then(res => res.json())
-          .then(data => console.log("User saved:", data))
-          .catch(err => {
-            console.error("❌ Server error:", err);
-            showAlert("❌ Serverfel vid inloggning. Försök igen senare.", "red");
-            document.querySelector(".g_id_signin").style.opacity = "1";
-          });
-        }, 1500);
+        showAlert("✅ Inloggning lyckades!", "green");
+        fetch("/api/auth", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token })
+        })
+        .then(res => res.json())
+        .then(data => console.log("User saved:", data))
+        .catch(err => console.error("❌ Server error:", err));
       }
-      
       function buyPlan(planName) {
         const googleID = localStorage.getItem("googleID");
         if (!googleID) {
           showAlert("⚠️ Du måste logga in med Google först!", "red");
           return;
         }
-        
-        // Show loading animation
-        document.getElementById("loader").style.display = "block";
-        
-        // Add visual feedback for selected plan
-        const planCards = document.querySelectorAll(".plan-card");
-        planCards.forEach(card => {
-          if (card.querySelector("h4").textContent === planName) {
-            card.classList.add("ring-4", "ring-cyan-400", "ring-opacity-70");
-            gsap.to(card, {duration: 0.3, scale: 1.03, ease: "back.out"});
-          } else {
-            card.classList.add("opacity-50");
-            gsap.to(card, {duration: 0.3, scale: 0.98});
-          }
-        });
-        
-        // Confetti effect on selection
-        launchConfetti();
-        
-        showAlert(`🎉 Du har valt ${planName}! Förbereder betalning...`, "green");
-        
-        setTimeout(() => {
-          fetch("/api/buy", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ googleID, planName })
-          })
-          .then(res => {
-            if (!res.ok) {
-              throw new Error("Server error");
-            }
-            return res.json();
-          })
-          .then(data => {
-            // Hide loader
-            document.getElementById("loader").style.display = "none";
-            
-            // Create transition effect
-            const container = document.querySelector(".glass");
-            gsap.to(container, {
-              duration: 0.5,
-              opacity: 0,
-              y: -20,
-              onComplete: () => {
-                window.location.href = data.url;
-              }
-            });
-          })
-          .catch(err => {
-            // Hide loader
-            document.getElementById("loader").style.display = "none";
-            
-            // Reset plan cards
-            planCards.forEach(card => {
-              card.classList.remove("ring-4", "ring-cyan-400", "ring-opacity-70", "opacity-50");
-              gsap.to(card, {duration: 0.3, scale: 1});
-            });
-            
-            showAlert("❌ Det uppstod ett fel vid betalningen. Försök igen senare.", "red");
-            console.error("Payment error:", err);
-          });
-        }, 1500);
+        fetch("/api/buy", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ googleID, planName })
+        })
+        .then(res => res.json())
+        .then(data => window.location.href = data.url)
+        .catch(err => showAlert("❌ Serverfel. Försök igen senare.", "red"));
       }
-      
       function showAlert(message, color) {
         const alertBox = document.getElementById("alertMessage");
         alertBox.textContent = message;
-        alertBox.classList.remove("hidden", "bg-red-500", "bg-green-500", "alert-animate-out");
-        alertBox.classList.add(color === "red" ? "bg-red-500" : "bg-green-500", "alert-animate-in");
-        
-        // Add subtle glow effect
-        alertBox.style.boxShadow = `0 0 15px ${color === "red" ? "rgba(239, 68, 68, 0.5)" : "rgba(16, 185, 129, 0.5)"}`;
-        
-        // Subtle pulse animation
-        gsap.to(alertBox, {duration: 0.2, scale: 1.05, yoyo: true, repeat: 1});
-        
-        setTimeout(() => {
-          alertBox.classList.remove("alert-animate-in");
-          alertBox.classList.add("alert-animate-out");
-          setTimeout(() => {
-            alertBox.classList.add("hidden");
-          }, 500);
-        }, 3000);
+        alertBox.classList.remove("hidden");
+        alertBox.classList.add(color === "red" ? "bg-red-500" : "bg-green-500");
+        setTimeout(() => alertBox.classList.add("hidden"), 3000);
       }
-      
-      // Confetti effect
-      function launchConfetti() {
-        const colors = ['#1e3a8a', '#9333ea', '#06b6d4', '#f3f4f6', '#8b5cf6'];
-        
-        for (let i = 0; i < 100; i++) {
-          const confetti = document.createElement('div');
-          confetti.className = 'absolute';
-          confetti.style.width = `${Math.random() * 10 + 5}px`;
-          confetti.style.height = `${Math.random() * 5 + 5}px`;
-          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.position = 'fixed';
-          confetti.style.top = '-10px';
-          confetti.style.left = `${Math.random() * 100}vw`;
-          confetti.style.opacity = Math.random();
-          confetti.style.borderRadius = `${Math.random() > 0.5 ? '50%' : '0'}`;
-          confetti.style.zIndex = '9999';
-          document.body.appendChild(confetti);
-          
-          // Animate the confetti
-          gsap.to(confetti, {
-            y: `${window.innerHeight + 10}px`,
-            x: `${(Math.random() - 0.5) * 200}px`,
-            rotation: `${Math.random() * 360}deg`,
-            duration: Math.random() * 2 + 2,
-            ease: "power1.out",
-            onComplete: () => {
-              confetti.remove();
-            }
-          });
-        }
-      }
-      
-      // Handle Particles Background
-      const initBackground = () => {
-        const canvas = document.createElement('canvas');
-        canvas.id = 'particles-bg';
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.width = '100%';
-        canvas.style.height = '100%';
-        canvas.style.pointerEvents = 'none';
-        canvas.style.zIndex = '-2';
-        document.body.appendChild(canvas);
-        
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        const particles = [];
-        const particleCount = 50;
-        
-        for (let i = 0; i < particleCount; i++) {
-          particles.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 2 + 1,
-            color: `rgba(255, 255, 255, ${Math.random() * 0.3})`,
-            speedX: (Math.random() - 0.5) * 0.5,
-            speedY: (Math.random() - 0.5) * 0.5
-          });
-        }
-        
-        function animate() {
-          requestAnimationFrame(animate);
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          
-          particles.forEach(particle => {
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-            ctx.fillStyle = particle.color;
-            ctx.fill();
-            
-            // Update position
-            particle.x += particle.speedX;
-            particle.y += particle.speedY;
-            
-            // Boundary checking
-            if (particle.x < 0 || particle.x > canvas.width) {
-              particle.speedX = -particle.speedX;
-            }
-            if (particle.y < 0 || particle.y > canvas.height) {
-              particle.speedY = -particle.speedY;
-            }
-          });
-          
-          // Connect nearby particles with lines
-          connectParticles();
-        }
-        
-        function connectParticles() {
-          for (let i = 0; i < particles.length; i++) {
-            for (let j = i + 1; j < particles.length; j++) {
-              const dx = particles[i].x - particles[j].x;
-              const dy = particles[i].y - particles[j].y;
-              const distance = Math.sqrt(dx * dx + dy * dy);
-              
-              if (distance < 100) {
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 * (1 - distance / 100)})`;
-                ctx.lineWidth = 0.5;
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-              }
-            }
-          }
-        }
-        
-        // Resize handling
-        window.addEventListener('resize', () => {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        });
-        
-        animate();
-      };
-      
-      // 3D Rotating cube in background
-      function init3DCube() {
-        const container = document.createElement('div');
-        container.style.position = 'fixed';
-        container.style.top = '0';
-        container.style.left = '0';
-        container.style.width = '100%';
-        container.style.height = '100%';
-        container.style.zIndex = '-3';
-        container.style.opacity = '0.3';
-        container.style.pointerEvents = 'none';
-        document.body.appendChild(container);
-        
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        
-        const renderer = new THREE.WebGLRenderer({ alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        container.appendChild(renderer.domElement);
-        
-        const geometry = new THREE.BoxGeometry(5, 5, 5);
-        const material = new THREE.MeshBasicMaterial({
-          color: 0xffffff,
-          wireframe: true,
-          transparent: true,
-          opacity: 0.2
-        });
-        
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
-        
-        camera.position.z = 15;
-        
-        const animate = function() {
-          requestAnimationFrame(animate);
-          
-          cube.rotation.x += 0.001;
-          cube.rotation.y += 0.001;
-          
-          renderer.render(scene, camera);
-        };
-        
-        animate();
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-      }
-      
-      // Interactive logo animation
-      function animateLogo() {
-        const logo = document.querySelector('.logo');
-        
-        logo.addEventListener('mouseover', () => {
-          gsap.to(logo, {
-            duration: 0.5,
-            scale: 1.1,
-            textShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
-            ease: "elastic.out(1, 0.3)"
-          });
-        });
-        
-        logo.addEventListener('mouseout', () => {
-          gsap.to(logo, {
-            duration: 0.5,
-            scale: 1,
-            textShadow: 'none',
-            ease: "elastic.out(1, 0.3)"
-          });
-        });
-      }
-      
-      // Initialize on page load
       window.onload = function() {
-        // Check URL parameters
         if (window.location.search.includes("showpricingplans")) {
           document.getElementById("loginMessage").textContent = "Logga in för att fortsätta till köp av plan.";
         }
-        
-        // Initialize animations and effects
-        initBackground();
-        init3DCube();
-        animateLogo();
-        
-        // Animate entry of main container
-        gsap.from(".glass", {
-          duration: 1.2,
-          y: 30,
-          opacity: 0,
-          ease: "power3.out",
-          delay: 0.3
-        });
-        
-        // Staggered animation for floating elements
-        gsap.from(".floating", {
-          duration: 1.5,
-          opacity: 0,
-          y: 20,
-          stagger: 0.2,
-          ease: "power2.out",
-          delay: 0.5
-        });
-        
-        // Animate feature items on hover
-        const featureItems = document.querySelectorAll('.feature-item');
-        featureItems.forEach(item => {
-          item.addEventListener('mouseenter', () => {
-            gsap.to(item, { duration: 0.3, x: 5, color: '#22d3ee' });
-          });
-          
-          item.addEventListener('mouseleave', () => {
-            gsap.to(item, { duration: 0.3, x: 0, color: 'inherit' });
-          });
-        });
       }
     </script>
   </body>
 </html>
-</antArtifact>
