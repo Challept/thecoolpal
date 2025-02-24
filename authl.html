@@ -8,86 +8,73 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+      body {
+        background: linear-gradient(135deg, #1e3a8a, #9333ea);
+      }
+      .glass {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+    </style>
   </head>
-  <body class="bg-gray-900 text-gray-100 antialiased">
+  <body class="text-gray-100 antialiased flex items-center justify-center min-h-screen">
     <!-- Main Container -->
-    <div class="min-h-screen flex items-center justify-center p-4">
-      <div class="max-w-lg w-full bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-        <div class="p-8 flex flex-col items-center justify-center border-b border-gray-700">
-          <h1 class="text-2xl font-bold mb-4">Webstay</h1>
-          <p class="text-gray-400 text-center mb-6" id="loginMessage">
-            Logga in eller registrera dig med Google för att fortsätta.
-          </p>
-          <!-- Google Sign-In Button -->
-          <div id="g_id_onload"
-               data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
-               data-callback="handleCredentialResponse"
-               data-itp_support="true"
-               data-auto_prompt="true"></div>
-          <div class="mt-4">
-            <div class="g_id_signin" data-type="standard"></div>
+    <div class="w-full max-w-lg p-6 glass text-center">
+      <h1 class="text-3xl font-bold mb-4 text-white">Webstay</h1>
+      <p class="text-gray-300 mb-6" id="loginMessage">
+        Logga in eller registrera dig med Google för att fortsätta.
+      </p>
+      <!-- Google Sign-In Button -->
+      <div id="g_id_onload"
+        data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+        data-callback="handleCredentialResponse"
+        data-itp_support="true"
+        data-auto_prompt="true"></div>
+      <div class="mt-4">
+        <div class="g_id_signin" data-type="standard"></div>
+      </div>
+      <!-- Alert Message -->
+      <div id="alertMessage" class="mt-4 text-sm text-center hidden px-3 py-2 rounded"></div>
+      
+      <!-- Pricing Plans Section -->
+      <div id="pricingPlansSection" class="hidden p-8">
+        <h3 class="text-xl font-semibold mb-4 text-white">Välj din plan</h3>
+        <div class="grid grid-cols-1 gap-4">
+          <div class="bg-white bg-opacity-20 p-4 rounded-lg hover:scale-105 transform transition cursor-pointer" onclick="buyPlan('Start Plan')">
+            <h4 class="text-lg font-semibold text-white">Start Plan</h4>
+            <p class="text-gray-200 text-sm">299kr engångs, 10kr/månad</p>
           </div>
-          <!-- Alert Message -->
-          <div id="alertMessage" class="mt-4 text-sm text-center hidden px-3 py-2 rounded"></div>
-        </div>
-        <!-- Pricing Plans Section -->
-        <div id="pricingPlansSection" class="hidden p-8 flex flex-col justify-center">
-          <h3 class="text-xl font-semibold mb-4 text-center">Välj din plan</h3>
-          <div class="grid grid-cols-1 gap-4">
-            <!-- Pricing Card: Start Plan -->
-            <div onclick="buyPlan('Start Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-              <div class="mb-2 text-lg font-medium">Start Plan</div>
-              <div class="mb-4 text-sm text-gray-300">299kr engångs, 10kr/månad</div>
-              <button onclick="event.stopPropagation(); buyPlan('Start Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                Välj
-              </button>
-            </div>
-            <!-- Pricing Card: Premium Plan -->
-            <div onclick="buyPlan('Premium Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-              <div class="mb-2 text-lg font-medium">Premium Plan</div>
-              <div class="mb-4 text-sm text-gray-300">399kr engångs, 49kr/månad</div>
-              <button onclick="event.stopPropagation(); buyPlan('Premium Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                Välj
-              </button>
-            </div>
-            <!-- Pricing Card: Ultimate Plan -->
-            <div onclick="buyPlan('Ultimate Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-              <div class="mb-2 text-lg font-medium">Ultimate Plan</div>
-              <div class="mb-4 text-sm text-gray-300">999kr engångs, 99kr/månad</div>
-              <button onclick="event.stopPropagation(); buyPlan('Ultimate Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                Välj
-              </button>
-            </div>
-            <!-- Pricing Card: Exclusive Plan -->
-            <div onclick="buyPlan('Exclusive Plan')" class="cursor-pointer bg-gray-700 rounded-lg p-4 hover:shadow-lg transition transform hover:-translate-y-1">
-              <div class="mb-2 text-lg font-medium">Exclusive</div>
-              <div class="mb-4 text-sm text-gray-300">1999kr engångs, 199kr/månad</div>
-              <button onclick="event.stopPropagation(); buyPlan('Exclusive Plan')" class="bg-green-500 text-gray-900 font-semibold py-1 px-3 rounded hover:bg-green-400 transition">
-                Välj
-              </button>
-            </div>
+          <div class="bg-white bg-opacity-20 p-4 rounded-lg hover:scale-105 transform transition cursor-pointer" onclick="buyPlan('Premium Plan')">
+            <h4 class="text-lg font-semibold text-white">Premium Plan</h4>
+            <p class="text-gray-200 text-sm">399kr engångs, 49kr/månad</p>
+          </div>
+          <div class="bg-white bg-opacity-20 p-4 rounded-lg hover:scale-105 transform transition cursor-pointer" onclick="buyPlan('Ultimate Plan')">
+            <h4 class="text-lg font-semibold text-white">Ultimate Plan</h4>
+            <p class="text-gray-200 text-sm">999kr engångs, 99kr/månad</p>
+          </div>
+          <div class="bg-white bg-opacity-20 p-4 rounded-lg hover:scale-105 transform transition cursor-pointer" onclick="buyPlan('Exclusive Plan')">
+            <h4 class="text-lg font-semibold text-white">Exclusive Plan</h4>
+            <p class="text-gray-200 text-sm">1999kr engångs, 199kr/månad</p>
           </div>
         </div>
       </div>
     </div>
-
     <script>
-      // Callback for Google Sign-In
       function handleCredentialResponse(response) {
         const googleID = response.credential;
         localStorage.setItem("googleID", googleID);
         showAlert("✅ Inloggning lyckades!", "green");
         console.log("✅ Google ID stored:", googleID);
-        // Toggle the right column content based on the URL parameter
+        
         if (window.location.search.includes("showpricingplans")) {
           document.getElementById("loginMessage").textContent = "Logga in för att fortsätta till köp av plan.";
-          if (googleID) {
-            document.getElementById("pricingPlansSection").classList.remove("hidden");
-          }
+          document.getElementById("pricingPlansSection").classList.remove("hidden");
         }
       }
 
-      // Function to handle plan purchase
       function buyPlan(planName) {
         const googleID = localStorage.getItem("googleID");
         if (!googleID) {
@@ -99,33 +86,30 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ googleID, planName })
         })
-          .then(res => res.json())
-          .then(data => {
-            if (data.url) {
-              window.location.href = data.url;
-            } else {
-              showAlert("⚠️ Ett fel uppstod! Försök igen.", "red");
-            }
-          })
-          .catch(error => {
-            console.error("❌ Error:", error);
-            showAlert("❌ Serverfel. Försök igen senare.", "red");
-          });
+        .then(res => res.json())
+        .then(data => {
+          if (data.url) {
+            window.location.href = data.url;
+          } else {
+            showAlert("⚠️ Ett fel uppstod! Försök igen.", "red");
+          }
+        })
+        .catch(error => {
+          console.error("❌ Error:", error);
+          showAlert("❌ Serverfel. Försök igen senare.", "red");
+        });
       }
 
-      // Function to show alert messages
       function showAlert(message, color) {
         const alertBox = document.getElementById("alertMessage");
         alertBox.textContent = message;
         alertBox.classList.remove("hidden");
-        alertBox.classList.remove("bg-green-500", "bg-red-500");
         alertBox.classList.add(color === "red" ? "bg-red-500" : "bg-green-500");
         setTimeout(() => {
           alertBox.classList.add("hidden");
         }, 3000);
       }
 
-      // On page load, check URL for ?showpricingplans and toggle right column content accordingly
       window.onload = function() {
         if (window.location.search.includes("showpricingplans")) {
           document.getElementById("loginMessage").textContent = "Logga in för att fortsätta till köp av plan.";
