@@ -62,44 +62,70 @@
             <h4 class="text-lg font-semibold text-white">Premium Plan</h4>
             <p class="text-gray-200 text-sm">399kr engångs, 49kr/månad</p>
           </div>
+          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Ultimate Plan')">
+            <h4 class="text-lg font-semibold text-white">Ultimate Plan</h4>
+            <p class="text-gray-200 text-sm">999kr engångs, 99kr/månad</p>
+          </div>
+          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Exclusive Plan')">
+            <h4 class="text-lg font-semibold text-white">Exclusive Plan</h4>
+            <p class="text-gray-200 text-sm">1999kr engångs, 199kr/månad</p>
+          </div>
         </div>
+      </div>
+      <div id="doneScreen" class="step-hidden mt-6">
+        <h2 class="text-2xl font-bold text-white mb-4">Inloggning slutförd</h2>
+        <p class="text-gray-200 text-lg">Du är nu inloggad och kan använda Webstay!</p>
       </div>
       <div id="alertMessage" class="mt-6 text-sm text-center hidden px-4 py-3 rounded-lg shadow-lg"></div>
     </div>
     <script>
-      function handleCredentialResponse(response) {
-        const token = response.credential;
-        localStorage.setItem("googleID", token);
-        showAlert("✅ Inloggning lyckades!", "green");
-        fetch("https://api.webstay.se/api/auth", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          mode: "cors",
-          body: JSON.stringify({ token })
-        })
-        .then(res => res.json())
-        .then(data => {
+      function checkURLParams() {
+        return new URLSearchParams(window.location.search).has("showpricingplans");
+      }
+
+      async function handleCredentialResponse(response) {
+        try {
+          const token = response.credential;
+          localStorage.setItem("googleID", token);
+          showAlert("✅ Inloggning lyckades!", "green");
+          const res = await fetch("https://api.webstay.se/api/auth", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token })
+          });
+          if (!res.ok) throw new Error("Server response not OK");
+          const data = await res.json();
           console.log("User saved:", data);
           document.getElementById("step1").classList.add("step-hidden");
-          document.getElementById("step2").classList.remove("step-hidden");
-        })
-        .catch(err => console.error("❌ Server error:", err));
-      }
-      function buyPlan(planName) {
-        const googleID = localStorage.getItem("googleID");
-        if (!googleID) {
-          showAlert("⚠️ Du måste logga in med Google först!", "red");
-          return;
+          if (checkURLParams()) {
+            document.getElementById("step2").classList.remove("step-hidden");
+          } else {
+            document.getElementById("doneScreen").classList.remove("step-hidden");
+          }
+        } catch (err) {
+          console.error("❌ Server error:", err);
+          showAlert("❌ Serverfel. Försök igen senare.", "red");
         }
-        fetch("https://api.webstay.se/create-payment-link", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          mode: "cors",
-          body: JSON.stringify({ googleID, planName })
-        })
-        .then(res => res.json())
-        .then(data => window.location.href = data.url)
-        .catch(err => showAlert("❌ Serverfel. Försök igen senare.", "red"));
+      }
+      async function buyPlan(planName) {
+        try {
+          const googleID = localStorage.getItem("googleID");
+          if (!googleID) {
+            showAlert("⚠️ Du måste logga in med Google först!", "red");
+            return;
+          }
+          const res = await fetch("https://api.webstay.se/create-payment-link", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ googleID, planName })
+          });
+          if (!res.ok) throw new Error("Server response not OK");
+          const data = await res.json();
+          window.location.href = data.url;
+        } catch (err) {
+          console.error("❌ Error processing payment:", err);
+          showAlert("❌ Serverfel. Försök igen senare.", "red");
+        }
       }
       function showAlert(message, color) {
         const alertBox = document.getElementById("alertMessage");
@@ -107,12 +133,6 @@
         alertBox.classList.remove("hidden");
         alertBox.classList.add(color === "red" ? "bg-red-500" : "bg-green-500");
         setTimeout(() => alertBox.classList.add("hidden"), 3000);
-      }
-      window.onload = function() {
-        if (window.location.search.includes("showpricingplans")) {
-          document.getElementById("step1").classList.add("step-hidden");
-          document.getElementById("step2").classList.remove("step-hidden");
-        }
       }
     </script>
   </body>
