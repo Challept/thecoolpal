@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Webstay - Logga in/Registrera</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups" />
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
     <style>
       body {
@@ -102,7 +102,7 @@
           const res = await fetch("https://api.webstay.se/savegoogleuser", {
             method: "POST",
             mode: "cors",
-            credentials: "include",
+            credentials: "same-origin",
             headers: { 
               "Content-Type": "application/json"
             },
