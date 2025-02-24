@@ -99,17 +99,26 @@
           showAlert("✅ Inloggning lyckades!", "success");
           const res = await fetch("https://api.webstay.se/savegoogleuser", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*"
+            },
             body: JSON.stringify({ token })
           });
-          if (!res.ok) throw new Error("Server response not OK");
+          if (!res.ok) throw new Error(`Server response not OK: ${res.status}`);
           const data = await res.json();
           console.log("User saved:", data);
           document.getElementById("step1").classList.add("step-hidden");
           document.getElementById("doneScreen").classList.remove("step-hidden");
         } catch (err) {
           console.error("❌ Server error:", err);
-          showAlert("❌ Serverfel. Kontrollera din internetanslutning och försök igen.", "error");
+          if (err.message.includes("Failed to fetch")) {
+            showAlert("❌ Nätverksfel: Kontrollera din internetanslutning och försök igen.", "error");
+          } else if (err.message.includes("Server response not OK")) {
+            showAlert("❌ Servern returnerade ett fel. Försök igen senare.", "error");
+          } else {
+            showAlert("❌ Ett oväntat fel inträffade.", "error");
+          }
         }
       }
     </script>
