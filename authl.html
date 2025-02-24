@@ -28,6 +28,27 @@
       .step-hidden {
         display: none;
       }
+      .alert {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        min-width: 250px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .alert-success {
+        background-color: #4CAF50;
+        color: white;
+      }
+      .alert-error {
+        background-color: #F44336;
+        color: white;
+      }
       @keyframes fadeIn {
         from { opacity: 0; }
         to { opacity: 1; }
@@ -51,40 +72,31 @@
           <div class="g_id_signin" data-type="standard"></div>
         </div>
       </div>
-      <div id="step2" class="step-hidden mt-6">
-        <h2 class="text-2xl font-bold text-white mb-4">Välj en plan</h2>
-        <div class="grid grid-cols-1 gap-6">
-          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Start Plan')">
-            <h4 class="text-lg font-semibold text-white">Start Plan</h4>
-            <p class="text-gray-200 text-sm">299kr engångs, 10kr/månad</p>
-          </div>
-          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Premium Plan')">
-            <h4 class="text-lg font-semibold text-white">Premium Plan</h4>
-            <p class="text-gray-200 text-sm">399kr engångs, 49kr/månad</p>
-          </div>
-          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Ultimate Plan')">
-            <h4 class="text-lg font-semibold text-white">Ultimate Plan</h4>
-            <p class="text-gray-200 text-sm">999kr engångs, 99kr/månad</p>
-          </div>
-          <div class="bg-white bg-opacity-25 p-6 rounded-lg hover:scale-105 transform transition cursor-pointer shadow-xl" onclick="buyPlan('Exclusive Plan')">
-            <h4 class="text-lg font-semibold text-white">Exclusive Plan</h4>
-            <p class="text-gray-200 text-sm">1999kr engångs, 199kr/månad</p>
-          </div>
-        </div>
-      </div>
       <div id="doneScreen" class="step-hidden mt-6">
         <h2 class="text-2xl font-bold text-white mb-4">Inloggning slutförd</h2>
         <p class="text-gray-200 text-lg">Du är nu inloggad och kan använda Webstay!</p>
       </div>
-      <div id="alertMessage" class="mt-6 text-sm text-center hidden px-4 py-3 rounded-lg shadow-lg"></div>
+      <div id="alertContainer"></div>
     </div>
     <script>
+      function showAlert(message, type) {
+        const alertContainer = document.getElementById("alertContainer");
+        const alertDiv = document.createElement("div");
+        alertDiv.className = `alert ${type === "success" ? "alert-success" : "alert-error"}`;
+        alertDiv.textContent = message;
+        alertContainer.appendChild(alertDiv);
+        setTimeout(() => {
+          alertDiv.style.opacity = "0";
+          setTimeout(() => alertDiv.remove(), 300);
+        }, 3000);
+      }
+      
       async function handleCredentialResponse(response) {
         try {
           const token = response.credential;
           if (!token) throw new Error("Google Authentication failed");
           localStorage.setItem("googleID", token);
-          showAlert("✅ Inloggning lyckades!", "green");
+          showAlert("✅ Inloggning lyckades!", "success");
           const res = await fetch("https://api.webstay.se/savegoogleuser", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -97,7 +109,7 @@
           document.getElementById("doneScreen").classList.remove("step-hidden");
         } catch (err) {
           console.error("❌ Server error:", err);
-          showAlert("❌ Serverfel. Försök igen senare.", "red");
+          showAlert("❌ Serverfel. Försök igen senare.", "error");
         }
       }
     </script>
