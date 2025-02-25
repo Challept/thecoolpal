@@ -101,7 +101,7 @@ citron - limón"></textarea>
     <div id="learn-answer-container" class="bg-white p-6 rounded shadow hidden">
       <div id="learn-progress" class="mb-4 text-sm"></div>
       <div id="learn-question" class="text-xl font-semibold mb-4"></div>
-      <!-- Rätt svar visas alltid under frågan -->
+      <!-- Här visas alltid det korrekta svaret med en "Lyssna"-knapp -->
       <div id="learn-correct-answer" class="mb-4 text-lg text-gray-700"></div>
       <input type="text" id="learn-input" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här">
       <button id="learn-submit-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skicka</button>
@@ -112,6 +112,11 @@ citron - limón"></textarea>
   </div>
   
   <script>
+    // Gör funktionen global så den kan anropas via inline onclick
+    function listenWord(word) {
+      window.open("https://translate.google.com/?sl=es&tl=sv&text=" + encodeURIComponent(word) + "&op=translate", "_blank", "width=600,height=400");
+    }
+    
     // Globala variabler för vokabulären
     let vocabularyData = [];
     
@@ -372,7 +377,11 @@ bord - mesa`;
       const wordPair = vocabularyData[index];
       document.getElementById('flip-progress').textContent = "Kort " + (flipState.currentIndex + 1) + " av " + flipState.order.length;
       document.getElementById('flip-front').textContent = wordPair.swedish;
-      document.getElementById('flip-back').textContent = wordPair.spanish.join(" / ");
+      // Visa spanska svaret med en "Lyssna"-knapp (använder det första ordet)
+      const spanishText = wordPair.spanish.join(" / ");
+      const firstSpanish = wordPair.spanish[0];
+      document.getElementById('flip-back').innerHTML = spanishText +
+        ' <button class="ml-2 bg-indigo-500 hover:bg-indigo-600 text-white py-1 px-2 rounded text-sm" onclick="listenWord(\'' + firstSpanish.replace(/'/g, "\\'") + '\')">Lyssna</button>';
       // Återställ flip-status
       document.getElementById('flip-card').classList.remove('flipped');
     }
@@ -414,8 +423,11 @@ bord - mesa`;
       const currentWord = learnTestState.vocabulary[currentIdx];
       document.getElementById('learn-progress').textContent = "Fråga " + (learnTestState.currentIndex + 1) + " av " + learnTestState.order.length;
       document.getElementById('learn-question').textContent = "Översätt ordet: " + currentWord.swedish;
-      // Rätt svar visas alltid direkt
-      document.getElementById('learn-correct-answer').textContent = "Rätt svar: " + currentWord.spanish.join(" eller ");
+      // Rätt svar visas alltid direkt med en "Lyssna"-knapp (använder det första ordet)
+      const spanishText = currentWord.spanish.join(" eller ");
+      const firstSpanish = currentWord.spanish[0];
+      document.getElementById('learn-correct-answer').innerHTML = "Rätt svar: " + spanishText +
+        ' <button class="ml-2 bg-indigo-500 hover:bg-indigo-600 text-white py-1 px-2 rounded text-sm" onclick="listenWord(\'' + firstSpanish.replace(/'/g, "\\'") + '\')">Lyssna</button>';
       document.getElementById('learn-input').value = "";
       document.getElementById('learn-feedback').textContent = "";
       document.getElementById('learn-input').focus();
