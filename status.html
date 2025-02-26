@@ -93,6 +93,30 @@
     }
     /* Hamburger button */
     .hamburger { cursor: pointer; }
+    /* Offline modal custom styles */
+    #offlineModalContent {
+      /* relative for internal particle container */
+      position: relative;
+      overflow: hidden;
+    }
+    #offlineParticles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+    #loadingIcon {
+      margin-top: 1rem;
+    }
+    .drop {
+      /* small circle drops */
+      width: 1rem;
+      height: 1rem;
+      background: #fff;
+      border-radius: 9999px;
+    }
   </style>
 </head>
 <body class="bg-animated min-h-screen relative">
@@ -117,20 +141,16 @@
     <!-- Topbar -->
     <header class="flex items-center justify-between px-8 py-4 shadow flex-shrink-0">
       <div class="flex flex-col">
-        <!-- Welcome message with glitch effect on name and email -->
         <h1 id="welcomeMessage" class="text-2xl font-bold text-white">Dashboard</h1>
         <p id="userEmail" class="text-sm text-gray-400"></p>
       </div>
       <div class="flex items-center space-x-6">
-        <!-- Network Info -->
         <div id="networkHeader" class="network-card">0.00 / 10.000</div>
-        <!-- Hamburger button for mobile -->
         <button id="menuToggle" class="hamburger block sm:hidden text-white focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <!-- Logout Button -->
         <button id="logoutBtn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Logga ut</button>
       </div>
     </header>
@@ -142,7 +162,7 @@
         <a href="#" id="navStatus">Status</a>
       </aside>
 
-      <!-- Mobile Menu (hidden by default) -->
+      <!-- Mobile Menu -->
       <aside id="mobileMenu" class="mobile-menu hidden sm:hidden">
         <button id="menuClose" class="mb-4 text-white focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -250,9 +270,18 @@
 
   <!-- Offline Modal (No close button) -->
   <div id="offlineModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden z-50">
-    <div id="offlineModalContent" class="bg-blue-900 text-white p-8 rounded shadow-lg text-center">
-      <h2 class="text-2xl font-bold mb-4">Servern är offline!</h2>
-      <p class="mb-6">Vi har tappat kontakten med servern. Vänta medan vi återansluter...</p>
+    <div id="offlineModalContent" class="bg-blue-900 text-white p-8 rounded shadow-lg text-center relative overflow-hidden">
+      <!-- Container for particles inside the popup -->
+      <div id="offlineParticles"></div>
+      <div class="relative z-10">
+        <h2 class="text-2xl font-bold mb-4">Servern är offline!</h2>
+        <p class="mb-6">Vi har tappat kontakten med servern. Vänta medan vi återansluter...</p>
+        <div id="loadingIcon" class="flex justify-center space-x-2">
+          <div class="drop"></div>
+          <div class="drop"></div>
+          <div class="drop"></div>
+        </div>
+      </div>
     </div>
   </div>
   
@@ -264,10 +293,11 @@
       dataInterval: null,
       statusInterval: null,
       offlineDashboard: false,
-      offlineStatus: false
+      offlineStatus: false,
+      offlineParticlesInitialized: false
     };
 
-    // tsParticles initialization
+    // tsParticles background initialization
     tsParticles.load("tsparticles", {
       particles: {
         number: { value: 50, density: { enable: true, area: 800 } },
@@ -309,31 +339,62 @@
       mobileMenu.classList.add('hidden');
     });
 
-    // Function to show our custom unauthorized modal with animations
+    // Show custom unauthorized modal
     function showUnauthorizedModal() {
       const modal = document.getElementById('unauthorizedModal');
       const modalContent = document.getElementById('unauthorizedModalContent');
       modal.classList.remove('hidden');
       gsap.to(modalContent, { duration: 0.6, scale: 1, opacity: 1, ease: "back.out(1.7)" });
     }
-
-    // When unauthorized modal button is clicked, reload the page
     document.getElementById('unauthorizedModalBtn').addEventListener('click', () => {
       location.reload();
     });
 
-    // Function to show/hide offline modal based on connection status with extra pulsing animation
+    // Start loading animation (water drops + spinner effect)
+    function startLoadingAnimation() {
+      gsap.to("#loadingIcon", { rotation: 360, duration: 2, ease: "none", repeat: -1 });
+      gsap.timeline({ repeat: -1 })
+        .to(".drop", { y: 20, ease: "power2.in", duration: 0.5, stagger: 0.2 })
+        .to(".drop", { y: -20, ease: "power2.out", duration: 0.5, stagger: 0.2 })
+        .to(".drop", { y: 0, ease: "power2.inOut", duration: 0.3, stagger: 0.2 });
+    }
+    function stopLoadingAnimation() {
+      gsap.killTweensOf("#loadingIcon");
+      gsap.killTweensOf(".drop");
+    }
+
+    // Function to show/hide offline modal based on API status
     function updateOfflineModal() {
       const offlineModal = document.getElementById('offlineModal');
-      if (state.offlineDashboard || state.offlineStatus) {
+      if ((state.offlineDashboard || state.offlineStatus) && state.user) {
         if (offlineModal.classList.contains('hidden')) {
           offlineModal.classList.remove('hidden');
           gsap.fromTo('#offlineModalContent', { scale: 0.8, opacity: 0 }, { duration: 0.5, scale: 1, opacity: 1, ease: "back.out(1.7)" });
-          // Add a pulsing effect to the header
+          // Initialize particles inside the modal if not done already
+          if (!state.offlineParticlesInitialized) {
+            tsParticles.load("offlineParticles", {
+              particles: {
+                number: { value: 20, density: { enable: true, area: 200 } },
+                color: { value: ["#ffffff", "#a3e635", "#3b82f6"] },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                move: { enable: true, speed: 1, direction: "bottom", outMode: "out" }
+              },
+              interactivity: {
+                detectsOn: "canvas",
+                events: { onHover: { enable: false } }
+              },
+              retina_detect: true
+            });
+            state.offlineParticlesInitialized = true;
+          }
+          startLoadingAnimation();
+          // Add a pulsing animation on the header text
           gsap.to("#offlineModalContent h2", { scale: 1.05, duration: 1, ease: "power1.inOut", yoyo: true, repeat: -1 });
         }
       } else {
-        // Kill pulsing animation and hide modal
+        stopLoadingAnimation();
         gsap.killTweensOf("#offlineModalContent h2");
         if (!offlineModal.classList.contains('hidden')) {
           gsap.to('#offlineModalContent', { duration: 0.5, scale: 0.8, opacity: 0, ease: "back.in(1.7)", onComplete: () => {
@@ -359,22 +420,17 @@
         name: credential.name
       };
       sessionStorage.setItem('user', JSON.stringify(state.user));
-      
-      // Update welcome message with glitch effect on name and display the email with a more intense glitch effect
       const firstName = state.user.name.split(' ')[0];
       document.getElementById('welcomeMessage').innerHTML = 
         `Välkommen, <span class="glitch" data-text="${firstName}">${firstName}</span>!`;
       document.getElementById('userEmail').innerHTML =
         `<span class="glitch-email" data-text="${state.user.email}">${state.user.email}</span>`;
-      
       document.getElementById('loginSection').classList.add('hidden');
       document.getElementById('dashboardSection').classList.remove('hidden');
       fetchDashboardData();
       state.dataInterval = setInterval(fetchDashboardData, 2000);
       state.statusInterval = setInterval(fetchStatusData, 2000);
     }
-
-    // JWT parsing function
     function parseJwt(token) {
       try {
         const base64Url = token.split('.')[1];
@@ -388,8 +444,6 @@
         return {};
       }
     }
-
-    // Logout function
     function logout() {
       clearInterval(state.dataInterval);
       clearInterval(state.statusInterval);
@@ -416,13 +470,11 @@
         updateOfflineModal();
       }
     }
-
     function updateOverview(users) {
       updateStats(users);
       updatePlanChart(users);
       updateUserTable(users);
     }
-
     function updateStats(users) {
       const totalUsers = users.length;
       const planCounts = users.reduce((acc, user) => {
@@ -430,7 +482,6 @@
         return acc;
       }, {});
       const topPlan = Object.keys(planCounts).reduce((a, b) => planCounts[a] > planCounts[b] ? a : b, "–");
-
       const totalUsersElem = document.getElementById('totalUsers');
       if (totalUsersElem) {
         const currentTotal = parseInt(totalUsersElem.textContent) || 0;
@@ -453,7 +504,6 @@
         }});
       }
     }
-
     function updatePlanChart(users) {
       const planCounts = users.reduce((acc, user) => {
         acc[user.PlanName] = (acc[user.PlanName] || 0) + 1;
@@ -461,7 +511,6 @@
       }, {});
       const labels = Object.keys(planCounts);
       const data = Object.values(planCounts);
-
       if (state.planChart) {
         state.planChart.data.labels = labels;
         state.planChart.data.datasets[0].data = data;
@@ -487,7 +536,6 @@
         });
       }
     }
-
     function updateUserTable(users) {
       const tbody = document.getElementById('userTable');
       const tbodyMobile = document.getElementById('userTableMobile') || null;
@@ -501,7 +549,6 @@
       if (tbody) { tbody.innerHTML = rowsHtml; }
       if (tbodyMobile) { tbodyMobile.innerHTML = rowsHtml; }
     }
-
     async function fetchStatusData() {
       try {
         const response = await fetch("https://api.webstay.se/web-status");
@@ -515,7 +562,6 @@
         updateOfflineModal();
       }
     }
-
     function updateStatusSection(data) {
       const statusElem = document.getElementById('serverStatus');
       if (statusElem) {
@@ -589,7 +635,6 @@
         networkHeader.textContent = `${reqs} / 10.000`;
       }
     }
-
     window.onload = function() {
       google.accounts.id.initialize({
         client_id: "216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com",
@@ -602,7 +647,6 @@
         { theme: "outline", size: "large", text: "signin_with" }
       );
       google.accounts.id.prompt();
-
       const savedUser = sessionStorage.getItem('user');
       if (savedUser) {
         state.user = JSON.parse(savedUser);
