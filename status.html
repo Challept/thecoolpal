@@ -1,91 +1,96 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cool Minimal Dashboard</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegant Dashboard</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- tsParticles for animated backgrounds -->
+  <!-- tsParticles -->
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
-  <!-- Chart.js for charts -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- GSAP for smooth animations -->
+  <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <!-- Google Font: Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
   <style>
-    html, body { overflow-x: hidden; }
-    body { font-family: 'Inter', sans-serif; }
-    /* Animated gradient background */
-    .bg-animated {
-      background: linear-gradient(135deg, #1f2937, #111827, #1f2937);
-      background-size: 400% 400%;
-      animation: darkGradient 20s ease infinite;
+    /* Reset & basic styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      height: 100%;
+      overflow-x: hidden;
     }
-    @keyframes darkGradient {
+    /* New dynamic gradient background */
+    .bg-dynamic {
+      background: linear-gradient(135deg, #6b73ff, #000dff);
+      background-size: 200% 200%;
+      animation: gradientFlow 15s ease infinite;
+    }
+    @keyframes gradientFlow {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    /* Redesigned login card */
-    .login-card {
-      background: rgba(31, 41, 55, 0.9);
-      border-radius: 1rem;
-      padding: 2.5rem;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
+    /* Glassmorphism login card */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
-    .login-card h2 {
-      animation: fadeInDown 1s ease;
+    .glass-card h2 {
+      animation: slideDown 1s ease;
     }
-    @keyframes fadeInDown {
+    @keyframes slideDown {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    /* Dashboard card */
-    .card {
-      background: #1f2937;
-      border-radius: 0.75rem;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-      color: #e5e7eb;
+    /* Dashboard card style */
+    .dashboard-card {
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
       transition: transform 0.3s;
     }
-    .card:hover { transform: translateY(-4px); }
-    /* Header */
+    .dashboard-card:hover {
+      transform: translateY(-5px);
+    }
+    /* Redesigned header */
     header {
-      background: #111827;
-      border-bottom: 1px solid #374151;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    /* Network info style */
-    .network-card {
-      background: #1e40af;
-      padding: 0.75rem 1.25rem;
-      border-radius: 0.5rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #e5e7eb;
-    }
-    /* Sidebar */
+    /* Sidebar design */
     .sidebar {
-      background: #111827;
-      border-right: 1px solid #374151;
-      flex-shrink: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      min-width: 220px;
+      padding: 1.5rem;
     }
     .sidebar a {
+      color: rgba(255, 255, 255, 0.7);
       display: block;
-      padding: 0.75rem 1rem;
-      color: #9ca3af;
-      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 8px;
       transition: background 0.3s, color 0.3s;
     }
     .sidebar a:hover, .sidebar a.active {
-      background: #374151;
-      color: #e5e7eb;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
     /* Mobile menu */
     .mobile-menu {
@@ -94,109 +99,154 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: #111827;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 2rem;
       z-index: 50;
-      padding: 1.5rem;
     }
     .hamburger { cursor: pointer; }
     /* Redesigned Offline Modal */
-    #offlineModalContent {
+    .offline-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .offline-card {
+      background: linear-gradient(135deg, #1e3a8a, #1e40af);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      color: #fff;
       position: relative;
       overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: popIn 0.6s ease-out;
     }
-    #offlineParticles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
-    #loadingIcon {
-      margin-top: 1rem;
+    .spinner {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
     }
-    .drop {
-      width: 1rem;
-      height: 1rem;
+    .spinner div {
+      width: 12px;
+      height: 12px;
       background: #fff;
-      border-radius: 9999px;
+      border-radius: 50%;
+      animation: bounce 0.6s infinite alternate;
+    }
+    .spinner div:nth-child(2) { animation-delay: 0.2s; }
+    .spinner div:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+    /* Unauthorized modal styling */
+    .unauthorized-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+    .unauthorized-card {
+      background: rgba(255, 0, 0, 0.8);
+      padding: 2rem;
+      border-radius: 16px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
-<body class="bg-animated min-h-screen relative">
-  <!-- tsParticles Background for the overall page -->
+<body class="bg-dynamic min-h-screen relative">
+  <!-- tsParticles Background -->
   <div id="tsparticles" class="absolute inset-0 z-0"></div>
-  
-  <!-- Login Section (always displayed on load) -->
+
+  <!-- Login Section -->
   <div id="loginSection" class="flex items-center justify-center min-h-screen relative z-10">
-    <div class="login-card max-w-md w-full mx-auto text-center px-6">
+    <div class="glass-card max-w-md w-full mx-4 text-center">
       <h2 class="text-4xl font-bold text-white mb-4">Logga in</h2>
-      <p class="text-white mb-8">Använd ditt Google‑konto för att logga in</p>
+      <p class="text-white mb-6">Använd ditt Google‑konto för att logga in</p>
       <div id="g_id_onload"
            data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
            data-callback="handleCredentialResponse"
            data-auto_prompt="true"></div>
-      <div class="g_id_signin mt-4" data-type="standard"></div>
+      <div class="g_id_signin mt-4"></div>
     </div>
   </div>
-  
-  <!-- Dashboard Section (hidden until sign-in) -->
+
+  <!-- Dashboard Section -->
   <div id="dashboardSection" class="hidden relative z-10 min-h-screen flex flex-col">
-    <!-- Topbar -->
-    <header class="flex items-center justify-between px-8 py-4 shadow">
-      <div class="flex flex-col">
+    <!-- Header -->
+    <header>
+      <div>
         <h1 id="welcomeMessage" class="text-3xl font-bold text-white">Dashboard</h1>
-        <p id="userEmail" class="text-sm text-gray-400"></p>
+        <p id="userEmail" class="text-sm text-gray-300"></p>
       </div>
-      <div class="flex items-center space-x-6">
-        <div id="networkHeader" class="network-card">0.00 / 10.000</div>
-        <button id="menuToggle" class="hamburger block sm:hidden text-white focus:outline-none">
+      <div class="flex items-center space-x-4">
+        <div id="networkHeader" class="px-4 py-2 bg-indigo-600 rounded text-lg font-semibold">0.00 / 10.000</div>
+        <button id="menuToggle" class="hamburger sm:hidden text-white focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           </svg>
         </button>
-        <button id="logoutBtn" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Logga ut</button>
+        <button id="logoutBtn" class="px-4 py-2 bg-red-500 rounded text-white hover:bg-red-600">Logga ut</button>
       </div>
     </header>
-    
+
     <div class="flex flex-1 overflow-hidden">
       <!-- Sidebar (Desktop) -->
-      <aside id="desktopSidebar" class="sidebar w-64 p-6 space-y-6 overflow-auto hidden sm:block">
+      <aside id="desktopSidebar" class="sidebar hidden sm:block">
         <a href="#" id="navOverview" class="active">Översikt</a>
         <a href="#" id="navStatus">Status</a>
       </aside>
 
       <!-- Mobile Menu -->
       <aside id="mobileMenu" class="mobile-menu hidden sm:hidden">
-        <button id="menuClose" class="mb-4 text-white focus:outline-none">
+        <button id="menuClose" class="mb-6 text-white focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
         <nav class="space-y-4">
-          <a href="#" id="navOverviewMobile" class="block px-4 py-2 rounded bg-gray-700 text-white">Översikt</a>
-          <a href="#" id="navStatusMobile" class="block px-4 py-2 rounded text-gray-300 hover:bg-gray-600">Status</a>
+          <a href="#" id="navOverviewMobile" class="block px-4 py-2 bg-indigo-700 rounded text-white">Översikt</a>
+          <a href="#" id="navStatusMobile" class="block px-4 py-2 rounded text-gray-300 hover:bg-indigo-600">Status</a>
         </nav>
       </aside>
-      
+
       <!-- Main Content -->
-      <main class="flex-1 p-8 space-y-10 overflow-auto">
+      <main class="flex-1 p-8 overflow-auto space-y-10">
         <!-- Overview Section -->
         <section id="sectionOverview">
-          <div class="card p-8 space-y-6">
-            <h2 class="text-2xl font-bold mb-4">Användaruppgifter & Planfördelning</h2>
-            <div class="flex flex-col sm:flex-row items-center justify-between">
+          <div class="dashboard-card space-y-6">
+            <h2 class="text-2xl font-bold mb-4 text-white">Användaruppgifter & Planfördelning</h2>
+            <div class="flex flex-col sm:flex-row justify-between items-center">
               <div>
-                <p class="text-gray-400 text-sm">Totalt antal användare</p>
-                <p id="totalUsers" class="text-4xl font-bold">–</p>
+                <p class="text-gray-300 text-sm">Totalt antal användare</p>
+                <p id="totalUsers" class="text-4xl font-bold text-white">–</p>
               </div>
               <div>
-                <p class="text-gray-400 text-sm">Topp plan</p>
-                <p id="topPlan" class="text-4xl font-bold">–</p>
+                <p class="text-gray-300 text-sm">Topp plan</p>
+                <p id="topPlan" class="text-4xl font-bold text-white">–</p>
               </div>
             </div>
             <div class="overflow-y-auto max-h-64 hidden sm:block mt-6">
-              <table class="min-w-full">
+              <table class="min-w-full text-white">
                 <thead class="border-b border-gray-600">
                   <tr>
                     <th class="px-4 py-2 text-left text-sm">User ID</th>
@@ -208,7 +258,7 @@
               </table>
             </div>
             <div class="block sm:hidden mt-6">
-              <table class="min-w-full">
+              <table class="min-w-full text-white">
                 <thead class="border-b border-gray-600">
                   <tr>
                     <th class="px-4 py-2 text-left text-sm">User ID</th>
@@ -220,41 +270,41 @@
               </table>
             </div>
             <div class="flex justify-center mt-8">
-              <div style="width: 400px; height: 400px;">
+              <div style="width: 300px; height: 300px;">
                 <canvas id="planChart"></canvas>
               </div>
             </div>
           </div>
         </section>
-        
+
         <!-- Status Section -->
         <section id="sectionStatus" class="hidden">
-          <div class="card p-8 space-y-6">
-            <h2 class="text-2xl font-bold mb-4">Server Status</h2>
+          <div class="dashboard-card space-y-6">
+            <h2 class="text-2xl font-bold mb-4 text-white">Server Status</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div class="bg-gray-900 bg-opacity-40 p-4 rounded">
-                <p class="text-gray-400 text-sm mb-1">Status</p>
-                <p id="serverStatus" class="text-lg">–</p>
+              <div class="bg-gray-700 p-4 rounded">
+                <p class="text-gray-300 text-sm mb-1">Status</p>
+                <p id="serverStatus" class="text-lg text-white">–</p>
               </div>
-              <div class="bg-gray-900 bg-opacity-40 p-4 rounded">
-                <p class="text-gray-400 text-sm mb-1">Drifttid</p>
-                <p id="uptime" class="text-lg">–</p>
+              <div class="bg-gray-700 p-4 rounded">
+                <p class="text-gray-300 text-sm mb-1">Drifttid</p>
+                <p id="uptime" class="text-lg text-white">–</p>
               </div>
-              <div class="bg-gray-900 bg-opacity-40 p-4 rounded">
-                <p class="text-gray-400 text-sm mb-1">Processor</p>
-                <p id="cpu" class="text-lg">–</p>
+              <div class="bg-gray-700 p-4 rounded">
+                <p class="text-gray-300 text-sm mb-1">Processor</p>
+                <p id="cpu" class="text-lg text-white">–</p>
               </div>
-              <div class="bg-gray-900 bg-opacity-40 p-4 rounded">
-                <p class="text-gray-400 text-sm mb-1">Minne</p>
-                <p id="memory" class="text-lg">–</p>
+              <div class="bg-gray-700 p-4 rounded">
+                <p class="text-gray-300 text-sm mb-1">Minne</p>
+                <p id="memory" class="text-lg text-white">–</p>
               </div>
-              <div class="bg-gray-900 bg-opacity-40 p-4 rounded">
-                <p class="text-gray-400 text-sm mb-1">Lagring</p>
-                <div id="storage" class="text-lg">–</div>
+              <div class="bg-gray-700 p-4 rounded">
+                <p class="text-gray-300 text-sm mb-1">Lagring</p>
+                <div id="storage" class="text-lg text-white">–</div>
               </div>
-              <div class="bg-gray-900 bg-opacity-40 p-4 rounded">
-                <p class="text-gray-400 text-sm mb-1">GPU</p>
-                <p id="gpu" class="text-lg">–</p>
+              <div class="bg-gray-700 p-4 rounded">
+                <p class="text-gray-300 text-sm mb-1">GPU</p>
+                <p id="gpu" class="text-lg text-white">–</p>
               </div>
             </div>
           </div>
@@ -262,33 +312,31 @@
       </main>
     </div>
   </div>
-  
-  <!-- Custom Unauthorized Modal -->
-  <div id="unauthorizedModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden z-50">
-    <div id="unauthorizedModalContent" class="bg-gray-800 text-white p-8 rounded shadow-lg text-center transform scale-90 opacity-0">
+
+  <!-- Unauthorized Modal -->
+  <div id="unauthorizedModal" class="unauthorized-modal hidden">
+    <div id="unauthorizedModalContent" class="unauthorized-card">
       <h2 class="text-2xl font-bold mb-4">Åtkomst nekad</h2>
       <p class="mb-6">Du är inte auktoriserad att använda denna applikation.</p>
-      <button id="unauthorizedModalBtn" class="px-4 py-2 bg-red-500 rounded hover:bg-red-600">Stäng</button>
+      <button id="unauthorizedModalBtn" class="px-4 py-2 bg-white text-red-500 rounded hover:bg-gray-200">Stäng</button>
     </div>
   </div>
 
-  <!-- Redesigned Offline Modal (No close button) -->
-  <div id="offlineModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 hidden z-50">
-    <div id="offlineModalContent" class="bg-blue-900 text-white p-8 rounded shadow-lg text-center relative overflow-hidden">
-      <div id="offlineParticles"></div>
-      <div class="relative z-10">
-        <h2 class="text-2xl font-bold mb-4">Servern är offline!</h2>
-        <p class="mb-6">Vi har tappat kontakten med servern. Vänta medan vi återansluter...</p>
-        <div id="loadingIcon" class="flex justify-center space-x-2">
-          <div class="drop"></div>
-          <div class="drop"></div>
-          <div class="drop"></div>
-        </div>
+  <!-- Redesigned Offline Modal -->
+  <div id="offlineModal" class="offline-modal hidden">
+    <div id="offlineModalContent" class="offline-card">
+      <h2 class="text-2xl font-bold mb-4">Servern är offline!</h2>
+      <p class="mb-6">Vi har tappat kontakten med servern. Försöker återansluta...</p>
+      <div id="loadingIcon" class="spinner">
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </div>
   </div>
-  
+
   <script>
+    // State management
     const state = {
       user: null,
       users: [],
@@ -300,10 +348,10 @@
       offlineParticlesInitialized: false
     };
 
-    // Initialize main tsParticles background
+    // Initialize tsParticles background
     tsParticles.load("tsparticles", {
       particles: {
-        number: { value: 50, density: { enable: true, area: 800 } },
+        number: { value: 60, density: { enable: true, area: 800 } },
         color: { value: "#ffffff" },
         shape: { type: "circle" },
         opacity: { value: 0.4, random: true },
@@ -339,29 +387,22 @@
       mobileMenu.classList.add('hidden');
     });
 
-    // Unauthorized modal display
+    // Unauthorized modal
     function showUnauthorizedModal() {
       const modal = document.getElementById('unauthorizedModal');
       const modalContent = document.getElementById('unauthorizedModalContent');
       modal.classList.remove('hidden');
-      gsap.to(modalContent, { duration: 0.6, scale: 1, opacity: 1, ease: "back.out(1.7)" });
+      gsap.fromTo(modalContent, { scale: 0.8, opacity: 0 }, { duration: 0.6, scale: 1, opacity: 1, ease: "back.out(1.7)" });
     }
     document.getElementById('unauthorizedModalBtn').addEventListener('click', () => location.reload());
 
-    // Loading animation for offline modal
+    // Offline modal animations
     function startLoadingAnimation() {
       gsap.to("#loadingIcon", { rotation: 360, duration: 2, ease: "none", repeat: -1 });
-      gsap.timeline({ repeat: -1 })
-        .to(".drop", { y: 20, ease: "power2.in", duration: 0.5, stagger: 0.2 })
-        .to(".drop", { y: -20, ease: "power2.out", duration: 0.5, stagger: 0.2 })
-        .to(".drop", { y: 0, ease: "power2.inOut", duration: 0.3, stagger: 0.2 });
     }
     function stopLoadingAnimation() {
       gsap.killTweensOf("#loadingIcon");
-      gsap.killTweensOf(".drop");
     }
-
-    // Offline modal update function (only shows after login)
     function updateOfflineModal() {
       const offlineModal = document.getElementById('offlineModal');
       if ((state.offlineDashboard || state.offlineStatus) && state.user) {
@@ -369,7 +410,7 @@
           offlineModal.classList.remove('hidden');
           gsap.fromTo('#offlineModalContent', { scale: 0.8, opacity: 0 }, { duration: 0.5, scale: 1, opacity: 1, ease: "back.out(1.7)" });
           if (!state.offlineParticlesInitialized) {
-            tsParticles.load("offlineParticles", {
+            tsParticles.load("offlineModalContent", {
               particles: {
                 number: { value: 20, density: { enable: true, area: 200 } },
                 color: { value: ["#ffffff", "#a3e635", "#3b82f6"] },
@@ -395,7 +436,7 @@
       }
     }
 
-    // Google Sign-In callback (no persistent storage; user must always sign in)
+    // Google Sign-In callback
     function handleCredentialResponse(response) {
       const credential = parseJwt(response.credential);
       const allowedIds = ["115156821048844521223", "103093805154822424574"];
@@ -409,10 +450,9 @@
         email: credential.email,
         name: credential.name
       };
-      // Immediately switch to dashboard (no session saving)
       const firstName = state.user.name.split(' ')[0];
-      document.getElementById('welcomeMessage').innerHTML = `Välkommen, <span class="glitch" data-text="${firstName}">${firstName}</span>!`;
-      document.getElementById('userEmail').innerHTML = `<span class="glitch-email" data-text="${state.user.email}">${state.user.email}</span>`;
+      document.getElementById('welcomeMessage').innerHTML = `Välkommen, <span>${firstName}</span>!`;
+      document.getElementById('userEmail').textContent = state.user.email;
       document.getElementById('loginSection').classList.add('hidden');
       document.getElementById('dashboardSection').classList.remove('hidden');
       fetchDashboardData();
@@ -630,7 +670,6 @@
         { theme: "outline", size: "large", text: "signin_with" }
       );
       google.accounts.id.prompt();
-      // Always show login page on load (do not check for a saved session)
     };
   </script>
 </body>
