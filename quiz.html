@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Skapa Ditt Språkquiz</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -18,7 +18,8 @@
     .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
-    .flip-card-front, .flip-card-back {
+    .flip-card-front,
+    .flip-card-back {
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
       position: absolute;
@@ -32,28 +33,37 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex items-center justify-center bg-gray-100">
-  <div class="max-w-2xl w-full p-6">
-    <h1 class="text-3xl font-bold text-center mb-6">Skapa Ditt Eget Språkquiz</h1>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 antialiased flex items-center justify-center">
+  <div class="max-w-3xl w-full p-6 space-y-6">
+    <h1 class="text-4xl font-extrabold text-center text-gray-800">Skapa Ditt Eget Språkquiz</h1>
     
-    <!-- Setup: Klistra in din vokabulärlista eller ladda förinställd "La comida" -->
+    <!-- Setup: Klistra in din vokabulärlista, ladda förinställd, eller välj från biblioteket -->
     <div id="setup-container" class="bg-white p-6 rounded shadow">
-      <h2 class="text-xl font-semibold mb-4">Klistra in din vokabulärlista</h2>
+      <h2 class="text-2xl font-semibold mb-4">Klistra in din vokabulärlista</h2>
       <textarea id="vocab-input" class="w-full border border-gray-300 rounded p-2 h-64 mb-4" placeholder="Exempel:
 äpple - manzana
 banan - plátano
 apelsin - naranja
 päron - pera
 citron - limón"></textarea>
-      <div class="flex space-x-4">
-        <button id="create-quiz-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skapa Läxliste</button>
-        <button id="load-presaved-btn" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Ladda La comida</button>
+      <div class="flex flex-wrap gap-4">
+        <button id="create-quiz-btn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skapa Läxliste</button>
+        <button id="load-presaved-btn" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Ladda La comida</button>
+      </div>
+      <button id="load-library-btn" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded mt-4">
+        Ladda från bibliotek
+      </button>
+      
+      <!-- Quizbibliotek-container (dold tills användaren klickar "Ladda från bibliotek") -->
+      <div id="library-container" class="bg-white p-6 rounded shadow mt-4 hidden">
+        <h2 class="text-2xl font-semibold mb-4">Quizbibliotek</h2>
+        <ul id="library-list" class="space-y-2"></ul>
       </div>
     </div>
     
-    <!-- Meny för lägen (visas efter inmatning) -->
+    <!-- Meny för lägen -->
     <div id="mode-container" class="bg-white p-6 rounded shadow hidden">
-      <h2 class="text-xl font-semibold mb-4">Välj läge</h2>
+      <h2 class="text-2xl font-semibold mb-4">Välj läge</h2>
       <div class="flex flex-col space-y-4">
         <button id="mode-test-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Testa dig</button>
         <button id="mode-flip-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Lär med kort (flip)</button>
@@ -62,11 +72,17 @@ citron - limón"></textarea>
       <button id="mode-back-btn" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
     </div>
     
+    <!-- Frågor & Svar-lista (visas i menyn) -->
+    <div id="qa-display" class="bg-white p-6 rounded shadow mt-4 hidden">
+      <h2 class="text-2xl font-semibold mb-4">Alla frågor och svar</h2>
+      <ul id="qa-list" class="list-disc pl-5 space-y-1 text-gray-700"></ul>
+    </div>
+    
     <!-- Testläge: "Testa dig" -->
     <div id="quiz-container" class="bg-white p-6 rounded shadow hidden">
       <div id="progress" class="mb-4 text-sm"></div>
       <div id="question" class="text-xl font-semibold mb-4"></div>
-      <input type="text" id="answer" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här">
+      <input type="text" id="answer" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här" />
       <button id="submit-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skicka</button>
       <div id="feedback" class="mt-4 text-lg"></div>
       <button id="quiz-back-btn" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
@@ -97,24 +113,23 @@ citron - limón"></textarea>
       </div>
     </div>
     
-    <!-- Lär med svar: Testläge med svaret alltid synligt -->
+    <!-- Lär med svar: Alltid synligt svar -->
     <div id="learn-answer-container" class="bg-white p-6 rounded shadow hidden">
       <div id="learn-progress" class="mb-4 text-sm"></div>
       <div id="learn-question" class="text-xl font-semibold mb-4"></div>
-      <!-- Rätt svar visas alltid under frågan -->
       <div id="learn-correct-answer" class="mb-4 text-lg text-gray-700"></div>
-      <input type="text" id="learn-input" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här">
+      <input type="text" id="learn-input" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här" />
       <button id="learn-submit-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skicka</button>
       <div id="learn-feedback" class="mt-4 text-lg"></div>
       <button id="learn-back-btn" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
     </div>
-    
   </div>
   
   <script>
-    // Globala variabler för vokabulären
+    // Globala variabler
     let vocabularyData = [];
-    
+    let libraryQuizzes = []; // lagrar quiz från bibliotek
+
     // Tillstånd för "Testa dig"
     let quizState = {
       vocabulary: [],
@@ -122,21 +137,21 @@ citron - limón"></textarea>
       currentIndex: 0,
       score: 0
     };
-    
-    // Tillstånd för "Lär med svar" (testläge med svaret alltid synligt)
+
+    // Tillstånd för "Lär med svar"
     let learnTestState = {
       vocabulary: [],
       order: [],
       currentIndex: 0,
       score: 0
     };
-    
+
     // Tillstånd för flip-läget
     let flipState = {
       order: [],
       currentIndex: 0
     };
-    
+
     // Utility: Fisher-Yates shuffle
     function shuffleArray(array) {
       for (let i = array.length - 1; i > 0; i--) {
@@ -145,8 +160,8 @@ citron - limón"></textarea>
       }
       return array;
     }
-    
-    // Parsar vokabulärlistan (format: svenska - spanska)
+
+    // Parsar vokabulärlistan (för handinmatning; format: fråga - svar1/svar2)
     function parseVocabulary(text) {
       const lines = text.split('\n');
       const vocab = [];
@@ -155,16 +170,26 @@ citron - limón"></textarea>
         if (!line) return;
         const parts = line.split('-');
         if (parts.length < 2) return;
-        const swedish = parts[0].trim();
-        const spanish = parts.slice(1).join('-').trim();
-        // Flera svar kan separeras med "/"
-        const spanishAnswers = spanish.split('/').map(s => s.trim().toLowerCase());
-        vocab.push({ swedish: swedish, spanish: spanishAnswers });
+        const question = parts[0].trim();
+        const answerText = parts.slice(1).join('-').trim();
+        const answerArray = answerText.split('/').map(s => s.trim().toLowerCase());
+        vocab.push({ question: question, answer: answerArray });
       });
       return vocab;
     }
-    
-    // Gå tillbaka till meny (döljer alla containers)
+
+    // Uppdatera visningen av alla frågor och svar i menyn
+    function updateQuizDisplay() {
+      const qaList = document.getElementById('qa-list');
+      qaList.innerHTML = "";
+      vocabularyData.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="font-semibold text-gray-800">${item.question}</span> – <span class="text-gray-600">${item.answer.join(" / ")}</span>`;
+        qaList.appendChild(li);
+      });
+    }
+
+    // Gå tillbaka till meny (visar mode-container och QA-list)
     function backToModeSelection() {
       document.getElementById('setup-container').classList.add('hidden');
       document.getElementById('quiz-container').classList.add('hidden');
@@ -172,9 +197,11 @@ citron - limón"></textarea>
       document.getElementById('flip-container').classList.add('hidden');
       document.getElementById('learn-answer-container').classList.add('hidden');
       document.getElementById('mode-container').classList.remove('hidden');
+      document.getElementById('qa-display').classList.remove('hidden');
     }
-    
+
     // --- Setup ---
+    // Skapa quiz från inmatad vokabulärlista
     document.getElementById('create-quiz-btn').addEventListener('click', function() {
       const text = document.getElementById('vocab-input').value;
       const vocab = parseVocabulary(text);
@@ -183,12 +210,14 @@ citron - limón"></textarea>
         return;
       }
       vocabularyData = vocab;
-      // Dölj setup och visa lägesmenyn
+      updateQuizDisplay();
+      // Visa meny och QA-list; dölj setup
       document.getElementById('setup-container').classList.add('hidden');
       document.getElementById('mode-container').classList.remove('hidden');
+      document.getElementById('qa-display').classList.remove('hidden');
     });
-    
-    // Ladda den förinställda listan "La comida"
+
+    // Ladda förinställd "La comida"
     document.getElementById('load-presaved-btn').addEventListener('click', function() {
       const preSaved = `äpple - manzana
 banan - plátano
@@ -257,28 +286,69 @@ sätta, ställa, lägga - poner
 bord - mesa`;
       document.getElementById('vocab-input').value = preSaved;
     });
-    
+
+    // Ladda från bibliotek (libraryq.json)
+    document.getElementById('load-library-btn').addEventListener('click', function() {
+      fetch('libraryq.json')
+        .then(response => response.json())
+        .then(data => {
+          libraryQuizzes = data.quizzes;
+          const libraryList = document.getElementById('library-list');
+          libraryList.innerHTML = "";
+          libraryQuizzes.forEach((quiz, index) => {
+            const li = document.createElement('li');
+            li.className = "p-4 border border-gray-200 rounded flex justify-between items-center";
+            li.innerHTML = `<div>
+              <div class="font-bold">${quiz.title}</div>
+              <div class="text-sm text-gray-600">Språk: ${quiz.language}</div>
+            </div>
+            <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded" data-index="${index}">Välj</button>`;
+            libraryList.appendChild(li);
+          });
+          document.getElementById('library-container').classList.remove('hidden');
+        })
+        .catch(err => {
+          alert("Kunde inte ladda quizbiblioteket.");
+          console.error(err);
+        });
+    });
+
+    // När en quiz väljs från biblioteket
+    document.getElementById('library-list').addEventListener('click', function(e) {
+      if (e.target.matches('button')) {
+        const index = e.target.getAttribute('data-index');
+        const quiz = libraryQuizzes[index];
+        vocabularyData = quiz.vocabulary;
+        updateQuizDisplay();
+        // Dölj setup och bibliotek, visa meny och QA-list
+        document.getElementById('setup-container').classList.add('hidden');
+        document.getElementById('library-container').classList.add('hidden');
+        document.getElementById('mode-container').classList.remove('hidden');
+        document.getElementById('qa-display').classList.remove('hidden');
+      }
+    });
+
     // --- Meny för lägen ---
     document.getElementById('mode-test-btn').addEventListener('click', function() {
       initQuiz();
     });
-    
+
     document.getElementById('mode-flip-btn').addEventListener('click', function() {
       initFlipMode();
     });
-    
+
     document.getElementById('mode-learn-btn').addEventListener('click', function() {
       initLearnTest();
     });
-    
-    // "Tillbaka" i menyn – återgår till inmatning
+
     document.getElementById('mode-back-btn').addEventListener('click', function() {
       vocabularyData = [];
       document.getElementById('vocab-input').value = "";
       document.getElementById('mode-container').classList.add('hidden');
+      document.getElementById('qa-display').classList.add('hidden');
       document.getElementById('setup-container').classList.remove('hidden');
     });
-    
+
     // --- Testläge: "Testa dig" ---
     function initQuiz() {
       quizState.vocabulary = vocabularyData;
@@ -286,11 +356,12 @@ bord - mesa`;
       quizState.currentIndex = 0;
       quizState.score = 0;
       document.getElementById('mode-container').classList.add('hidden');
+      document.getElementById('qa-display').classList.add('hidden');
       document.getElementById('quiz-container').classList.remove('hidden');
       document.getElementById('result-container').classList.add('hidden');
       showQuestion();
     }
-    
+
     function showQuestion() {
       if (quizState.currentIndex >= quizState.order.length) {
         showResult();
@@ -299,26 +370,26 @@ bord - mesa`;
       const currentIdx = quizState.order[quizState.currentIndex];
       const currentWord = quizState.vocabulary[currentIdx];
       document.getElementById('progress').textContent = "Fråga " + (quizState.currentIndex + 1) + " av " + quizState.order.length;
-      document.getElementById('question').textContent = "Översätt ordet: " + currentWord.swedish;
+      document.getElementById('question').textContent = "Översätt ordet: " + currentWord.question;
       document.getElementById('answer').value = "";
       document.getElementById('feedback').textContent = "";
       document.getElementById('answer').focus();
     }
-    
+
     document.getElementById('submit-btn').addEventListener('click', function() {
       checkAnswer();
     });
-    
+
     document.getElementById('answer').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         checkAnswer();
       }
     });
-    
+
     function checkAnswer() {
       const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
       const currentIdx = quizState.order[quizState.currentIndex];
-      const correctAnswers = quizState.vocabulary[currentIdx].spanish;
+      const correctAnswers = quizState.vocabulary[currentIdx].answer;
       const feedbackEl = document.getElementById('feedback');
       if (correctAnswers.includes(userAnswer)) {
         feedbackEl.textContent = "Rätt!";
@@ -333,35 +404,36 @@ bord - mesa`;
       quizState.currentIndex++;
       setTimeout(showQuestion, 1500);
     }
-    
+
     function showResult() {
       document.getElementById('quiz-container').classList.add('hidden');
       const resultText = "Du fick " + quizState.score + " av " + quizState.order.length + " rätt.";
       document.getElementById('result-text').textContent = resultText;
       document.getElementById('result-container').classList.remove('hidden');
     }
-    
+
     document.getElementById('quiz-back-btn').addEventListener('click', function() {
       backToModeSelection();
     });
-    
+
     document.getElementById('restart-btn').addEventListener('click', function() {
       initQuiz();
     });
-    
+
     document.getElementById('result-back-btn').addEventListener('click', function() {
       backToModeSelection();
     });
-    
+
     // --- Lär med kort (Flip Card) ---
     function initFlipMode() {
       flipState.order = shuffleArray([...Array(vocabularyData.length).keys()]);
       flipState.currentIndex = 0;
       document.getElementById('mode-container').classList.add('hidden');
+      document.getElementById('qa-display').classList.add('hidden');
       document.getElementById('flip-container').classList.remove('hidden');
       showFlipCard();
     }
-    
+
     function showFlipCard() {
       if (flipState.currentIndex >= flipState.order.length) {
         alert("Du har gått igenom alla kort!");
@@ -371,40 +443,38 @@ bord - mesa`;
       const index = flipState.order[flipState.currentIndex];
       const wordPair = vocabularyData[index];
       document.getElementById('flip-progress').textContent = "Kort " + (flipState.currentIndex + 1) + " av " + flipState.order.length;
-      document.getElementById('flip-front').textContent = wordPair.swedish;
-      document.getElementById('flip-back').textContent = wordPair.spanish.join(" / ");
-      // Återställ flip-status
+      document.getElementById('flip-front').textContent = wordPair.question;
+      document.getElementById('flip-back').textContent = wordPair.answer.join(" / ");
       document.getElementById('flip-card').classList.remove('flipped');
     }
-    
-    // Vänd kortet vid klick
+
     document.getElementById('flip-card').addEventListener('click', function() {
       this.classList.toggle('flipped');
     });
-    
+
     document.getElementById('flip-next-btn').addEventListener('click', function() {
       flipState.currentIndex++;
       showFlipCard();
     });
-    
+
     document.getElementById('flip-back-btn').addEventListener('click', function() {
       backToModeSelection();
     });
-    
-    // --- Lär med svar: Duplikat av "Testa dig" med svaret alltid synligt ---
+
+    // --- Lär med svar: Alltid synligt svar ---
     function initLearnTest() {
       learnTestState.vocabulary = vocabularyData;
       learnTestState.order = shuffleArray([...Array(vocabularyData.length).keys()]);
       learnTestState.currentIndex = 0;
       learnTestState.score = 0;
       document.getElementById('mode-container').classList.add('hidden');
-      // Dölj övriga containers
+      document.getElementById('qa-display').classList.add('hidden');
       document.getElementById('quiz-container').classList.add('hidden');
       document.getElementById('flip-container').classList.add('hidden');
       document.getElementById('learn-answer-container').classList.remove('hidden');
       showLearnTestQuestion();
     }
-    
+
     function showLearnTestQuestion() {
       if (learnTestState.currentIndex >= learnTestState.order.length) {
         showLearnTestResult();
@@ -413,18 +483,17 @@ bord - mesa`;
       const currentIdx = learnTestState.order[learnTestState.currentIndex];
       const currentWord = learnTestState.vocabulary[currentIdx];
       document.getElementById('learn-progress').textContent = "Fråga " + (learnTestState.currentIndex + 1) + " av " + learnTestState.order.length;
-      document.getElementById('learn-question').textContent = "Översätt ordet: " + currentWord.swedish;
-      // Rätt svar visas alltid direkt
-      document.getElementById('learn-correct-answer').textContent = "Rätt svar: " + currentWord.spanish.join(" eller ");
+      document.getElementById('learn-question').textContent = "Översätt ordet: " + currentWord.question;
+      document.getElementById('learn-correct-answer').textContent = "Rätt svar: " + currentWord.answer.join(" eller ");
       document.getElementById('learn-input').value = "";
       document.getElementById('learn-feedback').textContent = "";
       document.getElementById('learn-input').focus();
     }
-    
+
     function checkLearnTestAnswer() {
       const userAnswer = document.getElementById('learn-input').value.trim().toLowerCase();
       const currentIdx = learnTestState.order[learnTestState.currentIndex];
-      const correctAnswers = learnTestState.vocabulary[currentIdx].spanish;
+      const correctAnswers = learnTestState.vocabulary[currentIdx].answer;
       const feedbackEl = document.getElementById('learn-feedback');
       if (correctAnswers.includes(userAnswer)) {
         feedbackEl.textContent = "Rätt!";
@@ -439,26 +508,25 @@ bord - mesa`;
       learnTestState.currentIndex++;
       setTimeout(showLearnTestQuestion, 2000);
     }
-    
+
     document.getElementById('learn-submit-btn').addEventListener('click', function() {
       checkLearnTestAnswer();
     });
-    
+
     document.getElementById('learn-input').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         checkLearnTestAnswer();
       }
     });
-    
+
     document.getElementById('learn-back-btn').addEventListener('click', function() {
       backToModeSelection();
     });
-    
+
     function showLearnTestResult() {
       alert("Du fick " + learnTestState.score + " av " + learnTestState.order.length + " rätt.");
       backToModeSelection();
     }
-    
   </script>
 </body>
 </html>
