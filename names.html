@@ -170,11 +170,8 @@
       fetch("https://api.webstay.se/view-logins?code=254205")
         .then(response => response.json())
         .then(data => {
-          if (data.error) {
-            alert("Fel vid hämtning av användare: " + data.error);
-            return;
-          }
-          displayUsers(data.users);
+          // Eftersom API:t nu returnerar en array med användare, skickar vi datan direkt
+          displayUsers(data);
         })
         .catch(error => {
           console.error("Fel vid fetch:", error);
