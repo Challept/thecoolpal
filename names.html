@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inloggning & Användarlista</title>
+  <!-- Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    /* Grundläggande styling */
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #74ABE2, #5563DE);
+      font-family: 'Helvetica Neue', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: #333;
+    }
+    #container {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      width: 90%;
+      max-width: 800px;
+      animation: fadeIn 1s ease-out;
+    }
+    h2 {
+      margin-bottom: 20px;
+      font-size: 2em;
+      color: #5563DE;
+    }
+    .hidden {
+      display: none;
+    }
+    /* Styling för sökrutan */
+    #search {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border 0.3s, box-shadow 0.3s;
+    }
+    #search:focus {
+      border-color: #5563DE;
+      outline: none;
+      box-shadow: 0 0 8px rgba(85,99,222,0.5);
+    }
+    /* Tabellstil */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background-color: #5563DE;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+      transform: scale(1.01);
+      transition: transform 0.2s;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    img:hover {
+      transform: scale(1.1);
+    }
+    /* Enkel fadeIn animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Inloggningssektion -->
+    <div id="login-container">
+      <h2 class="animate__animated animate__fadeInDown">Logga in med Google</h2>
+      <div id="g_id_onload"
+           data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+           data-callback="handleCredentialResponse"
+           data-itp_support="true"
+           data-auto_prompt="false">
+      </div>
+      <div class="mt-6 animate__animated animate__fadeInUp">
+        <div class="g_id_signin" data-type="standard"></div>
+      </div>
+    </div>
+
+    <!-- Användarlista sektion -->
+    <div id="user-container" class="hidden">
+      <h2 class="animate__animated animate__fadeInDown">Användarlista</h2>
+      <input type="text" id="search" placeholder="Sök efter namn eller e-post..." onkeyup="filterUsers()">
+      <table class="animate__animated animate__fadeIn">
+        <thead>
+          <tr>
+            <th>Bild</th>
+            <th>Namn</th>
+            <th>E-post</th>
+          </tr>
+        </thead>
+        <tbody id="user-table-body">
+          <!-- Dynamiskt innehåll fylls här -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Tillåtna Google-ID:n
+    const allowedIDs = ["115156821048844521223", "103093805154822424574"];
+
+    // Callback från Google Sign-In
+    function handleCredentialResponse(response) {
+      const jwt = response.credential;
+      const payload = parseJwt(jwt);
+      if (!payload) {
+        alert("Fel vid inloggningen. Försök igen.");
+        return;
+      }
+      // Kontrollera om ID:t är tillåtet
+      if (!allowedIDs.includes(payload.sub)) {
+        alert("Åtkomst nekad: Din Google-ID är inte auktoriserad.");
+        // Lägg till en skakningsanimation
+        document.getElementById("container").classList.add("animate__shakeX");
+        setTimeout(() => {
+          document.getElementById("container").classList.remove("animate__shakeX");
+        }, 1000);
+        return;
+      }
+      // Döljer inloggningen och visar användarlistan
+      document.getElementById("login-container").classList.add("hidden");
+      document.getElementById("user-container").classList.remove("hidden");
+      fetchUserList();
+    }
+
+    // Funktion för att avkoda JWT
+    function parseJwt(token) {
+      try {
+        return JSON.parse(atob(token.split('.')[1]));
+      } catch (e) {
+        console.error("Fel vid avkodning av token:", e);
+        return null;
+      }
+    }
+
+    // Hämta användardata från API:t
+    function fetchUserList() {
+      fetch("https://api.webstay.se/view-logins?code=254205")
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            alert("Fel vid hämtning av användare: " + data.error);
+            return;
+          }
+          displayUsers(data.users);
+        })
+        .catch(error => {
+          console.error("Fel vid fetch:", error);
+          alert("Kunde inte hämta användardata.");
+        });
+    }
+
+    // Visa användarna i tabellen
+    function displayUsers(users) {
+      const tableBody = document.getElementById("user-table-body");
+      tableBody.innerHTML = ""; // Rensa tidigare data
+      users.forEach(user => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><img src="${user.picture}" alt="Bild på ${user.name}"></td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Sökfunktionen för att filtrera tabellen
+    function filterUsers() {
+      const searchQuery = document.getElementById("search").value.toLowerCase();
+      const rows = document.querySelectorAll("#user-table-body tr");
+      rows.forEach(row => {
+        const name = row.cells[1].textContent.toLowerCase();
+        const email = row.cells[2].textContent.toLowerCase();
+        if (name.includes(searchQuery) || email.includes(searchQuery)) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
