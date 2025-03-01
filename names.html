@@ -2,34 +2,58 @@
 <html lang="sv">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Inloggning & Användarlista</title>
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <!-- Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <!-- Animate.css for extra animation effekter -->
+  <!-- Animate.css for animationseffekter -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
-    /* Grundläggande styling med responsivitet och animationer */
-    body {
+    /* Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #74ABE2, #5563DE);
+    }
+    /* Grundläggande body styling */
+    body {
       font-family: 'Poppins', sans-serif;
-      color: #333;
+      background: linear-gradient(135deg, #74ABE2, #5563DE);
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
+      color: #333;
+      overflow-x: hidden;
     }
+    /* Header styling */
+    header {
+      width: 100%;
+      text-align: center;
+      padding: 20px 0;
+      background: rgba(255, 255, 255, 0.8);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+    header h1 {
+      font-size: 2em;
+      color: #5563DE;
+    }
+    /* Container styling */
     #container {
       background: #fff;
       border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
       padding: 40px;
       width: 95%;
       max-width: 900px;
+      margin-top: 100px; /* space for the fixed header */
       animation: fadeIn 1s ease-out;
     }
     h2 {
@@ -40,6 +64,11 @@
     }
     .hidden {
       display: none;
+    }
+    /* Login container */
+    #login-container {
+      text-align: center;
+      padding: 20px;
     }
     /* Sökfält styling */
     #search {
@@ -56,12 +85,15 @@
       outline: none;
       box-shadow: 0 0 10px rgba(85, 99, 222, 0.5);
     }
-    /* Tabell styling */
+    /* Table container to avoid horizontal scrolling */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      display: block;
-      overflow-x: auto;
+      min-width: 600px;
     }
     thead {
       background-color: #5563DE;
@@ -96,6 +128,16 @@
     img:hover {
       transform: scale(1.1);
     }
+    /* Footer styling */
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      color: #fff;
+      text-align: center;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    /* Responsive adjustments */
     @media (max-width: 600px) {
       #container {
         padding: 20px;
@@ -118,6 +160,9 @@
   </style>
 </head>
 <body>
+  <header>
+    <h1>Välkommen till Användarportalen</h1>
+  </header>
   <div id="container">
     <!-- Inloggningssektion -->
     <div id="login-container">
@@ -135,27 +180,31 @@
     <!-- Användarlista sektion -->
     <div id="user-container" class="hidden">
       <h2 class="animate__animated animate__fadeInDown">Användarlista</h2>
-      <input type="text" id="search" placeholder="Sök efter namn, e-post eller detaljer..." onkeyup="filterUsers()">
-      <table class="animate__animated animate__fadeIn">
-        <thead>
-          <tr>
-            <th>Bild</th>
-            <th>Namn</th>
-            <th>E-post</th>
-            <th>Övriga uppgifter</th>
-          </tr>
-        </thead>
-        <tbody id="user-table-body">
-          <!-- Dynamiskt innehåll fylls här -->
-        </tbody>
-      </table>
+      <input type="text" id="search" placeholder="Sök efter namn, e-post eller Google ID..." onkeyup="filterUsers()">
+      <div class="table-container">
+        <table class="animate__animated animate__fadeIn">
+          <thead>
+            <tr>
+              <th>Bild</th>
+              <th>Namn</th>
+              <th>E-post</th>
+              <th>Google ID</th>
+            </tr>
+          </thead>
+          <tbody id="user-table-body">
+            <!-- Dynamiskt innehåll fylls här -->
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-
+  <footer>
+    <p>© 2025 Användarportalen. Alla rättigheter förbehållna.</p>
+  </footer>
   <script>
     // Tillåtna Google-ID:n
     const allowedIDs = ["115156821048844521223", "103093805154822424574"];
-
+    
     // Callback från Google Sign-In
     function handleCredentialResponse(response) {
       const jwt = response.credential;
@@ -178,7 +227,7 @@
       document.getElementById("user-container").classList.remove("hidden");
       fetchUserList();
     }
-
+    
     // Funktion för att avkoda JWT
     function parseJwt(token) {
       try {
@@ -188,42 +237,43 @@
         return null;
       }
     }
-
+    
     // Hämta användardata från API:t
     function fetchUserList() {
       fetch("https://api.webstay.se/view-logins?code=254205")
         .then(response => response.json())
         .then(data => {
-          if (data.error) {
-            alert("Fel vid hämtning av användare: " + data.error);
-            return;
+          // Om data returneras som en array direkt
+          if (Array.isArray(data)) {
+            displayUsers(data);
+          } else if (data.users && Array.isArray(data.users)) {
+            displayUsers(data.users);
+          } else {
+            alert("Fel vid hämtning av användardata.");
           }
-          displayUsers(data.users);
         })
         .catch(error => {
           console.error("Fel vid fetch:", error);
           alert("Kunde inte hämta användardata.");
         });
     }
-
+    
     // Visa användare i tabellen
     function displayUsers(users) {
       const tableBody = document.getElementById("user-table-body");
       tableBody.innerHTML = "";
       users.forEach(user => {
         const row = document.createElement("tr");
-        // Om ytterligare detaljer finns kan du lägga dem här
-        const otherDetails = user.details ? user.details : "";
         row.innerHTML = `
           <td><img src="${user.picture}" alt="Bild på ${user.name}"></td>
           <td>${user.name}</td>
           <td style="word-break: break-all;">${user.email}</td>
-          <td>${otherDetails}</td>
+          <td style="word-break: break-all;">${user.googleID}</td>
         `;
         tableBody.appendChild(row);
       });
     }
-
+    
     // Sökfunktionen för att filtrera tabellen
     function filterUsers() {
       const searchQuery = document.getElementById("search").value.toLowerCase();
@@ -231,8 +281,8 @@
       rows.forEach(row => {
         const name = row.cells[1].textContent.toLowerCase();
         const email = row.cells[2].textContent.toLowerCase();
-        const other = row.cells[3].textContent.toLowerCase();
-        if (name.includes(searchQuery) || email.includes(searchQuery) || other.includes(searchQuery)) {
+        const googleID = row.cells[3].textContent.toLowerCase();
+        if (name.includes(searchQuery) || email.includes(searchQuery) || googleID.includes(searchQuery)) {
           row.style.display = "";
         } else {
           row.style.display = "none";
