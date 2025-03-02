@@ -162,11 +162,12 @@
           showAlert("Google inloggning saknas, vänligen logga in igen.", "error");
           return;
         }
-        const response = await fetch("https://api.webstay.se/create-payment-link", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ googleID: googleID, planName: planName })
-        });
+fetch("https://api.webstay.se/create-payment-link", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ googleID, planName })
+});
+
         if (!response.ok) throw new Error("Kunde inte skapa betalningslänk");
         const data = await response.json();
         window.location.href = data.url;
