@@ -8,6 +8,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <!-- Dessa meta-taggar tillåter popups -->
   <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups" />
   <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
   <style>
@@ -56,6 +57,8 @@
       text-align: center;
       min-width: 250px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      opacity: 1;
+      transition: opacity 0.3s ease;
     }
     .alert-success {
       background-color: #4CAF50;
@@ -83,6 +86,7 @@
     <div class="glass text-center">
       <h1 class="text-4xl font-extrabold text-white mb-4 animate-pulse">Webstay</h1>
       <p class="text-gray-200 mb-6" id="loginMessage">Logga in med Google för att fortsätta</p>
+      
       <!-- Inloggningssektion -->
       <div id="step1">
         <div id="g_id_onload"
@@ -94,11 +98,13 @@
           <div class="g_id_signin" data-type="standard"></div>
         </div>
       </div>
+      
       <!-- Inloggad skärm -->
       <div id="doneScreen" class="hidden mt-6">
         <h2 class="text-2xl font-bold text-white mb-2">Inloggning slutförd</h2>
         <p class="text-gray-200">Du är nu inloggad och kan använda Webstay!</p>
       </div>
+      
       <!-- Abonnemangsplaner -->
       <div id="pricingPlans" class="hidden mt-6">
         <h2 class="text-2xl font-bold text-white mb-4">Våra Abonnemangsplaner</h2>
@@ -137,9 +143,11 @@
           </div>
         </div>
       </div>
+      
       <div id="alertContainer"></div>
     </div>
   </div>
+  
   <script>
     // Funktion för att visa animerade alerts
     function showAlert(message, type) {
@@ -148,28 +156,36 @@
       alertDiv.className = `alert ${type === "success" ? "alert-success" : "alert-error"}`;
       alertDiv.textContent = message;
       alertContainer.appendChild(alertDiv);
+      console.log("Alert visas:", message);
       setTimeout(() => {
         alertDiv.style.opacity = "0";
         setTimeout(() => alertDiv.remove(), 300);
       }, 3000);
     }
     
-    // Funktion för att skapa Stripe betalningslänk via API
+    // Funktion för att skapa Stripe betalningslänk via API med extra loggning
     async function createPaymentLink(planName) {
       try {
         const googleID = localStorage.getItem("googleID");
         if (!googleID) {
           showAlert("Google inloggning saknas, vänligen logga in igen.", "error");
+          console.error("Google inloggning saknas i localStorage");
           return;
         }
-fetch("https://api.webstay.se/create-payment-link", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ googleID, planName })
-});
-
-        if (!response.ok) throw new Error("Kunde inte skapa betalningslänk");
+        console.log("Skapar betalningslänk för plan:", planName, "med googleID:", googleID);
+        const response = await fetch("https://api.webstay.se/create-payment-link", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ googleID, planName })
+        });
+        console.log("Svar från server (create-payment-link):", response);
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Servern svarade inte OK:", errorText);
+          throw new Error("Kunde inte skapa betalningslänk");
+        }
         const data = await response.json();
+        console.log("Betalningslänk mottagen:", data.url);
         window.location.href = data.url;
       } catch (err) {
         console.error("❌ Betalningslänk fel:", err);
@@ -177,20 +193,23 @@ fetch("https://api.webstay.se/create-payment-link", {
       }
     }
     
-    // Callback-funktion för Google-inloggning
+    // Callback-funktion för Google-inloggning med extra loggning
     async function handleCredentialResponse(response) {
       try {
+        console.log("Google-token mottagen:", response);
         const token = response.credential;
         if (!token) throw new Error("Google autentisering misslyckades");
         localStorage.setItem("googleID", token);
+        console.log("Token sparad i localStorage:", token);
         showAlert("✅ Inloggning lyckades!", "success");
         
         // Verifiera token mot backend
         const res = await fetch("https://api.webstay.se/google-auth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token: token })
+          body: JSON.stringify({ token })
         });
+        console.log("Svar från server vid google-auth:", res);
         if (!res.ok) throw new Error(`Server svarade inte OK: ${res.status}`);
         const data = await res.json();
         console.log("User authenticated:", data);
@@ -198,14 +217,16 @@ fetch("https://api.webstay.se/create-payment-link", {
         // Dölj inloggningssektionen
         document.getElementById("step1").classList.add("hidden");
         
-        // Visa abonnemangsplaner eller standard inloggad skärm baserat på URL
+        // Beroende på URL, visa abonnemangsplaner eller standard inloggad skärm
         if (window.location.search.includes("showpricingplans")) {
+          console.log("URL innehåller 'showpricingplans' - visar prissättningsplaner");
           document.getElementById("pricingPlans").classList.remove("hidden");
         } else {
+          console.log("Visar standard inloggad skärm");
           document.getElementById("doneScreen").classList.remove("hidden");
         }
       } catch (err) {
-        console.error("❌ Server error:", err);
+        console.error("❌ Serverfel vid inloggning:", err);
         showAlert("❌ Ett fel uppstod vid inloggning. Försök igen.", "error");
       }
     }
