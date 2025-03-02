@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- These meta tags help allow popups when needed -->
     <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin-allow-popups" />
     <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp" />
     <style>
@@ -64,6 +65,7 @@
       <p class="text-gray-300 mb-6 text-lg" id="loginMessage">
         Logga in eller registrera dig med Google för att fortsätta.
       </p>
+      <!-- Google Login Section -->
       <div id="step1">
         <div id="g_id_onload"
           data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
@@ -132,8 +134,8 @@
           setTimeout(() => alertDiv.remove(), 300);
         }, 3000);
       }
-      
-      // Function to create a Stripe Payment Link for a given plan
+
+      // Create Stripe Payment Link
       async function createPaymentLink(planName) {
         try {
           const googleID = localStorage.getItem("googleID");
@@ -148,7 +150,7 @@
           });
           if (!response.ok) throw new Error("Kunde inte skapa betalningslänk");
           const data = await response.json();
-          // Redirect user to the Stripe checkout session
+          // Redirect user to the Stripe checkout session URL
           window.location.href = data.url;
         } catch (err) {
           console.error("❌ Betalningslänk fel:", err);
@@ -156,14 +158,14 @@
         }
       }
 
-      // Google credential callback
+      // Google sign-in callback function
       async function handleCredentialResponse(response) {
         try {
           const token = response.credential;
           if (!token) throw new Error("Google Authentication failed");
           localStorage.setItem("googleID", token);
           showAlert("✅ Inloggning lyckades!", "success");
-          
+
           // Verify token with the backend
           const res = await fetch("https://api.webstay.se/google-auth", {
             method: "POST",
@@ -172,14 +174,14 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ token })
           });
-          
           if (!res.ok) throw new Error(`Server response not OK: ${res.status}`);
           const data = await res.json();
           console.log("User authenticated:", data);
-          // Hide login step
+
+          // Hide login section
           document.getElementById("step1").classList.add("step-hidden");
           
-          // Check for query parameter ?showpricingplans
+          // Check if URL contains "?showpricingplans"
           if (window.location.search.includes("showpricingplans")) {
             document.getElementById("pricingPlans").classList.remove("step-hidden");
           } else {
