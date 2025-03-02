@@ -74,13 +74,53 @@
           <div class="g_id_signin" data-type="standard"></div>
         </div>
       </div>
+      <!-- Standard logged in screen (if not showing pricing) -->
       <div id="doneScreen" class="step-hidden mt-6">
         <h2 class="text-2xl font-bold text-white mb-4">Inloggning slutförd</h2>
         <p class="text-gray-200 text-lg">Du är nu inloggad och kan använda Webstay!</p>
       </div>
+      <!-- Pricing Plans Section -->
+      <div id="pricingPlans" class="step-hidden mt-6">
+        <h2 class="text-3xl font-bold text-white mb-6">Våra Abonnemangsplaner</h2>
+        <div class="grid grid-cols-1 gap-6">
+          <!-- Start Plan -->
+          <div class="bg-white bg-opacity-20 p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 class="text-2xl font-bold text-white mb-2">Start Plan</h3>
+            <p class="text-gray-200 mb-4">1 dag gratis provperiod</p>
+            <button onclick="createPaymentLink('Start Plan')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+              Prenumerera
+            </button>
+          </div>
+          <!-- Premium Plan -->
+          <div class="bg-white bg-opacity-20 p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 class="text-2xl font-bold text-white mb-2">Premium Plan</h3>
+            <p class="text-gray-200 mb-4">3 dagar gratis provperiod</p>
+            <button onclick="createPaymentLink('Premium Plan')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+              Prenumerera
+            </button>
+          </div>
+          <!-- Ultimate Plan -->
+          <div class="bg-white bg-opacity-20 p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 class="text-2xl font-bold text-white mb-2">Ultimate Plan</h3>
+            <p class="text-gray-200 mb-4">5 dagar gratis provperiod</p>
+            <button onclick="createPaymentLink('Ultimate Plan')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+              Prenumerera
+            </button>
+          </div>
+          <!-- Exclusive Plan -->
+          <div class="bg-white bg-opacity-20 p-6 rounded-xl shadow-md hover:shadow-xl transition">
+            <h3 class="text-2xl font-bold text-white mb-2">Exclusive Plan</h3>
+            <p class="text-gray-200 mb-4">7 dagar gratis provperiod</p>
+            <button onclick="createPaymentLink('Exclusive Plan')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+              Prenumerera
+            </button>
+          </div>
+        </div>
+      </div>
       <div id="alertContainer"></div>
     </div>
     <script>
+      // Function to display alert messages
       function showAlert(message, type) {
         const alertContainer = document.getElementById("alertContainer");
         const alertDiv = document.createElement("div");
@@ -93,6 +133,30 @@
         }, 3000);
       }
       
+      // Function to create a Stripe Payment Link for a given plan
+      async function createPaymentLink(planName) {
+        try {
+          const googleID = localStorage.getItem("googleID");
+          if (!googleID) {
+            showAlert("Google inloggning saknas, vänligen logga in igen.", "error");
+            return;
+          }
+          const response = await fetch("https://api.webstay.se/create-payment-link", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ googleID, planName })
+          });
+          if (!response.ok) throw new Error("Kunde inte skapa betalningslänk");
+          const data = await response.json();
+          // Redirect user to the Stripe checkout session
+          window.location.href = data.url;
+        } catch (err) {
+          console.error("❌ Betalningslänk fel:", err);
+          showAlert("❌ Ett fel uppstod vid skapande av betalningslänk.", "error");
+        }
+      }
+
+      // Google credential callback
       async function handleCredentialResponse(response) {
         try {
           const token = response.credential;
@@ -100,6 +164,7 @@
           localStorage.setItem("googleID", token);
           showAlert("✅ Inloggning lyckades!", "success");
           
+          // Verify token with the backend
           const res = await fetch("https://api.webstay.se/google-auth", {
             method: "POST",
             mode: "cors",
@@ -111,8 +176,15 @@
           if (!res.ok) throw new Error(`Server response not OK: ${res.status}`);
           const data = await res.json();
           console.log("User authenticated:", data);
+          // Hide login step
           document.getElementById("step1").classList.add("step-hidden");
-          document.getElementById("doneScreen").classList.remove("step-hidden");
+          
+          // Check for query parameter ?showpricingplans
+          if (window.location.search.includes("showpricingplans")) {
+            document.getElementById("pricingPlans").classList.remove("step-hidden");
+          } else {
+            document.getElementById("doneScreen").classList.remove("step-hidden");
+          }
         } catch (err) {
           console.error("❌ Server error:", err);
           showAlert("❌ Ett fel uppstod vid inloggning. Försök igen.", "error");
