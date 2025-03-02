@@ -166,10 +166,11 @@
     // Funktion för att skapa Stripe betalningslänk via API med extra loggning
     async function createPaymentLink(planName) {
       try {
-        const googleID = localStorage.getItem("googleID");
+        // Hämta token från sessionStorage istället för localStorage
+        const googleID = sessionStorage.getItem("googleID");
         if (!googleID) {
           showAlert("Google inloggning saknas, vänligen logga in igen.", "error");
-          console.error("Google inloggning saknas i localStorage");
+          console.error("Google inloggning saknas i sessionStorage");
           return;
         }
         console.log("Skapar betalningslänk för plan:", planName, "med googleID:", googleID);
@@ -199,8 +200,9 @@
         console.log("Google-token mottagen:", response);
         const token = response.credential;
         if (!token) throw new Error("Google autentisering misslyckades");
-        localStorage.setItem("googleID", token);
-        console.log("Token sparad i localStorage:", token);
+        // Spara token i sessionStorage
+        sessionStorage.setItem("googleID", token);
+        console.log("Token sparad i sessionStorage:", token);
         showAlert("✅ Inloggning lyckades!", "success");
         
         // Verifiera token mot backend
@@ -217,7 +219,7 @@
         // Dölj inloggningssektionen
         document.getElementById("step1").classList.add("hidden");
         
-        // Beroende på URL, visa abonnemangsplaner eller standard inloggad skärm
+        // Visa abonnemangsplaner eller standard inloggad skärm baserat på URL
         if (window.location.search.includes("showpricingplans")) {
           console.log("URL innehåller 'showpricingplans' - visar prissättningsplaner");
           document.getElementById("pricingPlans").classList.remove("hidden");
