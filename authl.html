@@ -59,6 +59,7 @@
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       opacity: 1;
       transition: opacity 0.3s ease;
+      z-index: 10000;
     }
     .alert-success {
       background-color: #4CAF50;
@@ -68,7 +69,7 @@
       background-color: #F44336;
       color: white;
     }
-    /* Ett litet kort med planval */
+    /* Plankort */
     .plan-card {
       background: rgba(255, 255, 255, 0.20);
       border-radius: 10px;
@@ -76,26 +77,26 @@
       margin-top: 1rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
-    /* Overlay för laddning */
+    /* Overlay som visas vid betalning */
     #loadingOverlay {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(0, 0, 0, 0.75);
+      background-color: rgba(0, 0, 0, 0.85);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-size: 1.5rem;
+      color: #fff;
+      font-size: 1.8rem;
       z-index: 9999;
     }
     .hidden { display: none; }
   </style>
 </head>
 <body>
-  <!-- Overlay som visas vid betalning -->
+  <!-- Overlay för "Väntar på betalning..." (visas endast under betalningsprocessen) -->
   <div id="loadingOverlay" class="hidden">Väntar på betalning...</div>
   
   <div class="container">
@@ -121,12 +122,11 @@
         <p class="text-gray-200">Du är nu inloggad och kan använda Webstay!</p>
       </div>
       
-      <!-- Kort med planval (visas endast om URL:en innehåller ?showpricingplans) -->
+      <!-- Planvalskort (visas endast om URL:en innehåller ?showpricingplans) -->
       <div id="pricingPlans" class="hidden mt-6">
         <div class="plan-card">
           <h2 class="text-xl font-bold text-white mb-2">Välj Abonnemangsplan</h2>
           <select id="planSelect" class="w-full p-2 rounded mb-4">
-            <!-- Värdena matchar backend-planerna -->
             <option value="Start">Start Plan - 1 dag gratis</option>
             <option value="Premium">Premium Plan - 3 dagar gratis</option>
             <option value="Ultimate">Ultimate Plan - 5 dagar gratis</option>
@@ -144,7 +144,7 @@
   </div>
   
   <script>
-    // Funktion för att visa animerade alerts
+    // Funktion för att visa alerts
     function showAlert(message, type) {
       const alertContainer = document.getElementById("alertContainer");
       const alertDiv = document.createElement("div");
@@ -157,7 +157,7 @@
         setTimeout(() => alertDiv.remove(), 300);
       }, 3000);
     }
-    
+
     // Enkel JWT-avkodare för att extrahera payload (sub)
     function parseJwt(token) {
       const base64Url = token.split('.')[1];
@@ -167,10 +167,10 @@
       }).join(''));
       return JSON.parse(jsonPayload);
     }
-    
-    // Lyssna på meddelanden från popup-fönstret (t.ex. från din success-sida)
+
+    // Lyssna på meddelanden från popup-fönstret (exempelvis från success-sidan)
     window.addEventListener("message", function(event) {
-      // Om du har en specifik origin kan du kolla event.origin
+      // Här kan du kontrollera event.origin om du vill
       if (event.data === "payment_success") {
         showAlert("✅ Betalning genomförd!", "success");
         document.getElementById("loadingOverlay").classList.add("hidden");
@@ -178,8 +178,8 @@
         document.getElementById("doneScreen").classList.remove("hidden");
       }
     });
-    
-    // Funktion för att skapa Stripe betalningslänk via API med popup-fönster
+
+    // Funktion för att skapa betalningslänk med popup-fönster och overlay
     async function createPaymentLink(planName) {
       try {
         const googleID = sessionStorage.getItem("googleID");
@@ -203,24 +203,25 @@
         const data = await response.json();
         console.log("Betalningslänk mottagen:", data.url);
         
-        // Visa overlay med laddningsmeddelande
-        const overlay = document.getElementById("loadingOverlay");
-        overlay.classList.remove("hidden");
-        
         // Öppna popup-fönster med Stripe Checkout
         const popup = window.open(data.url, "StripeCheckout", "width=800,height=600");
         if (!popup) {
           showAlert("Popup blockerad, vänligen tillåt popup-fönster.", "error");
-          overlay.classList.add("hidden");
           return;
         }
         
-        // Polling för att kolla om popup-fönstret stängs
+        // Visa overlay (Väntar på betalning...) först efter popup-fönstret öppnats
+        document.getElementById("loadingOverlay").classList.remove("hidden");
+        
+        // Kontrollera om popup-fönstret stängs (om betalningen inte genomförs)
         const popupInterval = setInterval(() => {
           if (popup.closed) {
             clearInterval(popupInterval);
-            overlay.classList.add("hidden");
-            showAlert("Betalning avbruten.", "error");
+            // Om inte betalningsframgång har notifierats (dvs. om "doneScreen" fortfarande är dold)
+            if (document.getElementById("doneScreen").classList.contains("hidden")) {
+              document.getElementById("loadingOverlay").classList.add("hidden");
+              showAlert("Betalning avbruten.", "error");
+            }
           }
         }, 1000);
       } catch (err) {
@@ -228,8 +229,8 @@
         showAlert("❌ Ett fel uppstod vid skapande av betalningslänk.", "error");
       }
     }
-    
-    // Callback-funktion för Google-inloggning med extra loggning
+
+    // Callback-funktion för Google-inloggning
     async function handleCredentialResponse(response) {
       try {
         console.log("Google-token mottagen:", response);
