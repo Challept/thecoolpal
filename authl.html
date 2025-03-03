@@ -187,7 +187,7 @@
           return;
         }
         console.log("Skapar betalningslänk för plan:", planName, "med googleID:", googleID);
-        const response = await fetch("https://api.webstay.se/create-payment-link", {
+        const response = await fetch("https://api.webstay.se/handle-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ googleID, planName })
