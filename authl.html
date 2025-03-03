@@ -142,7 +142,7 @@
       <!-- Inloggningssektion -->
       <div id="step1">
         <div id="g_id_onload"
-             data-client_id="216513476074-2g3ua2sboin4g8f16n8mdf9o2h1tbn0q.apps.googleusercontent.com"
+             data-client_id="DIN_GOOGLE_CLIENT_ID"
              data-callback="handleCredentialResponse"
              data-itp_support="true"
              data-auto_prompt="false"></div>
@@ -161,12 +161,12 @@
       <div id="pricingPlans" class="hidden mt-6">
         <div class="plan-card">
           <h2 class="text-xl font-bold text-white mb-2">Välj Abonnemangsplan</h2>
-          <!-- Dropdown med planalternativ och information om gratis provperiod -->
+          <!-- Dropdown med planalternativ och information om 3 dagars gratis provperiod -->
           <select id="planSelect" class="w-full p-2 rounded mb-4">
-            <option value="Start">Start Plan - 1 dag gratis, 99 kr/mån</option>
-            <option value="Premium">Premium Plan - 3 dagar gratis, 199 kr/mån</option>
-            <option value="Ultimate">Ultimate Plan - 5 dagar gratis, 299 kr/mån</option>
-            <option value="Exclusive">Exclusive Plan - 7 dagar gratis, 399 kr/mån</option>
+            <option value="Start">Start Plan - 3 dagar gratis, 9 kr/mån, Startavgift: 299 kr</option>
+            <option value="Premium">Premium Plan - 3 dagar gratis, 49 kr/mån, Startavgift: 399 kr</option>
+            <option value="Ultimate">Ultimate Plan - 3 dagar gratis, 99 kr/mån, Startavgift: 999 kr</option>
+            <option value="Exclusive">Exclusive Plan - 3 dagar gratis, 199 kr/mån, Startavgift: 1999 kr</option>
           </select>
           <!-- När användaren klickar öppnas betalnings-popupen -->
           <button onclick="createPaymentLink(document.getElementById('planSelect').value)"
@@ -184,7 +184,7 @@
   <div id="checkoutContainer" class="checkout-container" style="display:none;">
     <!-- Orderöversikt – fylls dynamiskt -->
     <div id="orderSummary" style="margin-bottom:20px; padding:10px; background:#f0f0f0; border-radius:8px;">
-      <!-- Exempeltext, kommer att uppdateras baserat på vald plan -->
+      <!-- Texten uppdateras baserat på vald plan -->
       <h3 style="margin:0 0 5px 0;">Orderöversikt</h3>
       <p id="planInfo" style="margin:0;"></p>
     </div>
@@ -257,8 +257,8 @@
           return;
         }
         console.log("Skapar betalningslänk för plan:", planName, "med googleID:", googleID);
-        // Här anropar du din backend för att skapa betalningslänken.
-        // För detta exempel simulerar vi svaret genom att bygga en URL till samma sida i checkout-läge.
+        // Anropa din backend för att skapa betalningslänken.
+        // Här simuleras svaret genom att öppna samma sida i checkout-läge.
         const checkoutUrl = window.location.origin + window.location.pathname +
            "?checkout=true&planName=" + encodeURIComponent(planName);
         console.log("Öppnar checkout-popup:", checkoutUrl);
@@ -349,21 +349,23 @@
         // Hämta vald plan från URL-parametrar
         const planName = urlParams.get("planName") || "Premium"; // standardvärde om ej angivet
         
-        // Definiera planinformation (trial-dagar & månadskostnad i öre)
+        // Definiera planinformation med 3 dagars gratis prov, startavgift & månadsavgift (beloppen anges i öre)
         const planDetails = {
-          "Start":     { trialDays: 1, monthlyPrice: 9900 },
-          "Premium":   { trialDays: 3, monthlyPrice: 19900 },
-          "Ultimate":  { trialDays: 5, monthlyPrice: 29900 },
-          "Exclusive": { trialDays: 7, monthlyPrice: 39900 }
+          "Start":     { trialDays: 3, monthlyPrice: 900,  startFee: 29900 },
+          "Premium":   { trialDays: 3, monthlyPrice: 4900, startFee: 39900 },
+          "Ultimate":  { trialDays: 3, monthlyPrice: 9900, startFee: 99900 },
+          "Exclusive": { trialDays: 3, monthlyPrice: 19900, startFee: 199900 }
         };
         
         const details = planDetails[planName] || planDetails["Premium"];
-        // Visa orderöversikt
+        // Visa orderöversikt med planens detaljer
         const planInfoEl = document.getElementById("planInfo");
         planInfoEl.innerHTML = `<strong>Plan:</strong> ${planName}<br>
-                                <strong>Gratis provperiod:</strong> ${details.trialDays} dag(ar)<br>
+                                <strong>Gratis provperiod:</strong> ${details.trialDays} dagar<br>
+                                <strong>Startavgift:</strong> ${Math.round(details.startFee/100)} kr<br>
                                 <strong>Månadskostnad:</strong> ${Math.round(details.monthlyPrice/100)} kr<br>
-                                <strong>Att betala idag:</strong> 0 kr`;
+                                <strong>Att betala idag:</strong> 0 kr<br>
+                                <small>Efter provperioden debiteras startavgift och månadsavgift.</small>`;
         
         // Initiera Stripe
         const stripe = Stripe("pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu");
@@ -374,13 +376,13 @@
         cardElement.mount("#card-element");
         
         // Skapa Payment Request Button (för Apple Pay, Google Pay m.m.)
-        // Här sätts totalbeloppet – om provperioden är gratis sätts beloppet till 0
+        // Eftersom provperioden är gratis sätts beloppet till 0
         const paymentRequest = stripe.paymentRequest({
           country: "SE",
           currency: "sek",
           total: {
             label: "Totalt att betala",
-            amount: 0  // Gratis prov – ingen debitering idag
+            amount: 0
           },
           requestPayerName: true,
           requestPayerEmail: true,
