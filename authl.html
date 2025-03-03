@@ -23,7 +23,7 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    /* Huvudcontainer centrerad vertikalt och horisontellt */
+    /* Centrerad container */
     .container {
       display: flex;
       justify-content: center;
@@ -68,16 +68,13 @@
       background-color: #F44336;
       color: white;
     }
-    /* Rutnät för priskort: 1 kolumn på mobiler, 2 kolumner på större skärmar */
-    .plans-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-    @media(min-width: 768px) {
-      .plans-grid {
-        grid-template-columns: 1fr 1fr;
-      }
+    /* Ett litet kort med planval */
+    .plan-card {
+      background: rgba(255, 255, 255, 0.20);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -105,42 +102,20 @@
         <p class="text-gray-200">Du är nu inloggad och kan använda Webstay!</p>
       </div>
       
-      <!-- Abonnemangsplaner -->
+      <!-- Ett litet kort med dropdown och knapp för att välja plan -->
       <div id="pricingPlans" class="hidden mt-6">
-        <h2 class="text-2xl font-bold text-white mb-4">Våra Abonnemangsplaner</h2>
-        <div class="plans-grid">
-          <!-- Start Plan -->
-          <div class="bg-white bg-opacity-20 p-4 rounded-lg shadow transition transform hover:scale-105">
-            <h3 class="text-xl font-bold text-white mb-1">Start Plan</h3>
-            <p class="text-gray-100 mb-3">1 dag gratis provperiod</p>
-            <button onclick="createPaymentLink('Start Plan')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded">
-              Prenumerera
-            </button>
-          </div>
-          <!-- Premium Plan -->
-          <div class="bg-white bg-opacity-20 p-4 rounded-lg shadow transition transform hover:scale-105">
-            <h3 class="text-xl font-bold text-white mb-1">Premium Plan</h3>
-            <p class="text-gray-100 mb-3">3 dagar gratis provperiod</p>
-            <button onclick="createPaymentLink('Premium Plan')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded">
-              Prenumerera
-            </button>
-          </div>
-          <!-- Ultimate Plan -->
-          <div class="bg-white bg-opacity-20 p-4 rounded-lg shadow transition transform hover:scale-105">
-            <h3 class="text-xl font-bold text-white mb-1">Ultimate Plan</h3>
-            <p class="text-gray-100 mb-3">5 dagar gratis provperiod</p>
-            <button onclick="createPaymentLink('Ultimate Plan')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded">
-              Prenumerera
-            </button>
-          </div>
-          <!-- Exclusive Plan -->
-          <div class="bg-white bg-opacity-20 p-4 rounded-lg shadow transition transform hover:scale-105">
-            <h3 class="text-xl font-bold text-white mb-1">Exclusive Plan</h3>
-            <p class="text-gray-100 mb-3">7 dagar gratis provperiod</p>
-            <button onclick="createPaymentLink('Exclusive Plan')" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded">
-              Prenumerera
-            </button>
-          </div>
+        <div class="plan-card">
+          <h2 class="text-xl font-bold text-white mb-2">Välj Abonnemangsplan</h2>
+          <select id="planSelect" class="w-full p-2 rounded mb-4">
+            <option value="Start Plan">Start Plan - 1 dag gratis</option>
+            <option value="Premium Plan">Premium Plan - 3 dagar gratis</option>
+            <option value="Ultimate Plan">Ultimate Plan - 5 dagar gratis</option>
+            <option value="Exclusive Plan">Exclusive Plan - 7 dagar gratis</option>
+          </select>
+          <button onclick="createPaymentLink(document.getElementById('planSelect').value)"
+                  class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded">
+            Prenumerera
+          </button>
         </div>
       </div>
       
@@ -166,7 +141,7 @@
     // Funktion för att skapa Stripe betalningslänk via API med extra loggning
     async function createPaymentLink(planName) {
       try {
-        // Hämta token från sessionStorage istället för localStorage
+        // Hämta token från sessionStorage
         const googleID = sessionStorage.getItem("googleID");
         if (!googleID) {
           showAlert("Google inloggning saknas, vänligen logga in igen.", "error");
@@ -219,14 +194,9 @@
         // Dölj inloggningssektionen
         document.getElementById("step1").classList.add("hidden");
         
-        // Visa abonnemangsplaner eller standard inloggad skärm baserat på URL
-        if (window.location.search.includes("showpricingplans")) {
-          console.log("URL innehåller 'showpricingplans' - visar prissättningsplaner");
-          document.getElementById("pricingPlans").classList.remove("hidden");
-        } else {
-          console.log("Visar standard inloggad skärm");
-          document.getElementById("doneScreen").classList.remove("hidden");
-        }
+        // Visa plankort (det enda kortet)
+        console.log("Visar plankort");
+        document.getElementById("pricingPlans").classList.remove("hidden");
       } catch (err) {
         console.error("❌ Serverfel vid inloggning:", err);
         showAlert("❌ Ett fel uppstod vid inloggning. Försök igen.", "error");
