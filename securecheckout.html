@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embedded Checkout</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    #checkout-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
+    #payment-message { margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+  <button id="payButton">Betala Nu</button>
+
+  <div id="checkout-popup">
+    <h2>Betalning</h2>
+    <form id="payment-form">
+      <div id="card-element"></div>
+      <button type="submit">Betala</button>
+      <p id="payment-message"></p>
+    </form>
+  </div>
+
+  <script>
+    const stripe = Stripe("pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu"); // Replace with your Stripe Public Key
+    const elements = stripe.elements();
+    const cardElement = elements.create("card");
+    cardElement.mount("#card-element");
+
+    document.getElementById("payButton").addEventListener("click", function () {
+      document.getElementById("checkout-popup").style.display = "block";
+    });
+
+    document.getElementById("payment-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const { paymentMethod, error } = await stripe.createPaymentMethod({ type: "card", card: cardElement });
+
+      if (error) {
+        document.getElementById("payment-message").textContent = "❌ Fel vid betalning!";
+        return;
+      }
+
+      const response = await fetch("http://localhost:3000/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          googleID: "115156821048844521223",
+          planName: "Premium",
+          addSecurity: true,
+          paymentMethodId: paymentMethod.id,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.error) {
+        document.getElementById("payment-message").textContent = "❌ Betalning misslyckades!";
+      } else {
+        document.getElementById("payment-message").textContent = "✅ Betalning genomförd!";
+        setTimeout(() => { document.getElementById("checkout-popup").style.display = "none"; }, 2000);
+      }
+    });
+  </script>
+
+</body>
+</html>
