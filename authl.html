@@ -472,7 +472,7 @@ document.getElementById("payment-form").addEventListener("submit", async (event)
       document.getElementById("payment-message").textContent = "❌ Betalningen misslyckades!";
     } else {
       document.getElementById("payment-message").textContent = "✅ Betalning genomförd!";
-      window.opener.postMessage("payment_success", "*");
+      window.parent.postMessage("payment_success", "*");
       window.close();
     }
   } catch (error) {
