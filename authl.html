@@ -139,10 +139,20 @@
       }, 3000);
     }
     
+    // Enkel JWT-avkodare för att extrahera payload (sub)
+    function parseJwt (token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+    
     // Funktion för att skapa Stripe betalningslänk via API med extra loggning
     async function createPaymentLink(planName) {
       try {
-        // Hämta token från sessionStorage
+        // Hämta googleID från sessionStorage (det är nu det avkodade sub-värdet)
         const googleID = sessionStorage.getItem("googleID");
         if (!googleID) {
           showAlert("Google inloggning saknas, vänligen logga in igen.", "error");
@@ -176,9 +186,15 @@
         console.log("Google-token mottagen:", response);
         const token = response.credential;
         if (!token) throw new Error("Google autentisering misslyckades");
-        // Spara token i sessionStorage
-        sessionStorage.setItem("googleID", token);
-        console.log("Token sparad i sessionStorage:", token);
+        
+        // Avkoda token för att extrahera "sub" (användar-ID)
+        const payload = parseJwt(token);
+        const userId = payload.sub;
+        if (!userId) throw new Error("Kunde inte extrahera användar-ID från token");
+        
+        // Spara det kortare användar-ID:t i sessionStorage
+        sessionStorage.setItem("googleID", userId);
+        console.log("Token avkodad och userID sparad i sessionStorage:", userId);
         showAlert("✅ Inloggning lyckades!", "success");
         
         // Verifiera token mot backend
@@ -195,7 +211,7 @@
         // Dölj inloggningssektionen
         document.getElementById("step1").classList.add("hidden");
         
-        // Visa antingen prismeny (om URL:en innehåller ?showpricingplans) eller en enkel inloggnad skärm
+        // Visa prismeny (om URL:en innehåller ?showpricingplans) eller inloggad skärm
         if (window.location.search.includes("showpricingplans")) {
           console.log("Visar prismeny");
           document.getElementById("pricingPlans").classList.remove("hidden");
