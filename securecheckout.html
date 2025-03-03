@@ -160,7 +160,7 @@
         document.getElementById("payment-message").textContent = "❌ Error: " + error.message;
         return;
       }
-      const response = await fetch("http://localhost:3000/create-payment", {
+      const response = await fetch("https://api.webstay.se/create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
