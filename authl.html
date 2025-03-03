@@ -76,9 +76,28 @@
       margin-top: 1rem;
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
+    /* Overlay för laddning */
+    #loadingOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      z-index: 9999;
+    }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
+  <!-- Overlay som visas vid betalning -->
+  <div id="loadingOverlay" class="hidden">Väntar på betalning...</div>
+  
   <div class="container">
     <div class="glass text-center">
       <h1 class="text-4xl font-extrabold text-white mb-4 animate-pulse">Webstay</h1>
@@ -140,19 +159,29 @@
     }
     
     // Enkel JWT-avkodare för att extrahera payload (sub)
-    function parseJwt (token) {
+    function parseJwt(token) {
       const base64Url = token.split('.')[1];
       const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
           return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join(''));
       return JSON.parse(jsonPayload);
     }
     
-    // Funktion för att skapa Stripe betalningslänk via API med extra loggning
+    // Lyssna på meddelanden från popup-fönstret (t.ex. från din success-sida)
+    window.addEventListener("message", function(event) {
+      // Om du har en specifik origin kan du kolla event.origin
+      if (event.data === "payment_success") {
+        showAlert("✅ Betalning genomförd!", "success");
+        document.getElementById("loadingOverlay").classList.add("hidden");
+        document.getElementById("pricingPlans").classList.add("hidden");
+        document.getElementById("doneScreen").classList.remove("hidden");
+      }
+    });
+    
+    // Funktion för att skapa Stripe betalningslänk via API med popup-fönster
     async function createPaymentLink(planName) {
       try {
-        // Hämta googleID från sessionStorage (det är nu det avkodade sub-värdet)
         const googleID = sessionStorage.getItem("googleID");
         if (!googleID) {
           showAlert("Google inloggning saknas, vänligen logga in igen.", "error");
@@ -173,7 +202,27 @@
         }
         const data = await response.json();
         console.log("Betalningslänk mottagen:", data.url);
-        window.location.href = data.url;
+        
+        // Visa overlay med laddningsmeddelande
+        const overlay = document.getElementById("loadingOverlay");
+        overlay.classList.remove("hidden");
+        
+        // Öppna popup-fönster med Stripe Checkout
+        const popup = window.open(data.url, "StripeCheckout", "width=800,height=600");
+        if (!popup) {
+          showAlert("Popup blockerad, vänligen tillåt popup-fönster.", "error");
+          overlay.classList.add("hidden");
+          return;
+        }
+        
+        // Polling för att kolla om popup-fönstret stängs
+        const popupInterval = setInterval(() => {
+          if (popup.closed) {
+            clearInterval(popupInterval);
+            overlay.classList.add("hidden");
+            showAlert("Betalning avbruten.", "error");
+          }
+        }, 1000);
       } catch (err) {
         console.error("❌ Betalningslänk fel:", err);
         showAlert("❌ Ett fel uppstod vid skapande av betalningslänk.", "error");
