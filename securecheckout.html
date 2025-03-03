@@ -1,47 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Embedded Checkout</title>
   <script src="https://js.stripe.com/v3/"></script>
   <style>
-    #checkout-popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
-    #payment-message { margin-top: 20px; }
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .checkout-container {
+      background: #ffffff;
+      max-width: 480px;
+      width: 90%;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    .checkout-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .checkout-header h2 {
+      margin: 0;
+      font-size: 24px;
+      color: #333333;
+    }
+    .checkout-header p {
+      color: #777777;
+      font-size: 14px;
+    }
+    #payment-request-button {
+      margin-bottom: 20px;
+    }
+    #card-element {
+      border: 1px solid #e0e0e0;
+      border-radius: 4px;
+      padding: 12px;
+      background-color: #fafafa;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #6772e5;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #5469d4;
+    }
+    #payment-message {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
-
-  <button id="payButton">Betala Nu</button>
-
-  <div id="checkout-popup">
-    <h2>Betalning</h2>
+  <div class="checkout-container">
+    <div class="checkout-header">
+      <h2>Complete Your Payment</h2>
+      <p>Secure checkout powered by Stripe</p>
+    </div>
+    <!-- Payment Request Button for Apple Pay, Google Pay, etc. -->
+    <div id="payment-request-button"></div>
+    <!-- OR use Card Element -->
     <form id="payment-form">
       <div id="card-element"></div>
-      <button type="submit">Betala</button>
+      <button type="submit" id="card-button">Pay Now</button>
       <p id="payment-message"></p>
     </form>
   </div>
 
   <script>
-    const stripe = Stripe("pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu"); // Replace with your Stripe Public Key
+    // Replace with your live Stripe public key
+    const stripe = Stripe("pk_live_51QH6igLnfTyXNYdEPTKgwYTUNqaCdfAxxKm3muIlm6GmLVvguCeN71I6udCVwiMouKam1BSyvJ4EyELKDjAsdIUo00iMqzDhqu");
     const elements = stripe.elements();
-    const cardElement = elements.create("card");
+
+    // Create and mount the Card Element
+    const cardElement = elements.create("card", { hidePostalCode: true });
     cardElement.mount("#card-element");
 
-    document.getElementById("payButton").addEventListener("click", function () {
-      document.getElementById("checkout-popup").style.display = "block";
+    // Setup Payment Request Button for Apple Pay / Google Pay
+    // (Make sure to update the currency and country to match your needs.)
+    const paymentRequest = stripe.paymentRequest({
+      country: "US", // e.g., change to "SE" for Sweden
+      currency: "sek",
+      total: {
+        label: "Total",
+        // Example total: sum of one-time fees (e.g. setup + security add-on)
+        amount: 39900 + 12900,
+      },
+      requestPayerName: true,
+      requestPayerEmail: true,
     });
 
+    const prButton = elements.create("paymentRequestButton", {
+      paymentRequest: paymentRequest,
+      style: {
+        paymentRequestButton: {
+          type: "default", // Options: default, donate, buy
+          theme: "light",  // Options: light, dark, auto
+          height: "44px",
+        },
+      },
+    });
+
+    // Check if the Payment Request is available (Apple Pay, Google Pay, etc.)
+    paymentRequest.canMakePayment().then(function(result) {
+      if (result) {
+        prButton.mount("#payment-request-button");
+      } else {
+        document.getElementById("payment-request-button").style.display = "none";
+      }
+    });
+
+    // Handle Payment Request Button events
+    paymentRequest.on("paymentmethod", async (ev) => {
+      // Call your backend to process payment using the Payment Method ID from the event
+      const response = await fetch("https://api.webstay.se/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          googleID: "115156821048844521223",
+          planName: "Premium",
+          addSecurity: true,
+          paymentMethodId: ev.paymentMethod.id,
+        }),
+      });
+      const data = await response.json();
+      if (data.error) {
+        ev.complete("fail");
+        document.getElementById("payment-message").textContent = "❌ Payment failed!";
+      } else {
+        ev.complete("success");
+        document.getElementById("payment-message").textContent = "✅ Payment successful!";
+      }
+    });
+
+    // Handle card form submission
     document.getElementById("payment-form").addEventListener("submit", async (event) => {
       event.preventDefault();
-      const { paymentMethod, error } = await stripe.createPaymentMethod({ type: "card", card: cardElement });
-
+      const { paymentMethod, error } = await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+      });
       if (error) {
-        document.getElementById("payment-message").textContent = "❌ Fel vid betalning!";
+        document.getElementById("payment-message").textContent = "❌ Error: " + error.message;
         return;
       }
-
       const response = await fetch("http://localhost:3000/create-payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,16 +170,13 @@
           paymentMethodId: paymentMethod.id,
         }),
       });
-
       const data = await response.json();
       if (data.error) {
-        document.getElementById("payment-message").textContent = "❌ Betalning misslyckades!";
+        document.getElementById("payment-message").textContent = "❌ Payment failed!";
       } else {
-        document.getElementById("payment-message").textContent = "✅ Betalning genomförd!";
-        setTimeout(() => { document.getElementById("checkout-popup").style.display = "none"; }, 2000);
+        document.getElementById("payment-message").textContent = "✅ Payment successful!";
       }
     });
   </script>
-
 </body>
 </html>
