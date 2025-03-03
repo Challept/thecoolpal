@@ -102,15 +102,16 @@
         <p class="text-gray-200">Du är nu inloggad och kan använda Webstay!</p>
       </div>
       
-      <!-- Ett litet kort med dropdown och knapp för att välja plan -->
+      <!-- Kort med planval (visas endast om URL:en innehåller ?showpricingplans) -->
       <div id="pricingPlans" class="hidden mt-6">
         <div class="plan-card">
           <h2 class="text-xl font-bold text-white mb-2">Välj Abonnemangsplan</h2>
           <select id="planSelect" class="w-full p-2 rounded mb-4">
-            <option value="Start Plan">Start Plan - 1 dag gratis</option>
-            <option value="Premium Plan">Premium Plan - 3 dagar gratis</option>
-            <option value="Ultimate Plan">Ultimate Plan - 5 dagar gratis</option>
-            <option value="Exclusive Plan">Exclusive Plan - 7 dagar gratis</option>
+            <!-- Värdena matchar backend-planerna -->
+            <option value="Start">Start Plan - 1 dag gratis</option>
+            <option value="Premium">Premium Plan - 3 dagar gratis</option>
+            <option value="Ultimate">Ultimate Plan - 5 dagar gratis</option>
+            <option value="Exclusive">Exclusive Plan - 7 dagar gratis</option>
           </select>
           <button onclick="createPaymentLink(document.getElementById('planSelect').value)"
                   class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 rounded">
@@ -194,9 +195,14 @@
         // Dölj inloggningssektionen
         document.getElementById("step1").classList.add("hidden");
         
-        // Visa plankort (det enda kortet)
-        console.log("Visar plankort");
-        document.getElementById("pricingPlans").classList.remove("hidden");
+        // Visa antingen prismeny (om URL:en innehåller ?showpricingplans) eller en enkel inloggnad skärm
+        if (window.location.search.includes("showpricingplans")) {
+          console.log("Visar prismeny");
+          document.getElementById("pricingPlans").classList.remove("hidden");
+        } else {
+          console.log("Visar inloggad skärm");
+          document.getElementById("doneScreen").classList.remove("hidden");
+        }
       } catch (err) {
         console.error("❌ Serverfel vid inloggning:", err);
         showAlert("❌ Ett fel uppstod vid inloggning. Försök igen.", "error");
