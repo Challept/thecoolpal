@@ -169,6 +169,7 @@
 
     // Lyssna på meddelanden från popup (exempelvis från din success-sida)
     window.addEventListener("message", function(event) {
+      // För säkerhets skull kan du kontrollera event.origin här
       if (event.data === "payment_success") {
         showAlert("✅ Betalning genomförd!", "success");
         document.getElementById("loadingOverlay").style.display = "none";
@@ -207,7 +208,7 @@
           showAlert("Popup blockerad, vänligen tillåt popup-fönster.", "error");
           return;
         }
-        // Visa overlay först efter popup-fönstret öppnats
+        // Visa overlay efter popup-fönstret har öppnats
         document.getElementById("loadingOverlay").style.display = "flex";
         
         // Kontrollera om popup-fönstret stängs utan att betalningen slutförts
@@ -243,7 +244,7 @@
         console.log("Token avkodad och userID sparad i sessionStorage:", userId);
         showAlert("✅ Inloggning lyckades!", "success");
         
-        // Verifiera token mot backend
+        // Verifiera token mot backend (se till att endpointen matchar din backend-konfiguration)
         const res = await fetch("https://api.webstay.se/google-auth", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
