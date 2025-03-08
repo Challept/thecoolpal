@@ -7,11 +7,20 @@
 <body>
   <h1>Live User Count</h1>
   <p>Active Users: <span id="userCount">0</span></p>
-  
+
+  <!-- 1. Load the Socket.IO client script from your API server -->
+  <script src="https://api.webstay.se/socket.io/socket.io.js"></script>
+
   <script>
-    // The API endpoint URL (adjust protocol if needed)
+    // 2. Connect to your Socket.IO server at api.webstay.se
+    //    This ensures activeUserCount is incremented on the server.
+    const socket = io("https://api.webstay.se", {
+      transports: ["websocket"]  // ensures a direct websocket connection
+    });
+
+    // 3. Also set up a simple fetch to get the current user count every second
     const apiEndpoint = 'https://api.webstay.se/api/liveUsers';
-    
+
     function updateUserCount() {
       fetch(apiEndpoint)
         .then(response => response.json())
@@ -22,10 +31,15 @@
           console.error('Error fetching user count:', error);
         });
     }
-    
-    // Update the count every second
+
+    // 4. Listen for real-time updates from the server
+    socket.on("userCountUpdate", (count) => {
+      document.getElementById('userCount').textContent = count;
+    });
+
+    // 5. Poll the endpoint every second (optional backup to ensure the count is correct)
     setInterval(updateUserCount, 1000);
-    updateUserCount(); // initial call
+    updateUserCount(); // Initial fetch on page load
   </script>
 </body>
 </html>
