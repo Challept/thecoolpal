@@ -42,38 +42,38 @@
             margin-bottom: 20px;
         }
 
-.test-user-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 2000;
-    display: inline-block;
-    background: linear-gradient(90deg, #00a2ff, #00ff88);
-    border-radius: 6px;
-    box-shadow: 0 4px 10px rgba(0, 255, 136, 0.4), 0 2px 5px rgba(0, 162, 255, 0.4);
-    transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
-}
+        .test-user-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+            display: inline-block;
+            background: linear-gradient(90deg, #00a2ff, #00ff88);
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0, 255, 136, 0.4), 0 2px 5px rgba(0, 162, 255, 0.4);
+            transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+        }
 
-.test-user-button a {
-    display: block;
-    text-decoration: none;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 12px 24px;
-    border-radius: 6px;
-    text-align: center;
-}
+        .test-user-button a {
+            display: block;
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-align: center;
+        }
 
-.test-user-button:hover {
-    transform: scale(1.1);
-    background: linear-gradient(90deg, #007ACC, #00ff66);
-    box-shadow: 0 6px 15px rgba(0, 255, 136, 0.5), 0 3px 8px rgba(0, 162, 255, 0.5);
-}
+        .test-user-button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(90deg, #007ACC, #00ff66);
+            box-shadow: 0 6px 15px rgba(0, 255, 136, 0.5), 0 3px 8px rgba(0, 162, 255, 0.5);
+        }
 
-.test-user-button a:hover {
-    color: #ffffff;
-}
+        .test-user-button a:hover {
+            color: #ffffff;
+        }
 
         .main-content {
             position: fixed;
@@ -105,6 +105,17 @@
             z-index: 2;
             text-align: center;
             padding: 20px;
+        }
+
+        /* NEW: Live counter style */
+        .live-counter {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
 
         .logo {
@@ -189,10 +200,6 @@
     </style>
 </head>
 <body>
-<div class="test-user-button">
-   <a href="https://test.webstay.se">Bli en testanvändare!</a>
-</div>
-
     <div class="loading-screen">
         <div class="loading-content">
             <video class="loading-video" autoplay muted playsinline>
@@ -204,6 +211,10 @@
     <div class="main-content">
         <div class="background"></div>
         <main class="content">
+            <!-- NEW: Live counter above the logo -->
+            <div class="live-counter">
+                Live Visitors: <span id="liveVisitorCount">0</span>
+            </div>
             <h1 class="logo">WEBSTAY</h1>
             <p class="tagline">FRAMTIDENS WEBBYGGARE</p>
             <div class="timer-container">
@@ -246,7 +257,7 @@
                 startCountdown();
             }
         });
-        // After 4 seconds, start transition sequence
+        // After 1.5 seconds, start transition sequence
         setTimeout(() => {
             tl.to(loadingScreen, {
                 opacity: 0,
@@ -279,8 +290,7 @@
     });
     
     function startCountdown() {
-    const countdownDate = new Date('December 31, 2025 23:59:59').getTime();
-
+        const countdownDate = new Date('December 31, 2025 23:59:59').getTime();
         
         function updateCountdown() {
             const now = new Date().getTime();
@@ -301,13 +311,7 @@
             
             ['days', 'hours', 'minutes', 'seconds'].forEach(unit => {
                 const element = document.getElementById(unit);
-                const newValue = {
-                    days: days,
-                    hours: hours,
-                    minutes: minutes,
-                    seconds: seconds
-                }[unit];
-                
+                const newValue = { days, hours, minutes, seconds }[unit];
                 element.textContent = String(newValue).padStart(2, '0');
             });
         }
@@ -315,6 +319,20 @@
         updateCountdown();
         const timer = setInterval(updateCountdown, 1000);
     }
+    
+    // NEW: Live Visitor Counter - Poll the API every second
+    function updateLiveVisitorCount() {
+        fetch('https://api.webstay.se/api/activeUsers')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('liveVisitorCount').textContent = data.activeUsers;
+            })
+            .catch(error => {
+                console.error('Error fetching live visitor count:', error);
+            });
+    }
+    updateLiveVisitorCount();
+    setInterval(updateLiveVisitorCount, 1000);
 </script>
 </body>
 </html>
