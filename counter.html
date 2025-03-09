@@ -2,22 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Live User Counter on home.webstay.se</title>
+  <title>Live User Counter</title>
 </head>
 <body>
   <h1>Live User Count</h1>
   <p>Active Users: <span id="userCount">0</span></p>
 
-  <!-- Load the Socket.IO client from a CDN -->
+  <!-- Load Socket.IO client from CDN -->
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
   <script>
-    // Connect to the Socket.IO server on api.webstay.se
-    const socket = io("https://api.webstay.se", {
-      transports: ["websocket"]
-    });
+    // Connect to the Socket.IO server on your API server
+    const socket = io("https://api.webstay.se", { transports: ["websocket"] });
     
-    // Listen for real-time user count updates
-    socket.on("userCountUpdate", (count) => {
+    // Listen for real-time updates and display them
+    socket.on("userCountUpdate", function(count) {
       document.getElementById("userCount").textContent = count;
     });
   </script>
