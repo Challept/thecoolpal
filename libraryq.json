@@ -1,242 +1,40 @@
 {
   "quizzes": [
     {
-      "id": "la_comida",
-      "title": "La Comida – Matordlista",
-      "language": "Svenska/Spanska",
-      "vocabulary": [
-        { "question": "äpple", "answer": ["manzana"] },
-        { "question": "banan", "answer": ["plátano"] },
-        { "question": "apelsin", "answer": ["naranja"] },
-        { "question": "päron", "answer": ["pera"] },
-        { "question": "citron", "answer": ["limón"] },
-        { "question": "vattenmelon", "answer": ["sandía"] },
-        { "question": "melon", "answer": ["melón"] },
-        { "question": "vindruva", "answer": ["uva"] },
-        { "question": "persika", "answer": ["melocotón"] },
-        { "question": "tomat", "answer": ["tomate"] },
-        { "question": "gurka", "answer": ["pepino"] },
-        { "question": "potatis", "answer": ["patata"] },
-        { "question": "morot", "answer": ["zanahoria"] },
-        { "question": "lök", "answer": ["cebolla"] },
-        { "question": "vitlök", "answer": ["ajo"] },
-        { "question": "isbergssallad", "answer": ["lechuga"] },
-        { "question": "paprika", "answer": ["pimiento"] },
-        { "question": "kaka", "answer": ["galleta"] },
-        { "question": "flingor", "answer": ["cereales"] },
-        { "question": "marmelad", "answer": ["mermelada"] },
-        { "question": "bröd", "answer": ["pan"] },
-        { "question": "fisk", "answer": ["pescado"] },
-        { "question": "korv", "answer": ["salchicha"] },
-        { "question": "bakelse", "answer": ["pastel"] },
-        { "question": "smör", "answer": ["mantequilla"] },
-        { "question": "ost", "answer": ["queso"] },
-        { "question": "yoghurt", "answer": ["yogur"] },
-        { "question": "kött", "answer": ["carne"] },
-        { "question": "skinka", "answer": ["jamón"] },
-        { "question": "kyckling", "answer": ["pollo"] },
-        { "question": "ris", "answer": ["arroz"] },
-        { "question": "ägg", "answer": ["huevo"] },
-        { "question": "salt", "answer": ["sal"] },
-        { "question": "socker", "answer": ["azúcar"] },
-        { "question": "läsk", "answer": ["refresco"] },
-        { "question": "mjölk", "answer": ["leche"] },
-        { "question": "vatten", "answer": ["agua"] },
-        { "question": "juice", "answer": ["zumo", "jugo"] },
-        { "question": "smörgås", "answer": ["bocadillo"] },
-        { "question": "påse", "answer": ["bolsa"] },
-        { "question": "dagstidningar", "answer": ["periódicos"] },
-        { "question": "böcker", "answer": ["libros"] },
-        { "question": "tuggummi", "answer": ["chicles"] },
-        { "question": "tidningar", "answer": ["revistas"] },
-        { "question": "kypare", "answer": ["camarero"] },
-        { "question": "något mer", "answer": ["algo más"] },
-        { "question": "jag är hungrig", "answer": ["tengo hambre"] },
-        { "question": "jag är törstig", "answer": ["tengo sed"] },
-        { "question": "sallad", "answer": ["ensalada"] },
-        { "question": "räkor", "answer": ["gambas"] },
-        { "question": "efterrätt", "answer": ["postre"] },
-        { "question": "notan", "answer": ["la cuenta"] },
-        { "question": "blåbär", "answer": ["arándanos"] },
-        { "question": "jordgubbar", "answer": ["fresas"] },
-        { "question": "jag vill ha", "answer": ["quiero"] },
-        { "question": "förrätt", "answer": ["entrada"] },
-        { "question": "huvudrätt", "answer": ["plato principal"] },
-        { "question": "ta med", "answer": ["para llevar"] },
-        { "question": "kunna", "answer": ["poder"] },
-        { "question": "sova", "answer": ["dormir"] },
-        { "question": "det finns", "answer": ["hay"] },
-        { "question": "önska", "answer": ["desear"] },
-        { "question": "beställa", "answer": ["pedir"] },
-        { "question": "sätta, ställa, lägga", "answer": ["poner"] },
-        { "question": "bord", "answer": ["mesa"] }
-      ]
-    },
-    {
-      "id": "naringslara",
-      "title": "Näringslära – Näringsämnen och Hälsa",
+      "id": "kemi_grunder",
+      "title": "Kemi – Syror, Baser och Salter",
       "language": "Svenska",
       "vocabulary": [
-        {
-          "question": "Vilka näringsämnen finns?",
-          "answer": ["Kolhydrater, fett, protein, mineralämnen (kalcium, järn, natrium), vitaminer (A, B, C, D) och vatten"]
-        },
-        {
-          "question": "Vilka näringsämnen ger energi?",
-          "answer": ["Kolhydrater, fett, proteiner"]
-        },
-        {
-          "question": "Varför behöver kroppen energi?",
-          "answer": ["Energi får vi genom att äta mat. Energi behövs så att kroppen kan fungera. När vi äter bryts maten ner i vår kropp och de energigivande ämnena sprids ut för att ge vår kropp just energi så att vi kan tänka, andas, röra oss, hålla värmen och så vidare."]
-        },
-        {
-          "question": "Vad beror energiförbrukningen på?",
-          "answer": ["Ålder - Kön - Vikt - Val av aktivitet - Temperatur i omgivningen - Genetiska faktorer"]
-        },
-        {
-          "question": "Vilken/vilka enheter mäts energi i?",
-          "answer": ["Joule och kalori (kJ och kcal)"]
-        },
-        {
-          "question": "Mat, hälsa och olika dieter debatteras ofta i media. Varför bör vi följa dessa debatter med viss källkritik?",
-          "answer": ["Dieter marknadsförs ofta som lösningen på många olika problem. Olika dieter kan vara olika bra för hälsan på lång sikt."]
-        },
-        {
-          "question": "Vilken funktion har kolhydrater i kroppen?",
-          "answer": ["Kolhydrater används i ämnesomsättningen - Ger energi - Lagras i muskler och lever"]
-        },
-        {
-          "question": "Nämn några livsmedel rika på kolhydrater",
-          "answer": ["Potatis - Pasta - Ris - Bönor - Bröd - Frukt och bär"]
-        },
-        {
-          "question": "Varför behöver vi fett?",
-          "answer": ["Fett behövs för att ta upp fettlösliga vitaminer - Skydda organen - Reparera och bygga celler - Skydda mot kyla - Fungera som stötdämpare - Hjälpa hormonerna att fungera"]
-        },
-        {
-          "question": "Vilken form är oftast mättat fett?",
-          "answer": ["Hårt eller fast"]
-        },
-        {
-          "question": "Vilka fördelar/nackdelar finns med mättat fett?",
-          "answer": ["Mättade fettsyror täpper till i blodkärlen"]
-        },
-        {
-          "question": "Ge exempel på livsmedel som innehåller mättat fett",
-          "answer": ["Smör - Ister - Kokosfett - Palmolja"]
-        },
-        {
-          "question": "I vilken form är oftast fleromättat fett?",
-          "answer": ["Mjukt eller flytande"]
-        },
-        {
-          "question": "Vilka fördelar/nackdelar finns med fleromättat fett?",
-          "answer": ["Fleromättade fetter sänker den onda kolesterolhalten - Höjer den goda kolesterolen i blodet - Motverkar hjärt- och kärlsjukdomar"]
-        },
-        {
-          "question": "Ge exempel på livsmedel som innehåller fleromättat fett",
-          "answer": ["Rapsolja - Fet fisk - Valnötter - Linfrön - Linfröolja"]
-        },
-        {
-          "question": "Vilken funktion har proteiner i kroppen?",
-          "answer": ["Proteiner behövs för att bygga muskler - Hålla kroppstemperaturen"]
-        },
-        {
-          "question": "Nämn några livsmedel rika på protein",
-          "answer": ["Kött - Ägg - Fisk - Ost - Bönor - Linser - Nötter"]
-        },
-        {
-          "question": "Ge exempel på tre mineralämnen",
-          "answer": ["Kalcium - Järn - Natrium"]
-        },
-        {
-          "question": "Vilken funktion har kalcium i kroppen?",
-          "answer": ["Viktigt för skelettet - Nervfunktionen - Hjälper blodet att koagulera"]
-        },
-        {
-          "question": "Nämn några livsmedel rika på kalcium",
-          "answer": ["Mjölk - Ost - Spannmål - Sesamfrö - Solrosfrö"]
-        },
-        {
-          "question": "Vad kan brist på kalcium leda till?",
-          "answer": ["Benskörhet - Rakit"]
-        },
-        {
-          "question": "Vilken funktion har järn i kroppen?",
-          "answer": ["Bildar hemoglobin - Transporterar syre"]
-        },
-        {
-          "question": "Vilket annat näringsämne behövs för att bättre kunna tillgodogöra sig järnet i maten?",
-          "answer": ["Vitamin C"]
-        },
-        {
-          "question": "Nämn några livsmedel rika på järn",
-          "answer": ["Inälvsmat - Kött"]
-        },
-        {
-          "question": "Vad kan brist på järn leda till?",
-          "answer": ["Fårre röda blodkroppar - Syrebrist"]
-        },
-        {
-          "question": "Vilken funktion har natrium i kroppen?",
-          "answer": ["Reglerar salt- och vätskebalans - Muskel- och nervfunktion"]
-        },
-        {
-          "question": "Nämn några livsmedel rika på natrium",
-          "answer": ["Bordssalt - Halvfabrikat"]
-        },
-        {
-          "question": "Vad kan för mycket natrium leda till?",
-          "answer": ["Högt blodtryck"]
-        },
-        {
-          "question": "Vilken funktion har vitaminer i kroppen?",
-          "answer": ["Bra för tillväxt och utveckling"]
-        },
-        {
-          "question": "Vad är A-vitaminer bra för?",
-          "answer": ["Tillväxt - Slemhinnor - Hälsa - Syn"]
-        },
-        {
-          "question": "Nämn några livsmedel rika på A-vitamin",
-          "answer": ["Ägg - Fet fisk - Grönsaker"]
-        },
-        {
-          "question": "Vad kan brist på A-vitamin leda till?",
-          "answer": ["Nattblindhet"]
-        },
-        {
-          "question": "Vad är B-vitaminer bra för?",
-          "answer": ["Energiupptag - Hår - Hud"]
-        },
-        {
-          "question": "Vad är C-vitaminer bra för?",
-          "answer": ["Sårläkning - Skydd mot oxidativ skada"]
-        },
-        {
-          "question": "Vad är D-vitaminer bra för?",
-          "answer": ["Omsättning av fosfat och kalcium"]
-        },
-        {
-          "question": "Vad har vatten för huvuduppgift i vår kropp?",
-          "answer": ["Transportera näringsämnen"]
-        },
-        {
-          "question": "Hur kan du hålla en jämn blodsockerkurva?",
-          "answer": ["Regelbundna måltider - Byta snabba kolhydrater mot långsamma"]
-        },
-        {
-          "question": "Hur kan du stärka ditt skelett?",
-          "answer": ["Röra på dig - Äta kalcium och D-vitamin"]
-        },
-        {
-          "question": "Hur kan du förändra ett recept för att minska vikten?",
-          "answer": ["Minska energiintaget - Mer fibrer"]
-        },
-        {
-          "question": "Hur kan du förändra ett recept för att sänka kolesterol?",
-          "answer": ["Minska mättat fett - Äta mer fisk och nötter"]
-        }
+        { "question": "Vad kan du använda BTB till?", "answer": ["För att ta reda på om en lösning är sur, neutral eller basisk"] },
+        { "question": "Vilken jon finns det mycket av i sura lösningar?", "answer": ["Vätejoner"] },
+        { "question": "Vilken syra finns i magsäcken?", "answer": ["Saltsyra"] },
+        { "question": "Vilken bas används vid tvåltillverkning?", "answer": ["Natriumhydroxid"] },
+        { "question": "Vad kallas de små partiklar som bygger upp salter?", "answer": ["Joner"] },
+        { "question": "Vilken grupp av ämnen bildar positiva joner?", "answer": ["Metaller"] },
+        { "question": "Salter består av laddade partiklar, men en saltkristall är ändå elektriskt neutral. Varför?", "answer": ["Det finns lika många negativa laddningar som positiva laddningar i en saltkristall"] },
+        { "question": "Vad heter vanligt koksalt på kemispråk?", "answer": ["Natriumklorid"] },
+        { "question": "Vilken jon finns i alla syror?", "answer": ["Vätejon, H+"] },
+        { "question": "Vad händer med en oädel metall som magnesium när den kommer i kontakt med syra?", "answer": ["Det bildas vätgas och metallen löses upp."] },
+        { "question": "Varför tillsätts kalk i försurade sjöar?", "answer": ["För att höja pH-värdet och återställa balansen."] },
+        { "question": "Vilket ämne kan ge rosa färg i en basisk lösning?", "answer": ["Fenolftalein"] },
+        { "question": "Hur kan man identifiera ammoniak i ett laboratorium utan etiketter?", "answer": ["Genom att använda luktsinnet."] },
+        { "question": "Vilken färg har fenolftalein i neutral lösning?", "answer": ["Färglös"] },
+        { "question": "Vilken är en av syrorna i experimentet som neutraliserar basen?", "answer": ["Saltsyra"] },
+        { "question": "Vilken jon finns i alla basiska lösningar?", "answer": ["Hydroxidjon, OH-"] },
+        { "question": "Vilken färg får BTB i en basisk lösning?", "answer": ["Blå"] },
+        { "question": "Vilket pH-värde har rent vatten?", "answer": ["7"] },
+        { "question": "Vilken metall är mest reaktiv med syror?", "answer": ["Magnesium"] },
+        { "question": "Vilken gas bildas vid reaktionen mellan en syra och en metall?", "answer": ["Vätgas"] },
+        { "question": "Vilken typ av bindning finns mellan atomerna i en vattenmolekyl?", "answer": ["Kovalent bindning"] },
+        { "question": "Vad är den kemiska formeln för vatten?", "answer": ["H2O"] },
+        { "question": "Vad är en syra enligt kemisk definition?", "answer": ["Ett ämne som avger vätejoner, H+"] },
+        { "question": "Vad är en bas enligt kemisk definition?", "answer": ["Ett ämne som tar upp vätejoner eller avger hydroxidjoner, OH-"] },
+        { "question": "Vad betyder det att en syra är stark?", "answer": ["Att den avger alla sina vätejoner i vattenlösning"] },
+        { "question": "Vilka tre starka syror är vanliga i kemi?", "answer": ["Saltsyra (HCl), Svavelsyra (H2SO4), Salpetersyra (HNO3)"] },
+        { "question": "Vilken kemisk förening bildas när en syra och en bas neutraliseras?", "answer": ["Ett salt och vatten"] },
+        { "question": "Vilken pH-skala används för att mäta surhet och basiska egenskaper?", "answer": ["pH-skalan från 0 till 14"] },
+        { "question": "Vad händer om pH är under 7?", "answer": ["Lösningen är sur"] },
+        { "question": "Vad händer om pH är över 7?", "answer": ["Lösningen är basisk"] }
       ]
     }
   ]
