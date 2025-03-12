@@ -48,7 +48,7 @@ päron - pera
 citron - limón"></textarea>
       <div class="flex flex-wrap gap-4">
         <button id="create-quiz-btn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skapa Läxliste</button>
-        <button id="load-presaved-btn" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Ladda La comida</button>
+        <button id="load-presaved-btn" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Ladda SBS</button>
       </div>
       <button id="load-library-btn" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded mt-4">
         Ladda från bibliotek
@@ -215,6 +215,41 @@ citron - limón"></textarea>
       document.getElementById('setup-container').classList.add('hidden');
       document.getElementById('mode-container').classList.remove('hidden');
       document.getElementById('qa-display').classList.remove('hidden');
+    });
+
+    // Ladda förinställd "Kemi – Syror, Baser och Salter"
+    document.getElementById('load-presaved-btn').addEventListener('click', function() {
+      const preSaved = `Vad kan du använda BTB till? – För att ta reda på om en lösning är sur, neutral eller basisk
+Vilken jon finns det mycket av i sura lösningar? – Vätejoner
+Vilken syra finns i magsäcken? – Saltsyra
+Vilken bas används vid tvåltillverkning? – Natriumhydroxid
+Vad kallas de små partiklar som bygger upp salter? – Joner
+Vilken grupp av ämnen bildar positiva joner? – Metaller
+Salter består av laddade partiklar, men en saltkristall är ändå elektriskt neutral. Varför? – Det finns lika många negativa laddningar som positiva laddningar i en saltkristall
+Vad heter vanligt koksalt på kemispråk? – Natriumklorid
+Vilken jon finns i alla syror? – Vätejon, H+
+Vad händer med en oädel metall som magnesium när den kommer i kontakt med syra? – Det bildas vätgas och metallen löses upp.
+Varför tillsätts kalk i försurade sjöar? – För att höja pH-värdet och återställa balansen.
+Vilket ämne kan ge rosa färg i en basisk lösning? – Fenolftalein
+Hur kan man identifiera ammoniak i ett laboratorium utan etiketter? – Genom att använda luktsinnet.
+Vilken färg har fenolftalein i neutral lösning? – Färglös
+Vilken är en av syrorna i experimentet som neutraliserar basen? – Saltsyra
+Vilken jon finns i alla basiska lösningar? – Hydroxidjon, OH-
+Vilken färg får BTB i en basisk lösning? – Blå
+Vilket pH-värde har rent vatten? – 7
+Vilken metall är mest reaktiv med syror? – Magnesium
+Vilken gas bildas vid reaktionen mellan en syra och en metall? – Vätgas
+Vilken typ av bindning finns mellan atomerna i en vattenmolekyl? – Kovalent bindning
+Vilken syra finns i citroner? – Citronsyra
+Vad kallas en lösning med pH över 7? – Basisk lösning
+Vilken jon är ansvarig för basers egenskaper? – Hydroxidjon, OH-
+Vad händer när en syra reagerar med en bas? – Det bildas ett salt och vatten.
+Vilken syra används ofta i bilbatterier? – Svavelsyra
+Vad kallas en syra som bara delvis avger sina vätejoner? – Svag syra
+Vad kallas den process där en syra och en bas reagerar och bildar ett neutralt pH? – Neutralisation
+Vilken jon ger vatten dess sura egenskaper? – Vätejon, H+
+Vilken syra finns i läskedrycker som cola? – Fosforsyra`;
+      document.getElementById('vocab-input').value = preSaved;
     });
 
     // Ladda från bibliotek (libraryq.json)
