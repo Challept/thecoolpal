@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Skapa Ditt Språkquiz</title>
+  <title>Flashcards - Skapa Ditt Språkquiz</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* CSS för flip-kortet */
@@ -35,9 +35,9 @@
 </head>
 <body class="min-h-screen bg-gradient-to-br from-blue-50 to-gray-100 antialiased flex items-center justify-center">
   <div class="max-w-3xl w-full p-6 space-y-6">
-    <h1 class="text-4xl font-extrabold text-center text-gray-800">Skapa Ditt Eget Språkquiz</h1>
+    <h1 class="text-4xl font-extrabold text-center text-gray-800">Skapa Ditt Flashcards‑Quiz</h1>
     
-    <!-- Setup: Klistra in din vokabulärlista, ladda förinställd, eller välj från biblioteket -->
+    <!-- Setup: Klistra in din vokabulärlista -->
     <div id="setup-container" class="bg-white p-6 rounded shadow">
       <h2 class="text-2xl font-semibold mb-4">Klistra in din vokabulärlista</h2>
       <textarea id="vocab-input" class="w-full border border-gray-300 rounded p-2 h-64 mb-4" placeholder="Exempel:
@@ -47,58 +47,12 @@ apelsin - naranja
 päron - pera
 citron - limón"></textarea>
       <div class="flex flex-wrap gap-4">
-        <button id="create-quiz-btn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skapa Läxliste</button>
+        <button id="create-flashcards-btn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skapa Flashcards</button>
         <button id="load-presaved-btn" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">Ladda SBS</button>
       </div>
-      <button id="load-library-btn" class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded mt-4">
-        Ladda från bibliotek
-      </button>
-      
-      <!-- Quizbibliotek-container (dold tills användaren klickar "Ladda från bibliotek") -->
-      <div id="library-container" class="bg-white p-6 rounded shadow mt-4 hidden">
-        <h2 class="text-2xl font-semibold mb-4">Quizbibliotek</h2>
-        <ul id="library-list" class="space-y-2"></ul>
-      </div>
     </div>
     
-    <!-- Meny för lägen -->
-    <div id="mode-container" class="bg-white p-6 rounded shadow hidden">
-      <h2 class="text-2xl font-semibold mb-4">Välj läge</h2>
-      <div class="flex flex-col space-y-4">
-        <button id="mode-test-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Testa dig</button>
-        <button id="mode-flip-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Lär med kort (flip)</button>
-        <button id="mode-learn-btn" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded">Lär med svar</button>
-      </div>
-      <button id="mode-back-btn" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
-    </div>
-    
-    <!-- Frågor & Svar-lista (visas i menyn) -->
-    <div id="qa-display" class="bg-white p-6 rounded shadow mt-4 hidden">
-      <h2 class="text-2xl font-semibold mb-4">Alla frågor och svar</h2>
-      <ul id="qa-list" class="list-disc pl-5 space-y-1 text-gray-700"></ul>
-    </div>
-    
-    <!-- Testläge: "Testa dig" -->
-    <div id="quiz-container" class="bg-white p-6 rounded shadow hidden">
-      <div id="progress" class="mb-4 text-sm"></div>
-      <div id="question" class="text-xl font-semibold mb-4"></div>
-      <input type="text" id="answer" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här" />
-      <button id="submit-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skicka</button>
-      <div id="feedback" class="mt-4 text-lg"></div>
-      <button id="quiz-back-btn" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
-    </div>
-    
-    <!-- Testläge: Resultat för "Testa dig" -->
-    <div id="result-container" class="hidden mt-6 bg-white p-6 rounded shadow text-center">
-      <h2 class="text-2xl font-bold mb-4">Resultat</h2>
-      <p id="result-text" class="text-xl mb-4"></p>
-      <div class="flex justify-center space-x-4">
-        <button id="restart-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Starta om testet</button>
-        <button id="result-back-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
-      </div>
-    </div>
-    
-    <!-- Lär med kort (Flashcards) med rätt/fel-knappar -->
+    <!-- Flashcards-läge -->
     <div id="flip-container" class="bg-white p-6 rounded shadow hidden">
       <div id="flip-progress" class="mb-4 text-sm"></div>
       <div class="flip-card cursor-pointer bg-gray-100 rounded p-6 mb-4" id="flip-card" style="height: 200px;">
@@ -107,6 +61,7 @@ citron - limón"></textarea>
           <div class="flip-card-back flex items-center justify-center h-full text-2xl font-bold" id="flip-back"></div>
         </div>
       </div>
+      <input type="text" id="flip-user-answer" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här" />
       <div class="flex justify-between">
         <button id="flip-correct-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Rätt</button>
         <button id="flip-incorrect-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Fel</button>
@@ -114,51 +69,51 @@ citron - limón"></textarea>
       </div>
     </div>
     
-    <!-- Flashcard-resultat -->
-    <div id="flip-result-container" class="hidden mt-6 bg-white p-6 rounded shadow text-center">
+    <!-- Resultatsida för flashcards -->
+    <div id="flip-result-container" class="hidden mt-6 bg-white p-6 rounded shadow">
       <h2 class="text-2xl font-bold mb-4">Resultat för Flashcards</h2>
       <p id="flip-result-text" class="text-xl mb-4"></p>
-      <div class="flex justify-center space-x-4">
+      <div id="flip-result-details" class="space-y-4"></div>
+      <div class="mt-4">
+        <button id="flip-train-selected-btn" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Träna markerade</button>
+      </div>
+      <div class="flex justify-center space-x-4 mt-4">
         <button id="flip-restart-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Starta om flashcards</button>
         <button id="flip-result-back-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
       </div>
     </div>
     
-    <!-- Lär med svar: Alltid synligt svar -->
-    <div id="learn-answer-container" class="bg-white p-6 rounded shadow hidden">
-      <div id="learn-progress" class="mb-4 text-sm"></div>
-      <div id="learn-question" class="text-xl font-semibold mb-4"></div>
-      <div id="learn-correct-answer" class="mb-4 text-lg text-gray-700"></div>
-      <input type="text" id="learn-input" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här" />
-      <button id="learn-submit-btn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">Skicka</button>
-      <div id="learn-feedback" class="mt-4 text-lg"></div>
-      <button id="learn-back-btn" class="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka</button>
+    <!-- Flashcards-träningsläge (för markerade eller enskilda) -->
+    <div id="flip-train-container" class="bg-white p-6 rounded shadow hidden">
+      <div id="flip-train-progress" class="mb-4 text-sm"></div>
+      <div class="flip-card cursor-pointer bg-gray-100 rounded p-6 mb-4" id="flip-train-card" style="height: 200px;">
+        <div class="flip-card-inner h-full" id="flip-train-card-inner">
+          <div class="flip-card-front flex items-center justify-center h-full text-2xl font-bold" id="flip-train-front"></div>
+          <div class="flip-card-back flex items-center justify-center h-full text-2xl font-bold" id="flip-train-back"></div>
+        </div>
+      </div>
+      <input type="text" id="flip-train-user-answer" class="w-full border border-gray-300 rounded p-2 mb-4" placeholder="Skriv ditt svar här" />
+      <div class="flex justify-between">
+        <button id="flip-train-correct-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Rätt</button>
+        <button id="flip-train-incorrect-btn" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">Fel</button>
+        <button id="flip-train-back-btn" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">Tillbaka till resultat</button>
+      </div>
     </div>
   </div>
   
   <script>
     // Globala variabler
     let vocabularyData = [];
-    let libraryQuizzes = []; // lagrar quiz från bibliotek
-
-    // Tillstånd för "Testa dig"
-    let quizState = {
-      vocabulary: [],
-      order: [],
-      currentIndex: 0,
-      score: 0
-    };
-
-    // Tillstånd för "Lär med svar"
-    let learnTestState = {
-      vocabulary: [],
-      order: [],
-      currentIndex: 0,
-      score: 0
-    };
-
-    // Tillstånd för flashcard-läget
+    // flipState hanterar huvud-flashcards-sessionen
     let flipState = {
+      order: [],
+      currentIndex: 0,
+      score: 0,
+      results: [] // Varje objekt: {index, question, correctAnswer, userAnswer, correct}
+    };
+    // flipTrainState hanterar träningsläget (markerade/enstaka kort)
+    let flipTrainState = {
+      vocabulary: [],
       order: [],
       currentIndex: 0,
       score: 0
@@ -190,355 +145,182 @@ citron - limón"></textarea>
       return vocab;
     }
 
-    // Uppdatera visningen av alla frågor och svar i menyn
-    function updateQuizDisplay() {
-      const qaList = document.getElementById('qa-list');
-      qaList.innerHTML = "";
-      vocabularyData.forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = `<span class="font-semibold text-gray-800">${item.question}</span> – <span class="text-gray-600">${item.answer.join(" / ")}</span>`;
-        qaList.appendChild(li);
-      });
-    }
-
-    // Gå tillbaka till meny (visar mode-container och QA-list)
-    function backToModeSelection() {
-      document.getElementById('setup-container').classList.remove('hidden');
-      document.getElementById('quiz-container').classList.add('hidden');
-      document.getElementById('result-container').classList.add('hidden');
-      document.getElementById('flip-container').classList.add('hidden');
-      document.getElementById('flip-result-container').classList.add('hidden');
-      document.getElementById('learn-answer-container').classList.add('hidden');
-      document.getElementById('mode-container').classList.remove('hidden');
-      document.getElementById('qa-display').classList.remove('hidden');
-    }
-
-    // --- Setup ---
-    // Skapa quiz från inmatad vokabulärlista
-    document.getElementById('create-quiz-btn').addEventListener('click', function() {
+    // Initiera flashcards-sessionen
+    function initFlashcards() {
       const text = document.getElementById('vocab-input').value;
       const vocab = parseVocabulary(text);
       if (vocab.length === 0) {
-        alert("Var god och ange en giltig vokabulärlista.");
+        alert("Var god ange en giltig vokabulärlista.");
         return;
       }
       vocabularyData = vocab;
-      updateQuizDisplay();
-      // Visa meny och QA-list; dölj setup
-      document.getElementById('setup-container').classList.add('hidden');
-      document.getElementById('mode-container').classList.remove('hidden');
-      document.getElementById('qa-display').classList.remove('hidden');
-    });
-
-    // Ladda förinställd "Kemi – Syror, Baser och Salter"
-    document.getElementById('load-presaved-btn').addEventListener('click', function() {
-      const preSaved = `Vad kan du använda BTB till? – För att ta reda på om en lösning är sur, neutral eller basisk
-Vilken jon finns det mycket av i sura lösningar? – Vätejoner
-Vilken syra finns i magsäcken? – Saltsyra
-Vilken bas används vid tvåltillverkning? – Natriumhydroxid
-Vad kallas de små partiklar som bygger upp salter? – Joner
-Vilken grupp av ämnen bildar positiva joner? – Metaller
-Salter består av laddade partiklar, men en saltkristall är ändå elektriskt neutral. Varför? – Det finns lika många negativa laddningar som positiva laddningar i en saltkristall
-Vad heter vanligt koksalt på kemispråk? – Natriumklorid
-Vilken jon finns i alla syror? – Vätejon, H+
-Vad händer med en oädel metall som magnesium när den kommer i kontakt med syra? – Det bildas vätgas och metallen löses upp.
-Varför tillsätts kalk i försurade sjöar? – För att höja pH-värdet och återställa balansen.
-Vilket ämne kan ge rosa färg i en basisk lösning? – Fenolftalein
-Hur kan man identifiera ammoniak i ett laboratorium utan etiketter? – Genom att använda luktsinnet.
-Vilken färg har fenolftalein i neutral lösning? – Färglös
-Vilken är en av syrorna i experimentet som neutraliserar basen? – Saltsyra
-Vilken jon finns i alla basiska lösningar? – Hydroxidjon, OH-
-Vilken färg får BTB i en basisk lösning? – Blå
-Vilket pH-värde har rent vatten? – 7
-Vilken metall är mest reaktiv med syror? – Magnesium
-Vilken gas bildas vid reaktionen mellan en syra och en metall? – Vätgas
-Vilken typ av bindning finns mellan atomerna i en vattenmolekyl? – Kovalent bindning
-Vilken syra finns i citroner? – Citronsyra
-Vad kallas en lösning med pH över 7? – Basisk lösning
-Vilken jon är ansvarig för basers egenskaper? – Hydroxidjon, OH-
-Vad händer när en syra reagerar med en bas? – Det bildas ett salt och vatten.
-Vilken syra används ofta i bilbatterier? – Svavelsyra
-Vad kallas en syra som bara delvis avger sina vätejoner? – Svag syra
-Vad kallas den process där en syra och en bas reagerar och bildar ett neutralt pH? – Neutralisation
-Vilken jon ger vatten dess sura egenskaper? – Vätejon, H+
-Vilken syra finns i läskedrycker som cola? – Fosforsyra`;
-      document.getElementById('vocab-input').value = preSaved;
-    });
-
-    // Ladda från bibliotek (libraryq.json)
-    document.getElementById('load-library-btn').addEventListener('click', function() {
-      fetch('libraryq.json')
-        .then(response => response.json())
-        .then(data => {
-          libraryQuizzes = data.quizzes;
-          const libraryList = document.getElementById('library-list');
-          libraryList.innerHTML = "";
-          libraryQuizzes.forEach((quiz, index) => {
-            const li = document.createElement('li');
-            li.className = "p-4 border border-gray-200 rounded flex justify-between items-center";
-            li.innerHTML = `<div>
-              <div class="font-bold">${quiz.title}</div>
-              <div class="text-sm text-gray-600">Språk: ${quiz.language}</div>
-            </div>
-            <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded" data-index="${index}">Välj</button>`;
-            libraryList.appendChild(li);
-          });
-          document.getElementById('library-container').classList.remove('hidden');
-        })
-        .catch(err => {
-          alert("Kunde inte ladda quizbiblioteket.");
-          console.error(err);
-        });
-    });
-
-    // När en quiz väljs från biblioteket
-    document.getElementById('library-list').addEventListener('click', function(e) {
-      if (e.target.matches('button')) {
-        const index = e.target.getAttribute('data-index');
-        const quiz = libraryQuizzes[index];
-        vocabularyData = quiz.vocabulary;
-        updateQuizDisplay();
-        // Dölj setup och bibliotek, visa meny och QA-list
-        document.getElementById('setup-container').classList.add('hidden');
-        document.getElementById('library-container').classList.add('hidden');
-        document.getElementById('mode-container').classList.remove('hidden');
-        document.getElementById('qa-display').classList.remove('hidden');
-      }
-    });
-
-    // --- Meny för lägen ---
-    document.getElementById('mode-test-btn').addEventListener('click', function() {
-      initQuiz();
-    });
-
-    document.getElementById('mode-flip-btn').addEventListener('click', function() {
-      initFlipMode();
-    });
-
-    document.getElementById('mode-learn-btn').addEventListener('click', function() {
-      initLearnTest();
-    });
-
-    document.getElementById('mode-back-btn').addEventListener('click', function() {
-      vocabularyData = [];
-      document.getElementById('vocab-input').value = "";
-      document.getElementById('mode-container').classList.add('hidden');
-      document.getElementById('qa-display').classList.add('hidden');
-      document.getElementById('setup-container').classList.remove('hidden');
-    });
-
-    // --- Testläge: "Testa dig" ---
-    function initQuiz() {
-      quizState.vocabulary = vocabularyData;
-      quizState.order = shuffleArray([...Array(vocabularyData.length).keys()]);
-      quizState.currentIndex = 0;
-      quizState.score = 0;
-      document.getElementById('mode-container').classList.add('hidden');
-      document.getElementById('qa-display').classList.add('hidden');
-      document.getElementById('quiz-container').classList.remove('hidden');
-      document.getElementById('result-container').classList.add('hidden');
-      showQuestion();
-    }
-
-    function showQuestion() {
-      if (quizState.currentIndex >= quizState.order.length) {
-        showResult();
-        return;
-      }
-      const currentIdx = quizState.order[quizState.currentIndex];
-      const currentWord = quizState.vocabulary[currentIdx];
-      document.getElementById('progress').textContent = "Fråga " + (quizState.currentIndex + 1) + " av " + quizState.order.length;
-      document.getElementById('question').textContent = "Översätt ordet: " + currentWord.question;
-      document.getElementById('answer').value = "";
-      document.getElementById('feedback').textContent = "";
-      document.getElementById('answer').focus();
-    }
-
-    document.getElementById('submit-btn').addEventListener('click', function() {
-      checkAnswer();
-    });
-
-    document.getElementById('answer').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        checkAnswer();
-      }
-    });
-
-    function checkAnswer() {
-      const userAnswer = document.getElementById('answer').value.trim().toLowerCase();
-      const currentIdx = quizState.order[quizState.currentIndex];
-      const correctAnswers = quizState.vocabulary[currentIdx].answer;
-      const feedbackEl = document.getElementById('feedback');
-      if (correctAnswers.includes(userAnswer)) {
-        feedbackEl.textContent = "Rätt!";
-        feedbackEl.classList.remove('text-red-500');
-        feedbackEl.classList.add('text-green-500');
-        quizState.score++;
-      } else {
-        feedbackEl.textContent = "Fel! Rätt svar: " + correctAnswers.join(" eller ");
-        feedbackEl.classList.remove('text-green-500');
-        feedbackEl.classList.add('text-red-500');
-      }
-      quizState.currentIndex++;
-      setTimeout(showQuestion, 1500);
-    }
-
-    function showResult() {
-      document.getElementById('quiz-container').classList.add('hidden');
-      const resultText = "Du fick " + quizState.score + " av " + quizState.order.length + " rätt.";
-      document.getElementById('result-text').textContent = resultText;
-      document.getElementById('result-container').classList.remove('hidden');
-    }
-
-    document.getElementById('quiz-back-btn').addEventListener('click', function() {
-      backToModeSelection();
-    });
-
-    document.getElementById('restart-btn').addEventListener('click', function() {
-      initQuiz();
-    });
-
-    document.getElementById('result-back-btn').addEventListener('click', function() {
-      backToModeSelection();
-    });
-
-    // --- Flashcard-läge med rätt/fel-knappar ---
-    function initFlipMode() {
       flipState.order = shuffleArray([...Array(vocabularyData.length).keys()]);
       flipState.currentIndex = 0;
       flipState.score = 0;
-      document.getElementById('mode-container').classList.add('hidden');
-      document.getElementById('qa-display').classList.add('hidden');
-      document.getElementById('flip-container').classList.remove('hidden');
+      flipState.results = [];
+      // Döp om visningen
+      document.getElementById('setup-container').classList.add('hidden');
       document.getElementById('flip-result-container').classList.add('hidden');
+      document.getElementById('flip-train-container').classList.add('hidden');
+      document.getElementById('flip-container').classList.remove('hidden');
       showFlipCard();
     }
 
+    // Visa aktuellt flashcard
     function showFlipCard() {
       if (flipState.currentIndex >= flipState.order.length) {
         showFlipResult();
         return;
       }
       const index = flipState.order[flipState.currentIndex];
-      const wordPair = vocabularyData[index];
+      const card = vocabularyData[index];
       document.getElementById('flip-progress').textContent = "Kort " + (flipState.currentIndex + 1) + " av " + flipState.order.length;
-      document.getElementById('flip-front').textContent = wordPair.question;
-      document.getElementById('flip-back').textContent = wordPair.answer.join(" / ");
-      // Säkerställ att kortet visas med framsidan upp
+      document.getElementById('flip-front').textContent = card.question;
+      document.getElementById('flip-back').textContent = card.answer.join(" / ");
+      document.getElementById('flip-user-answer').value = "";
       document.getElementById('flip-card').classList.remove('flipped');
     }
 
-    // Klicka på kortet för att vända det
-    document.getElementById('flip-card').addEventListener('click', function() {
-      this.classList.toggle('flipped');
-    });
-
-    // Markera kortet som rätt eller fel
-    function markFlashcard(correct) {
+    // Registrera resultat för aktuellt flashcard
+    function recordFlipResult(correct) {
+      const index = flipState.order[flipState.currentIndex];
+      const card = vocabularyData[index];
+      const userAnswer = document.getElementById('flip-user-answer').value.trim();
+      flipState.results.push({
+        index: index,
+        question: card.question,
+        correctAnswer: card.answer.join(" / "),
+        userAnswer: userAnswer || "(inget svar)",
+        correct: correct
+      });
       if (correct) {
         flipState.score++;
       }
       flipState.currentIndex++;
-      if (flipState.currentIndex < flipState.order.length) {
-        showFlipCard();
-      } else {
-        showFlipResult();
-      }
+      showFlipCard();
     }
 
-    document.getElementById('flip-correct-btn').addEventListener('click', function() {
-      markFlashcard(true);
-    });
-
-    document.getElementById('flip-incorrect-btn').addEventListener('click', function() {
-      markFlashcard(false);
-    });
-
-    document.getElementById('flip-back-btn').addEventListener('click', function() {
-      backToModeSelection();
-    });
-
+    // Visa resultatsidan med detaljerad lista
     function showFlipResult() {
       document.getElementById('flip-container').classList.add('hidden');
-      const resultText = "Du fick " + flipState.score + " av " + flipState.order.length + " rätt.";
-      document.getElementById('flip-result-text').textContent = resultText;
       document.getElementById('flip-result-container').classList.remove('hidden');
+      document.getElementById('flip-result-text').textContent = "Du fick " + flipState.score + " av " + flipState.order.length + " rätt.";
+      const detailsDiv = document.getElementById('flip-result-details');
+      detailsDiv.innerHTML = "";
+      flipState.results.forEach((res, i) => {
+        const resDiv = document.createElement('div');
+        resDiv.className = "p-4 border rounded shadow";
+        resDiv.innerHTML = `
+          <div><strong>Fråga:</strong> ${res.question}</div>
+          <div><strong>Ditt svar:</strong> ${res.userAnswer}</div>
+          <div><strong>Rätt svar:</strong> ${res.correctAnswer}</div>
+          <div><strong>Resultat:</strong> ${res.correct ? '<span class="text-green-500">Rätt</span>' : '<span class="text-red-500">Fel</span>'}</div>
+          <div class="flex items-center mt-2">
+            <button class="train-single-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded" data-index="${i}">Träna den här</button>
+            <input type="checkbox" class="train-checkbox ml-4" data-index="${i}">
+          </div>
+        `;
+        detailsDiv.appendChild(resDiv);
+      });
     }
 
-    document.getElementById('flip-restart-btn').addEventListener('click', function() {
-      initFlipMode();
-    });
-
-    document.getElementById('flip-result-back-btn').addEventListener('click', function() {
-      backToModeSelection();
-    });
-
-    // --- Lär med svar: Alltid synligt svar ---
-    function initLearnTest() {
-      learnTestState.vocabulary = vocabularyData;
-      learnTestState.order = shuffleArray([...Array(vocabularyData.length).keys()]);
-      learnTestState.currentIndex = 0;
-      learnTestState.score = 0;
-      document.getElementById('mode-container').classList.add('hidden');
-      document.getElementById('qa-display').classList.add('hidden');
-      document.getElementById('quiz-container').classList.add('hidden');
-      document.getElementById('flip-container').classList.add('hidden');
-      document.getElementById('learn-answer-container').classList.remove('hidden');
-      showLearnTestQuestion();
-    }
-
-    function showLearnTestQuestion() {
-      if (learnTestState.currentIndex >= learnTestState.order.length) {
-        showLearnTestResult();
+    // Initiera flashcardträning för markerade/enstaka kort
+    function initFlipTrain(selectedIndices) {
+      if (selectedIndices.length === 0) {
+        alert("Inga flashcards valda för träning.");
         return;
       }
-      const currentIdx = learnTestState.order[learnTestState.currentIndex];
-      const currentWord = learnTestState.vocabulary[currentIdx];
-      document.getElementById('learn-progress').textContent = "Fråga " + (learnTestState.currentIndex + 1) + " av " + learnTestState.order.length;
-      document.getElementById('learn-question').textContent = "Översätt ordet: " + currentWord.question;
-      document.getElementById('learn-correct-answer').textContent = "Rätt svar: " + currentWord.answer.join(" eller ");
-      document.getElementById('learn-input').value = "";
-      document.getElementById('learn-feedback').textContent = "";
-      document.getElementById('learn-input').focus();
+      flipTrainState.vocabulary = [];
+      selectedIndices.forEach(i => {
+        const res = flipState.results[i];
+        flipTrainState.vocabulary.push(vocabularyData[res.index]);
+      });
+      flipTrainState.order = shuffleArray([...Array(flipTrainState.vocabulary.length).keys()]);
+      flipTrainState.currentIndex = 0;
+      flipTrainState.score = 0;
+      document.getElementById('flip-result-container').classList.add('hidden');
+      document.getElementById('flip-train-container').classList.remove('hidden');
+      showFlipTrainCard();
     }
 
-    function checkLearnTestAnswer() {
-      const userAnswer = document.getElementById('learn-input').value.trim().toLowerCase();
-      const currentIdx = learnTestState.order[learnTestState.currentIndex];
-      const correctAnswers = learnTestState.vocabulary[currentIdx].answer;
-      const feedbackEl = document.getElementById('learn-feedback');
-      if (correctAnswers.includes(userAnswer)) {
-        feedbackEl.textContent = "Rätt!";
-        feedbackEl.classList.remove('text-red-500');
-        feedbackEl.classList.add('text-green-500');
-        learnTestState.score++;
-      } else {
-        feedbackEl.textContent = "Fel!";
-        feedbackEl.classList.remove('text-green-500');
-        feedbackEl.classList.add('text-red-500');
+    // Visa flashcard i träningsläget
+    function showFlipTrainCard() {
+      if (flipTrainState.currentIndex >= flipTrainState.order.length) {
+        // När träningen är klar, återgå till resultatsidan
+        document.getElementById('flip-train-container').classList.add('hidden');
+        document.getElementById('flip-result-container').classList.remove('hidden');
+        return;
       }
-      learnTestState.currentIndex++;
-      setTimeout(showLearnTestQuestion, 2000);
+      const index = flipTrainState.order[flipTrainState.currentIndex];
+      const card = flipTrainState.vocabulary[index];
+      document.getElementById('flip-train-progress').textContent = "Träningskort " + (flipTrainState.currentIndex + 1) + " av " + flipTrainState.vocabulary.length;
+      document.getElementById('flip-train-front').textContent = card.question;
+      document.getElementById('flip-train-back').textContent = card.answer.join(" / ");
+      document.getElementById('flip-train-user-answer').value = "";
+      document.getElementById('flip-train-card').classList.remove('flipped');
     }
 
-    document.getElementById('learn-submit-btn').addEventListener('click', function() {
-      checkLearnTestAnswer();
-    });
+    // Registrera resultat i träningsläget
+    function recordFlipTrainResult(correct) {
+      if (correct) {
+        flipTrainState.score++;
+      }
+      flipTrainState.currentIndex++;
+      showFlipTrainCard();
+    }
 
-    document.getElementById('learn-input').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        checkLearnTestAnswer();
+    // Eventlyssnare
+    document.getElementById('create-flashcards-btn').addEventListener('click', initFlashcards);
+    document.getElementById('load-presaved-btn').addEventListener('click', function() {
+      const preSaved = `äpple - manzana
+banan - plátano
+apelsin - naranja
+päron - pera
+citron - limón`;
+      document.getElementById('vocab-input').value = preSaved;
+    });
+    document.getElementById('flip-correct-btn').addEventListener('click', function() {
+      recordFlipResult(true);
+    });
+    document.getElementById('flip-incorrect-btn').addEventListener('click', function() {
+      recordFlipResult(false);
+    });
+    document.getElementById('flip-back-btn').addEventListener('click', function() {
+      location.reload();
+    });
+    document.getElementById('flip-restart-btn').addEventListener('click', function() {
+      initFlashcards();
+    });
+    document.getElementById('flip-result-back-btn').addEventListener('click', function() {
+      location.reload();
+    });
+    document.getElementById('flip-train-selected-btn').addEventListener('click', function() {
+      const checkboxes = document.querySelectorAll('.train-checkbox');
+      const selected = [];
+      checkboxes.forEach(cb => {
+        if (cb.checked) {
+          selected.push(cb.getAttribute('data-index'));
+        }
+      });
+      initFlipTrain(selected);
+    });
+    document.getElementById('flip-train-back-btn').addEventListener('click', function() {
+      document.getElementById('flip-train-container').classList.add('hidden');
+      document.getElementById('flip-result-container').classList.remove('hidden');
+    });
+    document.getElementById('flip-train-correct-btn').addEventListener('click', function() {
+      recordFlipTrainResult(true);
+    });
+    document.getElementById('flip-train-incorrect-btn').addEventListener('click', function() {
+      recordFlipTrainResult(false);
+    });
+    // Lyssna på "Träna den här"-knapparna i resultatsidan (delegation)
+    document.getElementById('flip-result-details').addEventListener('click', function(e) {
+      if (e.target && e.target.matches('.train-single-btn')) {
+        const idx = e.target.getAttribute('data-index');
+        initFlipTrain([idx]);
       }
     });
-
-    document.getElementById('learn-back-btn').addEventListener('click', function() {
-      backToModeSelection();
-    });
-
-    function showLearnTestResult() {
-      alert("Du fick " + learnTestState.score + " av " + learnTestState.order.length + " rätt.");
-      backToModeSelection();
-    }
   </script>
 </body>
 </html>
